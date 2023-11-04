@@ -26,10 +26,15 @@ const commonLoadable = (loader: any) =>
     });
 
 const routes: Array<Route> = [
+    // {
+    //     name: '404',
+    //     path: '*',
+    //     redirect: routeConstants.LOGIN,
+    // },
     {
-        name: '404',
-        path: '*',
-        redirect: routeConstants.LOGIN,
+        name: 'Register',
+        path: routeConstants.REGISTER,
+        Component: commonLoadable(() => import('views/Register')),
     },
 ];
 

@@ -1,0 +1,116 @@
+@import 'scss/global.scss';
+
+.register {
+    background: url('../../assets/images/bg-register.jpg') no-repeat center /
+        cover;
+    &__wrapper {
+        padding: 30px 0;
+    }
+    &__container {
+        background-color: $register-bgr;
+        width: 440px;
+        margin: 0px auto;
+        border-radius: 12px;
+        padding: 15px 30px;
+    }
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        &--title {
+            font-size: 20px;
+            font-weight: bold;
+            position: relative;
+            padding-bottom: 8px;
+            &::after {
+                content: '';
+                position: absolute;
+                width: 100px;
+                height: 4px;
+                border-radius: 6px;
+                background-color: $title-color;
+                bottom: 0;
+                right: 0;
+            }
+        }
+    }
+    &__intro {
+        font-weight: 600;
+        display: inline-block;
+        margin: 12px 0;
+    }
+    &__social {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    &__or {
+        display: flex;
+        margin: 12px 0;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        position: relative;
+        &::before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 2px;
+            border-radius: 4px;
+            background-color: $color--black;
+            left: 38px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 2px;
+            border-radius: 4px;
+            background-color: $color--black;
+            right: 38px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+    &__form {
+        label {
+            font-weight: 600;
+        }
+        .ant-input {
+            padding: 6px 11px;
+            font-size: 16px;
+        }
+        .ant-form-item {
+            margin-bottom: 16px;
+        }
+        &--name {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+        &--footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            margin-bottom: 16px;
+            span {
+                a {
+                    margin-left: 8px;
+                }
+            }
+        }
+        button {
+            width: 300px;
+            height: 42px;
+        }
+        .ant-form-vertical .ant-form-item-row {
+            text-align: center;
+        }
+        .ant-btn-primary {
+            background-color: $btn-register-color;
+        }
+    }
+}
