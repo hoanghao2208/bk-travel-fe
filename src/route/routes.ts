@@ -36,6 +36,11 @@ const routes: Array<Route> = [
         path: routeConstants.REGISTER,
         Component: commonLoadable(() => import('views/Register')),
     },
+    {
+        name: 'Login',
+        path: routeConstants.LOGIN,
+        Component: commonLoadable(() => import('views/Login')),
+    },
 ];
 
 export default routes;

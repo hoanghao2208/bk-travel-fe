@@ -3,6 +3,8 @@
 .register-layout {
     background: url('../../assets/images/bg-register.jpg') no-repeat center /
         cover;
+    min-width: 100vw;
+    min-height: 100vh;
     &__wrapper {
         padding: 30px 0;
     }
