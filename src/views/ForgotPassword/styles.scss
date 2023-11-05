@@ -1,0 +1,71 @@
+@import 'scss/global.scss';
+
+.forgot {
+    &-wrapper {
+        .register-layout__container {
+            margin: 120px auto 0 !important;
+        }
+    }
+    &-header {
+        &__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            &--title {
+                font-size: 20px;
+                font-weight: bold;
+                position: relative;
+                padding-bottom: 8px;
+                &::after {
+                    content: '';
+                    position: absolute;
+                    width: 156px;
+                    height: 4px;
+                    border-radius: 6px;
+                    background-color: $title-color;
+                    bottom: 0;
+                    right: 0;
+                }
+            }
+        }
+        &__intro {
+            font-weight: 600;
+            display: inline-block;
+            margin: 16px 0 32px;
+        }
+    }
+    &__form {
+        label {
+            font-weight: 600;
+        }
+        .ant-input {
+            padding: 6px 11px;
+            font-size: 16px;
+        }
+        .ant-form-item {
+            margin-bottom: 16px;
+        }
+        &--footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            margin-bottom: 16px;
+            span {
+                a {
+                    margin-left: 8px;
+                }
+            }
+        }
+        button {
+            width: 300px;
+            height: 42px;
+        }
+        .ant-form-vertical .ant-form-item-row {
+            text-align: center;
+        }
+        .ant-btn-primary {
+            background-color: $btn-register-color;
+        }
+    }
+}

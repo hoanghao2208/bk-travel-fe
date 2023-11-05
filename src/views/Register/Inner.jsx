@@ -51,18 +51,6 @@ const Inner = memo(() => {
                         </Form.Item>
                     </div>
                     <Form.Item
-                        label="Tên đăng nhập"
-                        name="username"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your username!',
-                            },
-                        ]}
-                    >
-                        <Input placeholder="Tên đăng nhập" />
-                    </Form.Item>
-                    <Form.Item
                         label="Email"
                         name="email"
                         rules={[

@@ -41,6 +41,11 @@ const routes: Array<Route> = [
         path: routeConstants.LOGIN,
         Component: commonLoadable(() => import('views/Login')),
     },
+    {
+        name: 'ForgotPassword',
+        path: routeConstants.FORGOT_PASSWORD,
+        Component: commonLoadable(() => import('views/ForgotPassword')),
+    },
 ];
 
 export default routes;
