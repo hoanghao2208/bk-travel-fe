@@ -7,9 +7,7 @@ const UserHomePageLayout: FC<PropsWithChildren> = ({ children }) => {
     return (
         <>
             <UserHeader />
-            <div className="user-homepage__wrapper">
-                <div className="user-homepage__container">{children}</div>
-            </div>
+            <div className="user-homepage__wrapper">{children}</div>
             <UserFooter />
         </>
     );

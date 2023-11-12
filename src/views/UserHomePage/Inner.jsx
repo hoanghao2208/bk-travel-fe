@@ -1,18 +1,58 @@
-import { memo, useEffect } from "react";
-import "./style.scss";
-import UserHomePageLayout from "layouts/UserHomePageLayout";
+import { memo, useEffect } from 'react';
+import './style.scss';
+import UserHomePageLayout from 'layouts/UserHomePageLayout';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import LocationSlide from 'components/LocationSlide';
 
 const Inner = memo(() => {
     useEffect(() => {
         document.title = 'Trang chủ';
-    })
+    });
     return (
         <UserHomePageLayout>
-            
+            <div className="swiper-wrapper">
+                <Swiper
+                    modules={[Autoplay, Navigation, Pagination]}
+                    spaceBetween={50}
+                    slidesPerView={1}
+                    navigation
+                    pagination={{ clickable: true }}
+                    autoplay={{ delay: 3000, disableOnInteraction: false }}
+                >
+                    <SwiperSlide>
+                        <LocationSlide
+                            imgURL="/images/slide2.jpg"
+                            description="Chào mừng bạn đến với thế giới của chúng tôi, nơi mà mỗi hành trình trở thành một cuộc phiêu lưu đặc biệt."
+                        />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <LocationSlide
+                            imgURL="/images/slide3.jpg"
+                            description="Chúng tôi tin rằng mỗi chuyến đi không chỉ là một đích đến mà còn là một cơ hội để khám phá bản thân. "
+                        />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <LocationSlide
+                            imgURL="/images/slide4.jpg"
+                            description="Chúng tôi không chỉ đưa bạn đến những địa điểm nổi tiếng, mà còn muốn bạn trải nghiệm và kết nối với văn hóa địa phương."
+                        />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <LocationSlide
+                            imgURL="/images/slide1.jpg"
+                            description="Mỗi chuyến đi của bạn không chỉ là một hành trình đến những địa điểm mới mẻ mà còn là một hành trình của trái tim bạn. Chúng tôi tin rằng du lịch có sức mạnh làm thay đổi cuộc sống và tạo ra những kí ức đẹp."
+                        />
+                    </SwiperSlide>
+                </Swiper>
+            </div>
         </UserHomePageLayout>
-    )
-})
+    );
+});
 
-Inner.displayName = "User HomePage Inner";
+Inner.displayName = 'User HomePage Inner';
 
 export default Inner;

@@ -1,6 +1,16 @@
 @import 'scss/global.scss';
 
 .user-header {
+    &__wrapper {
+        width: 100%;
+        background-color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        box-shadow: 0 20px 25px -5px $color-shadow1, 0 8px 10px -6px $color-shadow1;
+    }
     width: 80%;
     margin: 0 auto;
     display: flex;
