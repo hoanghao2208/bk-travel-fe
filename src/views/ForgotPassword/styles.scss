@@ -51,6 +51,7 @@
             align-items: center;
             font-size: 16px;
             margin-bottom: 16px;
+            flex-wrap: wrap;
             span {
                 a {
                     margin-left: 8px;
@@ -58,14 +59,29 @@
             }
         }
         button {
-            width: 300px;
+            width: 70%;
             height: 42px;
+            span {
+                font-weight: 600;
+            }
         }
         .ant-form-vertical .ant-form-item-row {
             text-align: center;
         }
         .ant-btn-primary {
             background-color: $btn-register-color;
+        }
+    }
+}
+
+@media screen and (max-width: 371px) {
+    .forgot {
+        &__form {
+            &--footer {
+                span {
+                    margin-bottom: 8px;
+                }
+            }
         }
     }
 }

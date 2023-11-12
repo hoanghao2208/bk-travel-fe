@@ -1,15 +1,18 @@
 import { Button, Form, Input } from 'antd';
 import LogoRegister from 'assets/icons/LogoRegister';
 import RegisterLayout from 'layouts/RegisterLayout';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './styles.scss';
 
 const Inner = memo(() => {
+    useEffect(() => {
+        document.title = 'Lấy lại mật khẩu';
+    });
     return (
         <div className="forgot-wrapper">
             <RegisterLayout>
-                <div className='forgot-header'>
+                <div className="forgot-header">
                     <div className="forgot-header__header">
                         <LogoRegister />
                         <span className="forgot-header__header--title">
