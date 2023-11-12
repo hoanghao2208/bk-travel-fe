@@ -1,0 +1,86 @@
+@import 'scss/global.scss';
+
+.user-footer {
+    width: 100%;
+    background-color: $color-homepage-bg;
+    padding: 40px 0;
+    &__top {
+        width: 80%;
+        margin: 0 auto;
+        border-bottom: 1px solid $color--border2;
+        &--intro,
+        &--title,
+        &--slogan,
+        &--button,
+        &--license {
+            text-align: center;
+        }
+        &--intro {
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            color: $color-homepage-intro;
+        }
+        &--title {
+            font-size: 42px;
+            color: $color-homepage-title;
+        }
+        &--slogan {
+            width: 46%;
+            line-height: 1.5;
+            margin: 0 auto;
+            color: $color-homepage-intro;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        &--button {
+            button {
+                width: 160px;
+                height: 46px;
+                border-radius: 20px;
+                box-shadow: 0 20px 25px -5px $color-shadow1, 0 8px 10px -6px $color-shadow1;
+                margin-bottom: 20px;
+                span {
+                    font-weight: 500;
+                    font-size: 16px;
+                }
+            }
+        }
+        &--license {
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+    }
+    &__bottom {
+        width: 80%;
+        margin: 16px auto 0;
+        display: flex;
+        align-items: center;
+        &--navigate {
+            text-align: center;
+            margin: 0 auto;
+            flex: 1 1 0%;
+            a {
+                text-decoration: none;
+                color: $color--black;
+                padding: 0 24px;
+                font-weight: 500;
+                transition: all 0.2s linear;
+                &:hover {
+                    color: $color-button--primary;
+                }
+            }
+        }
+        &--social {
+            display: flex;
+            margin-left: auto;
+            &-item:not(:last-child) {
+                margin-right: 12px;
+            }
+            &-item {
+                cursor: pointer;
+            }
+        }
+    }
+}
