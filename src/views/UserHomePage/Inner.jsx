@@ -7,6 +7,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import LocationSlide from 'components/LocationSlide';
+import OutstandingListTour from 'components/OutstandingListTour';
 
 const Inner = memo(() => {
     useEffect(() => {
@@ -17,11 +18,12 @@ const Inner = memo(() => {
             <div className="swiper-wrapper">
                 <Swiper
                     modules={[Autoplay, Navigation, Pagination]}
-                    spaceBetween={50}
+                    spaceBetween={0}
                     slidesPerView={1}
                     navigation
                     pagination={{ clickable: true }}
                     autoplay={{ delay: 3000, disableOnInteraction: false }}
+                    speed={1000}
                 >
                     <SwiperSlide>
                         <LocationSlide
@@ -47,7 +49,22 @@ const Inner = memo(() => {
                             description="Mỗi chuyến đi của bạn không chỉ là một hành trình đến những địa điểm mới mẻ mà còn là một hành trình của trái tim bạn. Chúng tôi tin rằng du lịch có sức mạnh làm thay đổi cuộc sống và tạo ra những kí ức đẹp."
                         />
                     </SwiperSlide>
+                    <SwiperSlide>
+                        <LocationSlide
+                            imgURL="/images/slide5.jpg"
+                            description="Tại đây, chúng tôi không chỉ tạo ra những chương trình du lịch, mà còn mang đến cho bạn những trải nghiệm độc đáo, nơi mà lịch trình không chỉ là danh sách điểm đến mà còn là hành trình của sự tự khám phá."
+                        />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <LocationSlide
+                            imgURL="/images/slide6.jpg"
+                            description="Chúng tôi cam kết mang lại trải nghiệm du lịch mà bạn không chỉ cảm thấy hài lòng mà còn tận hưởng mọi khoảnh khắc một cách trọn vẹn."
+                        />
+                    </SwiperSlide>
                 </Swiper>
+            </div>
+            <div className='homepage-container'>
+                <OutstandingListTour />
             </div>
         </UserHomePageLayout>
     );

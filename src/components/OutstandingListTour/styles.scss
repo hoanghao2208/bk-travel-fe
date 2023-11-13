@@ -1,0 +1,19 @@
+@import 'scss/global.scss';
+
+.outstanding-tour {
+    padding-bottom: 20px;
+    &__header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        a {
+            text-decoration: none;
+            font-weight: 600;
+            color: $color-gray-68;
+            transition: all 0.2s linear;
+            &:hover {
+                color: $color-button--primary-hover;
+            }
+        }
+    }
+}
