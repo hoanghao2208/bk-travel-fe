@@ -1,0 +1,13 @@
+@import 'scss/global.scss';
+
+.reason-list {
+    padding-bottom: 40px;
+    &__title {
+        margin: 40px 0;
+    }
+    &__items {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-column-gap: 40px;
+    }
+}

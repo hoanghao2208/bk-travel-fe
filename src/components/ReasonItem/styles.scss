@@ -1,0 +1,24 @@
+@import 'scss/global.scss';
+
+.reason {
+    background-color: white;
+    padding: 24px;
+    border-radius: 12px;
+    &__icon,
+    &__title {
+        text-align: center;
+    }
+    &__icon {
+        margin-bottom: 24px;
+    }
+    &__title {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    &__detail {
+        text-align: center;
+        line-height: 1.4;
+        font-size: 16px;
+        font-weight: 400;
+    }
+}

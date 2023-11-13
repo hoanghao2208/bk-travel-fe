@@ -10,6 +10,7 @@ import LocationSlide from 'components/LocationSlide';
 import OutstandingListTour from 'components/OutstandingListTour';
 import OutstandingListLocation from 'components/OutstandingListLocation';
 import TopLocationList from 'components/TopLocationList';
+import ReasonList from 'components/ReasonList';
 
 const Inner = memo(() => {
     useEffect(() => {
@@ -69,6 +70,7 @@ const Inner = memo(() => {
                 <OutstandingListTour />
                 <OutstandingListLocation />
                 <TopLocationList />
+                <ReasonList />
             </div>
         </UserHomePageLayout>
     );
