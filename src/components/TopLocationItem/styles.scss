@@ -1,0 +1,48 @@
+@import 'scss/global.scss';
+
+.top-items {
+    background-color: white;
+    border-radius: 12px;
+    &__location {
+        text-align: center;
+        border-bottom: solid 1px $color--border2;
+        margin: 0;
+        padding: 12px 0;
+        margin-bottom: 16px;
+        font-size: 20px;
+    }
+    &__list {
+        &--img {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        &--item {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            padding-bottom: 36px;
+            &:hover {
+                .top-items__list--title {
+                    color: $color--secondary;
+                }
+            }
+        }
+        &--des {
+            a,
+            p {
+                margin: 0;
+            }
+        }
+        &--title {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 600;
+            color: $color--primary;
+            padding-bottom: 6px;
+            transition: all 0.2s linear;
+        }
+    }
+}

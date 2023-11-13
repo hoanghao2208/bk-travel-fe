@@ -9,6 +9,7 @@ import 'swiper/css/pagination';
 import LocationSlide from 'components/LocationSlide';
 import OutstandingListTour from 'components/OutstandingListTour';
 import OutstandingListLocation from 'components/OutstandingListLocation';
+import TopLocationList from 'components/TopLocationList';
 
 const Inner = memo(() => {
     useEffect(() => {
@@ -64,9 +65,10 @@ const Inner = memo(() => {
                     </SwiperSlide>
                 </Swiper>
             </div>
-            <div className='homepage-container'>
+            <div className="homepage-container">
                 <OutstandingListTour />
                 <OutstandingListLocation />
+                <TopLocationList />
             </div>
         </UserHomePageLayout>
     );
