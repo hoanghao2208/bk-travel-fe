@@ -17,3 +17,11 @@
         }
     }
 }
+
+@media screen and (max-width: 470px) {
+    .outstanding-location__header {
+        a {
+            font-size: 13px;
+        }
+    }
+}

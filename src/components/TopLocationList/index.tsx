@@ -13,17 +13,27 @@ const TopLocationList: FC = memo(() => {
         <div className="top-list">
             <div className="outstanding-tour__header">
                 <Title title="Không thể không đến" />
-                <Link to="/">Xem thêm {'>>>'}</Link>
+                <Link to="/">Xem thêm</Link>
             </div>
 
             <div className="top-list__all-items">
                 <Swiper
                     modules={[Autoplay, Navigation]}
                     spaceBetween={40}
-                    slidesPerView={4}
                     navigation={false}
                     autoplay={{ delay: 2500, disableOnInteraction: false }}
                     speed={1000}
+                    breakpoints={{
+                        1552: {
+                            slidesPerView: 4,
+                        },
+                        1150: {
+                            slidesPerView: 3,
+                        },
+                        748: {
+                            slidesPerView: 2,
+                        },
+                    }}
                 >
                     <SwiperSlide>
                         <TopLoationItem />

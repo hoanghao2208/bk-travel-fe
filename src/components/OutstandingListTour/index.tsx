@@ -14,17 +14,27 @@ const OutstandingListTour: FC = () => {
         <div className="outstanding-tour">
             <div className="outstanding-tour__header">
                 <Title title="Các tour nổi bật của BK Travel" />
-                <Link to="/">Xem thêm {'>>>'}</Link>
+                <Link to="/">Xem thêm</Link>
             </div>
 
             <div className="outstanding-tour__list">
                 <Swiper
                     modules={[Autoplay, Navigation]}
                     spaceBetween={40}
-                    slidesPerView={4}
                     navigation={false}
                     autoplay={{ delay: 2500, disableOnInteraction: false }}
                     speed={1000}
+                    breakpoints={{
+                        1552: {
+                            slidesPerView: 4,
+                        },
+                        1150: {
+                            slidesPerView: 3,
+                        },
+                        748: {
+                            slidesPerView: 2,
+                        },
+                    }}
                 >
                     <SwiperSlide>
                         <TourItem />
