@@ -11,6 +11,7 @@ import OutstandingListTour from 'components/OutstandingListTour';
 import OutstandingListLocation from 'components/OutstandingListLocation';
 import TopLocationList from 'components/TopLocationList';
 import ReasonList from 'components/ReasonList';
+import { FloatButton } from 'antd';
 
 const Inner = memo(() => {
     useEffect(() => {
@@ -72,6 +73,7 @@ const Inner = memo(() => {
                 <TopLocationList />
                 <ReasonList />
             </div>
+            <FloatButton.BackTop visibilityHeight={0} />
         </UserHomePageLayout>
     );
 });
