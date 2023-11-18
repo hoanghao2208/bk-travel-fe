@@ -1,0 +1,29 @@
+@import 'scss/global.scss';
+
+.swiper-wrapper {
+    margin-top: 42px;
+    .swiper-button-prev,
+    .swiper-button-next {
+        color: $color-homepage-bg;
+        opacity: 0;
+        transform: scale(0.8);
+        transition: all 0.2s linear;
+    }
+    .swiper-button-prev {
+        left: 30px;
+    }
+    .swiper-button-next {
+        right: 30px;
+    }
+    &:hover {
+        .swiper-button-prev,
+        .swiper-button-next {
+            opacity: 1;
+        }
+    }
+}
+
+.homepage-container {
+    width: 80%;
+    margin: 0 auto;
+}

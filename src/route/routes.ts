@@ -26,11 +26,16 @@ const commonLoadable = (loader: any) =>
     });
 
 const routes: Array<Route> = [
+    // {
+    //     name: '404',
+    //     path: '*',
+    //     redirect: routeConstants.LOGIN,
+    // },
     {
-        name: '404',
-        path: '*',
-        redirect: routeConstants.LOGIN,
-    },
+        name: 'User Home Page',
+        path: '/',
+        Component: commonLoadable(() => import('views/UserHomePage')),
+    }
 ];
 
 export default routes;

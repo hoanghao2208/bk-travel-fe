@@ -1,0 +1,33 @@
+@import 'scss/global.scss';
+
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    position: relative;
+    padding-left: 20px;
+    margin: 20px 0 0;
+    max-width: 70%;
+    &::before {
+        content: '';
+        position: absolute;
+        width: 8px;
+        height: 100%;
+        background-color: $color--primary;
+        border-radius: 8px;
+        top: 0;
+        left: 0;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .title {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 415px) {
+    .title {
+        font-size: 16px;
+        max-width: 60%;
+    }
+}
