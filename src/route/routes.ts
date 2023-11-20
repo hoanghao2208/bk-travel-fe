@@ -35,7 +35,17 @@ const routes: Array<Route> = [
         name: 'User Home Page',
         path: '/',
         Component: commonLoadable(() => import('views/UserHomePage')),
-    }
+    },
+    {
+        name: 'Find Tour Page',
+        path: routeConstants.FIND_TOUR,
+        Component: commonLoadable(() => import('views/FindTourPage')),
+    },
+    {
+        name: 'Custom Tour Page',
+        path: routeConstants.CUSTOM_TOUR,
+        Component: commonLoadable(() => import('views/CustomTourPage')),
+    },
 ];
 
 export default routes;
