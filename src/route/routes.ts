@@ -35,7 +35,12 @@ const routes: Array<Route> = [
         name: 'User Home Page',
         path: '/',
         Component: commonLoadable(() => import('views/UserHomePage')),
-    }
+    },
+    {
+        name: 'User Profile Page',
+        path: routeConstants.USER_PROFILE,
+        Component: commonLoadable(() => import('views/UserProfilePage')),
+    },
 ];
 
 export default routes;

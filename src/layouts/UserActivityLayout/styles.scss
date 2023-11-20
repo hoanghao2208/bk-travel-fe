@@ -1,0 +1,50 @@
+@import 'scss/global.scss';
+
+.user-activity {
+    width: 80%;
+    margin: 0 auto;
+    padding: 130px 0 40px;
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+    &-wrapper {
+        background-color: $color-light-fb;
+    }
+    &__menu {
+        width: 24%;
+        position: sticky;
+        top: 130px;
+        &--avt {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid $color--border2;
+            border-bottom: 1px solid $color--light;
+            background-color: $color-homepage-bg;
+            padding-top: 20px;
+            border-radius: 8px 8px 0 0;
+        }
+        &--name,
+        &--email {
+            margin: 0;
+        }
+        &--name {
+            padding-top: 12px;
+            padding-bottom: 6px;
+            font-size: 24px;
+            color: $color--primary;
+        }
+        &--email {
+            padding-top: 6px;
+            padding-bottom: 12px;
+            color: $color-date;
+        }
+    }
+    &__children {
+        flex: 1;
+        padding: 0 20px;
+        background-color: white;
+        border-radius: 8px;
+    }
+}
