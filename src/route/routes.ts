@@ -46,6 +46,11 @@ const routes: Array<Route> = [
         path: routeConstants.CUSTOM_TOUR,
         Component: commonLoadable(() => import('views/CustomTourPage')),
     },
+    {
+        name: 'Search Results Page',
+        path: routeConstants.SEARCH_RESULTS,
+        Component: commonLoadable(() => import('views/SearchResultsPage')),
+    },
 ];
 
 export default routes;
