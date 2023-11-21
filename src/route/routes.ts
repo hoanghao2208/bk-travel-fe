@@ -46,6 +46,11 @@ const routes: Array<Route> = [
         path: routeConstants.USER_CHANGE_PASSWORD,
         Component: commonLoadable(() => import('views/UserChangePasswordPage')),
     },
+    {
+        name: 'Love List Page',
+        path: routeConstants.LOVE_LIST,
+        Component: commonLoadable(() => import('views/LoveListPage')),
+    },
 ];
 
 export default routes;

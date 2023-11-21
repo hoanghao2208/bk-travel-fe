@@ -37,22 +37,22 @@ const OutstandingListTour: FC = () => {
                     }}
                 >
                     <SwiperSlide>
-                        <TourItem />
+                        <TourItem haveBtn={true} bgItem={true} />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <TourItem />
+                        <TourItem haveBtn={true} bgItem={true} />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <TourItem />
+                        <TourItem haveBtn={true} bgItem={true} />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <TourItem />
+                        <TourItem haveBtn={true} bgItem={true} />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <TourItem />
+                        <TourItem haveBtn={true} bgItem={true} />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <TourItem />
+                        <TourItem haveBtn={true} bgItem={true} />
                     </SwiperSlide>
                 </Swiper>
             </div>
