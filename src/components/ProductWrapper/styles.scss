@@ -1,0 +1,28 @@
+@import 'scss/global.scss';
+
+.product-wrapper {
+    &__footer {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 24px;
+        margin-right: 8px;
+        &--button {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            button {
+                height: 36px;
+                span {
+                    font-weight: 500;
+                }
+            }
+        }
+        &--price {
+            font-weight: bold;
+            font-size: 22px;
+            color: $color--red;
+        }
+    }
+}

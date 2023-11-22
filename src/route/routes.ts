@@ -35,7 +35,12 @@ const routes: Array<Route> = [
         name: 'User Home Page',
         path: '/',
         Component: commonLoadable(() => import('views/UserHomePage')),
-    }
+    },
+    {
+        name: 'Cart Page',
+        path: routeConstants.CART,
+        Component: commonLoadable(() => import('views/CartPage')),
+    },
 ];
 
 export default routes;
