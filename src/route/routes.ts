@@ -41,6 +41,11 @@ const routes: Array<Route> = [
         path: routeConstants.CART,
         Component: commonLoadable(() => import('views/CartPage')),
     },
+    {
+        name: 'Fill Information Page',
+        path: routeConstants.FILL_INFORMATION,
+        Component: commonLoadable(() => import('views/FillInformationPage')),
+    },
 ];
 
 export default routes;
