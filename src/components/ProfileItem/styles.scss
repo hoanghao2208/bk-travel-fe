@@ -1,0 +1,59 @@
+@import 'scss/global.scss';
+
+.profile-item {
+    background-color: $color-search-bg;
+    padding: 4px 20px 12px;
+    border-radius: 8px;
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &--title {
+            font-size: 20px;
+        }
+        &--btn {
+            font-size: 18px;
+            color: $color-button--primary;
+            cursor: pointer;
+            transition: all 0.2s linear;
+            &:hover {
+                opacity: 0.5;
+            }
+        }
+    }
+    &__content {
+        input {
+            border: none;
+            background-color: $color--light;
+            font-weight: 400;
+            font-size: 20px;
+        }
+        .ant-input[disabled] {
+            background-color: $color-search-bg;
+            cursor: auto;
+        }
+        .ant-picker {
+            border: none;
+            width: 240px;
+            height: 40px;
+            background-color: $color--light;
+            input {
+                font-size: 18px;
+            }
+        }
+        .ant-picker-disabled {
+            background-color: $color-search-bg;
+            cursor: auto;
+        }
+    }
+    &__footer {
+        margin-top: 16px;
+        display: flex;
+        justify-content: flex-end;
+        button {
+            span {
+                font-weight: 500;
+            }
+        }
+    }
+}

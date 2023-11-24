@@ -1,0 +1,22 @@
+@import 'scss/global.scss';
+
+.change-password {
+    &__content {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+    &__footer {
+        padding: 20px 0;
+        display: flex;
+        justify-content: center;
+        button {
+            width: 200px;
+            background-color: $color--primary;
+        }
+        span {
+            font-weight: 500;
+        }
+    }
+}
