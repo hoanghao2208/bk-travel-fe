@@ -37,6 +37,21 @@ const routes: Array<Route> = [
         Component: commonLoadable(() => import('views/UserHomePage')),
     },
     {
+        name: 'Find Tour Page',
+        path: routeConstants.FIND_TOUR,
+        Component: commonLoadable(() => import('views/FindTourPage')),
+    },
+    {
+        name: 'Custom Tour Page',
+        path: routeConstants.CUSTOM_TOUR,
+        Component: commonLoadable(() => import('views/CustomTourPage')),
+    },
+    {
+        name: 'Search Results Page',
+        path: routeConstants.SEARCH_RESULTS,
+        Component: commonLoadable(() => import('views/SearchResultsPage')),
+    },
+    {
         name: 'User Profile Page',
         path: routeConstants.USER_PROFILE,
         Component: commonLoadable(() => import('views/UserProfilePage')),
