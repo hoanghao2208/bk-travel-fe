@@ -1,0 +1,124 @@
+@import 'scss/global.scss';
+
+.custom-tour {
+    &-wrapper {
+        padding: 130px 0 40px;
+    }
+    width: 80%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 16px 36px;
+    border-radius: 12px;
+    background-color: $color--light;
+    &__header {
+        &--title {
+            margin: 0;
+            padding: 8px 0 12px;
+            font-size: 24px;
+            font-weight: 600;
+            color: $color--primary;
+            border-bottom: 1px solid $color-homepage-bg;
+        }
+        &--intro {
+            margin: 0;
+            padding: 12px 0 24px;
+            color: $color--text2;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+    }
+    &__form {
+        .ant-select-selector {
+            height: 40px !important;
+            font-size: 16px;
+            color: $color-date;
+            font-weight: 500;
+            span {
+                font-weight: 500;
+            }
+        }
+        &--form1 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            .ant-form-item:nth-child(2) {
+                .ant-select {
+                    margin-top: 6px !important;
+                }
+            }
+        }
+        &--form2 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            .ant-form-item {
+                &:last-child {
+                    .ant-select {
+                        margin-top: 6px;
+                    }
+                    grid-column: span 2;
+                    width: 100%;
+                }
+            }
+            .ant-input {
+                height: 40px !important;
+                font-size: 16px;
+                color: $color-date;
+                font-weight: 500;
+                span {
+                    font-weight: 500;
+                }
+            }
+        }
+        &--form3 {
+            width: calc(50% - 20px);
+            textarea {
+                font-size: 16px;
+                font-weight: 500;
+                color: $color-date;
+            }
+        }
+        .ant-select {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            &-selector {
+                width: 100%;
+            }
+        }
+        .ant-form-item-label {
+            padding-bottom: 0 !important;
+            & > label {
+                line-height: 1.4;
+                font-size: 18px;
+                font-weight: 600;
+            }
+        }
+        .ant-picker {
+            height: 40px;
+            width: 100%;
+            margin-top: 6px;
+        }
+        .ant-input {
+            margin-top: 6px;
+        }
+        .ant-picker-input {
+            input {
+                color: $color-date;
+                font-weight: 500;
+                font-size: 16px;
+            }
+        }
+    }
+    &__button {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+        gap: 20px;
+        button {
+            span {
+                font-weight: 500;
+            }
+        }
+    }
+}

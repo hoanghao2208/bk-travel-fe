@@ -1,0 +1,85 @@
+@import 'scss/global.scss';
+
+.find-tour {
+    &-wrapper {
+        padding: 130px 0 40px;
+    }
+    width: 80%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 16px 36px;
+    border-radius: 12px;
+    background-color: $color--light;
+    &__header {
+        &--title {
+            margin: 0;
+            padding: 8px 0 12px;
+            font-size: 24px;
+            font-weight: 600;
+            color: $color--primary;
+            border-bottom: 1px solid $color-homepage-bg;
+        }
+        &--intro {
+            margin: 0;
+            padding: 12px 0 24px;
+            color: $color--text2;
+            font-weight: 500;
+        }
+    }
+    &__form {
+        .ant-form {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            .ant-select-selector {
+                height: 40px;
+                font-size: 16px;
+                border: none;
+                background-color: $color-homepage-bg;
+                color: $color-date;
+                font-weight: 500;
+                span {
+                    font-weight: 500;
+                }
+            }
+        }
+        .ant-form-item-label > label {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .ant-select {
+            display: flex;
+            align-items: center;
+            margin-top: 4px;
+        }
+        .ant-picker {
+            height: 40px;
+            width: 100%;
+            background-color: $color-homepage-bg;
+            border: none;
+        }
+        .ant-picker-input {
+            input {
+                color: $color-date;
+                font-weight: 500;
+                font-size: 16px;
+            }
+        }
+    }
+    &__button {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+        gap: 20px;
+        button {
+            span {
+                font-weight: 500;
+            }
+        }
+    }
+    &__outstanding {
+        width: 80%;
+        margin: 0 auto;
+        padding-bottom: 20px;
+    }
+}
