@@ -1,14 +1,22 @@
 import { Button } from 'antd';
 import HeartIcon from 'assets/icons/HeartIcon';
 import { CompassFilled } from '@ant-design/icons';
-import { FC, useState } from 'react';
+import { FC, memo, useState } from 'react';
 import './styles.scss';
 import { Link } from 'react-router-dom';
 
-const TourItem: FC = () => {
+interface TourItemProps {
+    haveBtn: boolean;
+    bgItem: boolean;
+}
+
+const TourItem: FC<TourItemProps> = memo(({ haveBtn, bgItem }) => {
     const [heart, setHeart] = useState(false);
     return (
-        <div className="tour-item">
+        <div
+            className="tour-item"
+            style={{ backgroundColor: bgItem ? 'white' : '#f5f5f5' }}
+        >
             <div className="tour-item__header">
                 <div
                     className="tour-item__header--icon"
@@ -53,21 +61,25 @@ const TourItem: FC = () => {
                 </div>
             </div>
 
-            <div className="tour-item__bottom">
-                <Button type="default" shape="round" size="large">
-                    Thêm vào giỏ hàng
-                </Button>
-                <Button
-                    type="primary"
-                    shape="round"
-                    icon={<CompassFilled />}
-                    size="large"
-                >
-                    Đặt tour ngay
-                </Button>
-            </div>
+            {haveBtn && (
+                <div className="tour-item__bottom">
+                    <Button type="default" shape="round" size="large">
+                        Thêm vào giỏ hàng
+                    </Button>
+                    <Button
+                        type="primary"
+                        shape="round"
+                        icon={<CompassFilled />}
+                        size="large"
+                    >
+                        Đặt tour ngay
+                    </Button>
+                </div>
+            )}
         </div>
     );
-};
+});
+
+TourItem.displayName = 'Tour Item';
 
 export default TourItem;

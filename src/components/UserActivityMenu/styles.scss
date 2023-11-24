@@ -1,0 +1,14 @@
+@import 'scss/global.scss';
+
+.user-actitvity-menu {
+    .ant-menu {
+        background-color: $color-homepage-bg;
+        box-sizing: border-box;
+        padding: 20px 0;
+        border-radius: 0 0 8px 8px;
+        li,
+        .ant-menu-item-icon {
+            font-size: 16px;
+        }
+    }
+}
