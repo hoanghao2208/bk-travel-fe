@@ -37,6 +37,16 @@ const routes: Array<Route> = [
         Component: commonLoadable(() => import('views/UserHomePage')),
     },
     {
+        name: 'Cart Page',
+        path: routeConstants.CART,
+        Component: commonLoadable(() => import('views/CartPage')),
+    },
+    {
+        name: 'Fill Information Page',
+        path: routeConstants.FILL_INFORMATION,
+        Component: commonLoadable(() => import('views/FillInformationPage')),
+    },
+    {
         name: 'Find Tour Page',
         path: routeConstants.FIND_TOUR,
         Component: commonLoadable(() => import('views/FindTourPage')),

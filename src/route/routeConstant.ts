@@ -2,6 +2,8 @@ const routeConstants = {
     LOGIN: '/login',
     FORGOT_PASSWORD: '/forgot-password',
     USER_HOME: '/',
+    CART: '/cart',
+    FILL_INFORMATION: '/fill-information',
     FIND_TOUR: '/find-tour',
     CUSTOM_TOUR: '/custom-tour',
     SEARCH_RESULTS: '/search-results',

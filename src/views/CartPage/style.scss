@@ -1,0 +1,103 @@
+@import 'scss/global.scss';
+
+.cart {
+    padding: 110px 0 40px;
+    width: 80%;
+    margin: 0 auto;
+    &-title {
+        font-size: 22px;
+        color: $color--primary;
+    }
+    &__content {
+        display: flex;
+        align-items: flex-start;
+        gap: 40px;
+        &--all-products {
+            width: 75%;
+        }
+        &--check-all {
+            background-color: $color--light;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-radius: 12px;
+            .ant-checkbox-wrapper {
+                display: flex;
+                align-items: center;
+                span {
+                    font-size: 16px;
+                    font-weight: 500;
+                }
+            }
+            .ant-btn {
+                span {
+                    font-weight: 500;
+                }
+            }
+        }
+        &--items {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+            border-radius: 12px;
+            gap: 20px;
+        }
+        &--item {
+            padding: 20px;
+            background-color: $color--light;
+        }
+
+        &--price {
+            width: 24%;
+            background-color: $color--light;
+            border-radius: 12px;
+            box-sizing: border-box;
+            padding: 20px;
+            position: sticky;
+            top: 130px;
+            &-title {
+                margin: 0;
+                text-align: center;
+                padding-bottom: 10px;
+                font-size: 22px;
+                border-bottom: 1px solid $color--border2;
+            }
+            &-number {
+                display: flex;
+                padding: 20px 0;
+                font-size: 20px;
+                font-weight: 600;
+                color: $color-date;
+                align-items: center;
+                justify-content: space-between;
+                border-bottom: 1px solid $color--border2;
+            }
+            &-cost {
+                font-size: 24px;
+                display: flex;
+                justify-content: flex-end;
+                margin: 0;
+                padding: 20px 0;
+                border-bottom: 1px solid $color--border2;
+            }
+            &-grade {
+                color: $color--red;
+                text-align: center;
+                line-height: 1.4;
+            }
+            &-btn {
+                margin-top: 20px;
+                display: flex;
+                justify-content: center;
+                .ant-btn {
+                    width: 200px !important;
+                    height: 40px;
+                    span {
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+    }
+}
