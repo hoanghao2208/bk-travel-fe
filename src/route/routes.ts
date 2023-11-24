@@ -91,6 +91,11 @@ const routes: Array<Route> = [
         path: routeConstants.LOVE_LIST,
         Component: commonLoadable(() => import('views/LoveListPage')),
     },
+    {
+        name: 'Schedule Detail Page',
+        path: routeConstants.SCHEDULE_DETAIL,
+        Component: commonLoadable(() => import('views/ScheduleDetailPage')),
+    },
 ];
 
 export default routes;

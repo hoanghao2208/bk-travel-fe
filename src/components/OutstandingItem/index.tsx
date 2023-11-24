@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 interface OutstandingItemProps {
     imgURL: string;
-    location: string;
+    location?: string;
 }
 
 const OutstandingItem: FC<OutstandingItemProps> = memo(
