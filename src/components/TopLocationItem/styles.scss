@@ -1,0 +1,63 @@
+@import 'scss/global.scss';
+
+.top-items {
+    background-color: white;
+    border-radius: 12px;
+    &:hover {
+        transition: all 0.2s linear;
+        transform: translateY(-12px);
+        box-shadow: 0 20px 25px -5px $color-shadow1,
+            0 8px 10px -6px $color-shadow1;
+    }
+    &__location {
+        text-align: center;
+        border-bottom: solid 1px $color--border2;
+        margin: 0;
+        padding: 12px 0;
+        margin-bottom: 16px;
+        font-size: 20px;
+    }
+    &__list {
+        &--img {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        &--item {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            padding-bottom: 36px;
+            &:hover {
+                .top-items__list--title {
+                    color: $color--secondary;
+                }
+            }
+        }
+        &--des {
+            a,
+            p {
+                margin: 0;
+            }
+        }
+        &--title {
+            display: inline-block;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 600;
+            color: $color--primary;
+            padding-bottom: 6px;
+            transition: all 0.2s linear;
+        }
+    }
+}
+
+@media screen and (max-width: 748px) {
+    .top-items__list {
+        &--item {
+            justify-content: center;
+            gap: 40px;
+        }
+    }
+}

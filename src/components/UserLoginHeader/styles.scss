@@ -1,0 +1,108 @@
+@import 'scss/global.scss';
+
+.user-login-header {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    &__wrapper {
+        width: 100%;
+        background-color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        box-shadow: 0 20px 25px -5px $color-shadow1,
+            0 8px 10px -6px $color-shadow1;
+    }
+    &__search {
+        margin-left: 30px;
+        .ant-input-affix-wrapper {
+            width: 170%;
+            line-height: 2.2;
+            font-size: 16px;
+            background-color: $color-search-bg;
+            border-radius: 16px;
+            border: 0;
+            input {
+                background-color: $color-search-bg;
+                &:focus {
+                    background-color: $color--light;
+                }
+                &::placeholder {
+                    color: $color-placeholder-input;
+                }
+            }
+            &:focus-within {
+                background-color: $color--light;
+            }
+        }
+    }
+    &__navigate {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        text-transform: uppercase;
+        a {
+            text-decoration: none;
+            color: $color-gray-68;
+            display: inline-block;
+            padding: 0 20px;
+            transition: all 0.2s linear;
+            &:hover {
+                color: $color-button--primary;
+            }
+        }
+        &--bell,
+        &--cart,
+        &--avatar {
+            cursor: pointer;
+        }
+        &--bell,
+        &--cart {
+            padding: 0 20px;
+        }
+        &--avatar {
+            padding-left: 20px;
+        }
+    }
+}
+
+@media screen and (max-width: 1420px) {
+    .user-login-header {
+        width: 90%;
+        &__search {
+            .ant-input-affix-wrapper {
+                width: 150%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1203px) {
+    .user-login-header {
+        width: 93%;
+        &__search {
+            .ant-input-affix-wrapper {
+                width: 120%;
+            }
+        }
+        &__navigate {
+            font-weight: 500;
+            a {
+                padding: 0 15px;
+            }
+            &--bell,
+            &--cart {
+                padding: 0 15px;
+            }
+            &--avatar {
+                padding-left: 15px;
+            }
+        }
+    }
+}
+
+// max-width: 1045px

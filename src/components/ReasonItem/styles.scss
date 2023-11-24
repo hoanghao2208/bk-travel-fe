@@ -1,0 +1,33 @@
+@import 'scss/global.scss';
+
+.reason {
+    background-color: white;
+    padding: 24px;
+    border-radius: 12px;
+    &__icon,
+    &__title {
+        text-align: center;
+    }
+    &__icon {
+        margin-bottom: 24px;
+    }
+    &__title {
+        font-size: 19.2px;
+        margin-bottom: 20px;
+    }
+    &__detail {
+        text-align: center;
+        line-height: 1.4;
+        font-size: 16px;
+        font-weight: 400;
+    }
+}
+
+@media screen and (max-width: 1494px) {
+    .reason {
+        &__title {
+            margin-bottom: 0;
+            height: 40px;
+        }
+    }
+}

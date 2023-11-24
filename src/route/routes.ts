@@ -46,6 +46,51 @@ const routes: Array<Route> = [
         path: routeConstants.FORGOT_PASSWORD,
         Component: commonLoadable(() => import('views/ForgotPassword')),
     },
+    {
+        name: 'User Home Page',
+        path: '/',
+        Component: commonLoadable(() => import('views/UserHomePage')),
+    },
+    {
+        name: 'Cart Page',
+        path: routeConstants.CART,
+        Component: commonLoadable(() => import('views/CartPage')),
+    },
+    {
+        name: 'Fill Information Page',
+        path: routeConstants.FILL_INFORMATION,
+        Component: commonLoadable(() => import('views/FillInformationPage')),
+    },
+    {
+        name: 'Find Tour Page',
+        path: routeConstants.FIND_TOUR,
+        Component: commonLoadable(() => import('views/FindTourPage')),
+    },
+    {
+        name: 'Custom Tour Page',
+        path: routeConstants.CUSTOM_TOUR,
+        Component: commonLoadable(() => import('views/CustomTourPage')),
+    },
+    {
+        name: 'Search Results Page',
+        path: routeConstants.SEARCH_RESULTS,
+        Component: commonLoadable(() => import('views/SearchResultsPage')),
+    },
+    {
+        name: 'User Profile Page',
+        path: routeConstants.USER_PROFILE,
+        Component: commonLoadable(() => import('views/UserProfilePage')),
+    },
+    {
+        name: 'User Change Password Page',
+        path: routeConstants.USER_CHANGE_PASSWORD,
+        Component: commonLoadable(() => import('views/UserChangePasswordPage')),
+    },
+    {
+        name: 'Love List Page',
+        path: routeConstants.LOVE_LIST,
+        Component: commonLoadable(() => import('views/LoveListPage')),
+    },
 ];
 
 export default routes;
