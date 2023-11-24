@@ -1,0 +1,70 @@
+@import 'scss/global.scss';
+
+.register {
+    &__form {
+        label {
+            font-weight: 600;
+        }
+        .ant-input {
+            padding: 6px 11px;
+            font-size: 16px;
+        }
+        .ant-form-item {
+            margin-bottom: 16px;
+        }
+        &--name {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+        &--footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            span {
+                a {
+                    margin-left: 8px;
+                }
+            }
+        }
+        button {
+            width: 70%;
+            height: 42px;
+            span {
+                font-weight: 600;
+            }
+        }
+        .ant-form-vertical .ant-form-item-row {
+            text-align: center;
+        }
+        .ant-btn-primary {
+            background-color: $btn-register-color;
+        }
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .register {
+        &__form {
+            &--name {
+                grid-template-columns: repeat(1, 1fr);
+                gap:0;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 423px) {
+    .register {
+        &__form {
+            &--footer {
+                span {
+                    margin-bottom: 8px;
+                }
+            }
+        }
+    }
+}

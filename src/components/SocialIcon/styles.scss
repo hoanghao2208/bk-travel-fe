@@ -1,0 +1,27 @@
+@import 'scss/global.scss';
+
+.social-icon {
+    width: 110px;
+    display: flex;
+    align-items: center;
+    background-color: $color--light;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 0 auto;
+    transition: background-color 0.2s linear;
+    &:hover {
+        background-color: $color--line;
+    }
+    &__name {
+        font-size: 16px;
+        margin-left: 13px;
+        font-weight: 500;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .social-icon {
+        width: 90%;
+    }
+}
