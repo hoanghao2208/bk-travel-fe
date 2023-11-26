@@ -91,6 +91,11 @@ const routes: Array<Route> = [
         path: routeConstants.LOVE_LIST,
         Component: commonLoadable(() => import('views/LoveListPage')),
     },
+    {
+        name: 'Admin Homepage',
+        path: routeConstants.ADMIN_HOMEPAGE,
+        Component: commonLoadable(() => import('views/AdminHomePage')),
+    },
 ];
 
 export default routes;

@@ -1,0 +1,47 @@
+@import 'scss/global.scss';
+
+.admin-header {
+    width: calc(100% - 288px);
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &__wrapper {
+        width: 100%;
+        padding: 12px 40px;
+        background-color: $color--light;
+        box-sizing: border-box;
+    }
+    &__navigate {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        margin-left: auto;
+        &--bell,
+        &--avatar {
+            cursor: pointer;
+        }
+    }
+    &__search {
+        .ant-input-affix-wrapper {
+            width: 170%;
+            line-height: 2.2;
+            font-size: 16px;
+            background-color: $color-search-bg;
+            border-radius: 16px;
+            border: 0;
+            input {
+                background-color: $color-search-bg;
+                &:focus {
+                    background-color: $color--light;
+                }
+                &::placeholder {
+                    color: $color-placeholder-input;
+                }
+            }
+            &:focus-within {
+                background-color: $color--light;
+            }
+        }
+    }
+}

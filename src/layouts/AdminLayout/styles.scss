@@ -1,0 +1,9 @@
+@import 'scss/global.scss';
+
+.admin-layout {
+    &__container {
+        width: calc(100% - 288px);
+        margin-left: auto;
+        background-color: $color-homepage-bg;
+    }
+}
