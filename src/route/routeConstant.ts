@@ -11,6 +11,7 @@ const routeConstants = {
     USER_PROFILE: '/user-profile',
     USER_CHANGE_PASSWORD: '/change-password',
     LOVE_LIST: '/likes',
+    ADMIN_HOMEPAGE: '/admin',
 };
 
 export default routeConstants;

@@ -1,0 +1,42 @@
+@import 'scss/global.scss';
+
+.admin-menu {
+    background-color: $color-admin-menu-bg;
+    width: 288px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+    box-shadow: 0 20px 25px -5px $color-shadow1, 0 8px 10px -6px $color-shadow1;
+    &--home {
+        padding: 16px;
+        font-size: 36px;
+        font-weight: bold;
+        a {
+            color: $color--light;
+            text-decoration: none;
+        }
+    }
+    &--navigate {
+        .ant-menu {
+            background-color: $color-admin-menu-bg;
+            color: $color-admin-menu-text;
+            li {
+                font-size: 16px;
+                font-weight: 500;
+            }
+        }
+        .ant-menu-item-group-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: $color-admin-menu-text;
+        }
+        .ant-menu-item {
+            gap: 12px;
+            svg {
+                font-size: 20px;
+            }
+        }
+    }
+}
