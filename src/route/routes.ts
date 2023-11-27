@@ -96,6 +96,11 @@ const routes: Array<Route> = [
         path: routeConstants.ADMIN_HOMEPAGE,
         Component: commonLoadable(() => import('views/AdminHomePage')),
     },
+    {
+        name: 'Admin Manage Tours',
+        path: routeConstants.ADMIN_MANAGE_TOURS,
+        Component: commonLoadable(() => import('views/AdminManageTours')),
+    },
 ];
 
 export default routes;
