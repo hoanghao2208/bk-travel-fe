@@ -13,6 +13,9 @@ const routeConstants = {
     LOVE_LIST: '/likes',
     ADMIN_HOMEPAGE: '/admin',
     ADMIN_MANAGE_TOURS: '/admin/manage-tours',
+    ADMIN_MANAGE_TOUR_GUIDE: '/admin/manage-tour-guide',
+    ADMIN_ASSIGN_NEW_TASK: '/admin/assign-new-task',
+    ADMIN_ADD_NEW_TOUR: '/admin/add-new-tour',
 };
 
 export default routeConstants;
