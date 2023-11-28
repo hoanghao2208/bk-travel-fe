@@ -116,6 +116,11 @@ const routes: Array<Route> = [
         path: routeConstants.ADMIN_ADD_NEW_TOUR,
         Component: commonLoadable(() => import('views/AdminAddNewTour')),
     },
+    {
+        name: 'Admin Notification',
+        path: routeConstants.ADMIN_NOTIFICATION,
+        Component: commonLoadable(() => import('views/AdminNotification')),
+    },
 ];
 
 export default routes;
