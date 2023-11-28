@@ -30,7 +30,7 @@ const Inner = memo(() => {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your username!',
+                                    message: 'Vui lòng nhập email của bạn',
                                 },
                             ]}
                         >
@@ -42,7 +42,7 @@ const Inner = memo(() => {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your username!',
+                                    message: 'Vui lòng nhập mật khẩu của bạn',
                                 },
                             ]}
                         >
