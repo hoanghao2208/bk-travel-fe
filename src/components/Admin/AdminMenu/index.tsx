@@ -9,9 +9,10 @@ import {
     FolderOpenOutlined,
     CloudOutlined,
 } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AdminMenu: FC = () => {
+    const navigate = useNavigate();
     type MenuItem = Required<MenuProps>['items'][number];
     function getItem(
         label: React.ReactNode,
@@ -33,7 +34,13 @@ const AdminMenu: FC = () => {
             'QUẢN LÝ TOURS',
             'manage-tour',
             null,
-            [getItem('Quản lý tour', '1', <AppstoreOutlined />)],
+            [
+                getItem(
+                    'Quản lý tour',
+                    'admin/manage-tours',
+                    <AppstoreOutlined />
+                ),
+            ],
             'group'
         ),
         getItem(
@@ -41,8 +48,16 @@ const AdminMenu: FC = () => {
             'manage-tour-guide',
             null,
             [
-                getItem('Quản lý hướng dẫn viên', '2', <AppstoreOutlined />),
-                getItem('Giao nhiệm vụ', '3', <UserAddOutlined />),
+                getItem(
+                    'Quản lý hướng dẫn viên',
+                    'admin/manage-tour-guide',
+                    <AppstoreOutlined />
+                ),
+                getItem(
+                    'Giao nhiệm vụ',
+                    'admin/assign-new-task',
+                    <UserAddOutlined />
+                ),
             ],
             'group'
         ),
@@ -50,7 +65,13 @@ const AdminMenu: FC = () => {
             'QUẢN LÝ DU KHÁCH',
             'manage-user',
             null,
-            [getItem('Quản lý du khách', '4', <AppstoreOutlined />)],
+            [
+                getItem(
+                    'Quản lý du khách',
+                    'admin/manage-tourist',
+                    <AppstoreOutlined />
+                ),
+            ],
             'group'
         ),
         getItem(
@@ -58,8 +79,16 @@ const AdminMenu: FC = () => {
             'inform',
             null,
             [
-                getItem('Gửi thông báo', '5', <CloudUploadOutlined />),
-                getItem('Quản lý thông báo', '6', <FolderOpenOutlined />),
+                getItem(
+                    'Gửi thông báo',
+                    'admin/notification',
+                    <CloudUploadOutlined />
+                ),
+                getItem(
+                    'Quản lý thông báo',
+                    'admin/manage-notification',
+                    <FolderOpenOutlined />
+                ),
             ],
             'group'
         ),
@@ -67,13 +96,19 @@ const AdminMenu: FC = () => {
             'THỜI TIẾT',
             'weather',
             null,
-            [getItem('Theo dõi thời tiết', '7', <CloudOutlined />)],
+            [
+                getItem(
+                    'Theo dõi thời tiết',
+                    'weather-forcast',
+                    <CloudOutlined />
+                ),
+            ],
             'group'
         ),
     ];
-    // const onClick: MenuProps['onClick'] = e => {
-    //     console.log('click ', e);
-    // };
+    const handleClick: MenuProps['onClick'] = e => {
+        navigate('/' + e.key);
+    };
     return (
         <div className="admin-menu">
             <div className="admin-menu--home">
@@ -81,7 +116,7 @@ const AdminMenu: FC = () => {
             </div>
             <div className="admin-menu--navigate">
                 <Menu
-                    // onClick={onClick}
+                    onClick={handleClick}
                     style={{ width: 288 }}
                     mode="inline"
                     items={items}
