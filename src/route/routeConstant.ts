@@ -18,6 +18,7 @@ const routeConstants = {
     ADMIN_ADD_NEW_TOUR: '/admin/add-new-tour',
     ADMIN_NOTIFICATION: '/admin/notification',
     ADMIN_MANAGE_NOTIFICATION: '/admin/manage-notification',
+    ADMIN_MANAGE_TOURIST: '/admin/manage-tourist',
 };
 
 export default routeConstants;
