@@ -33,9 +33,9 @@ const UserLoginHeader: FC = () => {
             key: '1',
             label: (
                 <Link
-                    to="/user-info"
+                    to="/user-profile"
                     style={{
-                        fontSize: '18px',
+                        fontSize: '16px',
                         display: 'inline-block',
                         paddingLeft: '10px',
                     }}
@@ -51,7 +51,7 @@ const UserLoginHeader: FC = () => {
                 <Link
                     to="/how-to-pay"
                     style={{
-                        fontSize: '18px',
+                        fontSize: '16px',
                         display: 'inline-block',
                         paddingLeft: '10px',
                     }}
@@ -67,7 +67,7 @@ const UserLoginHeader: FC = () => {
                 <Link
                     to="/favorite-tour"
                     style={{
-                        fontSize: '18px',
+                        fontSize: '16px',
                         display: 'inline-block',
                         paddingLeft: '10px',
                     }}
@@ -84,7 +84,7 @@ const UserLoginHeader: FC = () => {
                 <Link
                     to="/log-out"
                     style={{
-                        fontSize: '18px',
+                        fontSize: '16px',
                         display: 'inline-block',
                         paddingLeft: '10px',
                     }}
@@ -141,7 +141,7 @@ const UserLoginHeader: FC = () => {
                             placement="bottomRight"
                             arrow
                         >
-                            <Avatar size={48} icon={<UserOutlined />} />
+                            <Avatar size={40} icon={<UserOutlined />} />
                         </Dropdown>
                     </div>
                 </div>
