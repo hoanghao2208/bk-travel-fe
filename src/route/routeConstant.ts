@@ -12,6 +12,7 @@ const routeConstants = {
     USER_CHANGE_PASSWORD: '/change-password',
     LOVE_LIST: '/likes',
     ADMIN_HOMEPAGE: '/admin',
+    ADMIN_ASSIGN_NEW_TASK: '/admin/assign-new-task',
     ADMIN_ADD_NEW_TOUR: '/admin/add-new-tour',
 };
 
