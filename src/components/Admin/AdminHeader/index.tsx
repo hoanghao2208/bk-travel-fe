@@ -23,7 +23,7 @@ const AdminHeader: FC = () => {
                 <Link
                     to="/user-info"
                     style={{
-                        fontSize: '18px',
+                        fontSize: '16px',
                         display: 'inline-block',
                         paddingLeft: '10px',
                     }}
@@ -40,7 +40,7 @@ const AdminHeader: FC = () => {
                 <Link
                     to="/log-out"
                     style={{
-                        fontSize: '18px',
+                        fontSize: '16px',
                         display: 'inline-block',
                         paddingLeft: '10px',
                     }}
@@ -76,7 +76,7 @@ const AdminHeader: FC = () => {
                             placement="bottomRight"
                             arrow
                         >
-                            <Avatar size={48} icon={<UserOutlined />} />
+                            <Avatar size={40} icon={<UserOutlined />} />
                         </Dropdown>
                     </div>
                 </div>
