@@ -8,8 +8,8 @@ const CartIcon: FC<CartIconProps> = memo(({ hoverCart }) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
+            width="28"
+            height="28"
             viewBox="0 0 32 32"
         >
             <g

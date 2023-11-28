@@ -25,7 +25,7 @@ const OutstandingListTour: FC = () => {
                     autoplay={{ delay: 2500, disableOnInteraction: false }}
                     speed={1000}
                     breakpoints={{
-                        1552: {
+                        1400: {
                             slidesPerView: 4,
                         },
                         1150: {
