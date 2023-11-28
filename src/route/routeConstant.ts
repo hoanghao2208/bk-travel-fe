@@ -12,6 +12,7 @@ const routeConstants = {
     USER_CHANGE_PASSWORD: '/change-password',
     LOVE_LIST: '/likes',
     ADMIN_HOMEPAGE: '/admin',
+    ADMIN_MANAGE_TOUR_GUIDE: '/admin/manage-tour-guide',
 };
 
 export default routeConstants;
