@@ -24,6 +24,40 @@
             background-color: $color-homepage-bg;
             padding-top: 20px;
             border-radius: 8px 8px 0 0;
+            &-wrapper {
+                position: relative;
+                &:hover {
+                    .user-activity__menu--avt-change {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                }
+            }
+            &-change {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 10px;
+                border-radius: 50%;
+                background-color: $color-changeAvt-bg;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.2s linear;
+                cursor: pointer;
+                span {
+                    font-size: 18px;
+                    font-weight: 500;
+                }
+            }
+            &-icon {
+                font-size: 24px !important;
+            }
         }
         &--name,
         &--email {
@@ -47,4 +81,8 @@
         background-color: white;
         border-radius: 8px;
     }
+}
+
+.ant-modal-title {
+    font-size: 18px !important;
 }
