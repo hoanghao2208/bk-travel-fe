@@ -97,6 +97,11 @@ const routes: Array<Route> = [
         Component: commonLoadable(() => import('views/AdminHomePage')),
     },
     {
+        name: 'Admin Manage Tour Guide',
+        path: routeConstants.ADMIN_MANAGE_TOUR_GUIDE,
+        Component: commonLoadable(() => import('views/AdminManageTourGuide')),
+    },
+    {
         name: 'Admin Assign New Task',
         path: routeConstants.ADMIN_ASSIGN_NEW_TASK,
         Component: commonLoadable(() => import('views/AdminAssignTask')),
