@@ -101,6 +101,16 @@ const routes: Array<Route> = [
         path: routeConstants.ADMIN_MANAGE_TOUR_GUIDE,
         Component: commonLoadable(() => import('views/AdminManageTourGuide')),
     },
+    {
+        name: 'Admin Assign New Task',
+        path: routeConstants.ADMIN_ASSIGN_NEW_TASK,
+        Component: commonLoadable(() => import('views/AdminAssignTask')),
+    },
+    {
+        name: 'Admin Add New Tour',
+        path: routeConstants.ADMIN_ADD_NEW_TOUR,
+        Component: commonLoadable(() => import('views/AdminAddNewTour')),
+    },
 ];
 
 export default routes;
