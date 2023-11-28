@@ -1,0 +1,50 @@
+@import 'scss/global.scss';
+
+.admin-homepage {
+    box-sizing: border-box;
+    &__header {
+        padding: 20px 40px 120px;
+        background: linear-gradient(
+            to right bottom,
+            rgba($color-gradient-1, 0.8),
+            rgba($color-gradient-2, 0.8)
+        );
+        position: relative;
+        &-bg {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        &--btn {
+            .ant-btn {
+                width: 160px;
+                height: 40px;
+                border-color: $color--light;
+                span {
+                    font-weight: 500;
+                }
+            }
+        }
+        &-infor {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            position: absolute;
+            bottom: 0;
+            left: 40px;
+            right: 40px;
+            transform: translateY(50%);
+        }
+    }
+    &__content {
+        padding: 120px 40px 40px;
+        padding-top: 120px;
+        padding-bottom: 90px; //clear
+        &--title {
+            background-color: $color--light;
+            margin: 0;
+            padding: 14px;
+            border-radius: 8px 8px 0 0;
+        }
+    }
+}
