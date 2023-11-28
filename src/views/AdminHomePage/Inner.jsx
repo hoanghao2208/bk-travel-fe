@@ -80,7 +80,7 @@ const Inner = memo(() => {
                     <div className="admin-homepage__header-infor">
                         <div className="admin-homepage__header-infor--item">
                             <InforItem
-                                itemTitle="Số tour của hệ thống"
+                                itemTitle="Tổng số tour"
                                 count={128}
                                 unit="Tours"
                                 icon={<PlaneIcon />}
