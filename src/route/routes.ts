@@ -96,6 +96,11 @@ const routes: Array<Route> = [
         path: routeConstants.ADMIN_HOMEPAGE,
         Component: commonLoadable(() => import('views/AdminHomePage')),
     },
+    {
+        name: 'Admin Assign New Task',
+        path: routeConstants.ADMIN_ASSIGN_NEW_TASK,
+        Component: commonLoadable(() => import('views/AdminAssignTask')),
+    },
 ];
 
 export default routes;
