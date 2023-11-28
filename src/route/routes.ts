@@ -128,6 +128,11 @@ const routes: Array<Route> = [
             () => import('views/AdminManageNotification')
         ),
     },
+    {
+        name: 'Admin Manage Tourist',
+        path: routeConstants.ADMIN_MANAGE_TOURIST,
+        Component: commonLoadable(() => import('views/AdminManageTourist')),
+    },
 ];
 
 export default routes;
