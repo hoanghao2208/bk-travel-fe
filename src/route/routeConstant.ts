@@ -17,6 +17,7 @@ const routeConstants = {
     ADMIN_ASSIGN_NEW_TASK: '/admin/assign-new-task',
     ADMIN_ADD_NEW_TOUR: '/admin/add-new-tour',
     ADMIN_NOTIFICATION: '/admin/notification',
+    ADMIN_MANAGE_NOTIFICATION: '/admin/manage-notification',
 };
 
 export default routeConstants;

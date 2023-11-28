@@ -121,6 +121,13 @@ const routes: Array<Route> = [
         path: routeConstants.ADMIN_NOTIFICATION,
         Component: commonLoadable(() => import('views/AdminNotification')),
     },
+    {
+        name: 'Admin Manage Notification',
+        path: routeConstants.ADMIN_MANAGE_NOTIFICATION,
+        Component: commonLoadable(
+            () => import('views/AdminManageNotification')
+        ),
+    },
 ];
 
 export default routes;
