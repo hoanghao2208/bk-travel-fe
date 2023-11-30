@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const UserHeader: FC = () => {
     const navigate = useNavigate();
     return (
-        <div className='user-header__wrapper'>
+        <div className="user-header__wrapper">
             <div className="user-header">
                 <div className="user-header__logo">
                     <Link to="/">
@@ -23,7 +23,7 @@ const UserHeader: FC = () => {
                 </div>
                 <div className="user-header__navigate">
                     <Link to="/top-tour">Tour nổi bật</Link>
-                    <Link to="/weather-forcast">Thời tiết</Link>
+                    <Link to="/weather-forecast">Thời tiết</Link>
                     <Link to="/support">Trợ giúp</Link>
                     <Link to="/register">Đăng ký</Link>
                     <Button
