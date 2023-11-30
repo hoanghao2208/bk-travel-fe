@@ -112,7 +112,7 @@ const UserLoginHeader: FC = () => {
                 <div className="user-login-header__navigate">
                     <Link to="/top-tour">Tour nổi bật</Link>
                     <Link to="/voucher">Ưu đãi</Link>
-                    <Link to="/weather-forcast">Thời tiết</Link>
+                    <Link to="/weather-forecast">Thời tiết</Link>
                     <div
                         onClick={() => navigate('/')}
                         onMouseEnter={handleMouseEnterBell}
