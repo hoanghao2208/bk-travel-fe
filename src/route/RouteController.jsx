@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import RouteElement from 'route/components/RouteElement';
 import routes from 'route/routes';
 
@@ -37,9 +37,9 @@ const renderRoute = route => {
 
 const RouteController = memo(() => {
     return (
-        <HashRouter>
+        <BrowserRouter>
             <Routes>{routes.map(renderRoute)}</Routes>
-        </HashRouter>
+        </BrowserRouter>
     );
 });
 RouteController.displayName = 'RouteController';

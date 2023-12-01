@@ -8,6 +8,7 @@ import {
     CloudUploadOutlined,
     FolderOpenOutlined,
     CloudOutlined,
+    PlusOutlined,
 } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -39,6 +40,11 @@ const AdminMenu: FC = () => {
                     'Quản lý tour',
                     'admin/manage-tours',
                     <AppstoreOutlined />
+                ),
+                getItem(
+                    'Thêm tour mới',
+                    'admin/add-new-tour',
+                    <PlusOutlined />
                 ),
             ],
             'group'
@@ -99,7 +105,7 @@ const AdminMenu: FC = () => {
             [
                 getItem(
                     'Theo dõi thời tiết',
-                    'weather-forcast',
+                    'admin/weather-forecast',
                     <CloudOutlined />
                 ),
             ],
