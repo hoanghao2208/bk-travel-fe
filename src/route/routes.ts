@@ -138,6 +138,11 @@ const routes: Array<Route> = [
         path: routeConstants.WEATHER_FORECAST,
         Component: commonLoadable(() => import('views/WeatherForecastPage')),
     },
+    {
+        name: 'Admin Weather Forecast',
+        path: routeConstants.ADMIN_WEATHER_FORECAST,
+        Component: commonLoadable(() => import('views/AdminWeatherForecast')),
+    },
 ];
 
 export default routes;

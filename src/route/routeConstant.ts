@@ -20,6 +20,7 @@ const routeConstants = {
     ADMIN_MANAGE_NOTIFICATION: '/admin/manage-notification',
     ADMIN_MANAGE_TOURIST: '/admin/manage-tourist',
     WEATHER_FORECAST: '/weather-forecast',
+    ADMIN_WEATHER_FORECAST: 'admin/weather-forecast',
 };
 
 export default routeConstants;
