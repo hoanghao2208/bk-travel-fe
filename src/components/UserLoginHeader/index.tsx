@@ -65,7 +65,7 @@ const UserLoginHeader: FC = () => {
             key: '3',
             label: (
                 <Link
-                    to="/favorite-tour"
+                    to="/likes"
                     style={{
                         fontSize: '16px',
                         display: 'inline-block',
@@ -124,7 +124,7 @@ const UserLoginHeader: FC = () => {
                         </Badge>
                     </div>
                     <div
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate('/cart')}
                         onMouseEnter={handleMouseEnterCart}
                         onMouseLeave={handleMouseLeaveCart}
                         className="user-login-header__navigate--cart"

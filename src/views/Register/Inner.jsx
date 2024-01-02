@@ -4,11 +4,23 @@ import { Link } from 'react-router-dom';
 import './styles.scss';
 import RegisterHeader from 'components/RegisterHeader';
 import RegisterLayout from 'layouts/RegisterLayout';
+import { EMAIL_VALIDATE, PASSWORD_VALIDATE } from 'utils/constants';
+import Message from 'components/Message';
 
-const Inner = memo(() => {
+const Inner = memo(({ handleRegister }) => {
     useEffect(() => {
         document.title = 'Đăng ký';
     });
+
+    const handleSubmitRegister = values => {
+        const { password, confirm_password } = values;
+        if (password !== confirm_password) {
+            Message.sendError('Xác nhận mật khẩu không trùng khớp', 4);
+        } else {
+            handleRegister(values);
+        }
+    };
+
     return (
         <RegisterLayout>
             <RegisterHeader title="Đăng ký" />
@@ -19,18 +31,21 @@ const Inner = memo(() => {
                         remember: true,
                     }}
                     layout="vertical"
-                    // onFinish={onFinish}
-                    // onFinishFailed={onFinishFailed}
+                    onFinish={handleSubmitRegister}
                     autoComplete="off"
                 >
                     <div className="register__form--name">
                         <Form.Item
                             label="Họ"
-                            name="firstName"
+                            name="firstname"
                             rules={[
                                 {
                                     required: true,
                                     message: 'Vui lòng nhập Họ của bạn',
+                                },
+                                {
+                                    max: 10,
+                                    message: 'Số ký tự quá lớn',
                                 },
                             ]}
                         >
@@ -39,11 +54,15 @@ const Inner = memo(() => {
 
                         <Form.Item
                             label="Tên"
-                            name="lastName"
+                            name="lastname"
                             rules={[
                                 {
                                     required: true,
                                     message: 'Vui lòng nhập tên của bạn',
+                                },
+                                {
+                                    max: 32,
+                                    message: 'Số ký tự quá lớn',
                                 },
                             ]}
                         >
@@ -52,11 +71,15 @@ const Inner = memo(() => {
                     </div>
                     <Form.Item
                         label="Email"
-                        name="email"
+                        name="gmail"
                         rules={[
                             {
                                 required: true,
                                 message: 'Vui lòng nhập email của bạn',
+                            },
+                            {
+                                pattern: EMAIL_VALIDATE,
+                                message: 'Email của bạn không hợp lệ',
                             },
                         ]}
                     >
@@ -70,13 +93,18 @@ const Inner = memo(() => {
                                 required: true,
                                 message: 'Vui lòng nhập mật khẩu',
                             },
+                            {
+                                pattern: PASSWORD_VALIDATE,
+                                message:
+                                    'Mật khẩu tổi thiểu 8 ký tự, ít nhất 1 ký tự và 1 số.',
+                            },
                         ]}
                     >
-                        <Input placeholder="Mật khẩu" />
+                        <Input.Password placeholder="Mật khẩu" />
                     </Form.Item>
                     <Form.Item
                         label="Xác nhận mật khẩu"
-                        name="confirmPassword"
+                        name="confirm_password"
                         rules={[
                             {
                                 required: true,
@@ -84,7 +112,7 @@ const Inner = memo(() => {
                             },
                         ]}
                     >
-                        <Input placeholder="Xác nhận mật khẩu" />
+                        <Input.Password placeholder="Xác nhận mật khẩu" />
                     </Form.Item>
                     <div className="register__form--footer">
                         <span>

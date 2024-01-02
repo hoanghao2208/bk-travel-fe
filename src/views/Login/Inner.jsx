@@ -5,10 +5,13 @@ import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './styles.scss';
 
-const Inner = memo(() => {
+const Inner = memo(({ handleLogin, loading }) => {
     useEffect(() => {
         document.title = 'Đăng nhập';
     });
+    const handleSubmitLogin = values => {
+        handleLogin(values);
+    };
     return (
         <div className="login-wrapper">
             <RegisterLayout>
@@ -20,13 +23,12 @@ const Inner = memo(() => {
                             remember: true,
                         }}
                         layout="vertical"
-                        // onFinish={onFinish}
-                        // onFinishFailed={onFinishFailed}
+                        onFinish={handleSubmitLogin}
                         autoComplete="off"
                     >
                         <Form.Item
                             label="Email"
-                            name="email"
+                            name="gmail"
                             rules={[
                                 {
                                     required: true,
@@ -46,7 +48,7 @@ const Inner = memo(() => {
                                 },
                             ]}
                         >
-                            <Input placeholder="Mật khẩu" />
+                            <Input.Password placeholder="Mật khẩu" />
                         </Form.Item>
                         <div className="login__form--footer">
                             <span>
@@ -56,7 +58,11 @@ const Inner = memo(() => {
                             <Link to="/forgot-password">Quên mật khẩu?</Link>
                         </div>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit">
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                disabled={loading}
+                            >
                                 Đăng nhập
                             </Button>
                         </Form.Item>

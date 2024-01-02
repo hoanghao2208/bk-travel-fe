@@ -2,6 +2,7 @@ import ApiBase from 'modules/apis/apiBase';
 
 const _USER_PATH = '/users';
 const _OAUTH_PATH = '/oauth';
+const _TOUR = '/tour';
 
 class UserService extends ApiBase {
     me = () => {
@@ -9,8 +10,20 @@ class UserService extends ApiBase {
         return this.get(url);
     };
 
-    login = (requestBody: any) => {
-        const url = `${_OAUTH_PATH}/login`;
+    register = (requestBody: {
+        firstname: string;
+        lastname: string;
+        gmail: string;
+        password: string;
+        confirm_password: string;
+    }) => {
+        const url = `${_TOUR}/register`;
+        const res = this.post(url, requestBody);
+        return res;
+    };
+
+    login = (requestBody: { gmail: string; password: string }) => {
+        const url = `${_TOUR}/login`;
         const res = this.post(url, requestBody);
         return res;
     };
