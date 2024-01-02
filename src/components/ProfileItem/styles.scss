@@ -9,10 +9,10 @@
         justify-content: space-between;
         align-items: center;
         &--title {
-            font-size: 20px;
+            font-size: 16px;
         }
         &--btn {
-            font-size: 18px;
+            font-size: 16px;
             color: $color-button--primary;
             cursor: pointer;
             transition: all 0.2s linear;
@@ -26,7 +26,7 @@
             border: none;
             background-color: $color--light;
             font-weight: 400;
-            font-size: 20px;
+            font-size: 16px;
         }
         .ant-input[disabled] {
             background-color: $color-search-bg;
@@ -38,7 +38,7 @@
             height: 40px;
             background-color: $color--light;
             input {
-                font-size: 18px;
+                font-size: 16px;
             }
         }
         .ant-picker-disabled {

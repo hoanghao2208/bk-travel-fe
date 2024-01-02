@@ -40,11 +40,11 @@ const Inner = memo(() => {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your username!',
+                                    message: 'Vui lòng cung cấp email của bạn',
                                 },
                             ]}
                         >
-                            <Input placeholder="Emal" />
+                            <Input placeholder="Email" />
                         </Form.Item>
                         <div className="forgot__form--footer">
                             <span>

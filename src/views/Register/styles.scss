@@ -6,8 +6,10 @@
             font-weight: 600;
         }
         .ant-input {
-            padding: 6px 11px;
-            font-size: 16px;
+            padding: 4px 11px;
+            font-size: 14px;
+            font-weight: 500;
+            color: $color-date;
         }
         .ant-form-item {
             margin-bottom: 16px;
@@ -23,7 +25,7 @@
             align-items: center;
             font-size: 16px;
             flex-wrap: wrap;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
             span {
                 a {
                     margin-left: 8px;
@@ -32,7 +34,7 @@
         }
         button {
             width: 70%;
-            height: 42px;
+            height: 38px;
             span {
                 font-weight: 600;
             }
@@ -51,7 +53,7 @@
         &__form {
             &--name {
                 grid-template-columns: repeat(1, 1fr);
-                gap:0;
+                gap: 0;
             }
         }
     }

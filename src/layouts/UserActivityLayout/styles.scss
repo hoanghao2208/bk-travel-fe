@@ -6,7 +6,7 @@
     padding: 130px 0 40px;
     display: flex;
     align-items: flex-start;
-    gap: 40px;
+    gap: 24px;
     &-wrapper {
         background-color: $color-light-fb;
     }
@@ -24,6 +24,40 @@
             background-color: $color-homepage-bg;
             padding-top: 20px;
             border-radius: 8px 8px 0 0;
+            &-wrapper {
+                position: relative;
+                &:hover {
+                    .user-activity__menu--avt-change {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                }
+            }
+            &-change {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 10px;
+                border-radius: 50%;
+                background-color: $color-changeAvt-bg;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.2s linear;
+                cursor: pointer;
+                span {
+                    font-size: 16px;
+                    font-weight: 500;
+                }
+            }
+            &-icon {
+                font-size: 24px !important;
+            }
         }
         &--name,
         &--email {
@@ -32,12 +66,13 @@
         &--name {
             padding-top: 12px;
             padding-bottom: 6px;
-            font-size: 24px;
+            font-size: 20px;
             color: $color--primary;
         }
         &--email {
             padding-top: 6px;
             padding-bottom: 12px;
+            font-size: 14px;
             color: $color-date;
         }
     }
@@ -47,4 +82,8 @@
         background-color: white;
         border-radius: 8px;
     }
+}
+
+.ant-modal-title {
+    font-size: 18px !important;
 }

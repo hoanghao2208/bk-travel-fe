@@ -27,7 +27,8 @@
         &--item {
             display: flex;
             align-items: center;
-            justify-content: space-evenly;
+            justify-content: center;
+            gap: 24px;
             padding-bottom: 36px;
             &:hover {
                 .top-items__list--title {

@@ -45,13 +45,13 @@
         &--date {
             margin-bottom: 12px;
             font-weight: 500;
-            font-size: 16px;
+            font-size: 14px;
             color: $color-date;
         }
         &--location {
             margin-bottom: 12px;
             font-weight: 600;
-            font-size: 18px;
+            font-size: 16px;
             a {
                 text-decoration: none;
                 color: $color--black;
@@ -67,7 +67,7 @@
             align-items: center;
             justify-content: space-between;
             margin-bottom: 12px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 500;
         }
         &--data {
@@ -75,7 +75,7 @@
             color: $color--primary;
         }
         &--price {
-            font-size: 24px;
+            font-size: 20px;
             color: $color--red;
             font-weight: bold;
         }
@@ -89,9 +89,10 @@
         align-items: center;
         margin-top: 12px;
         button {
-            width: 180px;
+            width: 160px;
             span {
                 font-weight: 500;
+                font-size: 14px;
             }
             &:first-child {
                 margin-bottom: 12px;

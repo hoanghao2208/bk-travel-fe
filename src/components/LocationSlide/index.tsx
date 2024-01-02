@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import './styles.scss';
 import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 interface LocationSlideProps {
     imgURL: string;
@@ -8,6 +9,7 @@ interface LocationSlideProps {
 }
 
 const LocationSlide: FC<LocationSlideProps> = ({ imgURL, description }) => {
+    const navigate = useNavigate();
     return (
         <div className="location-slide">
             <div className="location-slide__bg"></div>
@@ -25,7 +27,9 @@ const LocationSlide: FC<LocationSlideProps> = ({ imgURL, description }) => {
                     </span>
                 </h3>
                 <p className="location-slide__info--des">{description}</p>
-                <Button type="primary">Đặt tour ngay</Button>
+                <Button type="primary" onClick={() => navigate('/find-tour')}>
+                    Đặt tour ngay
+                </Button>
             </div>
         </div>
     );

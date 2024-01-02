@@ -1,0 +1,41 @@
+@import 'scss/global.scss';
+
+.infor-item {
+    background-color: $color--light;
+    width: 100%;
+    border-radius: 12px;
+    box-sizing: border-box;
+    box-shadow: 0 20px 25px -5px $color-shadow1, 0 8px 10px -6px $color-shadow1;
+    padding: 12px 20px;
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        &--title {
+            font-size: 18px;
+        }
+        &--icon {
+            display: inline-block;
+            padding: 12px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            background-color: $color-search-bg;
+        }
+    }
+    &__footer {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        &--count {
+            font-size: 40px;
+            font-weight: bold;
+            margin: 0;
+        }
+        &--unit {
+            font-size: 16px;
+            font-weight: 500;
+            color: $color-date;
+        }
+    }
+}

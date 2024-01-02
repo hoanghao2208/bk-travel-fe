@@ -7,7 +7,7 @@
     width: 80%;
     margin: 0 auto;
     box-sizing: border-box;
-    padding: 16px 36px;
+    padding: 24px 36px;
     border-radius: 12px;
     background-color: $color--light;
     &__header {
@@ -32,8 +32,8 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 40px;
             .ant-select-selector {
-                height: 40px;
-                font-size: 16px;
+                height: 36px;
+                font-size: 14px;
                 border: none;
                 background-color: $color-homepage-bg;
                 color: $color-date;
@@ -44,16 +44,11 @@
             }
         }
         .ant-form-item-label > label {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
         }
-        .ant-select {
-            display: flex;
-            align-items: center;
-            margin-top: 4px;
-        }
         .ant-picker {
-            height: 40px;
+            height: 36px;
             width: 100%;
             background-color: $color-homepage-bg;
             border: none;
@@ -62,7 +57,7 @@
             input {
                 color: $color-date;
                 font-weight: 500;
-                font-size: 16px;
+                font-size: 14px;
             }
         }
     }

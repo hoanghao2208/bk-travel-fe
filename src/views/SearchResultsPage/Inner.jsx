@@ -17,7 +17,7 @@ const Inner = memo(() => {
                         Lọc kết quả
                     </h3>
                     <div className="search-result__filter--box">
-                        <div className="search-result__filter--item">
+                        {/* <div className="search-result__filter--item">
                             <FilterItem
                                 filterTitle="Loại hình tour"
                                 isSelectedDate={false}
@@ -37,7 +37,7 @@ const Inner = memo(() => {
                                     },
                                 ]}
                             />
-                        </div>
+                        </div> */}
                         <div className="search-result__filter--item">
                             <FilterItem
                                 filterTitle="Điểm khởi hành"
