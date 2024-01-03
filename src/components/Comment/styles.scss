@@ -1,0 +1,28 @@
+@import 'scss/global.scss';
+
+.user-comment {
+    background-color: $color--light;
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 20px 25px -5px $color-shadow1, 0 8px 10px -6px $color-shadow1;
+    margin-bottom: 20px;
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        &--name {
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        &--date {
+            font-weight: 600;
+            color: $color-date;
+        }
+    }
+    &__content {
+        line-height: 1.4;
+        color: $color-date;
+    }
+}

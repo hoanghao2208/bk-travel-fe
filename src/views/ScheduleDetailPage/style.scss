@@ -108,6 +108,8 @@
             display: flex;
             justify-content: space-between;
             flex-direction: column;
+            box-shadow: 0 20px 25px -5px $color-shadow1,
+                0 8px 10px -6px $color-shadow1;
             height: 200px;
             font-size: 17px;
             div {
@@ -129,6 +131,8 @@
             background-color: $color--light;
             padding: 16px 20px;
             border-radius: 8px;
+            box-shadow: 0 20px 25px -5px $color-shadow1,
+                0 8px 10px -6px $color-shadow1;
             box-sizing: border-box;
             height: 200px;
             h3 {

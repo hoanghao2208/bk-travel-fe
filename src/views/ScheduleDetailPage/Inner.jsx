@@ -59,14 +59,14 @@ const Inner = memo(() => {
 
                 <div className="schedule-detail__image">
                     <div className="schedule-detail__image--primary">
-                        <Image src="images/slide5.jpg" height={500} />
+                        <Image src="/images/slide5.jpg" height={500} />
                     </div>
                     <div className="schedule-detail__image--normal">
                         <div>
-                            <Image src="images/slide6.jpg" height={240} />
+                            <Image src="/images/slide6.jpg" height={240} />
                         </div>
                         <div>
-                            <Image src="images/slide2.jpg" height={240} />
+                            <Image src="/images/slide2.jpg" height={240} />
                         </div>
                     </div>
                 </div>
