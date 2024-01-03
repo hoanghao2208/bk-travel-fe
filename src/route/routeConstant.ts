@@ -11,6 +11,8 @@ const routeConstants = {
     USER_PROFILE: '/user-profile',
     USER_CHANGE_PASSWORD: '/change-password',
     LOVE_LIST: '/likes',
+    SCHEDULE_DETAIL: '/tour/schedule/detail/:tour_id',
+    DETAIL_TOUR: '/tour/information/detail/:tour_id',
     ADMIN_HOMEPAGE: '/admin',
     ADMIN_MANAGE_TOURS: '/admin/manage-tours',
     ADMIN_MANAGE_TOUR_GUIDE: '/admin/manage-tour-guide',
