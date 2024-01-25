@@ -1,40 +1,88 @@
 import UserActivityMenu from 'components/UserActivityMenu';
 import UserFooter from 'components/UserFooter';
 import UserLoginHeader from 'components/UserLoginHeader';
-import { FC, PropsWithChildren, memo, useState } from 'react';
+import {
+    FC,
+    PropsWithChildren,
+    memo,
+    useCallback,
+    useEffect,
+    useState,
+} from 'react';
 import './styles.scss';
 import { Avatar, Modal, Upload } from 'antd';
 import { UserOutlined, CameraOutlined, InboxOutlined } from '@ant-design/icons';
+import { getCustomerId } from 'reducers/token/function';
+import userService from 'services/userService';
+
+interface UserInfo {
+    firstname: string;
+    lastname: string;
+    email: string;
+}
+
+const defaultUserInfo: UserInfo = {
+    firstname: '',
+    lastname: '',
+    email: '',
+};
 
 const UserActivityLayout: FC<PropsWithChildren> = memo(({ children }) => {
     const [avtModal, setAvtModal] = useState<boolean>(false);
+    const [userInfo, setUserInfo] = useState<UserInfo>(defaultUserInfo);
     const handleCancel = () => {
         setAvtModal(false);
     };
+
+    const handleGetUserData = useCallback(async () => {
+        const user_id = getCustomerId();
+
+        try {
+            const response = await userService.getUserInfo(user_id);
+            if (response?.status === 200) {
+                setUserInfo(response?.data.user_info);
+            }
+        } catch (err) {
+            // eslint-disable-next-line no-console
+            console.log(err);
+        }
+    }, []);
+
+    useEffect(() => {
+        handleGetUserData();
+    }, [handleGetUserData]);
+    
     return (
         <>
             <UserLoginHeader />
             <div className="user-activity-wrapper">
                 <div className="user-activity">
                     <div className="user-activity__menu">
-                        <div className="user-activity__menu--avt">
-                            <div className="user-activity__menu--avt-wrapper">
-                                <Avatar size={116} icon={<UserOutlined />} />
-                                <div
-                                    className="user-activity__menu--avt-change"
-                                    onClick={() => setAvtModal(true)}
-                                >
-                                    <CameraOutlined className="user-activity__menu--avt-icon" />
-                                    <span>Thay đổi</span>
+                        {Object.keys(userInfo).length !== 0 && (
+                            <div className="user-activity__menu--avt">
+                                <div className="user-activity__menu--avt-wrapper">
+                                    <Avatar
+                                        size={116}
+                                        icon={<UserOutlined />}
+                                    />
+                                    <div
+                                        className="user-activity__menu--avt-change"
+                                        onClick={() => setAvtModal(true)}
+                                    >
+                                        <CameraOutlined className="user-activity__menu--avt-icon" />
+                                        <span>Thay đổi</span>
+                                    </div>
                                 </div>
+                                <h3 className="user-activity__menu--name">
+                                    {userInfo?.firstname +
+                                        ' ' +
+                                        userInfo?.lastname}
+                                </h3>
+                                <p className="user-activity__menu--email">
+                                    {userInfo?.email}
+                                </p>
                             </div>
-                            <h3 className="user-activity__menu--name">
-                                Dương Hoàng Hảo
-                            </h3>
-                            <p className="user-activity__menu--email">
-                                hao.duonghaokhmt@hcmut.edu.com
-                            </p>
-                        </div>
+                        )}
                         <UserActivityMenu />
                     </div>
                     <div className="user-activity__modal">

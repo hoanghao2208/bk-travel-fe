@@ -17,3 +17,5 @@ export const EMAIL_VALIDATE =
 export const PASSWORD_VALIDATE = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
 export const NAME_VALIDATE = /^\S*$/;
+
+export const VN_PHONE_NUMBER = /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/;

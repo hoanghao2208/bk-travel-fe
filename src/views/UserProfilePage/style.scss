@@ -2,10 +2,72 @@
 
 .user-profile {
     padding: 10px 0;
+    &__header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        span {
+            font-size: 18px;
+            font-weight: 500;
+            transition: color 0.2s linear;
+            cursor: pointer;
+            &:hover {
+                color: $color-button--primary;
+            }
+        }
+    }
     &__content {
         margin-top: 20px;
         display: flex;
         flex-direction: column;
         gap: 40px;
+        &--item {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            .ant-input {
+                height: 36px !important;
+                font-size: 14px;
+                color: $color-date;
+                font-weight: 500;
+                span {
+                    font-weight: 500;
+                }
+            }
+            .ant-form-item-label {
+                & > label {
+                    line-height: 1.4;
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+            }
+            .ant-picker {
+                height: 36px;
+                width: 100%;
+            }
+            .ant-picker-input {
+                input {
+                    color: $color-date;
+                    font-weight: 500;
+                    font-size: 16px;
+                }
+            }
+            .ant-select-selector {
+                height: 36px !important;
+                font-size: 14px;
+                color: $color-date;
+                font-weight: 500;
+                span {
+                    color: $color-date;
+                    font-weight: 500;
+                }
+            }
+        }
+        &--btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
     }
 }
