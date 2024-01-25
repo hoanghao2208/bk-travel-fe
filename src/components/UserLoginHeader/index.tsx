@@ -11,6 +11,8 @@ import UserDropDown from 'assets/icons/UserDropDown';
 import MoneyDropDown from 'assets/icons/MoneyDropDown';
 import HeartDropDown from 'assets/icons/HeartDropDown';
 import LogOutIcon from 'assets/icons/LogOutIcon';
+import Message from 'components/Message';
+import { setToken } from 'reducers/token/function';
 
 const UserLoginHeader: FC = () => {
     const navigate = useNavigate();
@@ -28,6 +30,14 @@ const UserLoginHeader: FC = () => {
     const handleMouseLeaveCart = () => {
         setHoverCart(false);
     };
+
+    const handleLogout = () => {
+        setToken('');
+        window.location.reload();
+        navigate('/');
+        Message.sendSuccess('Đăng xuất thành công');
+    };
+
     const items = [
         {
             key: '1',
@@ -65,7 +75,7 @@ const UserLoginHeader: FC = () => {
             key: '3',
             label: (
                 <Link
-                    to="/favorite-tour"
+                    to="/likes"
                     style={{
                         fontSize: '16px',
                         display: 'inline-block',
@@ -82,12 +92,13 @@ const UserLoginHeader: FC = () => {
             danger: true,
             label: (
                 <Link
-                    to="/log-out"
+                    to="/"
                     style={{
                         fontSize: '16px',
                         display: 'inline-block',
                         paddingLeft: '10px',
                     }}
+                    onClick={handleLogout}
                 >
                     Đăng xuất
                 </Link>
@@ -124,7 +135,7 @@ const UserLoginHeader: FC = () => {
                         </Badge>
                     </div>
                     <div
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate('/cart')}
                         onMouseEnter={handleMouseEnterCart}
                         onMouseLeave={handleMouseLeaveCart}
                         className="user-login-header__navigate--cart"

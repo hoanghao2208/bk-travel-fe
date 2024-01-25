@@ -25,7 +25,7 @@ const RouteElement: FC<IProps> = memo(
                 if (authorization) {
                     if (token) {
                         userService.me().then(res => {
-                            if (res.isSuccess) {
+                            if (res?.data.statusCode === 200) {
                                 setAuthorized(true);
                                 dispatch(profileActions.SET_PROFILE(res.data));
                             } else {

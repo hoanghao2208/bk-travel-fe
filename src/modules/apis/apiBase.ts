@@ -1,9 +1,6 @@
-import Message from 'components/Message';
+import axios from 'axios';
 import { forEach, isArray, isObject } from 'lodash';
 import { BodyType, BodyTypeEnum, DEFAULT_BODY_TYPE } from 'modules/apis/config';
-import messageCodes from 'modules/apis/messageCode';
-import ResponseParser, { getResponse, IResponse } from 'modules/apis/Response';
-import { setError } from 'reducers/error/function';
 import { getToken } from 'reducers/token/function';
 import { toSnakeCase } from 'utils/function/format';
 
@@ -29,91 +26,53 @@ const prepareData = (response: any): any => {
 interface IApiOptions {
     bodyType?: BodyTypeEnum;
     params?: any;
-    method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+    method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
     body?: any;
     headers?: any;
 }
 
 class ApiBase {
-    private _baseUrl = process.env.REACT_APP_API_URL + '/api';
+    private _baseUrl = 'http://localhost:8080/api';
 
-    get(
-        url: string,
-        options: IApiOptions = {},
-        customHandleError?: (err: IResponse) => IResponse
-    ) {
-        return this.call(
-            url,
-            {
-                ...options,
-                method: 'GET',
-            },
-            customHandleError
-        );
+    get(url: string, options: IApiOptions = {}) {
+        return this.call(url, {
+            ...options,
+            method: 'GET',
+        });
     }
 
-    post = (
-        url: string,
-        body?: any,
-        options: IApiOptions = {},
-        customHandleError?: (err: IResponse) => IResponse
-    ) => {
+    post = (url: string, body?: any, options: IApiOptions = {}) => {
         const _body = this.createBody(
             body,
             options?.bodyType || DEFAULT_BODY_TYPE
         );
-        return this.call(
-            url,
-            {
-                ...options,
-                body: _body ? _body : undefined,
-                method: 'POST',
-            },
-            customHandleError
-        );
+        return this.call(url, {
+            ...options,
+            body: _body ? _body : undefined,
+            method: 'POST',
+        });
     };
 
-    put = (
-        url: string,
-        body?: any,
-        options: IApiOptions = {},
-        customHandleError?: (err: IResponse) => IResponse
-    ) => {
+    put = (url: string, body?: any, options: IApiOptions = {}) => {
         const _body = this.createBody(
             body,
             options?.bodyType || DEFAULT_BODY_TYPE
         );
-        return this.call(
-            url,
-            {
-                ...options,
-                body: _body ? _body : undefined,
-                method: 'PUT',
-            },
-            customHandleError
-        );
+        return this.call(url, {
+            ...options,
+            body: _body ? _body : undefined,
+            method: 'PUT',
+        });
     };
 
-    delete = (
-        url: string,
-        options: IApiOptions = {},
-        customHandleError?: (err: IResponse) => IResponse
-    ) => {
-        return this.call(
-            url,
-            {
-                ...options,
-                method: 'DELETE',
-            },
-            customHandleError
-        );
+    delete = (url: string, options: IApiOptions = {}) => {
+        return this.call(url, {
+            ...options,
+            method: 'DELETE',
+        });
     };
 
-    call = async (
-        pathUrl: string,
-        rawOptions: IApiOptions,
-        customHandleError?: (err: IResponse) => IResponse
-    ) => {
+    call = async (pathUrl: string, rawOptions: IApiOptions) => {
         let url = this._baseUrl + pathUrl;
         if (rawOptions.params) {
             const paramsString = new URLSearchParams(
@@ -123,21 +82,16 @@ class ApiBase {
         }
         try {
             let options = this.createHeader(rawOptions);
-            let response = await fetch(url, {
-                ...options,
+            let response = await axios(url, {
+                url,
+                method: options.method,
+                headers: options.headers,
+                data: options.body,
+                params: options.params,
             });
-            let data = await ResponseParser.parse(response);
-            if (!data.isSuccess && customHandleError) {
-                data = customHandleError(data);
-            }
-            if (!data.isSuccess) {
-                return this.handleError(data);
-            }
-            return data;
+            return response;
         } catch (error: any) {
-            const e = error instanceof Error ? error : new Error(error);
-            const response = getResponse(null, e);
-            return this.handleError(response);
+            return error?.response;
         }
     };
 
@@ -169,18 +123,6 @@ class ApiBase {
             newOptions.headers.Authorization = `Bearer ${token}`;
         }
         return newOptions;
-    };
-
-    handleError = (error: IResponse) => {
-        if ([401].includes(error.errorCode)) {
-            setError(error.errorCode, error.message);
-        }
-        if (error.messageCode) {
-            Message.sendError(
-                messageCodes[error.messageCode] || messageCodes.default
-            );
-        }
-        return error;
     };
 }
 

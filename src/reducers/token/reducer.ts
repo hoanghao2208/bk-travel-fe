@@ -3,6 +3,7 @@ import { TokenState } from 'reducers/token/type';
 
 const initialState: TokenState = {
     accessToken: '',
+    user_id: 0,
     facebookAccessToken: '',
     userId: '',
     email: '',
@@ -20,6 +21,16 @@ const SET_ACCESS_TOKEN: TokenCaseReducer<string | undefined> = (
     return {
         ...state,
         accessToken: payload ?? '',
+    };
+};
+
+const SET_USER_ID: TokenCaseReducer<number | undefined> = (
+    state,
+    { payload }
+) => {
+    return {
+        ...state,
+        user_id: payload ?? 0,
     };
 };
 
@@ -60,6 +71,7 @@ const tokenSlice = createSlice({
         SET_ACCESS_TOKEN,
         SET_FACEBOOK_ACCESS_TOKEN,
         SET_FACE_BOOK_USER_INFO,
+        SET_USER_ID,
     },
 });
 

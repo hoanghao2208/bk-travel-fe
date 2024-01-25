@@ -2,7 +2,7 @@ import { notification } from "antd";
 
 const defaultMessageDuration = {
     info: 7,
-    success: 3,
+    success: 2,
     warning: 10,
     error: 12,
 };
