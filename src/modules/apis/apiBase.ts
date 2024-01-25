@@ -32,7 +32,7 @@ interface IApiOptions {
 }
 
 class ApiBase {
-    private _baseUrl = 'http://localhost:5000/api';
+    private _baseUrl = 'http://localhost:8080/api';
 
     get(url: string, options: IApiOptions = {}) {
         return this.call(url, {

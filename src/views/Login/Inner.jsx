@@ -28,7 +28,7 @@ const Inner = memo(({ handleLogin, loading }) => {
                     >
                         <Form.Item
                             label="Email"
-                            name="gmail"
+                            name="email"
                             rules={[
                                 {
                                     required: true,

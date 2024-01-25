@@ -71,7 +71,7 @@ const Inner = memo(({ handleRegister }) => {
                     </div>
                     <Form.Item
                         label="Email"
-                        name="gmail"
+                        name="email"
                         rules={[
                             {
                                 required: true,

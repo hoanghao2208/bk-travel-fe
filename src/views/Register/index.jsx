@@ -8,12 +8,12 @@ const Wrapper = memo(() => {
     const navigate = useNavigate();
     const handleRegister = useCallback(
         async data => {
-            const { firstname, lastname, gmail, password, confirm_password } =
+            const { firstname, lastname, email, password, confirm_password } =
                 data;
             const body = {
                 firstname: firstname.trim(),
                 lastname: lastname.trim(),
-                gmail,
+                email: email.trim(),
                 password,
                 confirm_password,
             };
@@ -22,7 +22,7 @@ const Wrapper = memo(() => {
                 Message.sendSuccess('Đăng ký thành công, Vui lòng đăng nhập');
                 navigate('/login');
             } else {
-                if (response?.data.message === 'Error: Gmail already exists') {
+                if (response?.data.message === 'Email is exist!') {
                     Message.sendError('Email đã tồn tại trên hệ thống');
                 } else {
                     Message.sendError('Đăng ký không thành công');

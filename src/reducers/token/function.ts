@@ -7,6 +7,10 @@ export const setToken = (token?: string) => {
     storeFunc.dispatch(tokenActions.SET_ACCESS_TOKEN, token);
 };
 
+export const setCustomerId = (userId?: number) => {
+    storeFunc.dispatch(tokenActions.SET_USER_ID, userId);
+};
+
 export const setFacebookToken = (
     facebookAccessToken?: string,
     userId?: string,
@@ -26,6 +30,10 @@ export const setFacebookToken = (
 export const getToken = () => {
     return storeFunc.getState()?.token?.accessToken;
 };
+
+export const getCustomerId = () => {
+    return storeFunc.getState()?.token?.user_id;
+}
 
 export const getFacebookToken = () => {
     return storeFunc.getState()?.token?.facebookAccessToken;

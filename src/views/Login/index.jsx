@@ -14,11 +14,11 @@ const Wrapper = memo(() => {
             const response = await userService.login(data);
             setIsLoading(false);
             if (response?.status === 200) {
-                Message.sendSuccess('Đăng nhập thành công', 2);
-                setToken(response?.data.metadata.token);
+                Message.sendSuccess('Đăng nhập thành công');
+                setToken(response?.data.access_token);
                 navigate('/');
             } else {
-                if (response?.data.message === "Username doesn't exist!") {
+                if (response?.data.message === "Email doesn't exist!") {
                     Message.sendError(
                         'Tài khoản không tồn tại trên hệ thống',
                         4
