@@ -1,3 +1,4 @@
+import axios from 'axios';
 import ApiBase from 'modules/apis/apiBase';
 
 const _USER_PATH = 'user';
@@ -49,6 +50,15 @@ class UserService extends ApiBase {
         const url = `/v1/${_USER_PATH}/update/${user_id}`;
         const res = this.post(url, requestBody);
         return res;
+    };
+
+    uploadAvatar = (user_id: number, requestBody: any, token: string) => {
+        const url = `http://localhost:8080/api/v1/user/upload/${user_id}`;
+        return axios.post(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
     };
 }
 

@@ -10,33 +10,43 @@ import {
     useState,
 } from 'react';
 import './styles.scss';
-import { Avatar, Modal, Upload } from 'antd';
+import { Avatar, Modal, Spin, Upload } from 'antd';
 import { UserOutlined, CameraOutlined, InboxOutlined } from '@ant-design/icons';
-import { getCustomerId } from 'reducers/token/function';
+import { getCustomerId, getToken } from 'reducers/token/function';
 import userService from 'services/userService';
+import type { RcFile, UploadProps } from 'antd/es/upload';
+import type { UploadFile } from 'antd/es/upload/interface';
+import Message from 'components/Message';
 
 interface UserInfo {
     firstname: string;
     lastname: string;
     email: string;
+    avatar: string;
 }
 
 const defaultUserInfo: UserInfo = {
     firstname: '',
     lastname: '',
     email: '',
+    avatar: '',
 };
 
 const UserActivityLayout: FC<PropsWithChildren> = memo(({ children }) => {
     const [avtModal, setAvtModal] = useState<boolean>(false);
     const [userInfo, setUserInfo] = useState<UserInfo>(defaultUserInfo);
+    const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [currentError, setCurrentError] = useState<string>('');
+
+    const user_id = getCustomerId();
+    const token = getToken();
+
     const handleCancel = () => {
         setAvtModal(false);
     };
 
     const handleGetUserData = useCallback(async () => {
-        const user_id = getCustomerId();
-
         try {
             const response = await userService.getUserInfo(user_id);
             if (response?.status === 200) {
@@ -46,14 +56,84 @@ const UserActivityLayout: FC<PropsWithChildren> = memo(({ children }) => {
             // eslint-disable-next-line no-console
             console.log(err);
         }
-    }, []);
+    }, [user_id]);
 
     useEffect(() => {
         handleGetUserData();
     }, [handleGetUserData]);
-    
+
+    const handleBeforeUpload = (file: RcFile) => {
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        const isAllowedType = allowedTypes.includes(file.type);
+        const maxSize = 5 * 1024 * 1024;
+        const isWithinSizeLimit = file.size <= maxSize;
+
+        if (!isAllowedType || !isWithinSizeLimit) {
+            setCurrentError(
+                !isAllowedType
+                    ? 'Định dạng file không phù hợp'
+                    : 'File vượt quá kích thước cho phép'
+            );
+            return false;
+        }
+
+        return true;
+    };
+
+    const handleUpload: UploadProps['onChange'] = async ({
+        fileList: newFileList,
+    }) => {
+        if (
+            newFileList &&
+            newFileList.length > 0 &&
+            newFileList[0].originFileObj
+        ) {
+            const isFileValid = handleBeforeUpload(
+                newFileList[0].originFileObj
+            );
+
+            if (!isFileValid) {
+                setCurrentError('');
+                return;
+            }
+
+            setFileList(newFileList);
+            try {
+                setLoading(true);
+                setAvtModal(false);
+
+                const formData = new FormData();
+                formData.append('avatar', newFileList[0].originFileObj);
+
+                const response = await userService.uploadAvatar(
+                    user_id,
+                    formData,
+                    token
+                );
+
+                if (response?.status === 200) {
+                    Message.sendSuccess('Cập nhật ảnh đại diện thành công');
+                    window.location.reload();
+                }
+            } catch (err) {
+                // eslint-disable-next-line no-console
+                console.log(err);
+            } finally {
+                setLoading(false);
+                setFileList([]);
+                setCurrentError('');
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (currentError !== '') {
+            Message.sendError(currentError, 5);
+        }
+    }, [currentError]);
+
     return (
-        <>
+        <Spin tip="Vui lòng chờ" size="large" spinning={loading}>
             <UserLoginHeader />
             <div className="user-activity-wrapper">
                 <div className="user-activity">
@@ -64,6 +144,11 @@ const UserActivityLayout: FC<PropsWithChildren> = memo(({ children }) => {
                                     <Avatar
                                         size={116}
                                         icon={<UserOutlined />}
+                                        src={
+                                            userInfo?.avatar
+                                                ? userInfo.avatar
+                                                : null
+                                        }
                                     />
                                     <div
                                         className="user-activity__menu--avt-change"
@@ -89,15 +174,14 @@ const UserActivityLayout: FC<PropsWithChildren> = memo(({ children }) => {
                         <Modal
                             title="Thay đổi ảnh đại diện"
                             open={avtModal}
-                            // onOk={handleOk}
                             onCancel={handleCancel}
                             footer={null}
                         >
                             <Upload.Dragger
                                 listType="picture-card"
-                                // fileList={fileList}
-                                // onChange={handleUpload}
-                                beforeUpload={() => false}
+                                fileList={fileList}
+                                onChange={handleUpload}
+                                beforeUpload={handleBeforeUpload}
                             >
                                 <p className="ant-upload-drag-icon">
                                     <InboxOutlined />
@@ -112,7 +196,7 @@ const UserActivityLayout: FC<PropsWithChildren> = memo(({ children }) => {
                 </div>
             </div>
             <UserFooter />
-        </>
+        </Spin>
     );
 });
 

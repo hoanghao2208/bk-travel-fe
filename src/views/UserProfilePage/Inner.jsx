@@ -93,7 +93,7 @@ const Inner = memo(
                                     >
                                         <Input
                                             placeholder="Email của bạn"
-                                            disabled={disabled}
+                                            disabled
                                         />
                                     </Form.Item>
                                 </div>
