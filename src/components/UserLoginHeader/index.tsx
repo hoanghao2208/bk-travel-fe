@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import './styles.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from 'assets/icons/Logo';
@@ -12,12 +12,25 @@ import MoneyDropDown from 'assets/icons/MoneyDropDown';
 import HeartDropDown from 'assets/icons/HeartDropDown';
 import LogOutIcon from 'assets/icons/LogOutIcon';
 import Message from 'components/Message';
-import { setToken } from 'reducers/token/function';
+import { getCustomerId, setToken } from 'reducers/token/function';
+import userService from 'services/userService';
+
+interface UserInfo {
+    avatar: string;
+}
+
+const defaultUserInfo: UserInfo = {
+    avatar: '',
+};
 
 const UserLoginHeader: FC = () => {
     const navigate = useNavigate();
     const [hoverBell, setHoverBell] = useState(false);
     const [hoverCart, setHoverCart] = useState(false);
+    const [userInfo, setUserInfo] = useState<UserInfo>(defaultUserInfo);
+
+    const user_id = getCustomerId();
+
     const handleMouseEnterBell = () => {
         setHoverBell(true);
     };
@@ -31,12 +44,28 @@ const UserLoginHeader: FC = () => {
         setHoverCart(false);
     };
 
+    const handleGetUserInfo = useCallback(async () => {
+        try {
+            const response = await userService.getUserInfo(user_id);
+            if (response?.status === 200) {
+                setUserInfo(response?.data.user_info);
+            }
+        } catch (err) {
+            // eslint-disable-next-line no-console
+            console.log(err);
+        }
+    }, [user_id]);
+
     const handleLogout = () => {
         setToken('');
         window.location.reload();
         navigate('/');
         Message.sendSuccess('Đăng xuất thành công');
     };
+
+    useEffect(() => {
+        handleGetUserInfo();
+    }, [handleGetUserInfo]);
 
     const items = [
         {
@@ -152,7 +181,11 @@ const UserLoginHeader: FC = () => {
                             placement="bottomRight"
                             arrow
                         >
-                            <Avatar size={40} icon={<UserOutlined />} />
+                            <Avatar
+                                size={44}
+                                icon={<UserOutlined />}
+                                src={userInfo?.avatar ? userInfo.avatar : null}
+                            />
                         </Dropdown>
                     </div>
                 </div>
