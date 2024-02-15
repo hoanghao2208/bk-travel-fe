@@ -4,6 +4,7 @@ import RegisterLayout from 'layouts/RegisterLayout';
 import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './styles.scss';
+import { EMAIL_VALIDATE } from 'utils/constants';
 
 const Inner = memo(({ handleLogin, loading }) => {
     useEffect(() => {
@@ -33,6 +34,10 @@ const Inner = memo(({ handleLogin, loading }) => {
                                 {
                                     required: true,
                                     message: 'Vui lòng nhập email của bạn',
+                                },
+                                {
+                                    pattern: EMAIL_VALIDATE,
+                                    message: 'Email của bạn không hợp lệ',
                                 },
                             ]}
                         >

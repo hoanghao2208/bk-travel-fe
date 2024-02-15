@@ -76,7 +76,7 @@ const Inner = memo(
                                     <Form.Item
                                         label="Ngày sinh của bạn"
                                         name="dob"
-                                        initialValue={dayjs(dob)}
+                                        initialValue={dob ? dayjs(dob) : null}
                                     >
                                         <DatePicker
                                             placeholder="Ngày sinh của bạn"

@@ -52,6 +52,22 @@ class UserService extends ApiBase {
         return res;
     };
 
+    forgotPassword = (requestBody: { email: string }) => {
+        const url = `/v1/${_USER_PATH}/forgot-password`;
+        const res = this.post(url, requestBody);
+        return res;
+    };
+
+    resetPassword = (requestBody: {
+        code: string;
+        new_password: string;
+        confirm_password: string;
+    }) => {
+        const url = `/v1/${_USER_PATH}/reset-password`;
+        const res = this.post(url, requestBody);
+        return res;
+    };
+
     uploadAvatar = (user_id: number, requestBody: any, token: string) => {
         const url = `http://localhost:8080/api/v1/user/upload/${user_id}`;
         return axios.post(url, requestBody, {
