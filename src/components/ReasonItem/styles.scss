@@ -4,6 +4,7 @@
     background-color: white;
     padding: 24px;
     border-radius: 12px;
+    box-shadow: 0 20px 25px -5px $color-shadow1, 0 8px 10px -6px $color-shadow1;
     &__icon,
     &__title {
         text-align: center;
