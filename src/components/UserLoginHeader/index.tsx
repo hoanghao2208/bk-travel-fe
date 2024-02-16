@@ -58,8 +58,8 @@ const UserLoginHeader: FC = () => {
 
     const handleLogout = () => {
         setToken('');
-        window.location.reload();
         navigate('/');
+        window.location.reload();
         Message.sendSuccess('Đăng xuất thành công');
     };
 

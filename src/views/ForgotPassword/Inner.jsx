@@ -4,11 +4,17 @@ import RegisterLayout from 'layouts/RegisterLayout';
 import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './styles.scss';
+import { EMAIL_VALIDATE } from 'utils/constants';
 
-const Inner = memo(() => {
+const Inner = memo(({ loading, handleForgotPassword }) => {
     useEffect(() => {
         document.title = 'Lấy lại mật khẩu';
     });
+
+    const handleSubmitForgot = value => {
+        handleForgotPassword(value);
+    };
+
     return (
         <div className="forgot-wrapper">
             <RegisterLayout>
@@ -30,7 +36,7 @@ const Inner = memo(() => {
                             remember: true,
                         }}
                         layout="vertical"
-                        // onFinish={onFinish}
+                        onFinish={handleSubmitForgot}
                         // onFinishFailed={onFinishFailed}
                         autoComplete="off"
                     >
@@ -42,9 +48,13 @@ const Inner = memo(() => {
                                     required: true,
                                     message: 'Vui lòng cung cấp email của bạn',
                                 },
+                                {
+                                    pattern: EMAIL_VALIDATE,
+                                    message: 'Email của bạn không hợp lệ',
+                                },
                             ]}
                         >
-                            <Input placeholder="Email" />
+                            <Input placeholder="Email" disabled={loading} />
                         </Form.Item>
                         <div className="forgot__form--footer">
                             <span>
@@ -54,7 +64,11 @@ const Inner = memo(() => {
                             <Link to="/login">Đăng nhập</Link>
                         </div>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit">
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                disabled={loading}
+                            >
                                 Xác nhận
                             </Button>
                         </Form.Item>
