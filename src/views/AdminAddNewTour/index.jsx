@@ -7,6 +7,8 @@ import { Form } from 'antd';
 const Wrapper = memo(() => {
     const [loading, setLoading] = useState(false);
     const [fileList, setFileList] = useState([]);
+    const [imgURL, setImgURL] = useState('');
+    const [showUpload, setShowUpload] = useState(true);
 
     const formRef = useRef(null);
     const [form] = Form.useForm();
@@ -33,10 +35,13 @@ const Wrapper = memo(() => {
 
             try {
                 setLoading(true);
+                window.scrollTo(0, 0);
                 const response = await tourService.createTour(formData);
                 if (response.status === 200) {
                     Message.sendSuccess('Tạo tour mới thành công!');
                     setFileList([]);
+                    setImgURL('');
+                    setShowUpload(true);
                     form.resetFields();
                 } else {
                     Message.sendError(
@@ -60,6 +65,10 @@ const Wrapper = memo(() => {
             loading={loading}
             fileList={fileList}
             setFileList={setFileList}
+            imgURL={imgURL}
+            setImgURL={setImgURL}
+            showUpload={showUpload}
+            setShowUpload={setShowUpload}
         />
     );
 });

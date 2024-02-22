@@ -38,6 +38,10 @@ const Inner = memo(
         loading,
         fileList,
         setFileList,
+        imgURL,
+        setImgURL,
+        showUpload,
+        setShowUpload,
     }) => {
         useEffect(() => {
             document.title = 'Thêm tour du lịch mới';
@@ -48,8 +52,7 @@ const Inner = memo(
             useState(false);
         const [departureTime, setDepartureTime] = useState('');
         const [deadlineDate, setDeadlineDate] = useState('');
-        const [showUpload, setShowUpload] = useState(true);
-        const [imgURL, setImgURL] = useState('');
+
         const [currentError, setCurrentError] = useState('');
 
         const onChangeDepartureDate = (_, dateString) => {
