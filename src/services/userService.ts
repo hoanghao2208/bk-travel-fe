@@ -45,11 +45,15 @@ class UserService extends ApiBase {
             dob: string;
             phone_number: string;
             gender: string;
-        }
+        },
+        token: string
     ) => {
-        const url = `/v1/${_USER_PATH}/update/${user_id}`;
-        const res = this.post(url, requestBody);
-        return res;
+        const url = `http://localhost:8080/api/v1/user/update/${user_id}`;
+        return axios.put(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
     };
 
     forgotPassword = (requestBody: { email: string }) => {
@@ -70,6 +74,23 @@ class UserService extends ApiBase {
 
     uploadAvatar = (user_id: number, requestBody: any, token: string) => {
         const url = `http://localhost:8080/api/v1/user/upload/${user_id}`;
+        return axios.post(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
+
+    changePassword = (
+        requestBody: {
+            old_password: string;
+            new_password: string;
+            confirm_password: string;
+            email: string;
+        },
+        token: string
+    ) => {
+        const url = 'http://localhost:8080/api/v1/user/change-password';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
