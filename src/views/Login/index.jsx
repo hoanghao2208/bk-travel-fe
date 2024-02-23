@@ -24,22 +24,19 @@ const Wrapper = memo(() => {
                         navigate('/');
                     }
                 } else {
-                    if (response?.data.message === "Email doesn't exist!") {
+                    if (response?.data === "Email doesn't exist!") {
                         Message.sendError(
                             'Tài khoản không tồn tại trên hệ thống',
                             4
                         );
-                    } else if (
-                        response?.data.message === 'Password is wrong!'
-                    ) {
+                    } else if (response?.data === 'Password is wrong!') {
                         Message.sendError('Mật khẩu không chính xác', 4);
                     } else {
                         Message.sendError('Đăng nhập không thành công', 4);
                     }
                 }
             } catch (err) {
-                // eslint-disable-next-line no-console
-                console.log(err);
+                console.error(err);
             } finally {
                 setIsLoading(false);
             }

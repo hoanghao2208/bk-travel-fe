@@ -34,24 +34,30 @@ const Wrapper = memo(() => {
         handleGetUserData();
     }, [handleGetUserData]);
 
-    const handleUpdateUserInfo = useCallback(async values => {
-        try {
-            setLoading(true);
-            const user_id = getCustomerId();
+    const handleUpdateUserInfo = useCallback(
+        async values => {
+            try {
+                setLoading(true);
+                const user_id = getCustomerId();
 
-            const response = await userService.updateUserInfo(user_id, values);
-            if (response?.status === 200) {
-                Message.sendSuccess('Cập nhật thông tin thành công!');
+                const response = await userService.updateUserInfo(
+                    user_id,
+                    values,
+                    token
+                );
+                if (response?.status === 200) {
+                    Message.sendSuccess('Cập nhật thông tin thành công!');
+                    setDisabled(true);
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
                 window.location.reload();
-                setDisabled(true);
             }
-        } catch (err) {
-            // eslint-disable-next-line no-console
-            console.log(err);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
+        },
+        [token]
+    );
 
     return (
         <Inner
