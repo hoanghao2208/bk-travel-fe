@@ -122,6 +122,11 @@ const routes: Array<Route> = [
         Component: commonLoadable(() => import('views/AdminAddNewTour')),
     },
     {
+        name: 'Admin Edit Tour',
+        path: routeConstants.ADMIN_EDIT_TOUR,
+        Component: commonLoadable(() => import('views/AdminEditTour')),
+    },
+    {
         name: 'Admin Notification',
         path: routeConstants.ADMIN_NOTIFICATION,
         Component: commonLoadable(() => import('views/AdminNotification')),

@@ -10,6 +10,7 @@ import {
     Button,
     Image,
     Spin,
+    Tooltip,
 } from 'antd';
 import './styles.scss';
 import { InboxOutlined, CompassFilled } from '@ant-design/icons';
@@ -33,7 +34,6 @@ for (let i = 10; i < 36; i++) {
 const Inner = memo(
     ({
         handleCreateNewTour,
-        formRef,
         form,
         loading,
         fileList,
@@ -56,17 +56,19 @@ const Inner = memo(
         const [currentError, setCurrentError] = useState('');
 
         const onChangeDepartureDate = (_, dateString) => {
-            const formattedDate = moment(dateString, 'DD/MM/YYYY').format(
-                'YYYY-MM-DD'
-            );
+            const formattedDate = moment(
+                dateString,
+                DEFAULT_DISPLAY_DATE_FORMAT
+            ).format('YYYY-MM-DD');
             setDepartureDate(formattedDate);
             setDepartureDateSelected(true);
         };
 
         const onChangeDeadlineDate = (_, dateString) => {
-            const formattedDate = moment(dateString, 'DD/MM/YYYY').format(
-                'YYYY-MM-DD'
-            );
+            const formattedDate = moment(
+                dateString,
+                DEFAULT_DISPLAY_DATE_FORMAT
+            ).format('YYYY-MM-DD');
             setDeadlineDate(formattedDate);
         };
 
@@ -151,10 +153,10 @@ const Inner = memo(
                         <div className="add-new-tour__content">
                             <Form
                                 form={form}
-                                ref={formRef}
-                                name="control-ref"
+                                name="add-new-tour"
                                 layout="vertical"
                                 onFinish={handleSubmitNewTour}
+                                autoComplete="off"
                             >
                                 <div className="add-new-tour__content-inf1">
                                     <div className="add-new-tour__content-inf1--item1">
@@ -403,6 +405,19 @@ const Inner = memo(
                                                 allowClear
                                                 placeholder="Địa điểm du lịch"
                                                 options={options}
+                                                maxTagCount="responsive"
+                                                maxTagPlaceholder={omittedValues => (
+                                                    <Tooltip
+                                                        title={omittedValues
+                                                            .map(
+                                                                ({ label }) =>
+                                                                    label
+                                                            )
+                                                            .join(', ')}
+                                                    >
+                                                        <span>...</span>
+                                                    </Tooltip>
+                                                )}
                                             />
                                         </Form.Item>
                                     </div>
@@ -471,7 +486,7 @@ const Inner = memo(
                                         >
                                             <Input.TextArea
                                                 placeholder="Điểm nhấn tour"
-                                                style={{ height: 120 }}
+                                                style={{ height: 150 }}
                                             />
                                         </Form.Item>
                                     </div>
@@ -479,10 +494,17 @@ const Inner = memo(
                                         <Form.Item
                                             name="note"
                                             label="Lưu ý về tour du lịch"
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message:
+                                                        'Vui lòng nhập lưu ý của tour',
+                                                },
+                                            ]}
                                         >
                                             <Input.TextArea
                                                 placeholder="Lưu ý về tour du lịch"
-                                                style={{ height: 120 }}
+                                                style={{ height: 150 }}
                                             />
                                         </Form.Item>
                                     </div>

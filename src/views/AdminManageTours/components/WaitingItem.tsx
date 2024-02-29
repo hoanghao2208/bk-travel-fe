@@ -8,6 +8,7 @@ import {
 } from '@ant-design/icons';
 import './styles.scss';
 import dayjs from 'dayjs';
+import { useNavigate } from 'react-router-dom';
 
 interface WaitingItemProps {
     status: string;
@@ -36,10 +37,15 @@ const WaitingItem: FC<WaitingItemProps> = memo(
         handleRecoverTour,
     }) => {
         const formattedDate = dayjs(date).format('DD/MM/YYYY');
+        const navigate = useNavigate();
 
         const handleOpenModal = () => {
             setOpenDeleteModal && setOpenDeleteModal(true);
             setSelectedTourId && setSelectedTourId(tour_id);
+        };
+
+        const hanldeNavigateEdit = () => {
+            navigate(`/admin/edit-information-tour/${tour_id}`);
         };
 
         return (
@@ -67,7 +73,12 @@ const WaitingItem: FC<WaitingItemProps> = memo(
                         <Button type="primary" icon={<CloudSyncOutlined />}>
                             Lên lịch trình
                         </Button>
-                        <Button icon={<EditOutlined />}>Chỉnh sửa</Button>
+                        <Button
+                            icon={<EditOutlined />}
+                            onClick={hanldeNavigateEdit}
+                        >
+                            Chỉnh sửa
+                        </Button>
                         <Button
                             key="submit"
                             danger
