@@ -14,19 +14,15 @@ const Wrapper = memo(() => {
 
     const handleCreateNewTour = useCallback(
         async data => {
-            const attractions = data.attractions.map((attraction, index) => ({
-                [`attractions[${index}][name]`]: attraction,
-            }));
-
             const formData = new FormData();
 
             Object.entries(data).forEach(([key, value]) => {
-                if (key !== 'attractions') {
+                if (key !== 'attractions' && key !== 'all_attractions') {
                     formData.append(key, value);
                 }
             });
 
-            attractions.forEach(attraction => {
+            data.all_attractions.forEach(attraction => {
                 Object.entries(attraction).forEach(([key, value]) => {
                     formData.append(key, value);
                 });
@@ -36,7 +32,7 @@ const Wrapper = memo(() => {
                 setLoading(true);
                 window.scrollTo(0, 0);
                 const response = await tourService.createTour(formData);
-                if (response.status === 200) {
+                if (response.status === 201) {
                     Message.sendSuccess('Tạo tour mới thành công!');
                     setFileList([]);
                     setImgURL('');

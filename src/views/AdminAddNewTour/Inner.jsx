@@ -23,14 +23,6 @@ import {
 import moment from 'moment';
 import dayjs from 'dayjs';
 
-const options = [];
-for (let i = 10; i < 36; i++) {
-    options.push({
-        label: i.toString(36) + i,
-        value: i.toString(36) + i,
-    });
-}
-
 const Inner = memo(
     ({
         handleCreateNewTour,
@@ -54,6 +46,8 @@ const Inner = memo(
         const [deadlineDate, setDeadlineDate] = useState('');
 
         const [currentError, setCurrentError] = useState('');
+        const [destinationPlaces, setDestinationPlaces] = useState([]);
+        const [allAttractions, setAllAttractions] = useState([]);
 
         const onChangeDepartureDate = (_, dateString) => {
             const formattedDate = moment(
@@ -119,15 +113,118 @@ const Inner = memo(
         };
 
         const handleSubmitNewTour = values => {
+            const destination_places = values.destination_places.join(', ');
+
             const tourData = {
                 ...values,
                 departure_date: departureDate,
                 departure_time: departureTime,
                 deadline_book_time: deadlineDate,
                 cover_image: fileList[0].originFileObj,
+                all_attractions: allAttractions,
+                destination_places,
             };
 
             handleCreateNewTour(tourData);
+        };
+
+        const handleChangeDestination = values => {
+            setDestinationPlaces(values);
+        };
+
+        const getOptionsFromDestinationPlaces = () => {
+            return destinationPlaces.map(place => {
+                if (place === 'Đà Nẵng') {
+                    return {
+                        label: place,
+                        options: [
+                            {
+                                label: 'Bà Nà Hills',
+                                value: 'Bà Nà Hills',
+                            },
+                            {
+                                label: 'Biển Mỹ Khê',
+                                value: 'Biển Mỹ Khê',
+                            },
+                        ],
+                    };
+                } else if (place === 'Hà Nội') {
+                    return {
+                        label: place,
+                        options: [
+                            {
+                                label: 'Chùa một cột',
+                                value: 'Chùa một cột',
+                            },
+                            {
+                                label: 'Cầu thê húc',
+                                value: 'Cầu thê húc',
+                            },
+                        ],
+                    };
+                } else if (place === 'TP. Hồ Chí Minh') {
+                    return {
+                        label: place,
+                        options: [
+                            {
+                                label: 'Dinh Độc Lập',
+                                value: 'Dinh Độc Lập',
+                            },
+                            {
+                                label: 'Landmark 81',
+                                value: 'Landmark 81',
+                            },
+                        ],
+                    };
+                }
+            });
+        };
+
+        const handleChangeAttractions = (values, options) => {
+            const selectedAttractions = [];
+            const all_attractions = [];
+            let prevPlace = null;
+            let i = 0;
+
+            values.forEach(value => {
+                options.forEach(option => {
+                    option.options.forEach(attraction => {
+                        if (attraction.value === value) {
+                            selectedAttractions.push({
+                                label: attraction.label,
+                                place: option.label,
+                            });
+                        }
+                    });
+                });
+            });
+
+            selectedAttractions.sort((a, b) => {
+                if (a.place > b.place) {
+                    return -1;
+                }
+                if (a.place < b.place) {
+                    return 1;
+                }
+                return 0;
+            });
+
+            selectedAttractions.forEach(attraction => {
+                if (prevPlace !== attraction.place) {
+                    i = 0;
+                }
+
+                const attractionKey = `attractions[${i}][${attraction.place}]`;
+                const attractionValue = attraction.label;
+                const attractionObj = {};
+                attractionObj[attractionKey] = attractionValue;
+                all_attractions.push(attractionObj);
+
+                prevPlace = attraction.place;
+                i++;
+            });
+
+            setAllAttractions(all_attractions);
         };
 
         useEffect(() => {
@@ -301,7 +398,7 @@ const Inner = memo(
                                     <div className="add-new-tour__content-inf1--item">
                                         <Form.Item
                                             label="Điểm đến"
-                                            name="destination_place"
+                                            name="destination_places"
                                             rules={[
                                                 {
                                                     required: true,
@@ -314,6 +411,22 @@ const Inner = memo(
                                                 placeholder="Điểm đến"
                                                 mode="multiple"
                                                 allowClear
+                                                onChange={
+                                                    handleChangeDestination
+                                                }
+                                                maxTagCount="responsive"
+                                                maxTagPlaceholder={omittedValues => (
+                                                    <Tooltip
+                                                        title={omittedValues
+                                                            .map(
+                                                                ({ label }) =>
+                                                                    label
+                                                            )
+                                                            .join(', ')}
+                                                    >
+                                                        <span>...</span>
+                                                    </Tooltip>
+                                                )}
                                             >
                                                 <Option value="TP. Hồ Chí Minh">
                                                     TP. Hồ Chí Minh
@@ -404,7 +517,17 @@ const Inner = memo(
                                                 mode="multiple"
                                                 allowClear
                                                 placeholder="Địa điểm du lịch"
-                                                options={options}
+                                                options={getOptionsFromDestinationPlaces()}
+                                                disabled={
+                                                    destinationPlaces.length ===
+                                                    0
+                                                }
+                                                onChange={values =>
+                                                    handleChangeAttractions(
+                                                        values,
+                                                        getOptionsFromDestinationPlaces()
+                                                    )
+                                                }
                                                 maxTagCount="responsive"
                                                 maxTagPlaceholder={omittedValues => (
                                                     <Tooltip
@@ -451,7 +574,7 @@ const Inner = memo(
                                     </div>
                                     <div className="add-new-tour__content-inf2--item">
                                         <Form.Item
-                                            label="Giá tour"
+                                            label="Giá tour (VNĐ)"
                                             name="price"
                                             rules={[
                                                 {
@@ -466,7 +589,7 @@ const Inner = memo(
                                                 },
                                             ]}
                                         >
-                                            <Input placeholder="Giá tour" />
+                                            <Input placeholder="Giá tour (VNĐ)" />
                                         </Form.Item>
                                     </div>
                                 </div>
@@ -528,34 +651,6 @@ const Inner = memo(
                                         />
                                     </Form.Item>
                                 </div>
-
-                                {/* <div className="add-new-tour__content-inf4">
-                            <Form.Item
-                                name="images-list"
-                                label="Các địa điểm du lịch"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message:
-                                            'Vui lòng thêm ảnh của địa điểm tham quan',
-                                    },
-                                ]}
-                            >
-                                <ImgCrop rotationSlider>
-                                    <Upload
-                                        listType="picture-card"
-                                        // fileList={fileList}
-                                        // onChange={onChange}
-                                        // onPreview={onPreview}
-                                    >
-                                        {'+ Thêm'}
-                                    </Upload>
-                                </ImgCrop>
-                            </Form.Item>
-                            <p className="img-validate">
-                                Định dạng JPG, PNG, JPEG
-                            </p>
-                        </div> */}
 
                                 <div className="add-new-tour__content-btn">
                                     <Button
