@@ -163,6 +163,11 @@ const routes: Array<Route> = [
         path: routeConstants.DETAIL_TOUR,
         Component: commonLoadable(() => import('views/DetailTourPage')),
     },
+    {
+        name: 'Admin Schedule Page',
+        path: routeConstants.ADMIN_SCHEDULE,
+        Component: commonLoadable(() => import('views/AdminSchedule')),
+    },
 ];
 
 export default routes;

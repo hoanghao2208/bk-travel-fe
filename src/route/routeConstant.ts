@@ -25,6 +25,7 @@ const routeConstants = {
     ADMIN_MANAGE_TOURIST: '/admin/manage-tourist',
     WEATHER_FORECAST: '/weather-forecast',
     ADMIN_WEATHER_FORECAST: 'admin/weather-forecast',
+    ADMIN_SCHEDULE: 'admin/schedule/:tour_id',
 };
 
 export default routeConstants;
