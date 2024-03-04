@@ -48,6 +48,10 @@ const WaitingItem: FC<WaitingItemProps> = memo(
             navigate(`/admin/edit-information-tour/${tour_id}`);
         };
 
+        const handleNavigateSchedule = () => {
+            navigate(`/admin/schedule/${tour_id}`);
+        };
+
         return (
             <div className="waiting-item">
                 <div className="waiting-item__img">
@@ -70,7 +74,11 @@ const WaitingItem: FC<WaitingItemProps> = memo(
 
                 {status === 'WAITING' && setOpenDeleteModal && (
                     <div className="waiting-item__btn">
-                        <Button type="primary" icon={<CloudSyncOutlined />}>
+                        <Button
+                            type="primary"
+                            icon={<CloudSyncOutlined />}
+                            onClick={handleNavigateSchedule}
+                        >
                             Lên lịch trình
                         </Button>
                         <Button
