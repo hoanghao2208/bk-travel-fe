@@ -1,8 +1,8 @@
 import { memo, useEffect } from 'react';
 import AdminLayout from 'layouts/AdminLayout';
 import dayjs from 'dayjs';
-import TimePickerItem from './components/TimePickerItem';
 import './style.scss';
+import ScheduleList from 'views/AdminSchedule/views/ScheduleList';
 
 const Inner = memo(({ tourData, column }) => {
     useEffect(() => {
@@ -27,7 +27,7 @@ const Inner = memo(({ tourData, column }) => {
                     )}
                 </div>
                 <div className="admin-schedule__content">
-                    <TimePickerItem tourData={tourData} column={column} />
+                    <ScheduleList tourData={tourData} column={column} />
                 </div>
             </div>
         </AdminLayout>
