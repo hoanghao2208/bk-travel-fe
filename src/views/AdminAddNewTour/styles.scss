@@ -128,4 +128,10 @@
             margin-bottom: 30px;
         }
     }
+    &__list-image {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
 }
