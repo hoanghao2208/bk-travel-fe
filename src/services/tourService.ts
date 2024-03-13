@@ -60,6 +60,19 @@ class TourService extends ApiBase {
             },
         });
     };
+
+    createSchedule = (requestBody: {
+        tour_id: number;
+        schedule_detail: any;
+    }) => {
+        const url = 'http://localhost:8080/api/v1/schedule';
+        return axios.post(url, requestBody);
+    };
+
+    getAllAttractionsOfTour = (id_tour: number) => {
+        const url = `http://localhost:8080/api/v1/tour/${id_tour}/destination`;
+        return axios.get(url);
+    };
 }
 
 const tourService = new TourService();

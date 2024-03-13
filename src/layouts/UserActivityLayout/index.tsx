@@ -65,7 +65,7 @@ const UserActivityLayout: FC<PropsWithChildren> = memo(({ children }) => {
     const handleBeforeUpload = (file: RcFile) => {
         const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
         const isAllowedType = allowedTypes.includes(file.type);
-        const maxSize = 5 * 1024 * 1024;
+        const maxSize = 10 * 1024 * 1024;
         const isWithinSizeLimit = file.size <= maxSize;
 
         if (!isAllowedType || !isWithinSizeLimit) {

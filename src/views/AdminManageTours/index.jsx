@@ -5,6 +5,7 @@ import tourService from 'services/tourService';
 const Wrapper = memo(() => {
     const [waitingTours, setWaitingTours] = useState([]);
     const [deletedTours, setDeletedTours] = useState([]);
+    const [onlineTours, setOnlineTours] = useState([]);
     const [refresh, setRefresh] = useState(false);
 
     const handleGetWaitingTours = useCallback(async () => {
@@ -12,6 +13,17 @@ const Wrapper = memo(() => {
             const response = await tourService.getWaitingTour();
             if (response?.status === 200) {
                 setWaitingTours(response?.data.tours);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }, []);
+
+    const handleGetOnlineTours = useCallback(async () => {
+        try {
+            const response = await tourService.getOnlineTour();
+            if (response?.status === 200) {
+                setOnlineTours(response?.data.tours);
             }
         } catch (err) {
             console.error(err);
@@ -37,11 +49,15 @@ const Wrapper = memo(() => {
         handleGetDeletedTours();
     }, [handleGetDeletedTours, refresh]);
 
+    useEffect(() => {
+        handleGetOnlineTours();
+    }, [handleGetOnlineTours, refresh]);
+
     return (
         <Inner
             waitingTours={waitingTours}
             deletedTours={deletedTours}
-            refresh={refresh}
+            onlineTours={onlineTours}
             setRefresh={setRefresh}
         />
     );

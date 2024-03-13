@@ -4,10 +4,16 @@
     &-form {
         display: flex;
         align-items: flex-end;
+        gap: 10px;
+        &-btn {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -60px;
+        }
     }
     &-form-list {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 20px;
         .ant-select-selector {
             height: 36px !important;
@@ -67,6 +73,17 @@
         &__btn {
             display: flex;
             gap: 20px;
+        }
+    }
+}
+
+.admin-schedule-confirm-btn {
+    text-align: center;
+    .ant-btn {
+        width: 200px;
+        height: 40px;
+        span {
+            font-weight: 500;
         }
     }
 }
