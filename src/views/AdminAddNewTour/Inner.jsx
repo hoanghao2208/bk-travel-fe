@@ -99,7 +99,7 @@ const Inner = memo(({ handleCreateNewTour, form }) => {
     const handleBeforeUpload = file => {
         const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
         const isAllowedType = allowedTypes.includes(file.type);
-        const maxSize = 5 * 1024 * 1024;
+        const maxSize = 10 * 1024 * 1024;
         const isWithinSizeLimit = file.size <= maxSize;
 
         if (!isAllowedType || !isWithinSizeLimit) {
@@ -706,13 +706,6 @@ const Inner = memo(({ handleCreateNewTour, form }) => {
                                 <Form.Item
                                     name="list_images"
                                     label="Hình ảnh các địa điểm du lịch"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                'Vui lòng thêm hình ảnh các địa điểm du lịch',
-                                        },
-                                    ]}
                                 >
                                     <p className="img-validate">
                                         Định dạng JPG, PNG, JPEG
