@@ -67,7 +67,7 @@ const WaitingItem: FC<WaitingItemProps> = memo(
                             {time}
                         </span>
                         <span className="waiting-item__detail--inf1-col3">
-                            Khởi hành {departure_place}
+                            Khởi hành từ {departure_place}
                         </span>
                     </div>
                 </div>
