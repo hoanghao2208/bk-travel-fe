@@ -1,9 +1,9 @@
-import { memo, useEffect } from 'react';
-import AdminLayout from 'layouts/AdminLayout';
-import dayjs from 'dayjs';
-import './style.scss';
-import ScheduleList from 'views/AdminSchedule/views/ScheduleList';
 import { Spin } from 'antd';
+import dayjs from 'dayjs';
+import AdminLayout from 'layouts/AdminLayout';
+import { memo, useEffect } from 'react';
+import ScheduleList from 'views/AdminSchedule/views/ScheduleList';
+import './style.scss';
 
 const Inner = memo(
     ({ form, tourData, column, handleScheduleTour, loading }) => {

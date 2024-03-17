@@ -1,10 +1,10 @@
-import { memo, useCallback, useEffect, useState } from 'react';
-import Inner from 'views/AdminSchedule/Inner';
-import tourService from 'services/tourService';
-import { useParams, useNavigate } from 'react-router-dom';
-import Message from 'components/Message';
-import routeConstants from 'route/routeConstant';
 import { Form } from 'antd';
+import Message from 'components/Message';
+import { memo, useCallback, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import routeConstants from 'route/routeConstant';
+import tourService from 'services/tourService';
+import Inner from 'views/AdminSchedule/Inner';
 
 const Wrapper = memo(() => {
     const { tour_id } = useParams();

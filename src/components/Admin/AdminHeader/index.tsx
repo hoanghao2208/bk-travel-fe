@@ -1,12 +1,12 @@
-import { FC, useState } from 'react';
-import './styles.scss';
-import { Avatar, Badge, Dropdown, Input } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import SearchIcon from 'assets/icons/SearchIcon';
+import { Avatar, Badge, Dropdown, Input } from 'antd';
 import BellNotifyIcon from 'assets/icons/BellNotifyIcon';
-import UserDropDown from 'assets/icons/UserDropDown';
 import LogOutIcon from 'assets/icons/LogOutIcon';
+import SearchIcon from 'assets/icons/SearchIcon';
+import UserDropDown from 'assets/icons/UserDropDown';
+import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
+import './styles.scss';
 
 const AdminHeader: FC = () => {
     const [hoverBell, setHoverBell] = useState<boolean>(false);

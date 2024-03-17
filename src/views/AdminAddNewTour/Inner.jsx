@@ -1,29 +1,29 @@
-import { memo, useCallback, useEffect, useState } from 'react';
-import AdminLayout from 'layouts/AdminLayout';
+import { CompassFilled, InboxOutlined } from '@ant-design/icons';
 import {
-    Form,
-    Upload,
-    Input,
-    DatePicker,
-    TimePicker,
-    Select,
     Button,
+    DatePicker,
+    Form,
     Image,
+    Input,
+    Select,
     Spin,
+    TimePicker,
     Tooltip,
+    Upload,
 } from 'antd';
-import './styles.scss';
-import { InboxOutlined, CompassFilled } from '@ant-design/icons';
 import Message from 'components/Message';
+import dayjs from 'dayjs';
+import AdminLayout from 'layouts/AdminLayout';
+import moment from 'moment';
+import { memo, useCallback, useEffect, useState } from 'react';
+import tourService from 'services/tourService';
 import {
     DEFAULT_DISPLAY_DATE_FORMAT,
     DIGIT_VALIDATE,
     TIME_FORMAT,
 } from 'utils/constants';
-import moment from 'moment';
-import dayjs from 'dayjs';
-import tourService from 'services/tourService';
 import { useCreateContext } from 'views/AdminAddNewTour/Context';
+import './styles.scss';
 
 const Inner = memo(({ handleCreateNewTour, form }) => {
     useEffect(() => {

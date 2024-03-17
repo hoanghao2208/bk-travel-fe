@@ -1,7 +1,8 @@
-import { memo, useEffect } from 'react';
-import AdminLayout from 'layouts/AdminLayout';
 import { Button, Table } from 'antd';
+import AdminLayout from 'layouts/AdminLayout';
+import { memo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import routeConstants from 'route/routeConstant';
 import './style.scss';
 
 const Inner = memo(() => {
@@ -61,7 +62,11 @@ const Inner = memo(() => {
                         BK - Travel
                     </h2>
                     <div className="admin-tour-guides__header--btn">
-                        <Button onClick={() => navigate('/admin/add-new-tour')}>
+                        <Button
+                            onClick={() =>
+                                navigate(routeConstants.ADMIN_ADD_NEW_TOUR)
+                            }
+                        >
                             Thêm tour mới
                         </Button>
                     </div>

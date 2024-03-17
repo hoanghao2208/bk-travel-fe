@@ -1,9 +1,9 @@
-import { memo, useEffect } from 'react';
 import { CheckCircleFilled } from '@ant-design/icons';
-import UserActivityLayout from 'layouts/UserActivityLayout';
 import { Button, Form, Input } from 'antd';
-import Title from 'components/Title';
 import Message from 'components/Message';
+import Title from 'components/Title';
+import UserActivityLayout from 'layouts/UserActivityLayout';
+import { memo, useEffect } from 'react';
 import './style.scss';
 
 const Inner = memo(({ form, handleChangePassword }) => {

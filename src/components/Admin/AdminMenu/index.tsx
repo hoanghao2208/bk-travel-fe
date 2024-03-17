@@ -1,16 +1,17 @@
-import React, { FC } from 'react';
-import './styles.scss';
-import { Menu } from 'antd';
-import type { MenuProps } from 'antd';
 import {
     AppstoreOutlined,
-    UserAddOutlined,
+    CloudOutlined,
     CloudUploadOutlined,
     FolderOpenOutlined,
-    CloudOutlined,
     PlusOutlined,
+    UserAddOutlined,
 } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { Menu } from 'antd';
+import React, { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import routeConstants from 'route/routeConstant';
+import './styles.scss';
 
 const AdminMenu: FC = () => {
     const navigate = useNavigate();
@@ -118,7 +119,7 @@ const AdminMenu: FC = () => {
     return (
         <div className="admin-menu">
             <div className="admin-menu--home">
-                <Link to="/admin">BK - Travel</Link>
+                <Link to={routeConstants.ADMIN_HOMEPAGE}>BK - Travel</Link>
             </div>
             <div className="admin-menu--navigate">
                 <Menu

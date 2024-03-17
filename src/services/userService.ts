@@ -97,6 +97,21 @@ class UserService extends ApiBase {
             },
         });
     };
+
+    addToWishList = (user_id: number, tour_id: number) => {
+        const url = `http://localhost:8080/api/v1/user/wishlist/${user_id}/tours/${tour_id}`;
+        return axios.post(url);
+    };
+
+    getWishList = (user_id: number) => {
+        const url = `http://localhost:8080/api/v1/user/wishlist/${user_id}`;
+        return axios.get(url);
+    };
+
+    removeFromWishList = (user_id: number, tour_id: number) => {
+        const url = `http://localhost:8080/api/v1/user/wishlist/${user_id}/tours/${tour_id}`;
+        return axios.delete(url);
+    };
 }
 
 const userService = new UserService();

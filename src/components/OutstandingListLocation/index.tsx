@@ -1,13 +1,13 @@
+import OutstandingItem from 'components/OutstandingItem';
 import Title from 'components/Title';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import './styles.scss';
-import { Autoplay, Navigation } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import OutstandingItem from 'components/OutstandingItem';
+import { Autoplay, Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import './styles.scss';
 
 const OutstandingListLocation: FC = () => {
     return (

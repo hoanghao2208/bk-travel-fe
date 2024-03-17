@@ -1,13 +1,13 @@
-import { memo, useEffect } from 'react';
-import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import { Button, Image } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
+import { Button, Image } from 'antd';
 import OutstandingItem from 'components/OutstandingItem';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation } from 'swiper/modules';
+import UserHomePageLayout from 'layouts/UserHomePageLayout';
+import { memo, useEffect } from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { Autoplay, Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import './style.scss';
 
 const Inner = memo(() => {

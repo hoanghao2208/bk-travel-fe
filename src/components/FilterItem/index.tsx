@@ -1,7 +1,7 @@
-import { FC, memo } from 'react';
-import './styles.scss';
 import { DatePicker, Input, Select } from 'antd';
+import { FC, memo } from 'react';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
+import './styles.scss';
 
 interface Options {
     value: string;

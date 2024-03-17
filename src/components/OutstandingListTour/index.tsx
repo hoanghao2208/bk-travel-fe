@@ -1,19 +1,40 @@
-import { FC } from 'react';
-import './styles.scss';
 import Title from 'components/Title';
 import TourItem from 'components/TourItem';
-import { Autoplay, Navigation } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import dayjs from 'dayjs';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import tourService from 'services/tourService';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Link } from 'react-router-dom';
+import { Autoplay, Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
+import { ITour } from 'utils/type';
+import './styles.scss';
 
 const OutstandingListTour: FC = () => {
+    const [onlineTours, setOnlineTours] = useState<ITour[]>([]);
+
+    const handleGetOnlineTours = useCallback(async () => {
+        try {
+            const response = await tourService.getOnlineTour();
+            if (response?.status === 200) {
+                setOnlineTours(response.data.tours);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
+
+    useEffect(() => {
+        handleGetOnlineTours();
+    }, [handleGetOnlineTours]);
+
     return (
         <div className="outstanding-tour">
             <div className="outstanding-tour__header">
-                <Title title="Các tour nổi bật của BK Travel" />
+                <Title title="Các tour mới của BK Travel" />
                 <Link to="/">Xem thêm</Link>
             </div>
 
@@ -36,24 +57,31 @@ const OutstandingListTour: FC = () => {
                         },
                     }}
                 >
-                    <SwiperSlide>
-                        <TourItem haveBtn={true} bgItem={true} />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <TourItem haveBtn={true} bgItem={true} />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <TourItem haveBtn={true} bgItem={true} />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <TourItem haveBtn={true} bgItem={true} />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <TourItem haveBtn={true} bgItem={true} />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <TourItem haveBtn={true} bgItem={true} />
-                    </SwiperSlide>
+                    {onlineTours.length > 0 &&
+                        onlineTours.map(tour => (
+                            <SwiperSlide key={tour.tour_id}>
+                                <TourItem
+                                    haveBtn={true}
+                                    bgItem={true}
+                                    tourId={tour.tour_id}
+                                    imgURL={tour.cover_image}
+                                    departureTime={dayjs(
+                                        tour.departure_date
+                                    ).format(DEFAULT_DISPLAY_DATE_FORMAT)}
+                                    time={tour.time}
+                                    tourName={tour.name}
+                                    departurePlace={tour.departure_place}
+                                    empty={
+                                        tour.max_customer -
+                                        tour.current_customers
+                                    }
+                                    deadlineBookTime={dayjs(
+                                        tour.deadline_book_time
+                                    ).format(DEFAULT_DISPLAY_DATE_FORMAT)}
+                                    price={tour.price}
+                                />
+                            </SwiperSlide>
+                        ))}
                 </Swiper>
             </div>
         </div>

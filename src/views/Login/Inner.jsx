@@ -3,8 +3,8 @@ import RegisterHeader from 'components/RegisterHeader';
 import RegisterLayout from 'layouts/RegisterLayout';
 import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './styles.scss';
 import { EMAIL_VALIDATE } from 'utils/constants';
+import './styles.scss';
 
 const Inner = memo(({ handleLogin, loading }) => {
     useEffect(() => {

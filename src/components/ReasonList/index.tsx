@@ -1,11 +1,11 @@
 import DiscoverIcon from 'assets/icons/DiscoverIcon';
+import LockIcon from 'assets/icons/LockIcon';
+import PriceIcon from 'assets/icons/PriceIcon';
+import SpeedIcon from 'assets/icons/SpeedIcon';
 import ReasonItem from 'components/ReasonItem';
 import Title from 'components/Title';
 import { FC } from 'react';
 import './styles.scss';
-import PriceIcon from 'assets/icons/PriceIcon';
-import SpeedIcon from 'assets/icons/SpeedIcon';
-import LockIcon from 'assets/icons/LockIcon';
 
 const ReasonList: FC = () => {
     return (

@@ -1,19 +1,23 @@
-import { FC, useCallback, useEffect, useState } from 'react';
-import './styles.scss';
-import { Link, useNavigate } from 'react-router-dom';
-import Logo from 'assets/icons/Logo';
-import SearchIcon from 'assets/icons/SearchIcon';
-import { Avatar, Badge, Dropdown, Input } from 'antd';
-import CartIcon from 'assets/icons/CartIcon';
-import BellNotifyIcon from 'assets/icons/BellNotifyIcon';
 import { UserOutlined } from '@ant-design/icons';
-import UserDropDown from 'assets/icons/UserDropDown';
-import MoneyDropDown from 'assets/icons/MoneyDropDown';
+import { Avatar, Badge, Dropdown, Input } from 'antd';
+import BellNotifyIcon from 'assets/icons/BellNotifyIcon';
+import CartIcon from 'assets/icons/CartIcon';
 import HeartDropDown from 'assets/icons/HeartDropDown';
 import LogOutIcon from 'assets/icons/LogOutIcon';
-import Message from 'components/Message';
-import { getCustomerId, setToken } from 'reducers/token/function';
+import Logo from 'assets/icons/Logo';
+import MoneyDropDown from 'assets/icons/MoneyDropDown';
+import SearchIcon from 'assets/icons/SearchIcon';
+import UserDropDown from 'assets/icons/UserDropDown';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+    getCustomerId,
+    setCustomerId,
+    setToken,
+} from 'reducers/token/function';
+import routeConstants from 'route/routeConstant';
 import userService from 'services/userService';
+import './styles.scss';
 
 interface UserInfo {
     avatar: string;
@@ -51,16 +55,14 @@ const UserLoginHeader: FC = () => {
                 setUserInfo(response?.data.user_info);
             }
         } catch (err) {
-            // eslint-disable-next-line no-console
-            console.log(err);
+            console.error(err);
         }
     }, [user_id]);
 
     const handleLogout = () => {
         setToken('');
-        navigate('/');
+        setCustomerId(0);
         window.location.reload();
-        Message.sendSuccess('Đăng xuất thành công');
     };
 
     useEffect(() => {
@@ -72,7 +74,7 @@ const UserLoginHeader: FC = () => {
             key: '1',
             label: (
                 <Link
-                    to="/user-profile"
+                    to={routeConstants.USER_PROFILE}
                     style={{
                         fontSize: '16px',
                         display: 'inline-block',
@@ -104,7 +106,7 @@ const UserLoginHeader: FC = () => {
             key: '3',
             label: (
                 <Link
-                    to="/likes"
+                    to={routeConstants.LOVE_LIST}
                     style={{
                         fontSize: '16px',
                         display: 'inline-block',
@@ -139,7 +141,7 @@ const UserLoginHeader: FC = () => {
         <div className="user-login-header__wrapper">
             <div className="user-login-header">
                 <div className="user-login-header__logo">
-                    <Link to="/">
+                    <Link to={routeConstants.USER_HOME_PAGE}>
                         <Logo />
                     </Link>
                 </div>
@@ -164,7 +166,7 @@ const UserLoginHeader: FC = () => {
                         </Badge>
                     </div>
                     <div
-                        onClick={() => navigate('/cart')}
+                        onClick={() => navigate(routeConstants.CART)}
                         onMouseEnter={handleMouseEnterCart}
                         onMouseLeave={handleMouseLeaveCart}
                         className="user-login-header__navigate--cart"

@@ -1,12 +1,12 @@
 import Title from 'components/Title';
+import TopLoationItem from 'components/TopLocationItem';
 import { FC, memo } from 'react';
 import { Link } from 'react-router-dom';
-import { Autoplay, Navigation } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import TopLoationItem from 'components/TopLocationItem';
+import { Autoplay, Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const TopLocationList: FC = memo(() => {
     return (

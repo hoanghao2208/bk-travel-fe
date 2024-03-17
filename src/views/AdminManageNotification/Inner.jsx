@@ -1,8 +1,8 @@
-import { memo, useEffect, useRef } from 'react';
+import { DatePicker, Form, Select, Table } from 'antd';
 import AdminLayout from 'layouts/AdminLayout';
-import { Form, DatePicker, Select, Table } from 'antd';
-import './style.scss';
+import { memo, useEffect, useRef } from 'react';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
+import './style.scss';
 
 const Inner = memo(() => {
     useEffect(() => {

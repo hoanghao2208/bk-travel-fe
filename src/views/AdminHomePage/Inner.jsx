@@ -1,13 +1,14 @@
-import { memo, useEffect } from 'react';
-import AdminLayout from 'layouts/AdminLayout';
 import { Button, Table } from 'antd';
-import { useNavigate } from 'react-router-dom';
 import Logo from 'assets/icons/Logo';
-import InforItem from 'components/Admin/InforItem';
-import PlaneIcon from 'assets/icons/PlaneIcon';
-import TouristIcon from 'assets/icons/TouristIcon';
-import TourGuideIcon from 'assets/icons/TourGuideIcon';
 import MoneyIcon from 'assets/icons/MoneyIcon';
+import PlaneIcon from 'assets/icons/PlaneIcon';
+import TourGuideIcon from 'assets/icons/TourGuideIcon';
+import TouristIcon from 'assets/icons/TouristIcon';
+import InforItem from 'components/Admin/InforItem';
+import AdminLayout from 'layouts/AdminLayout';
+import { memo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import routeConstants from 'route/routeConstant';
 import './style.scss';
 
 const Inner = memo(() => {
@@ -71,7 +72,9 @@ const Inner = memo(() => {
                         </div>
                         <div className="admin-homepage__header--btn">
                             <Button
-                                onClick={() => navigate('/admin/add-new-tour')}
+                                onClick={() =>
+                                    navigate(routeConstants.ADMIN_ADD_NEW_TOUR)
+                                }
                             >
                                 Thêm tour mới
                             </Button>

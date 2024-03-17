@@ -1,11 +1,11 @@
-import { memo, useEffect, useState } from 'react';
-import UserActivityLayout from 'layouts/UserActivityLayout';
+import { Button, DatePicker, Form, Input, Select } from 'antd';
 import Title from 'components/Title';
-import { Form, Input, DatePicker, Button, Select } from 'antd';
-import './style.scss';
-import { DEFAULT_DISPLAY_DATE_FORMAT, VN_PHONE_NUMBER } from 'utils/constants';
 import dayjs from 'dayjs';
+import UserActivityLayout from 'layouts/UserActivityLayout';
 import moment from 'moment';
+import { memo, useEffect, useState } from 'react';
+import { DEFAULT_DISPLAY_DATE_FORMAT, VN_PHONE_NUMBER } from 'utils/constants';
+import './style.scss';
 
 const Inner = memo(
     ({ userInfo, handleUpdateUserInfo, loading, disabled, setDisabled }) => {

@@ -1,3 +1,4 @@
+import Message from 'components/Message';
 import { jwtDecode } from 'jwt-decode';
 import { memo, useCallback, useEffect, useState } from 'react';
 import {
@@ -6,7 +7,6 @@ import {
     setCustomerId,
 } from 'reducers/token/function';
 import userService from 'services/userService';
-import Message from 'components/Message';
 import Inner from './Inner';
 
 const Wrapper = memo(() => {
