@@ -11,7 +11,7 @@ const routeConstants = {
     SEARCH_RESULTS: '/search-results',
     USER_PROFILE: '/user-profile',
     USER_CHANGE_PASSWORD: '/change-password',
-    LOVE_LIST: '/likes',
+    LOVE_LIST: '/wishlist',
     SCHEDULE_DETAIL: '/tour/schedule/detail/:tour_id',
     DETAIL_TOUR: '/tour/information/detail/:tour_id',
     ADMIN_HOMEPAGE: '/admin',

@@ -2,7 +2,7 @@ import { memo, useCallback, useState } from 'react';
 import Inner from 'views/Login/Inner';
 import userService from 'services/userService';
 import Message from 'components/Message';
-import { setToken } from 'reducers/token/function';
+import { setCustomerId, setToken } from 'reducers/token/function';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
@@ -18,6 +18,7 @@ const Wrapper = memo(() => {
                     Message.sendSuccess('Đăng nhập thành công');
                     setToken(response?.data.access_token);
                     const json = jwtDecode(response.data.access_token);
+                    setCustomerId(json.user_id);
                     if (json.role_user === 'admin') {
                         navigate('/admin');
                     } else {
