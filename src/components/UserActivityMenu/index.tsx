@@ -37,7 +37,7 @@ const UserActivityMenu: FC = () => {
             getItem('Đơn hàng', 'orders'),
         ]),
         getItem('Đánh giá', 'evaluate', <StarOutlined />),
-        getItem('Mục yêu thích', 'likes', <HeartOutlined />),
+        getItem('Mục yêu thích', 'wishlist', <HeartOutlined />),
         getItem('Đăng xuất', 'log-out', <LogoutOutlined />),
     ];
 

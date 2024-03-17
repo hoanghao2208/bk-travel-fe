@@ -1,84 +1,178 @@
-import { Button } from 'antd';
-import HeartIcon from 'assets/icons/HeartIcon';
 import { CompassFilled } from '@ant-design/icons';
-import { FC, memo, useState } from 'react';
+import { Button, Tooltip } from 'antd';
+import HeartIcon from 'assets/icons/HeartIcon';
+import HeartRedIcon from 'assets/icons/HeartRedIcon';
+import Message from 'components/Message';
+import { FC, memo, useCallback, useEffect, useState } from 'react';
+import { Link, generatePath, useNavigate } from 'react-router-dom';
+import { getCustomerId, getToken } from 'reducers/token/function';
+import routeConstants from 'route/routeConstant';
+import userService from 'services/userService';
 import './styles.scss';
-import { Link } from 'react-router-dom';
 
 interface TourItemProps {
     haveBtn: boolean;
     bgItem: boolean;
+    tourId: number;
+    imgURL: string;
+    departureTime: string;
+    time: string;
+    tourName: string;
+    departurePlace: string;
+    empty: number;
+    deadlineBookTime: string;
+    price: number;
 }
 
-const TourItem: FC<TourItemProps> = memo(({ haveBtn, bgItem }) => {
-    const [heart, setHeart] = useState(false);
-    return (
-        <div
-            className="tour-item"
-            style={{ backgroundColor: bgItem ? 'white' : '#f5f5f5' }}
-        >
-            <div className="tour-item__header">
-                <div
-                    className="tour-item__header--icon"
-                    onClick={() => setHeart(!heart)}
-                >
-                    <HeartIcon isClick={heart} />
-                </div>
-                <img
-                    src="/images/slide5.jpg"
-                    alt="tour location"
-                    className="tour-item__header--img"
-                />
-            </div>
+const TourItem: FC<TourItemProps> = memo(
+    ({
+        haveBtn,
+        bgItem,
+        tourId,
+        imgURL,
+        departureTime,
+        time,
+        tourName,
+        departurePlace,
+        empty,
+        deadlineBookTime,
+        price,
+    }) => {
+        const token = getToken();
+        const userId = getCustomerId();
+        const navigate = useNavigate();
 
-            <div className="tour-item__center">
-                <div className="tour-item__center--date">
-                    Ngày 12/10/2023 - 4 ngày, 3 đêm
-                </div>
-                <div className="tour-item__center--location">
-                    <Link to="/">
-                        Đà Nẵng – KDL Bà Nà – Sơn Trà – Hội An – La Vang - Động
-                        Phong Nha – Làng hương Thủy Xuân - Huế
-                    </Link>
-                </div>
-                <div className="tour-item__center--start">
-                    <span>Nơi khởi hành:</span>
-                    <span className="tour-item__center--data">
-                        TP. Hồ Chí Minh
-                    </span>
-                </div>
-                <div className="tour-item__center--blank">
-                    <span>Số chổ trống:</span>
-                    <span className="tour-item__center--data">10</span>
-                </div>
-                <div className="tour-item__center--expire">
-                    <span>Hạn đặt chổ:</span>
-                    <span className="tour-item__center--data">10/10/2023</span>
-                </div>
-                <div className="tour-item__center--price">
-                    <span>đ </span>
-                    <span>10.500.802</span>
-                </div>
-            </div>
+        const [loveList, setLoveList] = useState<number[]>([]);
 
-            {haveBtn && (
-                <div className="tour-item__bottom">
-                    <Button type="default" shape="round" size="large">
-                        Thêm vào giỏ hàng
-                    </Button>
-                    <Button
-                        type="primary"
-                        shape="round"
-                        icon={<CompassFilled />}
-                        size="large"
+        const handleNavigate = () => {
+            navigate(
+                generatePath(routeConstants.DETAIL_TOUR, { tour_id: tourId })
+            );
+        };
+
+        const handleGetWishListTours = useCallback(async () => {
+            try {
+                if (userId === 0) {
+                    return;
+                }
+                const response = await userService.getWishList(userId);
+                if (response?.status === 200) {
+                    const tempLoveList = response.data.data.map(
+                        (item: any) => item.tour_id
+                    );
+                    setLoveList(tempLoveList);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }, [userId]);
+
+        const handleWishListTour = useCallback(async () => {
+            if (token === '') {
+                navigate(routeConstants.LOGIN);
+                Message.sendWarning(
+                    'Vui lòng đăng nhập để thực hiện chức năng này'
+                );
+                return;
+            } else {
+                if (!loveList.includes(tourId)) {
+                    const response = await userService.addToWishList(
+                        userId,
+                        tourId
+                    );
+                    if (response?.status === 201) {
+                        setLoveList(prev => [...prev, tourId]);
+                    }
+                } else {
+                    const response = await userService.removeFromWishList(
+                        userId,
+                        tourId
+                    );
+                    if (response?.status === 200) {
+                        setLoveList(prev => prev.filter(id => id !== tourId));
+                    }
+                }
+            }
+        }, [loveList, navigate, token, tourId, userId]);
+
+        useEffect(() => {
+            handleGetWishListTours();
+        }, [handleGetWishListTours]);
+
+        return (
+            <div
+                className="tour-item"
+                style={{ backgroundColor: bgItem ? 'white' : '#f5f5f5' }}
+                onClick={handleNavigate}
+            >
+                <div className="tour-item__header">
+                    <div
+                        className="tour-item__header--icon"
+                        onClick={handleWishListTour}
                     >
-                        Đặt tour ngay
-                    </Button>
+                        {!loveList.includes(tourId) ? (
+                            <HeartIcon />
+                        ) : (
+                            <HeartRedIcon />
+                        )}
+                    </div>
+                    <img
+                        src={imgURL}
+                        alt="tour location"
+                        className="tour-item__header--img"
+                    />
                 </div>
-            )}
-        </div>
-    );
-});
+
+                <div className="tour-item__center">
+                    <div className="tour-item__center--date">
+                        Ngày {departureTime} - {time}
+                    </div>
+                    <div className="tour-item__center--location">
+                        <Tooltip title={tourName}>
+                            <Link to="/">{tourName}</Link>
+                        </Tooltip>
+                    </div>
+                    <div className="tour-item__center--start">
+                        <span>Nơi khởi hành:</span>
+                        <span className="tour-item__center--data">
+                            {departurePlace}
+                        </span>
+                    </div>
+                    <div className="tour-item__center--blank">
+                        <span>Số chổ trống:</span>
+                        <span className="tour-item__center--data">{empty}</span>
+                    </div>
+                    <div className="tour-item__center--expire">
+                        <span>Hạn đặt chổ:</span>
+                        <span className="tour-item__center--data">
+                            {deadlineBookTime}
+                        </span>
+                    </div>
+                    <div className="tour-item__center--price">
+                        <span>{price.toLocaleString()}</span>
+                        <span> VNĐ</span>
+                    </div>
+                </div>
+
+                {haveBtn && (
+                    <div className="tour-item__bottom">
+                        <Button type="default" shape="round" size="large">
+                            Thêm vào giỏ hàng
+                        </Button>
+                        <Button
+                            type="primary"
+                            shape="round"
+                            icon={<CompassFilled />}
+                            size="large"
+                        >
+                            Đặt tour ngay
+                        </Button>
+                    </div>
+                )}
+            </div>
+        );
+    }
+);
 
 TourItem.displayName = 'Tour Item';
 
