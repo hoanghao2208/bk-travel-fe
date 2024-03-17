@@ -1,17 +1,17 @@
-import { memo, useEffect } from 'react';
-import './style.scss';
+import { FloatButton } from 'antd';
+import LocationSlide from 'components/LocationSlide';
+import OutstandingListLocation from 'components/OutstandingListLocation';
+import OutstandingListTour from 'components/OutstandingListTour';
+import ReasonList from 'components/ReasonList';
+import TopLocationList from 'components/TopLocationList';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { memo, useEffect } from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import LocationSlide from 'components/LocationSlide';
-import OutstandingListTour from 'components/OutstandingListTour';
-import OutstandingListLocation from 'components/OutstandingListLocation';
-import TopLocationList from 'components/TopLocationList';
-import ReasonList from 'components/ReasonList';
-import { FloatButton } from 'antd';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import './style.scss';
 
 const Inner = memo(() => {
     useEffect(() => {

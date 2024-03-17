@@ -1,7 +1,7 @@
-import { memo, useEffect, useRef } from 'react';
+import { CompassFilled, InboxOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Select, Upload } from 'antd';
 import AdminLayout from 'layouts/AdminLayout';
-import { InboxOutlined, CompassFilled } from '@ant-design/icons';
-import { Form, Input, Select, Upload, Button } from 'antd';
+import { memo, useEffect, useRef } from 'react';
 import './style.scss';
 
 const Inner = memo(() => {

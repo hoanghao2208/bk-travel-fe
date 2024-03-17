@@ -1,10 +1,11 @@
-import { memo, useCallback, useState } from 'react';
-import Inner from 'views/Login/Inner';
-import userService from 'services/userService';
 import Message from 'components/Message';
-import { setCustomerId, setToken } from 'reducers/token/function';
-import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { memo, useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { setCustomerId, setToken } from 'reducers/token/function';
+import userService from 'services/userService';
+import Inner from 'views/Login/Inner';
+import routeConstants from 'route/routeConstant';
 
 const Wrapper = memo(() => {
     const navigate = useNavigate();
@@ -20,9 +21,9 @@ const Wrapper = memo(() => {
                     const json = jwtDecode(response.data.access_token);
                     setCustomerId(json.user_id);
                     if (json.role_user === 'admin') {
-                        navigate('/admin');
+                        navigate(routeConstants.ADMIN_HOMEPAGE);
                     } else {
-                        navigate('/');
+                        navigate(routeConstants.USER_HOME_PAGE);
                     }
                 } else {
                     if (response?.data === "Email doesn't exist!") {

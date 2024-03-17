@@ -1,10 +1,10 @@
+import { CompassFilled } from '@ant-design/icons';
+import { Button, Form } from 'antd';
 import dayjs from 'dayjs';
 import { memo, useEffect } from 'react';
-import FormList from 'views/AdminSchedule/views/FormList';
-import { Form, Button } from 'antd';
 import { useParams } from 'react-router-dom';
 import { DEFAULT_DISPLAY_DATE_FORMAT, TIME_FORMAT } from 'utils/constants';
-import { CompassFilled } from '@ant-design/icons';
+import FormList from 'views/AdminSchedule/views/FormList';
 import './style.scss';
 
 const SCHEDULE_DEFAULT_VALUE = [undefined];

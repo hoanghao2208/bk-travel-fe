@@ -1,10 +1,11 @@
-import { memo, useEffect, useState } from 'react';
-import AdminLayout from 'layouts/AdminLayout';
 import { Button, Modal } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import WaitingItem from 'views/AdminManageTours/components/WaitingItem';
-import tourService from 'services/tourService';
 import Message from 'components/Message';
+import AdminLayout from 'layouts/AdminLayout';
+import { memo, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import routeConstants from 'route/routeConstant';
+import tourService from 'services/tourService';
+import WaitingItem from 'views/AdminManageTours/components/WaitingItem';
 import './style.scss';
 
 const Inner = memo(
@@ -68,7 +69,9 @@ const Inner = memo(
                         </h2>
                         <div className="manage-tours__header--btn">
                             <Button
-                                onClick={() => navigate('/admin/add-new-tour')}
+                                onClick={() =>
+                                    navigate(routeConstants.ADMIN_ADD_NEW_TOUR)
+                                }
                             >
                                 Thêm tour mới
                             </Button>

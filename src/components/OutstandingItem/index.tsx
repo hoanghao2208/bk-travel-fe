@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
-import './styles.scss';
 import { Link } from 'react-router-dom';
+import './styles.scss';
 
 interface OutstandingItemProps {
     imgURL: string;

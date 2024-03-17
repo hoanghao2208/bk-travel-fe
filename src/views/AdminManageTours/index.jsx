@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import Inner from 'views/AdminManageTours/Inner';
 import tourService from 'services/tourService';
+import Inner from 'views/AdminManageTours/Inner';
 
 const Wrapper = memo(() => {
     const [waitingTours, setWaitingTours] = useState([]);

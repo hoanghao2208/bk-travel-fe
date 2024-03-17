@@ -1,9 +1,10 @@
-import { FC } from 'react';
-import './styles.scss';
-import Logo from 'assets/icons/Logo';
 import { Button, Input } from 'antd';
+import Logo from 'assets/icons/Logo';
 import SearchIcon from 'assets/icons/SearchIcon';
+import { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import routeConstants from 'route/routeConstant';
+import './styles.scss';
 
 const UserHeader: FC = () => {
     const navigate = useNavigate();
@@ -11,7 +12,7 @@ const UserHeader: FC = () => {
         <div className="user-header__wrapper">
             <div className="user-header">
                 <div className="user-header__logo">
-                    <Link to="/">
+                    <Link to={routeConstants.USER_HOME_PAGE}>
                         <Logo />
                     </Link>
                 </div>
@@ -25,11 +26,11 @@ const UserHeader: FC = () => {
                     <Link to="/top-tour">Tour nổi bật</Link>
                     <Link to="/weather-forecast">Thời tiết</Link>
                     <Link to="/support">Trợ giúp</Link>
-                    <Link to="/register">Đăng ký</Link>
+                    <Link to={routeConstants.REGISTER}>Đăng ký</Link>
                     <Button
                         type="primary"
                         ghost
-                        onClick={() => navigate('/login')}
+                        onClick={() => navigate(routeConstants.LOGIN)}
                     >
                         Đăng nhập
                     </Button>

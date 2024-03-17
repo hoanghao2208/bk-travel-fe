@@ -1,8 +1,8 @@
-import { memo, useCallback, useMemo, useState } from 'react';
-import Inner from 'views/AdminAddNewTour/Inner';
-import tourService from 'services/tourService';
-import Message from 'components/Message';
 import { Form } from 'antd';
+import Message from 'components/Message';
+import { memo, useCallback, useMemo, useState } from 'react';
+import tourService from 'services/tourService';
+import Inner from 'views/AdminAddNewTour/Inner';
 import CreateTourContextProvider from './Context';
 
 const Wrapper = memo(() => {

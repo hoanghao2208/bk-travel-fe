@@ -1,12 +1,13 @@
-import { FC } from 'react';
-import './styles.scss';
-import Logo from 'assets/icons/Logo';
-import { Link } from 'react-router-dom';
 import { Button } from 'antd';
-import LinkedInFooterIcon from 'assets/icons/LinkedInFooterIcon';
 import FacebookFooterIcon from 'assets/icons/FacebookFooterIcon';
 import InstagramFooterIcon from 'assets/icons/InstagramFooterIcon';
+import LinkedInFooterIcon from 'assets/icons/LinkedInFooterIcon';
+import Logo from 'assets/icons/Logo';
 import YoutubeFooterIcon from 'assets/icons/YoutubeFooterIcon';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
+import routeConstants from 'route/routeConstant';
+import './styles.scss';
 
 const UserFooter: FC = () => {
     return (
@@ -29,7 +30,7 @@ const UserFooter: FC = () => {
             </div>
             <div className="user-footer__bottom">
                 <div className="user-footer__bottom--logo">
-                    <Link to="/">
+                    <Link to={routeConstants.USER_HOME_PAGE}>
                         <Logo />
                     </Link>
                 </div>

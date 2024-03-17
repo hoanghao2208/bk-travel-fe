@@ -1,10 +1,10 @@
+import { Form } from 'antd';
+import Message from 'components/Message';
 import { jwtDecode } from 'jwt-decode';
 import { memo, useCallback } from 'react';
 import { getToken } from 'reducers/token/function';
-import Inner from 'views/UserChangePasswordPage/Inner';
-import { Form } from 'antd';
 import userService from 'services/userService';
-import Message from 'components/Message';
+import Inner from 'views/UserChangePasswordPage/Inner';
 
 const Wrapper = memo(() => {
     const token = getToken();

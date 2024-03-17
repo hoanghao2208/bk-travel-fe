@@ -1,9 +1,10 @@
-import { memo, useCallback, useEffect, useState } from 'react';
-import tourService from 'services/tourService';
-import Message from 'components/Message';
 import { Form } from 'antd';
+import Message from 'components/Message';
+import { memo, useCallback, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import routeConstants from 'route/routeConstant';
+import tourService from 'services/tourService';
 import Inner from 'views/AdminEditTour/Inner';
-import { useParams, useNavigate } from 'react-router-dom';
 
 const Wrapper = memo(() => {
     const [loading, setLoading] = useState(false);
@@ -35,7 +36,7 @@ const Wrapper = memo(() => {
                 );
                 if (response.status === 200) {
                     Message.sendSuccess('Cập nhật dữ liệu tour thành công!');
-                    navigate('/admin/manage-tours');
+                    navigate(routeConstants.ADMIN_EDIT_TOUR);
                 } else {
                     Message.sendError(
                         'Đã có lỗi xãy ra, vui lòng kiểm tra lại'

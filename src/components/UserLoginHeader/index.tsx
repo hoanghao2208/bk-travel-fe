@@ -141,7 +141,7 @@ const UserLoginHeader: FC = () => {
         <div className="user-login-header__wrapper">
             <div className="user-login-header">
                 <div className="user-login-header__logo">
-                    <Link to="/">
+                    <Link to={routeConstants.USER_HOME_PAGE}>
                         <Logo />
                     </Link>
                 </div>
@@ -166,7 +166,7 @@ const UserLoginHeader: FC = () => {
                         </Badge>
                     </div>
                     <div
-                        onClick={() => navigate('/cart')}
+                        onClick={() => navigate(routeConstants.CART)}
                         onMouseEnter={handleMouseEnterCart}
                         onMouseLeave={handleMouseLeaveCart}
                         className="user-login-header__navigate--cart"

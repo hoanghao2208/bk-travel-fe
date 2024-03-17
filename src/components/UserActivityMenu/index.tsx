@@ -1,14 +1,14 @@
-import React, { FC } from 'react';
-import './styles.scss';
-import { Menu } from 'antd';
-import type { MenuProps } from 'antd';
-import { useNavigate } from 'react-router-dom';
 import {
-    UserOutlined,
-    LogoutOutlined,
     HeartOutlined,
+    LogoutOutlined,
     StarOutlined,
+    UserOutlined,
 } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { Menu } from 'antd';
+import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './styles.scss';
 
 type MenuItem = Required<MenuProps>['items'][number];
 

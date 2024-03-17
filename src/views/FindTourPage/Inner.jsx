@@ -1,11 +1,12 @@
-import { memo, useEffect, useRef } from 'react';
-import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import './style.scss';
-import { Form, Select, DatePicker, Button } from 'antd';
 import { CompassFilled, PlusOutlined } from '@ant-design/icons';
-import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
+import { Button, DatePicker, Form, Select } from 'antd';
 import OutstandingListTour from 'components/OutstandingListTour';
+import UserHomePageLayout from 'layouts/UserHomePageLayout';
+import { memo, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
+import routeConstants from 'route/routeConstant';
+import './style.scss';
 
 const Inner = memo(() => {
     useEffect(() => {
@@ -111,7 +112,7 @@ const Inner = memo(() => {
                             shape="round"
                             icon={<PlusOutlined />}
                             size="large"
-                            onClick={() => navigate('/custom-tour')}
+                            onClick={() => navigate(routeConstants.CUSTOM_TOUR)}
                         >
                             Tạo tour của riêng bạn
                         </Button>

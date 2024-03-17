@@ -1,14 +1,15 @@
-import { FC, memo } from 'react';
-import { Button } from 'antd';
 import {
     CloudSyncOutlined,
-    EditOutlined,
     DeleteOutlined,
+    EditOutlined,
     UndoOutlined,
 } from '@ant-design/icons';
-import './styles.scss';
+import { Button } from 'antd';
 import dayjs from 'dayjs';
-import { useNavigate } from 'react-router-dom';
+import { FC, memo } from 'react';
+import { generatePath, useNavigate } from 'react-router-dom';
+import routeConstants from 'route/routeConstant';
+import './styles.scss';
 
 interface WaitingItemProps {
     status: string;
@@ -45,11 +46,11 @@ const WaitingItem: FC<WaitingItemProps> = memo(
         };
 
         const hanldeNavigateEdit = () => {
-            navigate(`/admin/edit-information-tour/${tour_id}`);
+            navigate(generatePath(routeConstants.ADMIN_EDIT_TOUR, { tour_id }));
         };
 
         const handleNavigateSchedule = () => {
-            navigate(`/admin/schedule/${tour_id}`);
+            navigate(generatePath(routeConstants.ADMIN_SCHEDULE, { tour_id }));
         };
 
         return (

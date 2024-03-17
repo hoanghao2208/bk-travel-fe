@@ -1,9 +1,9 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { Form, TimePicker, Input, Button, Select } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { TIME_FORMAT } from 'utils/constants';
+import { Button, Form, Input, Select, TimePicker } from 'antd';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import tourService from 'services/tourService';
+import { TIME_FORMAT } from 'utils/constants';
 import './style.scss';
 
 const Item = memo(({ name, tourDestinations, hidden, remove, ...props }) => {

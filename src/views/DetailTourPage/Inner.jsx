@@ -1,17 +1,17 @@
-import { memo, useEffect } from 'react';
-import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import StarIcon from 'assets/icons/StarIcon';
-import LoveIcon from 'assets/icons/LoveIcon';
-import { Image, Rate } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import DetailTourItem from 'components/DetailTourItem';
-import Comment from 'components/Comment';
-import Title from 'components/Title';
 import {
-    SendOutlined,
-    SearchOutlined,
     CommentOutlined,
+    SearchOutlined,
+    SendOutlined,
 } from '@ant-design/icons';
+import { Image, Rate } from 'antd';
+import LoveIcon from 'assets/icons/LoveIcon';
+import StarIcon from 'assets/icons/StarIcon';
+import Comment from 'components/Comment';
+import DetailTourItem from 'components/DetailTourItem';
+import Title from 'components/Title';
+import UserHomePageLayout from 'layouts/UserHomePageLayout';
+import { memo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './style.scss';
 
 const Inner = memo(() => {

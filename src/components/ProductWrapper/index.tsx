@@ -1,7 +1,7 @@
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import ProductItem from 'components/ProductItem';
 import { FC, memo } from 'react';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import './styles.scss';
 
 const ProductWrapper: FC = memo(() => {

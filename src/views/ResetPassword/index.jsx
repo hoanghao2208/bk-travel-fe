@@ -1,8 +1,9 @@
-import { memo, useCallback, useState } from 'react';
-import Inner from 'views/ResetPassword/Inner';
-import userService from 'services/userService';
 import Message from 'components/Message';
+import { memo, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import routeConstants from 'route/routeConstant';
+import userService from 'services/userService';
+import Inner from 'views/ResetPassword/Inner';
 
 const Wrapper = memo(() => {
     const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ const Wrapper = memo(() => {
                     Message.sendSuccess(
                         'Cập nhật mật khẩu thành công, vui lòng đăng nhập lại'
                     );
-                    navigate('/login');
+                    navigate(routeConstants.LOGIN);
                 } else {
                     if (response?.data.Message === 'Code is expired!') {
                         Message.sendError(

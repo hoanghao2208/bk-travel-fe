@@ -1,11 +1,11 @@
 import { Button, Form, Input } from 'antd';
-import { memo, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './styles.scss';
+import Message from 'components/Message';
 import RegisterHeader from 'components/RegisterHeader';
 import RegisterLayout from 'layouts/RegisterLayout';
+import { memo, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { EMAIL_VALIDATE, PASSWORD_VALIDATE } from 'utils/constants';
-import Message from 'components/Message';
+import './styles.scss';
 
 const Inner = memo(({ handleRegister }) => {
     useEffect(() => {

@@ -1,7 +1,7 @@
-import { memo, useEffect } from 'react';
-import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import { Checkbox, Button } from 'antd';
+import { Button, Checkbox } from 'antd';
 import ProductWrapper from 'components/ProductWrapper';
+import UserHomePageLayout from 'layouts/UserHomePageLayout';
+import { memo, useEffect } from 'react';
 import './style.scss';
 
 const Inner = memo(() => {

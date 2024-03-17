@@ -1,11 +1,12 @@
 import { Button, Form, Input } from 'antd';
 import LogoRegister from 'assets/icons/LogoRegister';
+import Message from 'components/Message';
 import RegisterLayout from 'layouts/RegisterLayout';
 import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Message from 'components/Message';
-import './styles.scss';
+import routeConstants from 'route/routeConstant';
 import { PASSWORD_VALIDATE } from 'utils/constants';
+import './styles.scss';
 
 const Inner = memo(({ loading, handleResetPassword }) => {
     useEffect(() => {
@@ -104,9 +105,11 @@ const Inner = memo(({ loading, handleResetPassword }) => {
                         <div className="forgot__form--footer">
                             <span>
                                 Chưa có tài khoản?
-                                <Link to="/register">Đăng ký</Link>
+                                <Link to={routeConstants.REGISTER}>
+                                    Đăng ký
+                                </Link>
                             </span>
-                            <Link to="/login">Đăng nhập</Link>
+                            <Link to={routeConstants.LOGIN}>Đăng nhập</Link>
                         </div>
                         <Form.Item>
                             <Button
