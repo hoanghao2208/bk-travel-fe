@@ -78,6 +78,9 @@
                 color: $color--red;
             }
         }
+        &--liked {
+            color: $color--red;
+        }
     }
     &__book-tour {
         margin-bottom: 30px;

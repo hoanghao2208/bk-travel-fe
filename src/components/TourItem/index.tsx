@@ -103,7 +103,6 @@ const TourItem: FC<TourItemProps> = memo(
             <div
                 className="tour-item"
                 style={{ backgroundColor: bgItem ? 'white' : '#f5f5f5' }}
-                onClick={handleNavigate}
             >
                 <div className="tour-item__header">
                     <div
@@ -120,10 +119,10 @@ const TourItem: FC<TourItemProps> = memo(
                         src={imgURL}
                         alt="tour location"
                         className="tour-item__header--img"
+                        onClick={handleNavigate}
                     />
                 </div>
-
-                <div className="tour-item__center">
+                <div className="tour-item__center" onClick={handleNavigate}>
                     <div className="tour-item__center--date">
                         Ngày {departureTime} - {time}
                     </div>

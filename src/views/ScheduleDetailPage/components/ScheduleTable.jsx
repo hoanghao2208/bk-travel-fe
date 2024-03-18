@@ -39,7 +39,7 @@ const ScheduleTable = memo(({ columnNumber, tourData, scheduleData }) => {
         handleGetDateSchedule();
     }, [handleGetDateSchedule]);
 
-    if (!scheduleData) {
+    if (scheduleData.length === 0) {
         return null;
     }
 

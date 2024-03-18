@@ -1,5 +1,5 @@
 import { SendOutlined } from '@ant-design/icons';
-import { Button, Image } from 'antd';
+import { Button, FloatButton, Image } from 'antd';
 import OutstandingItem from 'components/OutstandingItem';
 import dayjs from 'dayjs';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
@@ -20,7 +20,7 @@ const Inner = memo(({ tourData, scheduleData }) => {
 
     if (
         !tourData ||
-        !scheduleData ||
+        scheduleData.length === 0 ||
         !tourData.price ||
         !tourData.list_image ||
         !tourData.time
@@ -172,6 +172,8 @@ const Inner = memo(({ tourData, scheduleData }) => {
                         scheduleData={scheduleData}
                     />
                 </div>
+
+                <FloatButton.BackTop visibilityHeight={0} />
             </div>
         </UserHomePageLayout>
     );
