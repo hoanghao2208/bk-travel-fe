@@ -1,6 +1,7 @@
 import { SendOutlined } from '@ant-design/icons';
 import { Button, Image } from 'antd';
 import OutstandingItem from 'components/OutstandingItem';
+import dayjs from 'dayjs';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
 import { memo, useEffect } from 'react';
 import 'swiper/css';
@@ -8,33 +9,55 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
+import ScheduleTable from 'views/ScheduleDetailPage/components/ScheduleTable';
 import './style.scss';
 
-const Inner = memo(() => {
+const Inner = memo(({ tourData, scheduleData }) => {
     useEffect(() => {
         document.title = 'Lịch trình chi tiết';
     });
+
+    if (
+        !tourData ||
+        !scheduleData ||
+        !tourData.price ||
+        !tourData.list_image ||
+        !tourData.time
+    ) {
+        return null;
+    }
+
+    const imageList = JSON.parse(tourData.list_image);
+    const columnNumber = parseInt(tourData.time.match(/\d+/)[0]);
+
     return (
         <UserHomePageLayout>
             <div className="schedule-detail">
                 <div className="schedule-detail__header">
                     <div className="schedule-detail__header--left">
                         <h3 className="schedule-detail__header--left-title">
-                            Đà Nẵng – KDL Bà Nà – Sơn Trà – Hội An – La Vang -
-                            Động Phong Nha – Làng hương Thủy Xuân - Huế
+                            {tourData?.name}
                         </h3>
                         <div className="schedule-detail__header--left-info">
                             <div>
                                 <span>Nơi khởi hành:</span>
-                                <span>TP. Hồ Chí Minh</span>
+                                <span>{tourData?.departure_place}</span>
                             </div>
                             <div>
                                 <span>Số chổ trống:</span>
-                                <span>10</span>
+                                <span>
+                                    {tourData?.max_customer -
+                                        tourData?.current_customers}
+                                </span>
                             </div>
                             <div>
                                 <span>Hạn đặt chổ:</span>
-                                <span>12/10/2023</span>
+                                <span>
+                                    {dayjs(tourData?.deadline_book_time).format(
+                                        DEFAULT_DISPLAY_DATE_FORMAT
+                                    )}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -52,22 +75,21 @@ const Inner = memo(() => {
                             <Button shape="round">Liên hệ tư vấn</Button>
                         </div>
                         <h3 className="schedule-detail__header--right-price">
-                            đ 10.500.802
+                            {tourData?.price.toLocaleString()} VNĐ
                         </h3>
                     </div>
                 </div>
 
                 <div className="schedule-detail__image">
                     <div className="schedule-detail__image--primary">
-                        <Image src="/images/slide5.jpg" height={500} />
+                        <Image src={tourData.cover_image} height={500} />
                     </div>
                     <div className="schedule-detail__image--normal">
-                        <div>
-                            <Image src="/images/slide6.jpg" height={240} />
-                        </div>
-                        <div>
-                            <Image src="/images/slide2.jpg" height={240} />
-                        </div>
+                        {imageList.slice(0, 2).map((image, index) => (
+                            <div key={index}>
+                                <Image src={image} height={240} />
+                            </div>
+                        ))}
                     </div>
                 </div>
 
@@ -75,15 +97,19 @@ const Inner = memo(() => {
                     <div className="schedule-detail__information--left">
                         <div>
                             <span>Ngày khởi hành:</span>
-                            <span>20/10/2023</span>
+                            <span>
+                                {dayjs(tourData.departure_date).format(
+                                    DEFAULT_DISPLAY_DATE_FORMAT
+                                )}
+                            </span>
                         </div>
                         <div>
                             <span>Thời gian tập trung:</span>
-                            <span>8:00 am</span>
+                            <span>{tourData.departure_time}</span>
                         </div>
                         <div>
-                            <span>Số ngày:</span>
-                            <span>4 ngày, 3 đêm</span>
+                            <span>Thời gian tour:</span>
+                            <span>{tourData.time}</span>
                         </div>
                         <div>
                             <span>Hướng dẫn viên:</span>
@@ -92,21 +118,9 @@ const Inner = memo(() => {
                     </div>
                     <div className="schedule-detail__information--right">
                         <h3>Điểm nhấn</h3>
-                        <ul className="schedule-detail__information--right-hightlight">
-                            <li>
-                                Phố cổ Hội An với lung linh sắc màu của đèn lồng
-                                và những hoạt động dân gian đặc sắc.
-                            </li>
-                            <li>
-                                Đại Nội Huế rộng lớn nơi hoàng cung xưa của các
-                                vua chúa Triều Nguyễn.
-                            </li>
-                            <li>Chùa Thiên Mụ - Biểu tượng xứ Huế mộng mơ.</li>
-                            <li>
-                                Động Phong Nha - Thuộc quần thể Di sản với hệ
-                                thống sông ngầm dài nhất Thế Giới
-                            </li>
-                        </ul>
+                        <p className="schedule-detail__information--right-hightlight">
+                            {tourData.highlight}
+                        </p>
                     </div>
                 </div>
 
@@ -139,27 +153,11 @@ const Inner = memo(() => {
                                 },
                             }}
                         >
-                            <SwiperSlide>
-                                <OutstandingItem imgURL="/images/slide1.jpg" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <OutstandingItem imgURL="/images/slide2.jpg" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <OutstandingItem imgURL="/images/slide3.jpg" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <OutstandingItem imgURL="/images/slide4.jpg" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <OutstandingItem imgURL="/images/slide5.jpg" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <OutstandingItem imgURL="/images/slide6.jpg" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <OutstandingItem imgURL="/images/slide1.jpg" />
-                            </SwiperSlide>
+                            {imageList.map((image, index) => (
+                                <SwiperSlide key={index}>
+                                    <OutstandingItem imgURL={image} />
+                                </SwiperSlide>
+                            ))}
                         </Swiper>
                     </div>
                 </div>
@@ -168,6 +166,11 @@ const Inner = memo(() => {
                     <h3 className="schedule-detail__slider--title">
                         Lịch trình tour
                     </h3>
+                    <ScheduleTable
+                        columnNumber={columnNumber}
+                        tourData={tourData}
+                        scheduleData={scheduleData}
+                    />
                 </div>
             </div>
         </UserHomePageLayout>
