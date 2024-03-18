@@ -7,8 +7,7 @@ import {
 import { Button } from 'antd';
 import dayjs from 'dayjs';
 import { FC, memo } from 'react';
-import { generatePath, useNavigate } from 'react-router-dom';
-import routeConstants from 'route/routeConstant';
+import { useNavigate } from 'react-router-dom';
 import './styles.scss';
 
 interface WaitingItemProps {
@@ -46,11 +45,11 @@ const WaitingItem: FC<WaitingItemProps> = memo(
         };
 
         const hanldeNavigateEdit = () => {
-            navigate(generatePath(routeConstants.ADMIN_EDIT_TOUR, { tour_id }));
+            navigate(`/admin/edit-information-tour/${tour_id}`);
         };
 
         const handleNavigateSchedule = () => {
-            navigate(generatePath(routeConstants.ADMIN_SCHEDULE, { tour_id }));
+            navigate(`/admin/schedule/${tour_id}`);
         };
 
         return (

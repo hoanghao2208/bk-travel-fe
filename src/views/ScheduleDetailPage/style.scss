@@ -139,11 +139,10 @@
                 color: $color--primary;
                 margin: 0;
             }
-            ul {
-                margin-bottom: 0;
-                li:not(:last-child) {
-                    padding-bottom: 12px;
-                }
+            &-hightlight {
+                font-weight: 500;
+                line-height: 1.5;
+                color: $color--text2;
             }
         }
     }

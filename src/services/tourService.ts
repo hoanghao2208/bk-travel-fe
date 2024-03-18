@@ -73,6 +73,11 @@ class TourService extends ApiBase {
         const url = `http://localhost:8080/api/v1/tour/${id_tour}/destination`;
         return axios.get(url);
     };
+
+    getTourSchedule = (id_tour: number) => {
+        const url = `http://localhost:8080/api/v1/tour/${id_tour}/schedule`;
+        return axios.get(url);
+    };
 }
 
 const tourService = new TourService();

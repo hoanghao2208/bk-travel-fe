@@ -38,7 +38,7 @@ const ScheduleList = memo(({ form, tourData, column, handleScheduleTour }) => {
             data[1].forEach(item => {
                 item.range_time =
                     dayjs(item.range_time[0]).format(TIME_FORMAT) +
-                    '-' +
+                    ' - ' +
                     dayjs(item.range_time[1]).format(TIME_FORMAT);
                 item.description = item.description.trim();
                 item.note = item.note.trim();
