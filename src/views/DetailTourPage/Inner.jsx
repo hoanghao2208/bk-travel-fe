@@ -3,25 +3,66 @@ import {
     SearchOutlined,
     SendOutlined,
 } from '@ant-design/icons';
-import { Image, Rate } from 'antd';
+import { FloatButton, Image, Rate } from 'antd';
 import LoveIcon from 'assets/icons/LoveIcon';
+import LoveRedIcon from 'assets/icons/LoveRedIcon';
 import StarIcon from 'assets/icons/StarIcon';
 import Comment from 'components/Comment';
 import DetailTourItem from 'components/DetailTourItem';
+import Message from 'components/Message';
 import Title from 'components/Title';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import { memo, useEffect } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { getCustomerId, useToken } from 'reducers/token/function';
+import routeConstants from 'route/routeConstant';
+import userService from 'services/userService';
 import './style.scss';
 
-const Inner = memo(({ tourData }) => {
+const Inner = memo(({ tourData, loveList, setLoveList, isGetLoveList }) => {
     useEffect(() => {
         document.title = 'Chi tiết tour';
     });
+    const token = useToken();
     const navigate = useNavigate();
     const { tour_id } = useParams();
+    const userId = getCustomerId();
 
-    if (!tourData || !tourData.description || !tourData.list_image) {
+    const handleWishListTour = useCallback(async () => {
+        if (token === '') {
+            navigate(routeConstants.LOGIN);
+            Message.sendWarning(
+                'Vui lòng đăng nhập để thực hiện chức năng này'
+            );
+            return;
+        } else {
+            const tourId = parseInt(tour_id);
+            if (!loveList.includes(tourId)) {
+                const response = await userService.addToWishList(
+                    userId,
+                    tourId
+                );
+                if (response?.status === 201) {
+                    setLoveList(prev => [...prev, tourId]);
+                }
+            } else {
+                const response = await userService.removeFromWishList(
+                    userId,
+                    tourId
+                );
+                if (response?.status === 200) {
+                    setLoveList(prev => prev.filter(id => id !== tourId));
+                }
+            }
+        }
+    }, [loveList, navigate, setLoveList, token, tour_id, userId]);
+
+    if (
+        !tourData ||
+        !tourData.description ||
+        !tourData.list_image ||
+        isGetLoveList === false
+    ) {
         return null;
     }
 
@@ -48,9 +89,24 @@ const Inner = memo(({ tourData }) => {
                                 5000+ Tour đã được đặt
                             </span>
                         </p>
-                        <p className="tour-detail__header--like">
-                            <LoveIcon />
-                            <span>Yêu thích</span>
+                        <p
+                            className="tour-detail__header--like"
+                            onClick={handleWishListTour}
+                        >
+                            {!loveList.includes(parseInt(tour_id)) ? (
+                                <LoveIcon />
+                            ) : (
+                                <LoveRedIcon />
+                            )}
+                            <span
+                                className={`${
+                                    loveList.includes(parseInt(tour_id))
+                                        ? 'tour-detail__header--liked'
+                                        : ''
+                                }`}
+                            >
+                                Yêu thích
+                            </span>
                         </p>
                     </div>
                 </div>
@@ -154,6 +210,7 @@ const Inner = memo(({ tourData }) => {
                         />
                     </div>
                 </div>
+                <FloatButton.BackTop visibilityHeight={0} />
             </div>
         </UserHomePageLayout>
     );
