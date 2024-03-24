@@ -1,3 +1,7 @@
+import { Form } from 'antd';
+
+type ValidateStatus = Parameters<typeof Form.Item>[0]['validateStatus'];
+
 export interface ITour {
     tour_id: number;
     name: string;
@@ -9,4 +13,10 @@ export interface ITour {
     time: string;
     deadline_book_time: string;
     price: number;
+}
+
+export interface IPassengerNumber {
+    value: number;
+    validateStatus?: ValidateStatus;
+    errorMsg?: string | null;
 }

@@ -112,6 +112,18 @@ class UserService extends ApiBase {
         const url = `http://localhost:8080/api/v1/user/wishlist/${user_id}/tours/${tour_id}`;
         return axios.delete(url);
     };
+
+    addToCart = (requestBody: {
+        user_id: number;
+        tour: {
+            tour_id: number | null;
+            adult_quantity: number;
+            child_quantity: number;
+        };
+    }) => {
+        const url = 'http://localhost:8080/api/v1/user/cart';
+        return axios.post(url, requestBody);
+    };
 }
 
 const userService = new UserService();
