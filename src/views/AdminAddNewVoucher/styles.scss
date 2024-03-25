@@ -1,0 +1,89 @@
+@import 'scss/global.scss';
+
+.add-new-voucher {
+    box-sizing: border-box;
+    &__header {
+        padding: 20px 40px 10px;
+        &--title {
+            margin: 0;
+            text-transform: uppercase;
+            font-size: 32px;
+            letter-spacing: 1.4px;
+        }
+        &--intro {
+            margin: 8px 4px;
+            font-size: 16px;
+            font-weight: 500;
+            color: $color-date;
+        }
+    }
+    &__content {
+        padding: 10px 40px 20px;
+        box-sizing: border-box;
+        .ant-form-item-label > label {
+            line-height: 1.4;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .ant-input {
+            width: 100%;
+            height: 36px;
+            color: $color-date;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        .ant-select-selector {
+            height: 36px !important;
+            font-size: 16px;
+            color: $color-date;
+            font-weight: 500;
+            span {
+                font-weight: 500;
+            }
+        }
+        .ant-picker {
+            width: 100%;
+            height: 36px;
+        }
+        .ant-picker-input {
+            input {
+                color: $color-date;
+                font-weight: 500;
+                font-size: 16px;
+            }
+        }
+        &--row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+        &--row--img {
+            display: flex;
+            flex-direction: column;
+            width: calc(50% - 20px);
+        }
+        &-btn {
+            text-align: center;
+            margin-top: 20px;
+            .ant-btn {
+                width: 200px;
+                height: 40px;
+                span {
+                    font-weight: 500;
+                }
+            }
+        }
+        .img-validate {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+            color: $color-date;
+        }
+        .upload-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+    }
+}
