@@ -135,6 +135,7 @@
                 0 8px 10px -6px $color-shadow1;
             box-sizing: border-box;
             height: 200px;
+            overflow-y: scroll;
             h3 {
                 color: $color--primary;
                 margin: 0;

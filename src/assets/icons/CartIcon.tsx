@@ -1,10 +1,6 @@
 import { FC, memo } from 'react';
 
-interface CartIconProps {
-    hoverCart: boolean;
-}
-
-const CartIcon: FC<CartIconProps> = memo(({ hoverCart }) => {
+const CartIcon: FC = memo(() => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -14,7 +10,7 @@ const CartIcon: FC<CartIconProps> = memo(({ hoverCart }) => {
         >
             <g
                 fill="none"
-                stroke={hoverCart ? '#1890ff' : 'currentColor'}
+                stroke="currentColor"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"

@@ -1,0 +1,53 @@
+@import 'scss/global.scss';
+
+.input-passenger {
+    .ant-input-number-handler-wrap {
+        display: none;
+    }
+    .ant-input-number-input {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .ant-btn {
+        border: none;
+        span {
+            color: $color--light;
+            font-weight: 600;
+        }
+    }
+    .ant-form-item {
+        margin-bottom: 0;
+    }
+    &--wrapper {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        background-color: $color-homepage-bg;
+        box-sizing: border-box;
+        padding: 20px 10px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+    }
+    &--label {
+        font-size: 16px;
+        font-weight: 600;
+    }
+    &--item {
+        display: flex;
+        gap: 20px;
+        align-items: baseline;
+        .btn-decrease .ant-btn {
+            background: $color--red;
+            &:hover {
+                background-color: $color-status--deploying;
+            }
+        }
+        .btn-increase .ant-btn {
+            background: $color-button--green;
+            &:hover {
+                background: $color-button--green-hover;
+            }
+        }
+    }
+}
