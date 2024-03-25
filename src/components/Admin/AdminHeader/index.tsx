@@ -4,18 +4,11 @@ import BellNotifyIcon from 'assets/icons/BellNotifyIcon';
 import LogOutIcon from 'assets/icons/LogOutIcon';
 import SearchIcon from 'assets/icons/SearchIcon';
 import UserDropDown from 'assets/icons/UserDropDown';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import './styles.scss';
 
 const AdminHeader: FC = () => {
-    const [hoverBell, setHoverBell] = useState<boolean>(false);
-    const handleMouseEnterBell = () => {
-        setHoverBell(true);
-    };
-    const handleMouseLeaveBell = () => {
-        setHoverBell(false);
-    };
     const items = [
         {
             key: '1',
@@ -59,13 +52,9 @@ const AdminHeader: FC = () => {
                     <Input placeholder="Tìm kiếm ..." prefix={<SearchIcon />} />
                 </div>
                 <div className="admin-header__navigate">
-                    <div
-                        onMouseEnter={handleMouseEnterBell}
-                        onMouseLeave={handleMouseLeaveBell}
-                        className="admin-header__navigate--bell"
-                    >
+                    <div className="admin-header__navigate--bell">
                         <Badge count={8} overflowCount={10}>
-                            <BellNotifyIcon hoverBell={hoverBell} />
+                            <BellNotifyIcon />
                         </Badge>
                     </div>
                     <div className="admin-header__navigate--avatar">
