@@ -70,9 +70,9 @@
                 position: relative;
             }
             &-col3 {
-                padding-left: 14px;
+                padding-left: 20px;
             }
-            &-col2::after {
+            &-col3::after {
                 content: '';
                 width: 6px;
                 height: 6px;
@@ -80,7 +80,7 @@
                 background-color: $color-date;
                 position: absolute;
                 top: 50%;
-                right: 0;
+                left: 0;
                 transform: translateY(-50%);
             }
         }

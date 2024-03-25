@@ -112,6 +112,21 @@
     }
 }
 
+.btn-add-to-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    .ant-btn {
+        span {
+            font-weight: 600;
+        }
+    }
+    &-submit {
+        background-color: $color--primary;
+    }
+}
+
 @media screen and (max-width: 748px) {
     .tour-item {
         &__bottom {

@@ -124,6 +124,54 @@ class UserService extends ApiBase {
         const url = 'http://localhost:8080/api/v1/user/cart';
         return axios.post(url, requestBody);
     };
+
+    getCartByUser = (user_id: number) => {
+        const url = `http://localhost:8080/api/v1/user/cart/${user_id}`;
+        return axios.get(url);
+    };
+
+    deleteFromCart = (user_id: number, tour_id: number) => {
+        const url = `http://localhost:8080/api/v1/user/cart/${user_id}`;
+        return axios.delete(url, {
+            data: { tour_id },
+        });
+    };
+
+    increaseAdultQuantity = (requestBody: {
+        user_id: number;
+        tour_id: number;
+    }) => {
+        const url =
+            'http://localhost:8080/api/v1/user/cart/order-item/adult-quantity/increment';
+        return axios.put(url, requestBody);
+    };
+
+    decreaseAdultQuantity = (requestBody: {
+        user_id: number;
+        tour_id: number;
+    }) => {
+        const url =
+            'http://localhost:8080/api/v1/user/cart/order-item/adult-quantity/decrement';
+        return axios.put(url, requestBody);
+    };
+
+    increaseChildQuantity = (requestBody: {
+        user_id: number;
+        tour_id: number;
+    }) => {
+        const url =
+            'http://localhost:8080/api/v1/user/cart/order-item/child-quantity/increment';
+        return axios.put(url, requestBody);
+    };
+
+    decreaseChildQuantity = (requestBody: {
+        user_id: number;
+        tour_id: number;
+    }) => {
+        const url =
+            'http://localhost:8080/api/v1/user/cart/order-item/child-quantity/decrement';
+        return axios.put(url, requestBody);
+    };
 }
 
 const userService = new UserService();

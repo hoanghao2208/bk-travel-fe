@@ -26,3 +26,16 @@
         }
     }
 }
+
+.btn-edit-passenger {
+    text-align: center;
+    .ant-btn {
+        background-color: $color--primary;
+        &:hover {
+            background-color: $color-button--primary-hover;
+        }
+        span {
+            font-weight: 600;
+        }
+    }
+}

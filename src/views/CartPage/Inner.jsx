@@ -1,34 +1,40 @@
-import { Button, Checkbox } from 'antd';
+import { Button } from 'antd';
 import ProductWrapper from 'components/ProductWrapper';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
 import { memo, useEffect } from 'react';
 import './style.scss';
 
-const Inner = memo(() => {
+const Inner = memo(({ cartList, reload, setReload }) => {
     useEffect(() => {
         document.title = 'Giỏ hàng';
     });
+
+    if (cartList?.userId === '') {
+        return null;
+    }
+
     return (
         <UserHomePageLayout>
             <div className="cart">
                 <h2 className="cart-title">Giỏ hàng</h2>
                 <div className="cart__content">
                     <div className="cart__content--all-products">
-                        <div className="cart__content--check-all">
-                            <Checkbox>Tất cả</Checkbox>
-                            <Button danger>Xoá tour đã chọn</Button>
-                        </div>
                         <div className="cart__content--items">
-                            <div className="cart__content--item">
-                                <Checkbox>
-                                    <ProductWrapper />
-                                </Checkbox>
-                            </div>
-                            <div className="cart__content--item">
-                                <Checkbox>
-                                    <ProductWrapper />
-                                </Checkbox>
-                            </div>
+                            {cartList?.cart?.order_items.map(order => (
+                                <div
+                                    className="cart__content--item"
+                                    key={order.id}
+                                >
+                                    <ProductWrapper
+                                        tourId={order.tour_id}
+                                        adultQuantity={order.adult_quantity}
+                                        childQuantity={order.child_quantity}
+                                        totalPrice={order.total_price}
+                                        reload={reload}
+                                        setReload={setReload}
+                                    />
+                                </div>
+                            ))}
                         </div>
                     </div>
                     <div className="cart__content--price">

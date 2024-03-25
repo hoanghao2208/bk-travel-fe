@@ -29,24 +29,10 @@ const defaultUserInfo: UserInfo = {
 
 const UserLoginHeader: FC = () => {
     const navigate = useNavigate();
-    const [hoverBell, setHoverBell] = useState(false);
-    const [hoverCart, setHoverCart] = useState(false);
     const [userInfo, setUserInfo] = useState<UserInfo>(defaultUserInfo);
+    const [cartNumber, setCartNumber] = useState(0);
 
     const user_id = getCustomerId();
-
-    const handleMouseEnterBell = () => {
-        setHoverBell(true);
-    };
-    const handleMouseLeaveBell = () => {
-        setHoverBell(false);
-    };
-    const handleMouseEnterCart = () => {
-        setHoverCart(true);
-    };
-    const handleMouseLeaveCart = () => {
-        setHoverCart(false);
-    };
 
     const handleGetUserInfo = useCallback(async () => {
         try {
@@ -59,6 +45,14 @@ const UserLoginHeader: FC = () => {
         }
     }, [user_id]);
 
+    const handleGetCartCount = useCallback(async () => {
+        const response = await userService.getCartByUser(user_id);
+        if (response?.status === 200) {
+            const orderItems = response?.data.data.cart.order_items;
+            setCartNumber(orderItems?.length);
+        }
+    }, [user_id]);
+
     const handleLogout = () => {
         setToken('');
         setCustomerId(0);
@@ -68,6 +62,10 @@ const UserLoginHeader: FC = () => {
     useEffect(() => {
         handleGetUserInfo();
     }, [handleGetUserInfo]);
+
+    useEffect(() => {
+        handleGetCartCount();
+    }, [handleGetCartCount]);
 
     const items = [
         {
@@ -157,22 +155,18 @@ const UserLoginHeader: FC = () => {
                     <Link to="/weather-forecast">Thời tiết</Link>
                     <div
                         onClick={() => navigate('/')}
-                        onMouseEnter={handleMouseEnterBell}
-                        onMouseLeave={handleMouseLeaveBell}
                         className="user-login-header__navigate--bell"
                     >
                         <Badge count={8} overflowCount={10}>
-                            <BellNotifyIcon hoverBell={hoverBell} />
+                            <BellNotifyIcon />
                         </Badge>
                     </div>
                     <div
                         onClick={() => navigate(routeConstants.CART)}
-                        onMouseEnter={handleMouseEnterCart}
-                        onMouseLeave={handleMouseLeaveCart}
                         className="user-login-header__navigate--cart"
                     >
-                        <Badge count={9} overflowCount={9}>
-                            <CartIcon hoverCart={hoverCart} />
+                        <Badge count={cartNumber} overflowCount={9}>
+                            <CartIcon />
                         </Badge>
                     </div>
                     <div className="user-login-header__navigate--avatar">

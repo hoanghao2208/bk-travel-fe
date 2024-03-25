@@ -64,11 +64,19 @@ const InputPassengerNumber: FC<InputPassengerNumberProps> = memo(
         return (
             <div className="input-passenger">
                 <div className="input-passenger--wrapper">
-                    <span className="input-passenger--label">
-                    {title}</span>
+                    <span className="input-passenger--label">{title}</span>
                     <div className="input-passenger--item">
                         <div className="btn-decrease">
-                            <Button onClick={handleDecrement}>-</Button>
+                            <Button
+                                onClick={handleDecrement}
+                                disabled={
+                                    isChild
+                                        ? number.value === 0
+                                        : number.value === 1
+                                }
+                            >
+                                -
+                            </Button>
                         </div>
                         <Form.Item validateStatus={number.validateStatus}>
                             <InputNumber

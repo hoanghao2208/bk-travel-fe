@@ -227,19 +227,29 @@ const TourItem: FC<TourItemProps> = memo(
                 <Modal
                     title="Số lượng hành khách"
                     open={openModal}
-                    // onOk={() => setModal2Open(false)}
                     footer={[
-                        <Button key="back" onClick={() => setOpenModal(false)}>
-                            Hủy
-                        </Button>,
-                        <Button
-                            key="submit"
-                            type="primary"
-                            htmlType="submit"
-                            form={`count-passenger-${tourId}`}
+                        <div
+                            key="add-to-cart-footer"
+                            className="btn-add-to-cart"
                         >
-                            Xác nhận
-                        </Button>,
+                            <Button
+                                key="back"
+                                onClick={() => setOpenModal(false)}
+                            >
+                                Hủy
+                            </Button>
+                            ,
+                            <Button
+                                key="submit"
+                                type="primary"
+                                htmlType="submit"
+                                form={`count-passenger-${tourId}`}
+                                className="btn-add-to-cart-submit"
+                            >
+                                Xác nhận
+                            </Button>
+                            ,
+                        </div>,
                     ]}
                 >
                     <Form

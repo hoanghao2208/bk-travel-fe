@@ -1,43 +1,76 @@
-import { FC, memo } from 'react';
+import dayjs from 'dayjs';
+import { FC, memo, useCallback, useEffect, useState } from 'react';
+import tourService from 'services/tourService';
+import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
+import { ITour } from 'utils/type';
 import './styles.scss';
 
-const ProductItem: FC = memo(() => {
-    return (
-        <div className="product-item">
-            <div className="product-item__img">
-                <img src="/images/slide2.jpg" alt="product-img" />
-            </div>
-            <div className="product-item__detail">
-                <h3 className="product-item__detail--title">
-                    Đà Nẵng – KDL Bà Nà – Sơn Trà – Hội An – La Vang - Động
-                    Phong Nha – Làng hương Thủy Xuân - Huế
-                </h3>
-                <div className="product-item__detail--inf1">
-                    <span className="product-item__detail--inf1-col1">
-                        Ngày 10/10/2023
-                    </span>
-                    <span className="product-item__detail--inf1-col2">
-                        3 ngày, 2 đêm
-                    </span>
-                    <span className="product-item__detail--inf1-col3">
-                        Khởi hành TP. Hồ Chí Minh
-                    </span>
+interface ProductItemProps {
+    tourId: number;
+    adultQuantity: number;
+    childQuantity: number;
+}
+
+const ProductItem: FC<ProductItemProps> = memo(
+    ({ tourId, adultQuantity, childQuantity }) => {
+        const [tourInformation, setTourInformation] = useState<ITour>();
+
+        const getTourInformation = useCallback(async () => {
+            try {
+                const response = await tourService.getOneTour(tourId);
+                if (response?.status === 200) {
+                    setTourInformation(response.data.data);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }, [tourId]);
+
+        useEffect(() => {
+            getTourInformation();
+        }, [getTourInformation]);
+
+        return (
+            <div className="product-item">
+                <div className="product-item__img">
+                    <img src={tourInformation?.cover_image} alt="product-img" />
                 </div>
-                <div className="product-item__detail--inf2">
-                    <span className="product-item__detail--inf2-col1">
-                        Số lượng hành khách:{' '}
-                    </span>
-                    <span className="product-item__detail--inf2-col2">
-                        2 người lớn
-                    </span>
-                    <span className="product-item__detail--inf2-col3">
-                        2 trẻ em
-                    </span>
+                <div className="product-item__detail">
+                    <h3 className="product-item__detail--title">
+                        {tourInformation?.name}
+                    </h3>
+                    <div className="product-item__detail--inf1">
+                        <span className="product-item__detail--inf1-col1">
+                            Ngày{' '}
+                            {dayjs(tourInformation?.departure_date).format(
+                                DEFAULT_DISPLAY_DATE_FORMAT
+                            )}
+                        </span>
+                        <span className="product-item__detail--inf1-col2">
+                            {tourInformation?.time}
+                        </span>
+                        <span className="product-item__detail--inf1-col3">
+                            Khởi hành {tourInformation?.departure_place}
+                        </span>
+                    </div>
+                    <div className="product-item__detail--inf2">
+                        <span className="product-item__detail--inf2-col1">
+                            Số lượng hành khách:{' '}
+                        </span>
+                        <span className="product-item__detail--inf2-col2">
+                            {adultQuantity} người lớn
+                        </span>
+                        {childQuantity !== 0 && (
+                            <span className="product-item__detail--inf2-col3">
+                                {childQuantity} trẻ em
+                            </span>
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
-    );
-});
+        );
+    }
+);
 
 ProductItem.displayName = 'Product Item';
 
