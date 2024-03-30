@@ -173,6 +173,11 @@ const routes: Array<Route> = [
         path: routeConstants.ADMIN_ADD_NEW_VOUCHER,
         Component: commonLoadable(() => import('views/AdminAddNewVoucher')),
     },
+    {
+        name: 'Admin Manage Voucher Page',
+        path: routeConstants.ADMIN_MANAGE_VOUCHER,
+        Component: commonLoadable(() => import('views/AdminManageVouchers')),
+    },
 ];
 
 export default routes;
