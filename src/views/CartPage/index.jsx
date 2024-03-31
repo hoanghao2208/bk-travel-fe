@@ -6,6 +6,7 @@ import Inner from 'views/CartPage/Inner';
 const Wrapper = memo(() => {
     const userId = getCustomerId();
     const [cartList, setCartList] = useState([]);
+    const [selectedTour, setSelectedTour] = useState([]);
     const [reload, setReload] = useState(false);
 
     const getCartList = useCallback(async () => {
@@ -23,7 +24,15 @@ const Wrapper = memo(() => {
         getCartList();
     }, [getCartList, reload]);
 
-    return <Inner cartList={cartList} reload={reload} setReload={setReload} />;
+    return (
+        <Inner
+            cartList={cartList}
+            reload={reload}
+            setReload={setReload}
+            selectedTour={selectedTour}
+            setSelectedTour={setSelectedTour}
+        />
+    );
 });
 
 Wrapper.displayName = 'Cart Page';
