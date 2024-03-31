@@ -1,0 +1,23 @@
+@import 'scss/global.scss';
+
+.view--modal {
+    margin-top: 20px;
+    .view--item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        font-size: 16px;
+        font-weight: 600;
+        &--content {
+            color: $color--red;
+        }
+        &--title {
+            color: $color--primary;
+        }
+    }
+}
+
+.delete--desc {
+    font-weight: 600;
+}

@@ -1,0 +1,57 @@
+@import 'scss/global.scss';
+
+.admin-mng-vouchers {
+    box-sizing: border-box;
+    &__header {
+        padding: 20px 40px 60px;
+        background: rgba($color-gradient-2, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &--title {
+            font-size: 32px;
+            color: $color--light;
+        }
+        &--btn {
+            .ant-btn {
+                width: 180px;
+                height: 40px;
+                border-color: $color--light;
+                span {
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+    &__content {
+        padding: 30px 40px 40px;
+        &--title {
+            background-color: $color--light;
+            margin: 0;
+            padding: 14px;
+            border-radius: 8px 8px 0 0;
+        }
+    }
+    .status {
+        display: inline-block;
+        padding: 4px 8px;
+        color: $color--light;
+        font-weight: 500;
+        border-radius: 4px;
+    }
+    .active {
+        background-color: $color-button--green;
+    }
+    .expired {
+        background-color: $color--red;
+    }
+}
+
+.admin-mng-btn {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    .ant-btn {
+        border: none;
+    }
+}

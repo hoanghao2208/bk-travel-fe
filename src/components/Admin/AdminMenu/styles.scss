@@ -9,6 +9,8 @@
     bottom: 0;
     z-index: 10;
     box-shadow: 0 20px 25px -5px $color-shadow1, 0 8px 10px -6px $color-shadow1;
+    overflow-y: auto;
+    overflow-x: hidden;
     &--home {
         padding: 16px;
         font-size: 32px;

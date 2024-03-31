@@ -3,6 +3,7 @@ import {
     CloudOutlined,
     CloudUploadOutlined,
     FolderOpenOutlined,
+    GiftOutlined,
     PlusOutlined,
     UserAddOutlined,
 } from '@ant-design/icons';
@@ -77,6 +78,24 @@ const AdminMenu: FC = () => {
                     'Quản lý du khách',
                     'admin/manage-tourist',
                     <AppstoreOutlined />
+                ),
+            ],
+            'group'
+        ),
+        getItem(
+            'Mã GIẢM GIÁ',
+            'manage-voucher',
+            null,
+            [
+                getItem(
+                    'Quản lý Mã giảm giá',
+                    'admin/manage-voucher',
+                    <AppstoreOutlined />
+                ),
+                getItem(
+                    'Thêm Mã giảm giá',
+                    'admin/add-new-voucher',
+                    <GiftOutlined />
                 ),
             ],
             'group'
