@@ -60,17 +60,7 @@ const Item = memo(({ name, tourDestinations, hidden, remove, ...props }) => {
                     </Form.Item>
                 </div>
                 <div>
-                    <Form.Item
-                        {...props}
-                        name={[name, 'note']}
-                        label="Lưu ý"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Vui lòng nhập lưu ý',
-                            },
-                        ]}
-                    >
+                    <Form.Item {...props} name={[name, 'note']} label="Lưu ý">
                         <Input placeholder="Lưu ý" />
                     </Form.Item>
                 </div>

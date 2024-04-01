@@ -41,7 +41,7 @@ const ScheduleList = memo(({ form, tourData, column, handleScheduleTour }) => {
                     ' - ' +
                     dayjs(item.range_time[1]).format(TIME_FORMAT);
                 item.description = item.description.trim();
-                item.note = item.note.trim();
+                item.note = item.note?.trim() || '';
             });
         });
 
