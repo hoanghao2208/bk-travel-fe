@@ -1,6 +1,7 @@
 import Title from 'components/Title';
 import TourItem from 'components/TourItem';
 import dayjs from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import tourService from 'services/tourService';
@@ -13,14 +14,17 @@ import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
 import { ITour } from 'utils/type';
 import './styles.scss';
 
+dayjs.extend(isSameOrAfter);
+
 const OutstandingListTour: FC = () => {
+    const [allTours, setAllTours] = useState<ITour[]>([]);
     const [onlineTours, setOnlineTours] = useState<ITour[]>([]);
 
     const handleGetOnlineTours = useCallback(async () => {
         try {
             const response = await tourService.getOnlineTour();
             if (response?.status === 200) {
-                setOnlineTours(response.data.tours);
+                setAllTours(response.data.tours);
             }
         } catch (error) {
             console.error(error);
@@ -30,6 +34,14 @@ const OutstandingListTour: FC = () => {
     useEffect(() => {
         handleGetOnlineTours();
     }, [handleGetOnlineTours]);
+
+    useEffect(() => {
+        const now = dayjs().startOf('day');
+        const isOnlineTours = allTours.filter(tour =>
+            dayjs(tour.deadline_book_time).isSameOrAfter(now)
+        );
+        setOnlineTours(isOnlineTours);
+    }, [allTours]);
 
     return (
         <div className="outstanding-tour">
