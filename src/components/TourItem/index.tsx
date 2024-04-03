@@ -1,13 +1,14 @@
 import { CompassFilled } from '@ant-design/icons';
-import { Button, Form, Modal, Tooltip } from 'antd';
+import { Button, Tooltip } from 'antd';
 import HeartIcon from 'assets/icons/HeartIcon';
 import HeartRedIcon from 'assets/icons/HeartRedIcon';
 import Message from 'components/Message';
-import InputPassengerNumber from 'components/TourItem/components/InputPassengerNumber';
+import ModalSelectPassenger from 'components/TourItem/components/ModalSelectPassenger';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { Link, generatePath, useNavigate } from 'react-router-dom';
 import { getCustomerId, getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
+import orderService from 'services/orderService';
 import userService from 'services/userService';
 import { IPassengerNumber } from 'utils/type';
 import './styles.scss';
@@ -43,17 +44,19 @@ const TourItem: FC<TourItemProps> = memo(
         const token = getToken();
         const userId = getCustomerId();
         const navigate = useNavigate();
-        const [form] = Form.useForm();
 
         const [loveList, setLoveList] = useState<number[]>([]);
         const [selectedItem, setSelectedItem] = useState<number | null>(null);
-        const [openModal, setOpenModal] = useState(false);
+        const [openAddModal, setOpenAddModal] = useState(false);
+        const [openOrderModal, setOpenOrderModal] = useState(false);
+
         const [adultQuantity, setAdultQuantity] = useState<IPassengerNumber>({
             value: 1,
         });
         const [childQuantity, setChildQuantity] = useState<IPassengerNumber>({
             value: 0,
         });
+        const [userInfor, setUserInfor] = useState<any>([]);
 
         const handleNavigate = () => {
             navigate(
@@ -61,10 +64,26 @@ const TourItem: FC<TourItemProps> = memo(
             );
         };
 
-        const handleOpenModal = useCallback((tourId: number) => {
+        const handleOpenAddModal = useCallback((tourId: number) => {
             setSelectedItem(tourId);
-            setOpenModal(true);
+            setOpenAddModal(true);
         }, []);
+
+        const handleOpenOrderModal = useCallback((tourId: number) => {
+            setSelectedItem(tourId);
+            setOpenOrderModal(true);
+        }, []);
+
+        const getUserInfor = useCallback(async () => {
+            try {
+                const response = await userService.getUserInfo(userId);
+                if (response?.status === 200) {
+                    setUserInfor(response.data.user_info);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }, [userId]);
 
         const handleGetWishListTours = useCallback(async () => {
             try {
@@ -138,13 +157,64 @@ const TourItem: FC<TourItemProps> = memo(
                     ...prev,
                     value: 0,
                 }));
-                setOpenModal(false);
+                setOpenAddModal(false);
             }
         }, [adultQuantity.value, childQuantity.value, selectedItem, userId]);
+
+        const handleCreateOrder = useCallback(async () => {
+            try {
+                const body = {
+                    user_id: userId,
+                    adult_quantity: adultQuantity.value,
+                    child_quantity: childQuantity.value,
+                    tour_id: selectedItem,
+                    name_customer:
+                        userInfor?.firstname + ' ' + userInfor?.lastname,
+                    phone_customer: userInfor?.phone_number,
+                    address_customer: 'TP. Hồ Chí Minh',
+                };
+
+                if (body.phone_customer === '') {
+                    navigate(routeConstants.USER_PROFILE);
+                    Message.sendWarning('Vui lòng cập nhật số điện thoại');
+                    return;
+                }
+
+                const response = await orderService.createOneOrder(body);
+                if (response?.status === 200) {
+                    navigate(
+                        `${routeConstants.FILL_INFORMATION}?tourId=${selectedItem}&orderId=${response.data.order.order_id}`
+                    );
+                }
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setAdultQuantity(prev => ({
+                    ...prev,
+                    value: 1,
+                }));
+                setChildQuantity(prev => ({
+                    ...prev,
+                    value: 0,
+                }));
+                setOpenOrderModal(false);
+            }
+        }, [
+            adultQuantity.value,
+            childQuantity.value,
+            navigate,
+            selectedItem,
+            userId,
+            userInfor,
+        ]);
 
         useEffect(() => {
             handleGetWishListTours();
         }, [handleGetWishListTours]);
+
+        useEffect(() => {
+            getUserInfor();
+        }, [getUserInfor]);
 
         return (
             <>
@@ -209,7 +279,7 @@ const TourItem: FC<TourItemProps> = memo(
                                 type="default"
                                 shape="round"
                                 size="large"
-                                onClick={() => handleOpenModal(tourId)}
+                                onClick={() => handleOpenAddModal(tourId)}
                             >
                                 Thêm vào giỏ hàng
                             </Button>
@@ -218,59 +288,35 @@ const TourItem: FC<TourItemProps> = memo(
                                 shape="round"
                                 icon={<CompassFilled />}
                                 size="large"
+                                onClick={() => handleOpenOrderModal(tourId)}
                             >
                                 Đặt tour ngay
                             </Button>
                         </div>
                     )}
                 </div>
-                <Modal
-                    title="Số lượng hành khách"
-                    open={openModal}
-                    footer={[
-                        <div
-                            key="add-to-cart-footer"
-                            className="btn-add-to-cart"
-                        >
-                            <Button
-                                key="back"
-                                onClick={() => setOpenModal(false)}
-                            >
-                                Hủy
-                            </Button>
-                            ,
-                            <Button
-                                key="submit"
-                                type="primary"
-                                htmlType="submit"
-                                form={`count-passenger-${tourId}`}
-                                className="btn-add-to-cart-submit"
-                            >
-                                Xác nhận
-                            </Button>
-                            ,
-                        </div>,
-                    ]}
-                >
-                    <Form
-                        form={form}
-                        id={`count-passenger-${tourId}`}
-                        name="count-passenger"
-                        onFinish={handleAddToCart}
-                    >
-                        <InputPassengerNumber
-                            title="Người lớn"
-                            number={adultQuantity}
-                            setNumber={setAdultQuantity}
-                        />
-                        <InputPassengerNumber
-                            title="Trẻ em"
-                            number={childQuantity}
-                            setNumber={setChildQuantity}
-                            isChild={true}
-                        />
-                    </Form>
-                </Modal>
+                <ModalSelectPassenger
+                    tourId={tourId}
+                    name="count-passenger"
+                    adultQuantity={adultQuantity}
+                    childQuantity={childQuantity}
+                    setAdultQuantity={setAdultQuantity}
+                    setChildQuantity={setChildQuantity}
+                    openModal={openAddModal}
+                    setOpenModal={setOpenAddModal}
+                    handleFinish={handleAddToCart}
+                />
+                <ModalSelectPassenger
+                    tourId={tourId}
+                    name="order-passenger"
+                    adultQuantity={adultQuantity}
+                    childQuantity={childQuantity}
+                    setAdultQuantity={setAdultQuantity}
+                    setChildQuantity={setChildQuantity}
+                    openModal={openOrderModal}
+                    setOpenModal={setOpenOrderModal}
+                    handleFinish={handleCreateOrder}
+                />
             </>
         );
     }

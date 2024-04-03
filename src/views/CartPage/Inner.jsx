@@ -1,7 +1,13 @@
 import { Button } from 'antd';
+import Message from 'components/Message';
 import ProductWrapper from 'components/ProductWrapper';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import { memo, useEffect, useMemo } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getCustomerId } from 'reducers/token/function';
+import routeConstants from 'route/routeConstant';
+import orderService from 'services/orderService';
+import userService from 'services/userService';
 import NoItemInCart from 'views/CartPage/components/NoItemInCart';
 import './style.scss';
 
@@ -10,6 +16,28 @@ const Inner = memo(
         useEffect(() => {
             document.title = 'Giỏ hàng';
         });
+        const userId = getCustomerId();
+        const navigate = useNavigate();
+
+        const [userInfor, setUserInfor] = useState([]);
+
+        const selectedOrder = useMemo(() => {
+            const selected = cartList?.cart?.order_items.filter(item =>
+                selectedTour.includes(item.tour_id)
+            );
+            return selected;
+        }, [cartList?.cart?.order_items, selectedTour]);
+
+        const getUserInfor = useCallback(async () => {
+            try {
+                const response = await userService.getUserInfo(userId);
+                if (response?.status === 200) {
+                    setUserInfor(response.data.user_info);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }, [userId]);
 
         const totalPrice = useMemo(() => {
             if (!cartList?.cart?.order_items) return 0;
@@ -20,6 +48,40 @@ const Inner = memo(
                 return total;
             }, 0);
         }, [cartList?.cart?.order_items, selectedTour]);
+
+        const handleCreateCartOrder = useCallback(async () => {
+            try {
+                const body = {
+                    user_id: userId,
+                    order_items: selectedOrder.map(item => item.id),
+                    name_customer:
+                        userInfor?.firstname + ' ' + userInfor?.lastname,
+                    phone_customer: userInfor?.phone_number,
+                    address_customer: 'TP. Hồ Chí Minh',
+                };
+
+                if (body.phone_customer === '') {
+                    navigate(routeConstants.USER_PROFILE);
+                    Message.sendWarning('Vui lòng cập nhật số điện thoại');
+                    return;
+                }
+                const response = await orderService.createCartOrder(body);
+                if (response?.status === 200) {
+                    const tourIds = selectedTour
+                        .map(tourId => `tourId=${tourId}`)
+                        .join('&');
+                    navigate(
+                        `${routeConstants.FILL_INFORMATION}?${tourIds}&orderId=${response.data.order.order_id}`
+                    );
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }, [navigate, selectedOrder, selectedTour, userId, userInfor]);
+
+        useEffect(() => {
+            getUserInfor();
+        }, [getUserInfor]);
 
         if (cartList?.userId === '') {
             return null;
@@ -78,7 +140,10 @@ const Inner = memo(
                                             viên sau khi thanh toán
                                         </p>
                                         <div className="cart__content--price-btn">
-                                            <Button type="primary">
+                                            <Button
+                                                type="primary"
+                                                onClick={handleCreateCartOrder}
+                                            >
                                                 Thanh toán ngay
                                             </Button>
                                         </div>

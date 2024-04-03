@@ -48,6 +48,7 @@
                 width: 90%;
                 margin: 0 auto;
                 margin-top: 20px;
+                margin-bottom: 20px;
             }
         }
         &--contact {
@@ -124,10 +125,14 @@
                 color: $color-date;
                 padding-left: 42px;
             }
+            &-input {
+                width: 100%;
+            }
             &-inpt {
                 width: 90%;
                 margin: 0 auto;
                 display: flex;
+                justify-content: space-between;
                 .ant-input,
                 .ant-btn {
                     height: 40px;
@@ -136,6 +141,7 @@
                     border: 0;
                     font-size: 16px;
                     font-weight: 500;
+                    width: 100%;
                     color: $color-date;
                 }
                 .ant-btn span {
