@@ -8,7 +8,14 @@ import { memo, useCallback, useEffect } from 'react';
 import './style.scss';
 
 const Inner = memo(
-    ({ form, orderInfor, orderItems, listVoucher, handleApplyVoucher }) => {
+    ({
+        form,
+        orderInfor,
+        orderItems,
+        listVoucher,
+        handleApplyVoucher,
+        handlePaymentDirectly,
+    }) => {
         useEffect(() => {
             document.title = 'Thông tin thanh toán';
         });
@@ -129,7 +136,12 @@ const Inner = memo(
                                 score="234"
                             />
                             <div className="fill-infor__content--btn">
-                                <Button type="primary">Thanh toán ngay</Button>
+                                <Button
+                                    type="primary"
+                                    onClick={handlePaymentDirectly}
+                                >
+                                    Thanh toán ngay
+                                </Button>
                             </div>
                         </div>
                     </div>

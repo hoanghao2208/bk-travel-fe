@@ -30,6 +30,11 @@ class OrderService extends ApiBase {
         const url = 'http://localhost:8080/api/v1/order/create-from-cart';
         return axios.post(url, requestBody);
     };
+
+    paymentDirectly = (requestBody: { user_id: number; order_id: number }) => {
+        const url = 'http://localhost:8080/api/v1/order/payment';
+        return axios.post(url, requestBody);
+    };
 }
 
 const orderService = new OrderService();

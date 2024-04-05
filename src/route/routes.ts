@@ -178,6 +178,11 @@ const routes: Array<Route> = [
         path: routeConstants.ADMIN_MANAGE_VOUCHER,
         Component: commonLoadable(() => import('views/AdminManageVouchers')),
     },
+    {
+        name: 'Payment Success Page',
+        path: routeConstants.PAYMENT_SUCCESS,
+        Component: commonLoadable(() => import('views/PaymentSuccess')),
+    },
 ];
 
 export default routes;

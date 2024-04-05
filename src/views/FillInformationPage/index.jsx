@@ -1,7 +1,7 @@
 import { Form } from 'antd';
 import Message from 'components/Message';
 import { memo, useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getCustomerId } from 'reducers/token/function';
 import orderService from 'services/orderService';
 import voucherService from 'services/voucherService';
@@ -9,6 +9,7 @@ import Inner from 'views/FillInformationPage/Inner';
 
 const Wrapper = memo(() => {
     const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
     const userId = getCustomerId();
 
     const [form] = Form.useForm();
@@ -68,6 +69,29 @@ const Wrapper = memo(() => {
         [form, searchParams, userId]
     );
 
+    const handlePaymentDirectly = useCallback(async () => {
+        try {
+            const orderId = searchParams.getAll('orderId').map(Number);
+            const body = {
+                user_id: userId,
+                order_id: orderId,
+            };
+            const response = await orderService.paymentDirectly(body);
+            if (response?.status === 200) {
+                if (
+                    new URL(response.data.link_payment).origin !==
+                    window.location.origin
+                ) {
+                    window.location.href = response.data.link_payment;
+                } else {
+                    navigate(response.data.link_payment);
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, [navigate, searchParams, userId]);
+
     useEffect(() => {
         getOrderInformation();
     }, [getOrderInformation, isReload]);
@@ -79,6 +103,7 @@ const Wrapper = memo(() => {
             orderItems={orderInfor.order_items}
             listVoucher={listVoucher}
             handleApplyVoucher={handleApplyVoucher}
+            handlePaymentDirectly={handlePaymentDirectly}
         />
     );
 });
