@@ -35,6 +35,11 @@ class OrderService extends ApiBase {
         const url = 'http://localhost:8080/api/v1/order/payment';
         return axios.post(url, requestBody);
     };
+
+    getResultsPayment = (params: any) => {
+        const url = `http://localhost:8080/api/v1/user/payment/vnpay_ipn${params}`;
+        return axios.get(url);
+    };
 }
 
 const orderService = new OrderService();
