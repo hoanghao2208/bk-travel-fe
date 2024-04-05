@@ -4,8 +4,10 @@ import TourItem from 'components/TourItem';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
 import { memo, useEffect } from 'react';
 import './style.scss';
+import dayjs from 'dayjs';
+import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
 
-const Inner = memo(() => {
+const Inner = memo(({ searchResults }) => {
     useEffect(() => {
         document.title = 'Kết quả tìm kiếm';
     });
@@ -159,44 +161,43 @@ const Inner = memo(() => {
                 </div>
                 <div className="search-result__results">
                     <h3 className="search-result__results--title">
-                        Danh sách các tour du lịch Đà Nẵng khởi hành từ TP. Hồ
-                        Chí Minh
-                    </h3>
-                    <p className="search-result__results--desc">
-                        Đà Nẵng nằm giữa ba di sản thế giới: cố đô Huế, phố cổ
-                        Hội An và thánh địa Mỹ Sơn. Đà Nẵng còn có nhiều danh
-                        thắng tuyệt đẹp say lòng du khách như Ngũ Hành Sơn, Bà
-                        Nà, bán đảo Sơn Trà, đèo Hải Vân, sông Hàn thơ mộng và
-                        cầu quay Sông Hàn – niềm tự hào của thành phố, và biển
-                        Mỹ Khê đẹp nhất hành tinh.
-                        <br />
-                        Đăng ký tour Đà Nẵng cùng BK - Travel, Quý khách có thể
-                        đến khám phá các điểm đến nổi bật sau: Bà Nà Hills, Cầu
-                        quay sông Hàn, Ngũ Hành Sơn, Bán đảo Sơn Trà, ...
-                    </p>
-                    <p className="search-result__results--count">
                         Chúng tôi tìm thấy{' '}
                         <span className="search-result__results--number">
-                            52 tours
+                            {searchResults?.length} tours
                         </span>{' '}
-                        phù hợp với yêu cầu
-                    </p>
+                        phù hợp với nhu cầu của bạn
+                    </h3>
+                    <p className="search-result__results--count"></p>
                     <div className="search-result__results--list">
-                        <div className="search-result__results--item">
-                            <TourItem />
-                        </div>
-                        <div className="search-result__results--item">
-                            <TourItem />
-                        </div>
-                        <div className="search-result__results--item">
-                            <TourItem />
-                        </div>
-                        <div className="search-result__results--item">
-                            <TourItem />
-                        </div>
-                        <div className="search-result__results--item">
-                            <TourItem />
-                        </div>
+                        {searchResults &&
+                            searchResults.length > 0 &&
+                            searchResults.map(tour => (
+                                <div
+                                    className="search-result__results--item"
+                                    key={tour.tour_id}
+                                >
+                                    <TourItem
+                                        haveBtn={true}
+                                        bgItem={true}
+                                        tourId={tour.tour_id}
+                                        imgURL={tour.cover_image}
+                                        departureTime={dayjs(
+                                            tour.departure_date
+                                        ).format(DEFAULT_DISPLAY_DATE_FORMAT)}
+                                        time={tour.time}
+                                        tourName={tour.name}
+                                        departurePlace={tour.departure_place}
+                                        empty={
+                                            tour.max_customer -
+                                            tour.current_customers
+                                        }
+                                        deadlineBookTime={dayjs(
+                                            tour.deadline_book_time
+                                        ).format(DEFAULT_DISPLAY_DATE_FORMAT)}
+                                        price={tour.price}
+                                    />
+                                </div>
+                            ))}
                     </div>
                     <div className="search-result__results--pagination">
                         <Pagination
