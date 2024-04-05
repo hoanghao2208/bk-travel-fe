@@ -1,19 +1,49 @@
 import { CompassFilled, PlusOutlined } from '@ant-design/icons';
 import { Button, DatePicker, Form, Select } from 'antd';
+import Message from 'components/Message';
 import OutstandingListTour from 'components/OutstandingListTour';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import { memo, useEffect, useRef } from 'react';
+import { memo, useCallback, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
 import routeConstants from 'route/routeConstant';
+import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
 import './style.scss';
 
-const Inner = memo(() => {
+const Inner = memo(({ allDestinations, handleFindTour }) => {
     useEffect(() => {
         document.title = 'Tìm kiếm tour';
     });
-    const formRef = useRef(null);
     const navigate = useNavigate();
+
+    const timeOptions = useMemo(() => {
+        const timeOpts = [];
+        for (let i = 0; i < 10; i++) {
+            let newOpt;
+            if (i === 0) {
+                newOpt = {
+                    value: `${i + 1} ngày`,
+                };
+            } else {
+                newOpt = {
+                    value: `${i + 1} ngày, ${i} đêm`,
+                };
+            }
+            timeOpts.push(newOpt);
+        }
+        return timeOpts;
+    }, []);
+
+    const onFinish = useCallback(
+        values => {
+            if (Object.values(values).every(value => value === undefined)) {
+                Message.sendWarning('Phải ít nhất một trường mang giá trị', 5);
+                return;
+            }
+            handleFindTour(values);
+        },
+        [handleFindTour]
+    );
+
     return (
         <UserHomePageLayout>
             <div className="find-tour-wrapper">
@@ -29,79 +59,60 @@ const Inner = memo(() => {
                     </div>
                     <div className="find-tour__form">
                         <Form
-                            ref={formRef}
-                            name="control-ref"
+                            name="find-tour"
                             layout="vertical"
-                            // onFinish={onFinish}
+                            id="find-tour"
+                            onFinish={onFinish}
                         >
                             <Form.Item
-                                name="departure"
+                                name="departure_place"
                                 label="Điểm khởi hành"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Vui lòng chọn điểm khởi hành',
-                                    },
-                                ]}
                             >
                                 <Select placeholder="Điểm khởi hành">
-                                    <Option value="hochiminh">
-                                        TP. Hồ Chí Minh
-                                    </Option>
-                                    <Option value="danang">Đà Nẵng</Option>
-                                    <Option value="hanoi">Hà Nội</Option>
-                                    <Option value="vungtau">Vũng Tàu</Option>
+                                    {allDestinations.map(destination => (
+                                        <Option
+                                            key={destination.destination_id}
+                                            value={destination.name}
+                                        >
+                                            {destination.name}
+                                        </Option>
+                                    ))}
                                 </Select>
                             </Form.Item>
                             <Form.Item
-                                name="destination"
+                                name="destination_place"
                                 label="Điểm đến"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Vui lòng chọn điểm đến',
-                                    },
-                                ]}
                             >
                                 <Select placeholder="Điểm đến">
-                                    <Option value="hochiminh">
-                                        TP. Hồ Chí Minh
-                                    </Option>
-                                    <Option value="danang">Đà Nẵng</Option>
-                                    <Option value="hanoi">Hà Nội</Option>
-                                    <Option value="vungtau">Vũng Tàu</Option>
+                                    {allDestinations.map(destination => (
+                                        <Option
+                                            key={destination.destination_id}
+                                            value={destination.name}
+                                        >
+                                            {destination.name}
+                                        </Option>
+                                    ))}
                                 </Select>
                             </Form.Item>
                             <Form.Item
-                                name="time"
+                                name="departure_date"
                                 label="Ngày khởi hành"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Vui lòng chọn ngày khởi hành',
-                                    },
-                                ]}
                             >
                                 <DatePicker
                                     placeholder="Ngày khởi hành"
                                     format={DEFAULT_DISPLAY_DATE_FORMAT}
                                 />
                             </Form.Item>
-                            <Form.Item
-                                name="length-time"
-                                label="Thời gian tour"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Vui lòng chọn thời gian tour',
-                                    },
-                                ]}
-                            >
+                            <Form.Item name="time" label="Thời gian tour">
                                 <Select placeholder="Thời gian tour">
-                                    <Option value="1day">1 ngày</Option>
-                                    <Option value="2day">2 ngày, 1 đêm</Option>
-                                    <Option value="3day">3 ngày, 2 đêm</Option>
-                                    <Option value="4day">4 ngày, 3 đêm</Option>
+                                    {timeOptions.map(item => (
+                                        <Option
+                                            key={item.value}
+                                            value={item.value}
+                                        >
+                                            {item.value}
+                                        </Option>
+                                    ))}
                                 </Select>
                             </Form.Item>
                         </Form>
@@ -121,6 +132,8 @@ const Inner = memo(() => {
                             shape="round"
                             icon={<CompassFilled />}
                             size="large"
+                            htmlType="submit"
+                            form="find-tour"
                         >
                             Tìm kiếm
                         </Button>
