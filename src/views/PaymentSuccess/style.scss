@@ -1,0 +1,19 @@
+@import 'scss/global.scss';
+
+.payment-success {
+    padding: 130px 0 40px;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    &__desc {
+        font-size: 22px;
+        font-weight: 600;
+        color: $color--text2;
+    }
+    .ant-btn {
+        background-color: $color-button--green;
+    }
+    .ant-btn-primary:hover {
+        background-color: $color-button--green-hover !important;
+    }
+}

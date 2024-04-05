@@ -21,6 +21,17 @@ class VoucherService extends ApiBase {
         const url = `http://localhost:8080/api/v1/voucher/${voucher_id}`;
         return axios.delete(url);
     };
+
+    applyVoucher = (
+        orderId: number,
+        requestBody: {
+            user_id: number;
+            listVoucherCodes: string[];
+        }
+    ) => {
+        const url = `http://localhost:8080/api/v1/order/${orderId}/applyVoucher`;
+        return axios.post(url, requestBody);
+    };
 }
 
 const voucherService = new VoucherService();

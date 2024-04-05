@@ -1,4 +1,9 @@
-import { CheckOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import {
+    CheckOutlined,
+    CloseOutlined,
+    DeleteOutlined,
+    EditOutlined,
+} from '@ant-design/icons';
 import { Button, Modal } from 'antd';
 import Message from 'components/Message';
 import ProductItem from 'components/ProductItem';
@@ -14,7 +19,9 @@ interface ProductWrapperProps {
     childQuantity: number;
     totalPrice: string;
     reload: boolean;
+    selectedTour: number[];
     setReload: (isReload: boolean) => void;
+    setSelectedTour: (tourId: number[]) => void;
 }
 
 const ProductWrapper: FC<ProductWrapperProps> = memo(
@@ -24,7 +31,9 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
         childQuantity,
         totalPrice,
         reload,
+        selectedTour,
         setReload,
+        setSelectedTour,
     }) => {
         const userId = getCustomerId();
 
@@ -42,6 +51,10 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
                 if (response?.status === 200) {
                     Message.sendSuccess('Tour đã được xóa khỏi giỏ hàng');
                     setReload(!reload);
+                    const updatedSelectedTour: number[] = selectedTour.filter(
+                        item => item !== tourId
+                    );
+                    setSelectedTour(updatedSelectedTour);
                 }
             } catch (error) {
                 console.error(error);
@@ -49,7 +62,19 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
                 setOpenDeleteModal(false);
                 setLoading(false);
             }
-        }, [reload, setReload, tourId, userId]);
+        }, [reload, selectedTour, setReload, setSelectedTour, tourId, userId]);
+
+        const handleSelectedTour = useCallback(() => {
+            if (selectedTour.includes(tourId)) {
+                const updatedSelectedTour: number[] = selectedTour.filter(
+                    item => item !== tourId
+                );
+                setSelectedTour(updatedSelectedTour);
+            } else {
+                const updatedSelectedTour: number[] = [...selectedTour, tourId];
+                setSelectedTour(updatedSelectedTour);
+            }
+        }, [selectedTour, setSelectedTour, tourId]);
 
         return (
             <>
@@ -64,7 +89,22 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
                     <div className="product-wrapper__footer">
                         <div className="product-wrapper__footer--button">
                             <Button
+                                danger={selectedTour.includes(tourId)}
                                 type="primary"
+                                icon={
+                                    selectedTour.includes(tourId) ? (
+                                        <CloseOutlined />
+                                    ) : (
+                                        <CheckOutlined />
+                                    )
+                                }
+                                onClick={handleSelectedTour}
+                            >
+                                {selectedTour.includes(tourId)
+                                    ? 'Hủy chọn tour'
+                                    : 'Chọn tour này'}
+                            </Button>
+                            <Button
                                 icon={<EditOutlined />}
                                 onClick={() => setOpenEditModal(true)}
                             >
@@ -114,23 +154,7 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
                     open={openEditModal}
                     title="Chỉnh sửa số lượng hành khánh"
                     onCancel={() => setOpenEditModal(false)}
-                    footer={[
-                        <div
-                            key="submit-edit-passenger"
-                            className="btn-edit-passenger"
-                        >
-                            <Button
-                                key="submit"
-                                type="primary"
-                                icon={<CheckOutlined />}
-                                loading={loading}
-                                onClick={() => setOpenEditModal(false)}
-                            >
-                                Hoàn tất
-                            </Button>
-                            ,
-                        </div>,
-                    ]}
+                    footer={null}
                 >
                     <EditPassengerNumber
                         title="Người lớn"

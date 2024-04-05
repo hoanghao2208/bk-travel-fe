@@ -6,65 +6,16 @@
     background-color: $color--light;
     padding: 0 20px;
     border-radius: 12px;
-    &__location {
-        color: $color--primary;
-        line-height: 1.3;
-        border-bottom: 1px solid $color--border2;
-        margin: 0;
+    &__title {
+        text-align: center;
         padding: 20px 0;
+        border-bottom: 1px solid $color--border;
     }
-    &__inf1 {
+    &__inf {
         display: flex;
         border-bottom: 1px solid $color--border2;
         flex-direction: column;
-        padding: 20px 0;
-        div {
-            font-size: 16px;
-            font-weight: 500;
-            color: $color-date;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            span:first-child {
-                font-weight: 600;
-            }
-            &:not(:last-child) {
-                padding-bottom: 20px;
-            }
-        }
-    }
-    &__inf2 {
-        display: flex;
-        border-bottom: 1px solid $color--border2;
-        flex-direction: column;
-        padding: 20px 0;
-        p {
-            margin: 0;
-            padding-bottom: 20px;
-            font-size: 16px;
-            color: $color-date;
-            font-weight: bold;
-        }
-        div {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 16px;
-            font-weight: 500;
-            color: $color-date;
-            span:first-child {
-                font-weight: 600;
-            }
-        }
-        &--adult {
-            padding-bottom: 20px;
-        }
-    }
-    &__inf3 {
-        display: flex;
-        border-bottom: 1px solid $color--border2;
-        flex-direction: column;
-        padding: 20px 0;
+        padding-bottom: 20px;
         div {
             display: flex;
             align-items: center;
@@ -82,6 +33,9 @@
             padding-bottom: 20px;
         }
     }
+    &__total {
+        padding-top: 20px;
+    }
     &__score {
         text-align: center;
         color: $color--red;
@@ -89,5 +43,11 @@
         font-size: 16px;
         margin: 0;
         padding: 20px;
+    }
+    &--title {
+        color: $color--primary;
+    }
+    &--value {
+        color: $color--red;
     }
 }

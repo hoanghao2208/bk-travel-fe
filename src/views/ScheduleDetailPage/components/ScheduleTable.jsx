@@ -63,12 +63,14 @@ const ScheduleTable = memo(({ columnNumber, tourData, scheduleData }) => {
                                 {item.description}
                             </p>
                         </div>
-                        <p>
-                            <span>
-                                <span>*</span>Lưu ý:{' '}
-                            </span>
-                            {item.note}
-                        </p>
+                        {item.note !== '' && (
+                            <p>
+                                <span>
+                                    <span>*</span>Lưu ý:{' '}
+                                </span>
+                                {item.note}
+                            </p>
+                        )}
                     </div>
                 ))}
             </div>
