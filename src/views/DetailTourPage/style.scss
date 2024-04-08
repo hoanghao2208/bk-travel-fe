@@ -137,6 +137,9 @@
                 color: $color-date;
             }
         }
+        &--details span {
+            font-weight: 600;
+        }
     }
     &__rating {
         width: 70%;
@@ -175,5 +178,24 @@
                 opacity: 0.5;
             }
         }
+    }
+    &__user {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        text-transform: uppercase;
+        font-weight: 500;
+        font-size: 18px;
+        color: $color-admin-menu-text;
+        p {
+            cursor: pointer;
+        }
+        p:first-child {
+            border-right: 2px solid $color--border;
+            padding-right: 20px;
+        }
+    }
+    .active {
+        color: $color-admin-menu-bg;
     }
 }

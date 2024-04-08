@@ -48,8 +48,10 @@ const UserLoginHeader: FC = () => {
     const handleGetCartCount = useCallback(async () => {
         const response = await userService.getCartByUser(user_id);
         if (response?.status === 200) {
-            const orderItems = response?.data.data.cart.order_items;
-            setCartNumber(orderItems?.length);
+            if (response?.data.data.cart !== null) {
+                const orderItems = response?.data.data.cart.order_items;
+                setCartNumber(orderItems?.length);
+            }
         }
     }, [user_id]);
 
