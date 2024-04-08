@@ -1,0 +1,81 @@
+@import 'scss/global.scss';
+
+.user-rating,
+.user-comment {
+    background-color: $color--light;
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 20px 25px -5px $color-shadow1, 0 8px 10px -6px $color-shadow1;
+    margin-bottom: 20px;
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        &--name {
+            font-weight: bold;
+            margin-right: 20px;
+        }
+        &--date {
+            font-weight: 600;
+            color: $color-date;
+        }
+    }
+    &__content {
+        line-height: 1.4;
+        color: $color-date;
+    }
+    &__reply {
+        display: flex;
+        justify-content: flex-end;
+        cursor: pointer;
+        transition: all 0.2s linear;
+        opacity: 0;
+        visibility: hidden;
+        &:hover {
+            color: $btn-register-color;
+        }
+    }
+}
+
+.user-comment:hover .user-comment__reply {
+    opacity: 1;
+    visibility: visible;
+}
+
+.write--comment {
+    margin-bottom: 20px;
+    background-color: $color--light;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 20px 25px -5px $color-shadow1, 0 8px 10px -6px $color-shadow1;
+    p {
+        font-size: 18px;
+        font-weight: 600;
+    }
+    &__btn {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 15px;
+    }
+    textarea {
+        font-size: 16px;
+        font-weight: 500;
+        color: $color-date;
+    }
+    &--rating {
+        .ant-rate {
+            font-size: 24px;
+        }
+    }
+}
+
+.parent--cmt {
+    &--list {
+        width: 90%;
+        margin-left: auto;
+    }
+}

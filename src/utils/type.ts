@@ -12,7 +12,7 @@ export interface ITour {
     departure_date: string;
     time: string;
     deadline_book_time: string;
-    price: number;
+    price: string;
 }
 
 export interface IPassengerNumber {

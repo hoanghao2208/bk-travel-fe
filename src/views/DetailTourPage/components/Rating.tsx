@@ -2,32 +2,32 @@ import { Rate } from 'antd';
 import { FC, memo } from 'react';
 import './styles.scss';
 
-interface CommentProps {
+interface RatingProps {
     name?: string;
     rate: number;
     date: string;
     content: string;
 }
 
-const Comment: FC<CommentProps> = memo(
+const Rating: FC<RatingProps> = memo(
     ({ name = 'Người dùng BK Travel', rate, date, content }) => {
         return (
-            <div className="user-comment">
-                <div className="user-comment__header">
+            <div className="user-rating">
+                <div className="user-rating__header">
                     <div>
-                        <span className="user-comment__header--name">
+                        <span className="user-rating__header--name">
                             {name}
                         </span>
                         <Rate disabled allowHalf defaultValue={rate} />
                     </div>
-                    <span className="user-comment__header--date">{date}</span>
+                    <span className="user-rating__header--date">{date}</span>
                 </div>
-                <p className="user-comment__content">{content}</p>
+                <p className="user-rating__content">{content}</p>
             </div>
         );
     }
 );
 
-Comment.displayName = 'Comment';
+Rating.displayName = 'Rating';
 
-export default Comment;
+export default Rating;

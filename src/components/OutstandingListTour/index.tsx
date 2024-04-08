@@ -90,7 +90,7 @@ const OutstandingListTour: FC = () => {
                                     deadlineBookTime={dayjs(
                                         tour.deadline_book_time
                                     ).format(DEFAULT_DISPLAY_DATE_FORMAT)}
-                                    price={tour.price}
+                                    price={parseInt(tour.price)}
                                 />
                             </SwiperSlide>
                         ))}

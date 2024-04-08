@@ -91,7 +91,8 @@ const Inner = memo(
             <UserHomePageLayout>
                 <div className="cart">
                     <h2 className="cart-title">Giỏ hàng</h2>
-                    {cartList?.cart?.order_items?.length === 0 ? (
+                    {cartList?.cart?.order_items?.length === 0 ||
+                    cartList?.cart === null ? (
                         <NoItemInCart />
                     ) : (
                         <div className="cart__content">
