@@ -7,7 +7,12 @@ import { getCustomerId } from 'reducers/token/function';
 import commentService from 'services/commentService';
 import './styles.scss';
 
-const WriteReview: FC = memo(() => {
+interface WriteReviewProps {
+    reload: boolean;
+    setReload: (value: boolean) => void;
+}
+
+const WriteReview: FC<WriteReviewProps> = memo(({ reload, setReload }) => {
     const [form] = Form.useForm();
     const { tour_id } = useParams();
     const userId = String(getCustomerId());
@@ -39,6 +44,7 @@ const WriteReview: FC = memo(() => {
                 if (response?.status === 200) {
                     Message.sendSuccess('Bạn đã gửi đánh giá thành công');
                     form.resetFields();
+                    setReload(!reload);
                 }
             } catch (error) {
                 console.error(error);
@@ -49,7 +55,7 @@ const WriteReview: FC = memo(() => {
                 setLoading(false);
             }
         },
-        [form, tour_id, userId]
+        [form, reload, setReload, tour_id, userId]
     );
 
     return (

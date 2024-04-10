@@ -21,6 +21,11 @@ class CommentService extends ApiBase {
         const url = 'http://localhost:8080/api/v1/review';
         return axios.post(url, requestBody);
     };
+
+    getAllReviews = (tour_id: number) => {
+        const url = `http://localhost:8080/api/v1/tour/${tour_id}/reviews`;
+        return axios.get(url);
+    };
 }
 
 const commentService = new CommentService();

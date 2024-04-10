@@ -10,6 +10,7 @@ import StarIcon from 'assets/icons/StarIcon';
 import DetailTourItem from 'components/DetailTourItem';
 import Message from 'components/Message';
 import Title from 'components/Title';
+import ModalSelectPassenger from 'components/TourItem/components/ModalSelectPassenger';
 import dayjs from 'dayjs';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
 import { memo, useCallback, useEffect, useState } from 'react';
@@ -22,21 +23,28 @@ import CommentList from 'views/DetailTourPage/components/Comment';
 import Rating from 'views/DetailTourPage/components/Rating';
 import WriteComment from 'views/DetailTourPage/components/WriteComment';
 import WriteReview from 'views/DetailTourPage/components/WriteReview';
+import { useCreateContext } from 'views/DetailTourPage/Context';
 import './style.scss';
 
 const Inner = memo(
-    ({
-        tourData,
-        loveList,
-        commentsList,
-        setLoveList,
-        isGetLoveList,
-        reload,
-        setReload,
-    }) => {
+    ({ tourData, commentsList, reviewsList, handleCreateOrder }) => {
         useEffect(() => {
             document.title = 'Chi tiết tour';
         });
+
+        const {
+            loveList,
+            setLoveList,
+            reload,
+            setReload,
+            openOrderModal,
+            setOpenOrderModal,
+            adultQuantity,
+            setAdultQuantity,
+            childQuantity,
+            setChildQuantity,
+        } = useCreateContext();
+
         const token = useToken();
         const navigate = useNavigate();
         const { tour_id } = useParams();
@@ -73,17 +81,13 @@ const Inner = memo(
             }
         }, [loveList, navigate, setLoveList, token, tour_id, userId]);
 
-        if (
-            !tourData ||
-            !tourData.description ||
-            !tourData.list_image ||
-            isGetLoveList === false
-        ) {
+        if (!tourData || !tourData.description || !tourData.list_image) {
             return null;
         }
 
         const imageList = JSON.parse(tourData.list_image);
-        const descriptionParagraphs = tourData?.description.split('\r\n\r\n');
+        const descriptionParagraphs =
+            tourData?.description.split(/\r\n\r\n|\r\n/);
 
         const attractionsName = tourData.attractions.map(
             attraction => attraction.name
@@ -193,6 +197,7 @@ const Inner = memo(
                                 ).toLocaleString()} VNĐ`}
                                 icon={<SendOutlined />}
                                 buttonTitle="Đặt tour ngay"
+                                onClick={() => setOpenOrderModal(true)}
                             />
                             <DetailTourItem
                                 title="Lịch trình tour"
@@ -220,7 +225,7 @@ const Inner = memo(
                                 }`}
                                 onClick={() => setActiveTab('RATING')}
                             >
-                                Đánh giá (0)
+                                Đánh giá ({tourData?.count_reviewer})
                             </p>
                             <p
                                 className={`${
@@ -244,9 +249,9 @@ const Inner = memo(
                                         <Rate
                                             disabled
                                             allowHalf
-                                            defaultValue={
+                                            defaultValue={parseFloat(
                                                 tourData?.average_rate
-                                            }
+                                            )}
                                         />
                                         <span className="tour-detail__rating--total">
                                             ({tourData?.count_reviewer} lượt
@@ -258,15 +263,31 @@ const Inner = memo(
                                     </span>
                                 </div>
                                 <div>
-                                    <WriteReview />
-                                </div>
-                                <div className="tour-detail__rating--content">
-                                    <Rating
-                                        rate={4}
-                                        date="13/05/2023"
-                                        content="Khi đến nơi, bạn cần điền thông tin vào mẫu đơn bảo hiểm. Lưu ý, việc cung cấp thông tin cá nhân (VD: Số hộ chiếu, ngày sinh) chỉ phục vụ cho mục đích bảo hiểm, đây là yêu cầu bắt buộc để đảm bảo an toàn cho bạn trong suốt chuyến tham quan."
+                                    <WriteReview
+                                        reload={reload}
+                                        setReload={setReload}
                                     />
                                 </div>
+                                {reviewsList.length > 0 &&
+                                    reviewsList[0].comments &&
+                                    reviewsList[0].comments.length > 0 &&
+                                    reviewsList[0]?.comments.map(review => (
+                                        <div
+                                            className="tour-detail__rating--content"
+                                            key={review.comment_id}
+                                        >
+                                            <Rating
+                                                rate={review.rating}
+                                                name={review.user_name}
+                                                date={dayjs(
+                                                    review.createdAt
+                                                ).format(
+                                                    DEFAULT_DISPLAY_DATE_FORMAT
+                                                )}
+                                                content={review.content}
+                                            />
+                                        </div>
+                                    ))}
                             </>
                         )}
                         {activeTab === 'COMMENT' && (
@@ -301,6 +322,17 @@ const Inner = memo(
                         )}
                     </div>
                     <FloatButton.BackTop visibilityHeight={0} />
+                    <ModalSelectPassenger
+                        tourId={tour_id}
+                        name="order-passenger"
+                        adultQuantity={adultQuantity}
+                        childQuantity={childQuantity}
+                        setAdultQuantity={setAdultQuantity}
+                        setChildQuantity={setChildQuantity}
+                        openModal={openOrderModal}
+                        setOpenModal={setOpenOrderModal}
+                        handleFinish={handleCreateOrder}
+                    />
                 </div>
             </UserHomePageLayout>
         );
