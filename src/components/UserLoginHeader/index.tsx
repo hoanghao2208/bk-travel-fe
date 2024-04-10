@@ -58,6 +58,7 @@ const UserLoginHeader: FC = () => {
     const handleLogout = () => {
         setToken('');
         setCustomerId(0);
+        navigate(routeConstants.USER_HOME_PAGE);
         window.location.reload();
     };
 

@@ -14,7 +14,7 @@ const Wrapper = memo(() => {
             }
             const response = await userService.getWishList(userId);
             if (response?.status === 200) {
-                setWishListTours(response.data.data);
+                setWishListTours(response.data.data[0].tours);
             }
         } catch (error) {
             console.error(error);

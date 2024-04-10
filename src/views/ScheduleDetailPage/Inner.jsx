@@ -1,9 +1,11 @@
 import { SendOutlined } from '@ant-design/icons';
 import { Button, FloatButton, Image } from 'antd';
 import OutstandingItem from 'components/OutstandingItem';
+import ModalSelectPassenger from 'components/TourItem/components/ModalSelectPassenger';
 import dayjs from 'dayjs';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
 import { memo, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -11,12 +13,24 @@ import { Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
 import ScheduleTable from 'views/ScheduleDetailPage/components/ScheduleTable';
+import { useCreateContext } from 'views/ScheduleDetailPage/Context';
 import './style.scss';
 
-const Inner = memo(({ tourData, scheduleData }) => {
+const Inner = memo(({ tourData, scheduleData, handleCreateOrder }) => {
     useEffect(() => {
         document.title = 'Lịch trình chi tiết';
     });
+
+    const { tour_id } = useParams();
+
+    const {
+        openOrderModal,
+        setOpenOrderModal,
+        adultQuantity,
+        setAdultQuantity,
+        childQuantity,
+        setChildQuantity,
+    } = useCreateContext();
 
     if (
         !tourData ||
@@ -67,6 +81,7 @@ const Inner = memo(({ tourData, scheduleData }) => {
                                 type="primary"
                                 icon={<SendOutlined />}
                                 shape="round"
+                                onClick={() => setOpenOrderModal(true)}
                             >
                                 Đặt tour ngay
                             </Button>
@@ -75,7 +90,7 @@ const Inner = memo(({ tourData, scheduleData }) => {
                             <Button shape="round">Liên hệ tư vấn</Button>
                         </div>
                         <h3 className="schedule-detail__header--right-price">
-                            {tourData?.price.toLocaleString()} VNĐ
+                            {parseInt(tourData?.price).toLocaleString()} VNĐ
                         </h3>
                     </div>
                 </div>
@@ -104,7 +119,7 @@ const Inner = memo(({ tourData, scheduleData }) => {
                             </span>
                         </div>
                         <div>
-                            <span>Thời gian tập trung:</span>
+                            <span>Thời gian khởi hành:</span>
                             <span>{tourData.departure_time}</span>
                         </div>
                         <div>
@@ -174,6 +189,17 @@ const Inner = memo(({ tourData, scheduleData }) => {
                 </div>
 
                 <FloatButton.BackTop visibilityHeight={0} />
+                <ModalSelectPassenger
+                    tourId={tour_id}
+                    name="order-passenger"
+                    adultQuantity={adultQuantity}
+                    childQuantity={childQuantity}
+                    setAdultQuantity={setAdultQuantity}
+                    setChildQuantity={setChildQuantity}
+                    openModal={openOrderModal}
+                    setOpenModal={setOpenOrderModal}
+                    handleFinish={handleCreateOrder}
+                />
             </div>
         </UserHomePageLayout>
     );

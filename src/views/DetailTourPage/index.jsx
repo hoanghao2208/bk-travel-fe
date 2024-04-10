@@ -1,20 +1,48 @@
-import { memo, useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import Message from 'components/Message';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getCustomerId } from 'reducers/token/function';
+import routeConstants from 'route/routeConstant';
 import commentService from 'services/commentService';
+import orderService from 'services/orderService';
 import tourService from 'services/tourService';
 import userService from 'services/userService';
+import CreateDetailContextProvider from 'views/DetailTourPage/Context';
 import Inner from 'views/DetailTourPage/Inner';
 
 const Wrapper = memo(() => {
     const { tour_id } = useParams();
     const userId = getCustomerId();
+    const navigate = useNavigate();
 
     const [tourData, setTourData] = useState([]);
     const [loveList, setLoveList] = useState([]);
     const [commentsList, setCommentsList] = useState([]);
-    const [isGetLoveList, setIsGetLoveList] = useState(false);
+    const [reviewsList, setReviewsList] = useState([]);
+    const [userInfor, setUserInfor] = useState([]);
     const [reload, setReload] = useState(false);
+    const [openOrderModal, setOpenOrderModal] = useState(false);
+    const [adultQuantity, setAdultQuantity] = useState({
+        value: 1,
+    });
+    const [childQuantity, setChildQuantity] = useState({
+        value: 0,
+    });
+
+    const ContextValue = useMemo(() => {
+        return {
+            loveList,
+            setLoveList,
+            reload,
+            setReload,
+            openOrderModal,
+            setOpenOrderModal,
+            adultQuantity,
+            setAdultQuantity,
+            childQuantity,
+            setChildQuantity,
+        };
+    }, [adultQuantity, childQuantity, loveList, openOrderModal, reload]);
 
     const handleGetTourData = useCallback(async () => {
         try {
@@ -34,11 +62,10 @@ const Wrapper = memo(() => {
             }
             const response = await userService.getWishList(userId);
             if (response?.status === 200) {
-                const tempLoveList = response.data.data.map(
+                const tempLoveList = response.data.data[0].tours.map(
                     item => item.tour_id
                 );
                 setLoveList(tempLoveList);
-                setIsGetLoveList(true);
             }
         } catch (error) {
             console.error(error);
@@ -56,28 +83,103 @@ const Wrapper = memo(() => {
         }
     }, [tour_id]);
 
+    const handleGetReviews = useCallback(async () => {
+        try {
+            const response = await commentService.getAllReviews(tour_id);
+            if (response?.status === 200) {
+                setReviewsList(response.data.all_reviews);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, [tour_id]);
+
+    const getUserInfor = useCallback(async () => {
+        try {
+            const response = await userService.getUserInfo(userId);
+            if (response?.status === 200) {
+                setUserInfor(response.data.user_info);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, [userId]);
+
+    const handleCreateOrder = useCallback(async () => {
+        try {
+            const body = {
+                user_id: userId,
+                adult_quantity: adultQuantity.value,
+                child_quantity: childQuantity.value,
+                tour_id: tour_id,
+                name_customer: userInfor?.firstname + ' ' + userInfor?.lastname,
+                phone_customer: userInfor?.phone_number,
+                address_customer: 'TP. Hồ Chí Minh',
+            };
+
+            if (body.phone_customer === null) {
+                navigate(routeConstants.USER_PROFILE);
+                Message.sendWarning('Vui lòng cập nhật số điện thoại');
+                return;
+            }
+
+            const response = await orderService.createOneOrder(body);
+            if (response?.status === 200) {
+                navigate(
+                    `${routeConstants.FILL_INFORMATION}?tourId=${tour_id}&orderId=${response.data.order.order_id}`
+                );
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setAdultQuantity(prev => ({
+                ...prev,
+                value: 1,
+            }));
+            setChildQuantity(prev => ({
+                ...prev,
+                value: 0,
+            }));
+            setOpenOrderModal(false);
+        }
+    }, [
+        adultQuantity.value,
+        childQuantity.value,
+        navigate,
+        tour_id,
+        userId,
+        userInfor,
+    ]);
+
     useEffect(() => {
         handleGetTourData();
-    }, [handleGetTourData]);
+    }, [handleGetTourData, reload]);
 
     useEffect(() => {
         handleGetWishListTours();
     }, [handleGetWishListTours]);
 
     useEffect(() => {
+        getUserInfor();
+    }, [getUserInfor]);
+
+    useEffect(() => {
         handleGetComment();
     }, [handleGetComment, reload]);
 
+    useEffect(() => {
+        handleGetReviews();
+    }, [handleGetReviews, reload]);
+
     return (
-        <Inner
-            tourData={tourData}
-            loveList={loveList}
-            commentsList={commentsList}
-            setLoveList={setLoveList}
-            isGetLoveList={isGetLoveList}
-            reload={reload}
-            setReload={setReload}
-        />
+        <CreateDetailContextProvider value={ContextValue}>
+            <Inner
+                tourData={tourData}
+                commentsList={commentsList}
+                reviewsList={reviewsList}
+                handleCreateOrder={handleCreateOrder}
+            />
+        </CreateDetailContextProvider>
     );
 });
 

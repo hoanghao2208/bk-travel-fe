@@ -92,7 +92,7 @@ const TourItem: FC<TourItemProps> = memo(
                 }
                 const response = await userService.getWishList(userId);
                 if (response?.status === 200) {
-                    const tempLoveList = response.data.data.map(
+                    const tempLoveList = response.data.data[0].tours.map(
                         (item: any) => item.tour_id
                     );
                     setLoveList(tempLoveList);
@@ -174,7 +174,7 @@ const TourItem: FC<TourItemProps> = memo(
                     address_customer: 'TP. Hồ Chí Minh',
                 };
 
-                if (body.phone_customer === '') {
+                if (body.phone_customer === null) {
                     navigate(routeConstants.USER_PROFILE);
                     Message.sendWarning('Vui lòng cập nhật số điện thoại');
                     return;
