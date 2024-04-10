@@ -1,12 +1,40 @@
-import { memo, useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import Message from 'components/Message';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getCustomerId } from 'reducers/token/function';
+import routeConstants from 'route/routeConstant';
+import orderService from 'services/orderService';
 import tourService from 'services/tourService';
+import userService from 'services/userService';
+import CreateScheduleContextProvider from 'views/ScheduleDetailPage/Context';
 import Inner from 'views/ScheduleDetailPage/Inner';
 
 const Wrapper = memo(() => {
+    const userId = getCustomerId();
     const { tour_id } = useParams();
+    const navigate = useNavigate();
+
     const [tourData, setTourData] = useState([]);
     const [scheduleData, setScheduleData] = useState([]);
+    const [userInfor, setUserInfor] = useState([]);
+    const [openOrderModal, setOpenOrderModal] = useState(false);
+    const [adultQuantity, setAdultQuantity] = useState({
+        value: 1,
+    });
+    const [childQuantity, setChildQuantity] = useState({
+        value: 0,
+    });
+
+    const ContextValue = useMemo(() => {
+        return {
+            openOrderModal,
+            setOpenOrderModal,
+            adultQuantity,
+            setAdultQuantity,
+            childQuantity,
+            setChildQuantity,
+        };
+    }, [adultQuantity, childQuantity, openOrderModal]);
 
     const handleGetTourData = useCallback(async () => {
         try {
@@ -30,6 +58,63 @@ const Wrapper = memo(() => {
         }
     }, [tour_id]);
 
+    const getUserInfor = useCallback(async () => {
+        try {
+            const response = await userService.getUserInfo(userId);
+            if (response?.status === 200) {
+                setUserInfor(response.data.user_info);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, [userId]);
+
+    const handleCreateOrder = useCallback(async () => {
+        try {
+            const body = {
+                user_id: userId,
+                adult_quantity: adultQuantity.value,
+                child_quantity: childQuantity.value,
+                tour_id: tour_id,
+                name_customer: userInfor?.firstname + ' ' + userInfor?.lastname,
+                phone_customer: userInfor?.phone_number,
+                address_customer: 'TP. Hồ Chí Minh',
+            };
+
+            if (body.phone_customer === null) {
+                navigate(routeConstants.USER_PROFILE);
+                Message.sendWarning('Vui lòng cập nhật số điện thoại');
+                return;
+            }
+
+            const response = await orderService.createOneOrder(body);
+            if (response?.status === 200) {
+                navigate(
+                    `${routeConstants.FILL_INFORMATION}?tourId=${tour_id}&orderId=${response.data.order.order_id}`
+                );
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setAdultQuantity(prev => ({
+                ...prev,
+                value: 1,
+            }));
+            setChildQuantity(prev => ({
+                ...prev,
+                value: 0,
+            }));
+            setOpenOrderModal(false);
+        }
+    }, [
+        adultQuantity.value,
+        childQuantity.value,
+        navigate,
+        tour_id,
+        userId,
+        userInfor,
+    ]);
+
     useEffect(() => {
         handleGetTourData();
     }, [handleGetTourData]);
@@ -38,7 +123,19 @@ const Wrapper = memo(() => {
         handleGetScheduleData();
     }, [handleGetScheduleData]);
 
-    return <Inner tourData={tourData} scheduleData={scheduleData} />;
+    useEffect(() => {
+        getUserInfor();
+    }, [getUserInfor]);
+
+    return (
+        <CreateScheduleContextProvider value={ContextValue}>
+            <Inner
+                tourData={tourData}
+                scheduleData={scheduleData}
+                handleCreateOrder={handleCreateOrder}
+            />
+        </CreateScheduleContextProvider>
+    );
 });
 
 Wrapper.displayName = 'Schedule Detail';
