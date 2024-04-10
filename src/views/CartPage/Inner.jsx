@@ -2,12 +2,12 @@ import { Button } from 'antd';
 import Message from 'components/Message';
 import ProductWrapper from 'components/ProductWrapper';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUserProfile } from 'reducers/profile/function';
 import { getCustomerId } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import orderService from 'services/orderService';
-import userService from 'services/userService';
 import NoItemInCart from 'views/CartPage/components/NoItemInCart';
 import './style.scss';
 
@@ -16,10 +16,9 @@ const Inner = memo(
         useEffect(() => {
             document.title = 'Giỏ hàng';
         });
+        const userInfor = useUserProfile();
         const userId = getCustomerId();
         const navigate = useNavigate();
-
-        const [userInfor, setUserInfor] = useState([]);
 
         const selectedOrder = useMemo(() => {
             const selected = cartList?.cart?.order_items.filter(item =>
@@ -27,17 +26,6 @@ const Inner = memo(
             );
             return selected;
         }, [cartList?.cart?.order_items, selectedTour]);
-
-        const getUserInfor = useCallback(async () => {
-            try {
-                const response = await userService.getUserInfo(userId);
-                if (response?.status === 200) {
-                    setUserInfor(response.data.user_info);
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        }, [userId]);
 
         const totalPrice = useMemo(() => {
             if (!cartList?.cart?.order_items) return 0;
@@ -78,10 +66,6 @@ const Inner = memo(
                 console.error(error);
             }
         }, [navigate, selectedOrder, selectedTour, userId, userInfor]);
-
-        useEffect(() => {
-            getUserInfor();
-        }, [getUserInfor]);
 
         if (cartList?.userId === '') {
             return null;

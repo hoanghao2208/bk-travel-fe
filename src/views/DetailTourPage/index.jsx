@@ -1,6 +1,7 @@
 import Message from 'components/Message';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useUserProfile } from 'reducers/profile/function';
 import { getCustomerId } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import commentService from 'services/commentService';
@@ -11,15 +12,15 @@ import CreateDetailContextProvider from 'views/DetailTourPage/Context';
 import Inner from 'views/DetailTourPage/Inner';
 
 const Wrapper = memo(() => {
+    const userInfor = useUserProfile();
     const { tour_id } = useParams();
-    const userId = getCustomerId();
     const navigate = useNavigate();
+    const userId = getCustomerId();
 
     const [tourData, setTourData] = useState([]);
     const [loveList, setLoveList] = useState([]);
     const [commentsList, setCommentsList] = useState([]);
     const [reviewsList, setReviewsList] = useState([]);
-    const [userInfor, setUserInfor] = useState([]);
     const [reload, setReload] = useState(false);
     const [openOrderModal, setOpenOrderModal] = useState(false);
     const [adultQuantity, setAdultQuantity] = useState({
@@ -94,17 +95,6 @@ const Wrapper = memo(() => {
         }
     }, [tour_id]);
 
-    const getUserInfor = useCallback(async () => {
-        try {
-            const response = await userService.getUserInfo(userId);
-            if (response?.status === 200) {
-                setUserInfor(response.data.user_info);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }, [userId]);
-
     const handleCreateOrder = useCallback(async () => {
         try {
             const body = {
@@ -158,10 +148,6 @@ const Wrapper = memo(() => {
     useEffect(() => {
         handleGetWishListTours();
     }, [handleGetWishListTours]);
-
-    useEffect(() => {
-        getUserInfor();
-    }, [getUserInfor]);
 
     useEffect(() => {
         handleGetComment();

@@ -1,22 +1,22 @@
 import Message from 'components/Message';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useUserProfile } from 'reducers/profile/function';
 import { getCustomerId } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import orderService from 'services/orderService';
 import tourService from 'services/tourService';
-import userService from 'services/userService';
 import CreateScheduleContextProvider from 'views/ScheduleDetailPage/Context';
 import Inner from 'views/ScheduleDetailPage/Inner';
 
 const Wrapper = memo(() => {
+    const userInfor = useUserProfile();
     const userId = getCustomerId();
     const { tour_id } = useParams();
     const navigate = useNavigate();
 
     const [tourData, setTourData] = useState([]);
     const [scheduleData, setScheduleData] = useState([]);
-    const [userInfor, setUserInfor] = useState([]);
     const [openOrderModal, setOpenOrderModal] = useState(false);
     const [adultQuantity, setAdultQuantity] = useState({
         value: 1,
@@ -57,17 +57,6 @@ const Wrapper = memo(() => {
             console.error(error);
         }
     }, [tour_id]);
-
-    const getUserInfor = useCallback(async () => {
-        try {
-            const response = await userService.getUserInfo(userId);
-            if (response?.status === 200) {
-                setUserInfor(response.data.user_info);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }, [userId]);
 
     const handleCreateOrder = useCallback(async () => {
         try {
@@ -122,10 +111,6 @@ const Wrapper = memo(() => {
     useEffect(() => {
         handleGetScheduleData();
     }, [handleGetScheduleData]);
-
-    useEffect(() => {
-        getUserInfor();
-    }, [getUserInfor]);
 
     return (
         <CreateScheduleContextProvider value={ContextValue}>

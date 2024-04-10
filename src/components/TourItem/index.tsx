@@ -6,6 +6,7 @@ import Message from 'components/Message';
 import ModalSelectPassenger from 'components/TourItem/components/ModalSelectPassenger';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { Link, generatePath, useNavigate } from 'react-router-dom';
+import { useUserProfile } from 'reducers/profile/function';
 import { getCustomerId, getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import orderService from 'services/orderService';
@@ -41,6 +42,7 @@ const TourItem: FC<TourItemProps> = memo(
         deadlineBookTime,
         price,
     }) => {
+        const userInfor = useUserProfile();
         const token = getToken();
         const userId = getCustomerId();
         const navigate = useNavigate();
@@ -56,7 +58,6 @@ const TourItem: FC<TourItemProps> = memo(
         const [childQuantity, setChildQuantity] = useState<IPassengerNumber>({
             value: 0,
         });
-        const [userInfor, setUserInfor] = useState<any>([]);
 
         const handleNavigate = () => {
             navigate(
@@ -73,17 +74,6 @@ const TourItem: FC<TourItemProps> = memo(
             setSelectedItem(tourId);
             setOpenOrderModal(true);
         }, []);
-
-        const getUserInfor = useCallback(async () => {
-            try {
-                const response = await userService.getUserInfo(userId);
-                if (response?.status === 200) {
-                    setUserInfor(response.data.user_info);
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        }, [userId]);
 
         const handleGetWishListTours = useCallback(async () => {
             try {
@@ -211,10 +201,6 @@ const TourItem: FC<TourItemProps> = memo(
         useEffect(() => {
             handleGetWishListTours();
         }, [handleGetWishListTours]);
-
-        useEffect(() => {
-            getUserInfor();
-        }, [getUserInfor]);
 
         return (
             <>
