@@ -1,7 +1,7 @@
 import { FC, memo, ReactComponentElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { profileActions } from 'reducers/profile';
-import { setToken, useToken } from 'reducers/token/function';
+import { getCustomerId, setToken, useToken } from 'reducers/token/function';
 import { Provider } from 'route/Context';
 import RouteNavigate from 'route/components/RouteNavigate';
 import userService from 'services/userService';
@@ -20,14 +20,20 @@ const RouteElement: FC<IProps> = memo(
         const [authorized, setAuthorized] = useState(false);
         const navigateFunc = useNavigate();
         const token = useToken();
+        const userId = getCustomerId();
+
         useEffect(() => {
             if (!authorized) {
                 if (authorization) {
                     if (token) {
-                        userService.me().then(res => {
-                            if (res?.data.statusCode === 200) {
+                        userService.getUserInfo(userId).then(res => {
+                            if (res?.status === 200) {
                                 setAuthorized(true);
-                                dispatch(profileActions.SET_PROFILE(res.data));
+                                dispatch(
+                                    profileActions.SET_PROFILE(
+                                        res?.data.user_info
+                                    )
+                                );
                             } else {
                                 setToken('');
                                 setAuthorized(false);
@@ -45,7 +51,7 @@ const RouteElement: FC<IProps> = memo(
                 setAuthorized(false);
                 navigateFunc(routeConstants.LOGIN);
             }
-        }, [authorization, authorized, navigateFunc, token]);
+        }, [authorization, authorized, navigateFunc, token, userId]);
 
         if (!authorized) {
             return null;

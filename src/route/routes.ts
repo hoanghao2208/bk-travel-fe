@@ -53,18 +53,20 @@ const routes: Array<Route> = [
     },
     {
         name: 'User Home Page',
-        path: '/',
+        path: routeConstants.USER_HOME_PAGE,
         Component: commonLoadable(() => import('views/UserHomePage')),
     },
     {
         name: 'Cart Page',
         path: routeConstants.CART,
         Component: commonLoadable(() => import('views/CartPage')),
+        authorization: true,
     },
     {
         name: 'Fill Information Page',
         path: routeConstants.FILL_INFORMATION,
         Component: commonLoadable(() => import('views/FillInformationPage')),
+        authorization: true,
     },
     {
         name: 'Find Tour Page',
@@ -75,6 +77,7 @@ const routes: Array<Route> = [
         name: 'Custom Tour Page',
         path: routeConstants.CUSTOM_TOUR,
         Component: commonLoadable(() => import('views/CustomTourPage')),
+        authorization: true,
     },
     {
         name: 'Search Results Page',
@@ -85,16 +88,19 @@ const routes: Array<Route> = [
         name: 'User Profile Page',
         path: routeConstants.USER_PROFILE,
         Component: commonLoadable(() => import('views/UserProfilePage')),
+        authorization: true,
     },
     {
         name: 'User Change Password Page',
         path: routeConstants.USER_CHANGE_PASSWORD,
         Component: commonLoadable(() => import('views/UserChangePasswordPage')),
+        authorization: true,
     },
     {
         name: 'Love List Page',
         path: routeConstants.LOVE_LIST,
         Component: commonLoadable(() => import('views/LoveListPage')),
+        authorization: true,
     },
     {
         name: 'Admin Homepage',
@@ -182,6 +188,7 @@ const routes: Array<Route> = [
         name: 'Payment Success Page',
         path: routeConstants.PAYMENT_SUCCESS,
         Component: commonLoadable(() => import('views/PaymentSuccess')),
+        authorization: true,
     },
 ];
 

@@ -122,6 +122,13 @@ const TourItem: FC<TourItemProps> = memo(
 
         const handleAddToCart = useCallback(async () => {
             try {
+                if (token === '') {
+                    navigate(routeConstants.LOGIN);
+                    Message.sendWarning(
+                        'Vui lòng đăng nhập để thực hiện chức năng này'
+                    );
+                    return;
+                }
                 const body = {
                     user_id: userId,
                     tour: {
@@ -149,10 +156,24 @@ const TourItem: FC<TourItemProps> = memo(
                 }));
                 setOpenAddModal(false);
             }
-        }, [adultQuantity.value, childQuantity.value, selectedItem, userId]);
+        }, [
+            adultQuantity.value,
+            childQuantity.value,
+            navigate,
+            selectedItem,
+            token,
+            userId,
+        ]);
 
         const handleCreateOrder = useCallback(async () => {
             try {
+                if (token === '') {
+                    navigate(routeConstants.LOGIN);
+                    Message.sendWarning(
+                        'Vui lòng đăng nhập để thực hiện chức năng này'
+                    );
+                    return;
+                }
                 const body = {
                     user_id: userId,
                     adult_quantity: adultQuantity.value,
@@ -194,6 +215,7 @@ const TourItem: FC<TourItemProps> = memo(
             childQuantity.value,
             navigate,
             selectedItem,
+            token,
             userId,
             userInfor,
         ]);

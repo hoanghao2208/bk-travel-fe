@@ -1,11 +1,11 @@
 import { Button, Pagination } from 'antd';
 import FilterItem from 'components/FilterItem';
 import TourItem from 'components/TourItem';
+import dayjs from 'dayjs';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
 import { memo, useEffect } from 'react';
-import './style.scss';
-import dayjs from 'dayjs';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
+import './style.scss';
 
 const Inner = memo(({ searchResults }) => {
     useEffect(() => {

@@ -97,6 +97,13 @@ const Wrapper = memo(() => {
 
     const handleCreateOrder = useCallback(async () => {
         try {
+            if (userId === 0) {
+                navigate(routeConstants.LOGIN);
+                Message.sendWarning(
+                    'Vui lòng đăng nhập để thực hiện chức năng này'
+                );
+                return;
+            }
             const body = {
                 user_id: userId,
                 adult_quantity: adultQuantity.value,

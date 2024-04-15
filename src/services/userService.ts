@@ -2,16 +2,9 @@ import axios from 'axios';
 import ApiBase from 'modules/apis/apiBase';
 
 const _USER_PATH = 'user';
-const _OAUTH_PATH = '/oauth';
-const _TOUR = '/tour';
 const _AUTH = 'auth';
 
 class UserService extends ApiBase {
-    me = () => {
-        const url = `${_USER_PATH}/get/me`;
-        return this.get(url);
-    };
-
     register = (requestBody: {
         firstname: string;
         lastname: string;

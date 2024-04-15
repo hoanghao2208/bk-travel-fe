@@ -2,8 +2,9 @@ import { Button, Form } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import Message from 'components/Message';
 import { FC, memo, useCallback, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getCustomerId } from 'reducers/token/function';
+import routeConstants from 'route/routeConstant';
 import commentService from 'services/commentService';
 import './styles.scss';
 
@@ -14,6 +15,7 @@ interface WriteCommentProps {
 
 const WriteComment: FC<WriteCommentProps> = memo(({ reload, setReload }) => {
     const { tour_id } = useParams();
+    const navigate = useNavigate();
     const userId = String(getCustomerId());
     const [form] = Form.useForm();
 
@@ -22,6 +24,13 @@ const WriteComment: FC<WriteCommentProps> = memo(({ reload, setReload }) => {
     const handleCreateComment = useCallback(
         async (values: { content: string }) => {
             try {
+                if (userId === '0') {
+                    navigate(routeConstants.LOGIN);
+                    Message.sendWarning(
+                        'Vui lòng đăng nhập để thực hiện chức năng này'
+                    );
+                    return;
+                }
                 setLoading(true);
                 const formData = new FormData();
 
@@ -49,7 +58,7 @@ const WriteComment: FC<WriteCommentProps> = memo(({ reload, setReload }) => {
                 setLoading(false);
             }
         },
-        [form, reload, setReload, tour_id, userId]
+        [form, navigate, reload, setReload, tour_id, userId]
     );
 
     return (
