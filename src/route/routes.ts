@@ -190,6 +190,12 @@ const routes: Array<Route> = [
         Component: commonLoadable(() => import('views/PaymentSuccess')),
         authorization: true,
     },
+    {
+        name: 'User Orders Page',
+        path: routeConstants.USER_ORDERS,
+        Component: commonLoadable(() => import('views/UserOders')),
+        authorization: true,
+    },
 ];
 
 export default routes;

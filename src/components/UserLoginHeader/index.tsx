@@ -94,14 +94,14 @@ const UserLoginHeader: FC = () => {
             key: '2',
             label: (
                 <Link
-                    to="/how-to-pay"
+                    to="/orders"
                     style={{
                         fontSize: '16px',
                         display: 'inline-block',
                         paddingLeft: '10px',
                     }}
                 >
-                    Thông tin thanh toán
+                    Đơn hàng của bạn
                 </Link>
             ),
             icon: <MoneyDropDown />,

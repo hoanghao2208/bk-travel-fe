@@ -47,7 +47,6 @@ const UserActivityMenu: FC = () => {
     return (
         <div className="user-actitvity-menu">
             <Menu
-                defaultSelectedKeys={['user-profile']}
                 defaultOpenKeys={['account-info']}
                 mode="inline"
                 items={items}

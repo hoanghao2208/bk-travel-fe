@@ -1,0 +1,53 @@
+@import 'scss/global.scss';
+
+.orders {
+    padding: 10px 0 30px;
+    &--list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+        margin-top: 20px;
+    }
+}
+
+.orders-item {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: $color-homepage-bg;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 20px 25px -5px $color-shadow1, 0 8px 10px -6px $color-shadow1;
+
+    &--row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    &--content {
+        display: flex;
+        flex-direction: column;
+        span:first-child {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        span:last-child {
+            font-weight: 600;
+            font-size: 20px;
+            color: $color--red;
+        }
+    }
+
+    &--status {
+        width: 70%;
+        text-align: center;
+        margin: auto;
+        font-weight: 600;
+        color: $color-button--green;
+        background-color: $color-button--green-disabled;
+        border-radius: 6px;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+}
