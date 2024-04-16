@@ -15,6 +15,7 @@ const routeConstants = {
     SCHEDULE_DETAIL: '/tour/schedule/detail/:tour_id',
     DETAIL_TOUR: '/tour/information/detail/:tour_id',
     PAYMENT_SUCCESS: '/payment/success',
+    USER_ORDERS: '/orders',
     ADMIN_HOMEPAGE: '/admin',
     ADMIN_MANAGE_TOURS: '/admin/manage-tours',
     ADMIN_EDIT_TOUR: '/admin/edit-information-tour/:tour_id',

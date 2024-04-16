@@ -7,6 +7,11 @@ class OrderService extends ApiBase {
         return axios.get(url);
     };
 
+    getCompletedOrder = (userId: number) => {
+        const url = `http://localhost:8080/api/v1/user/${userId}/completed_order`;
+        return axios.get(url);
+    };
+
     createOneOrder = (requestBody: {
         user_id: number;
         child_quantity: number;
