@@ -4,7 +4,7 @@
     &__wrapper {
         padding: 130px 0 40px;
     }
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
     border: 1px solid $color--line;
     box-sizing: border-box;
@@ -17,14 +17,23 @@
         justify-content: space-between;
         &--location {
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             gap: 12px;
-            font-size: 16px;
-            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s linear;
             &:hover {
                 color: $color-date;
+            }
+            .ant-select-selector {
+                font-size: 16px;
+                color: $color-date;
+                font-weight: 500;
+                width: 200px !important;
+                border: none !important;
+                background-color: $color-search-bg !important;
+                span {
+                    font-weight: 500;
+                }
             }
         }
         &--status {
@@ -48,6 +57,33 @@
             padding-top: 8px;
         }
     }
+    &__inf {
+        text-align: center;
+        p {
+            font-size: 24px;
+            font-weight: 600;
+            color: $color--primary;
+        }
+        &--wrap {
+            width: 45%;
+            margin: 0 auto;
+            border: 1px solid $color--border;
+            padding: 20px 20px 0;
+            border-radius: 8px;
+            div {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                font-size: 18px;
+                font-weight: 500;
+                span:last-child {
+                    color: $color--red;
+                }
+            }
+        }
+    }
+
     &__week {
         display: grid;
         grid-template-columns: repeat(7, 1fr);

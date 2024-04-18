@@ -1,103 +1,174 @@
+import { Select } from 'antd';
 import LocationIcon from 'assets/icons/LocationIcon';
-import RainIconMini from 'assets/icons/WeatherIcon/IconMini/RainIconMini';
-import SunCloudIconMini from 'assets/icons/WeatherIcon/IconMini/SunCloudIconMini';
-import SunFewCloudIconMini from 'assets/icons/WeatherIcon/IconMini/SunFewCloudIconMini';
-import SunRainIconMini from 'assets/icons/WeatherIcon/IconMini/SunRainIconMini';
-import SunnyIconMini from 'assets/icons/WeatherIcon/IconMini/SunnyIconMini';
-import ThunderIconMini from 'assets/icons/WeatherIcon/IconMini/ThunderIconMini';
-import ThunderIcon from 'assets/icons/WeatherIcon/ThunderIcon';
-import WeatherItem from 'components/WeatherItem';
+import dayjs from 'dayjs';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useMemo } from 'react';
+import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
+import { formattedDateTime } from 'utils/function/format';
+import { renderIcon, renderStatus } from 'views/WeatherForecastPage/function';
 import './style.scss';
 
-const Inner = memo(() => {
-    useEffect(() => {
-        document.title = 'Theo dõi thời tiết';
-    });
-    return (
-        <UserHomePageLayout>
-            <div className="weather-forecast__wrapper">
-                <div className="weather-forecast">
-                    <div className="weather-forecast__today">
-                        <div className="weather-forecast__today--left">
-                            <div className="weather-forecast__today--location">
-                                <LocationIcon />
-                                <span>TP. Hồ Chí Minh</span>
+const Inner = memo(
+    ({
+        mainInfor,
+        sunInfor,
+        windInfor,
+        description,
+        location,
+        setLocation,
+    }) => {
+        useEffect(() => {
+            document.title = 'Theo dõi thời tiết';
+        });
+
+        const filterOption = (input, option) =>
+            (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+
+        const onChange = value => {
+            setLocation(value);
+        };
+
+        const currentDayString = useMemo(() => {
+            const currentDay = dayjs().day();
+            switch (currentDay) {
+                case 0:
+                    return 'Chủ Nhật';
+                case 1:
+                    return 'Thứ Hai';
+                case 2:
+                    return 'Thứ Ba';
+                case 3:
+                    return 'Thứ Tư';
+                case 4:
+                    return 'Thứ Năm';
+                case 5:
+                    return 'Thứ Sáu';
+                case 6:
+                    return 'Thứ Bảy';
+                default:
+                    return '';
+            }
+        }, []);
+
+        return (
+            <UserHomePageLayout>
+                <div className="weather-forecast__wrapper">
+                    <div className="weather-forecast">
+                        <div className="weather-forecast__today">
+                            <div className="weather-forecast__today--left">
+                                <div className="weather-forecast__today--location">
+                                    <LocationIcon />
+                                    <Select
+                                        showSearch
+                                        defaultValue={location}
+                                        placeholder="Thành phố"
+                                        optionFilterProp="children"
+                                        onChange={onChange}
+                                        filterOption={filterOption}
+                                        options={[
+                                            {
+                                                value: 'Ho Chi Minh',
+                                                label: 'TP. Hồ Chí Minh',
+                                            },
+                                            {
+                                                value: 'Da Nang',
+                                                label: 'TP. Đà Nẵng',
+                                            },
+                                            {
+                                                value: 'Vung Tau',
+                                                label: 'Vũng Tàu',
+                                            },
+                                        ]}
+                                    />
+                                </div>
+                                <p className="weather-forecast__today--status">
+                                    {renderStatus(description.main)}
+                                </p>
+                                <div className="weather-forecast__today--info">
+                                    <span className="weather-forecast__today--temperature">
+                                        {Math.round(mainInfor?.temp) || '--'}
+                                        <span>°C</span>
+                                    </span>
+                                    <div className="weather-forecast__today--date">
+                                        <span>{currentDayString} | </span>
+                                        <span>
+                                            {dayjs().format(
+                                                DEFAULT_DISPLAY_DATE_FORMAT
+                                            )}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                            <p className="weather-forecast__today--status">
-                                Trời nhiều mây
-                            </p>
-                            <div className="weather-forecast__today--info">
-                                <span className="weather-forecast__today--temperature">
-                                    26<span>°C</span>
-                                </span>
-                                <div className="weather-forecast__today--date">
-                                    <span>Chủ nhật | </span>
-                                    <span>12/10/2023</span>
+                            <div className="weather-forecast__today--right">
+                                {renderIcon(description.main)}
+                            </div>
+                        </div>
+                        <div className="weather-forecast__inf">
+                            <p>Thông tin chi tiết</p>
+                            <div className="weather-forecast__inf--wrap">
+                                <div>
+                                    <span>Nhiệt độ hiện tại</span>
+                                    <span>
+                                        {Math.round(mainInfor?.temp) || '--'} °C
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>Nhiệt độ cảm nhận được</span>
+                                    <span>
+                                        {Math.round(mainInfor?.feels_like) ||
+                                            '--'}{' '}
+                                        °C
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>Nhiệt độ thấp nhất</span>
+                                    <span>
+                                        {Math.floor(mainInfor?.temp_min) ||
+                                            '--'}{' '}
+                                        °C
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>Nhiệt độ cao nhất</span>
+                                    <span>
+                                        {Math.ceil(mainInfor?.temp_max) || '--'}{' '}
+                                        °C
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>Độ ẩm</span>
+                                    <span>
+                                        {Math.round(mainInfor?.humidity) ||
+                                            '--'}{' '}
+                                        g/m³
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>Tốc độ gió</span>
+                                    <span>{windInfor?.speed || '--'} m/s</span>
+                                </div>
+                                <div>
+                                    <span>Bình minh</span>
+                                    <span>
+                                        {formattedDateTime(sunInfor.sunrise) ||
+                                            '--'}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>Hoàng hôn</span>
+                                    <span>
+                                        {formattedDateTime(sunInfor.sunset) ||
+                                            '--'}
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <div className="weather-forecast__today--right">
-                            <ThunderIcon />
-                        </div>
-                    </div>
-                    <div className="weather-forecast__week">
-                        <WeatherItem
-                            date="Thứ hai"
-                            day="12/10/2023"
-                            icon={<SunCloudIconMini />}
-                            minTemp={20}
-                            maxTemp={32}
-                        />
-                        <WeatherItem
-                            date="Thứ ba"
-                            day="13/10/2023"
-                            icon={<RainIconMini />}
-                            minTemp={20}
-                            maxTemp={32}
-                        />
-                        <WeatherItem
-                            date="Thứ tư"
-                            day="14/10/2023"
-                            icon={<SunFewCloudIconMini />}
-                            minTemp={20}
-                            maxTemp={32}
-                        />
-                        <WeatherItem
-                            date="Thứ năm"
-                            day="15/10/2023"
-                            icon={<SunCloudIconMini />}
-                            minTemp={20}
-                            maxTemp={32}
-                        />
-                        <WeatherItem
-                            date="Thứ sáu"
-                            day="16/10/2023"
-                            icon={<SunnyIconMini />}
-                            minTemp={20}
-                            maxTemp={32}
-                        />
-                        <WeatherItem
-                            date="Thứ bảy"
-                            day="17/10/2023"
-                            icon={<SunRainIconMini />}
-                            minTemp={20}
-                            maxTemp={32}
-                        />
-                        <WeatherItem
-                            date="Chủ nhật"
-                            day="18/10/2023"
-                            icon={<ThunderIconMini />}
-                            minTemp={20}
-                            maxTemp={32}
-                        />
                     </div>
                 </div>
-            </div>
-        </UserHomePageLayout>
-    );
-});
+            </UserHomePageLayout>
+        );
+    }
+);
 
 Inner.displayName = 'Weather Forecast Inner';
 
