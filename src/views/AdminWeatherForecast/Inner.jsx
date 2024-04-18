@@ -5,7 +5,6 @@ import SunFewCloudIconMini from 'assets/icons/WeatherIcon/IconMini/SunFewCloudIc
 import SunRainIconMini from 'assets/icons/WeatherIcon/IconMini/SunRainIconMini';
 import SunnyIconMini from 'assets/icons/WeatherIcon/IconMini/SunnyIconMini';
 import ThunderIconMini from 'assets/icons/WeatherIcon/IconMini/ThunderIconMini';
-import RainIcon from 'assets/icons/WeatherIcon/RainIcon';
 import WeatherItem from 'components/WeatherItem';
 import AdminLayout from 'layouts/AdminLayout';
 import { memo, useEffect } from 'react';
@@ -39,7 +38,7 @@ const Inner = memo(() => {
                             </div>
                         </div>
                         <div className="admin-weather-forecast__today--right">
-                            <RainIcon />
+                            {/* <RainIcon /> */}
                         </div>
                     </div>
                     <div className="admin-weather-forecast__week">
