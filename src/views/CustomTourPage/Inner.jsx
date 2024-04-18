@@ -1,35 +1,136 @@
 import { CaretLeftOutlined, CompassFilled } from '@ant-design/icons';
-import { Button, DatePicker, Form, Input, Select, TimePicker } from 'antd';
+import {
+    Button,
+    DatePicker,
+    Form,
+    Input,
+    Select,
+    TimePicker,
+    Tooltip,
+} from 'antd';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import { memo, useEffect, useRef } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
+import tourService from 'services/tourService';
+import { DEFAULT_DISPLAY_DATE_FORMAT, TIME_FORMAT } from 'utils/constants';
 import './style.scss';
 
-const Inner = memo(() => {
+const Inner = memo(({ allDestinations }) => {
     useEffect(() => {
         document.title = 'Tạo tour của riêng bạn';
     });
     const navigate = useNavigate();
-    const options = [
-        {
-            label: 'TP. Hồ Chí Minh',
-            value: 'tphcm',
-        },
-        {
-            label: 'Đà Nẵng',
-            value: 'dn',
-        },
-        {
-            label: 'Hà Nội',
-            value: 'hn',
-        },
-        {
-            label: 'TP. Phan Thiết',
-            value: 'pt',
-        },
-    ];
-    const formRef = useRef(null);
+    const [form] = Form.useForm();
+
+    const [listAttractions, setListAttractions] = useState([]);
+    const [destinationPlaces, setDestinationPlaces] = useState([]);
+    const [allAttractions, setAllAttractions] = useState([]);
+
+    const filterOption = (input, option) =>
+        (option?.children ?? '').toLowerCase().includes(input.toLowerCase());
+
+    const handleChangeAttractions = (values, options) => {
+        const selectedAttractions = [];
+        const all_attractions = [];
+        let prevPlace = null;
+        let i = 0;
+
+        values.forEach(value => {
+            options.forEach(option => {
+                option.options.forEach(attraction => {
+                    if (attraction.value === value) {
+                        selectedAttractions.push({
+                            label: attraction.label,
+                            place: option.label,
+                        });
+                    }
+                });
+            });
+        });
+
+        selectedAttractions.sort((a, b) => {
+            if (a.place > b.place) {
+                return -1;
+            }
+            if (a.place < b.place) {
+                return 1;
+            }
+            return 0;
+        });
+
+        selectedAttractions.forEach(attraction => {
+            if (prevPlace !== attraction.place) {
+                i = 0;
+            }
+
+            const attractionKey = `attractions[${i}][${attraction.place}]`;
+            const attractionValue = attraction.label;
+            const attractionObj = {};
+            attractionObj[attractionKey] = attractionValue;
+            all_attractions.push(attractionObj);
+
+            prevPlace = attraction.place;
+            i++;
+        });
+
+        setAllAttractions(all_attractions);
+    };
+
+    const getAttractionsFromDestinationPlaces = useCallback(async () => {
+        const options = [];
+        for (const destination of destinationPlaces) {
+            try {
+                const response = await tourService.getAllAttractions(
+                    destination
+                );
+                if (response.status === 200) {
+                    const attractions = response.data.data.map(item => ({
+                        label: item.name,
+                        value: item.name,
+                    }));
+                    options.push({
+                        label: destination,
+                        options: attractions,
+                    });
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        return options;
+    }, [destinationPlaces]);
+
+    const handleChangeDestination = values => {
+        form.resetFields(['attractions']);
+        setDestinationPlaces(values);
+    };
+
+    const handleGenerateTimeOptions = useMemo(() => {
+        const timeOpts = [];
+        for (let i = 0; i < 10; i++) {
+            let newOpt;
+            if (i === 0) {
+                newOpt = {
+                    value: `${i + 1} ngày`,
+                };
+            } else {
+                newOpt = {
+                    value: `${i + 1} ngày, ${i} đêm`,
+                };
+            }
+            timeOpts.push(newOpt);
+        }
+        return timeOpts;
+    }, []);
+
+    useEffect(() => {
+        const getAttractions = async () => {
+            const options = await getAttractionsFromDestinationPlaces();
+            setListAttractions(options);
+        };
+
+        getAttractions();
+    }, [getAttractionsFromDestinationPlaces]);
 
     return (
         <UserHomePageLayout>
@@ -51,8 +152,8 @@ const Inner = memo(() => {
                     </div>
                     <div className="custom-tour__form">
                         <Form
-                            ref={formRef}
-                            name="control-ref"
+                            form={form}
+                            name="custom-tour"
                             layout="vertical"
                             // onFinish={onFinish}
                         >
@@ -68,15 +169,18 @@ const Inner = memo(() => {
                                         },
                                     ]}
                                 >
-                                    <Select placeholder="Điểm khởi hành">
-                                        <Option value="hochiminh">
-                                            TP. Hồ Chí Minh
-                                        </Option>
-                                        <Option value="danang">Đà Nẵng</Option>
-                                        <Option value="hanoi">Hà Nội</Option>
-                                        <Option value="vungtau">
-                                            Vũng Tàu
-                                        </Option>
+                                    <Select
+                                        placeholder="Điểm khởi hành"
+                                        filterOption={filterOption}
+                                    >
+                                        {allDestinations.map(destination => (
+                                            <Option
+                                                key={destination.destination_id}
+                                                value={destination.name}
+                                            >
+                                                {destination.name}
+                                            </Option>
+                                        ))}
                                     </Select>
                                 </Form.Item>
                                 <Form.Item
@@ -90,11 +194,31 @@ const Inner = memo(() => {
                                     ]}
                                 >
                                     <Select
-                                        mode="multiple"
                                         allowClear
+                                        mode="multiple"
+                                        onChange={handleChangeDestination}
                                         placeholder="Điểm đến"
-                                        options={options}
-                                    />
+                                        filterOption={filterOption}
+                                        maxTagCount="responsive"
+                                        maxTagPlaceholder={omittedValues => (
+                                            <Tooltip
+                                                title={omittedValues
+                                                    .map(({ label }) => label)
+                                                    .join(', ')}
+                                            >
+                                                <span>...</span>
+                                            </Tooltip>
+                                        )}
+                                    >
+                                        {allDestinations.map(destination => (
+                                            <Option
+                                                key={destination.destination_id}
+                                                value={destination.name}
+                                            >
+                                                {destination.name}
+                                            </Option>
+                                        ))}
+                                    </Select>
                                 </Form.Item>
                                 <Form.Item
                                     name="day"
@@ -123,7 +247,10 @@ const Inner = memo(() => {
                                         },
                                     ]}
                                 >
-                                    <TimePicker placeholder="Thời gian khởi hành" />
+                                    <TimePicker
+                                        placeholder="Thời gian khởi hành"
+                                        format={TIME_FORMAT}
+                                    />
                                 </Form.Item>
                             </div>
                             <div className="custom-tour__form--form2">
@@ -139,16 +266,16 @@ const Inner = memo(() => {
                                     ]}
                                 >
                                     <Select placeholder="Thời gian tour">
-                                        <Option value="1day">1 ngày</Option>
-                                        <Option value="2day">
-                                            2 ngày, 1 đêm
-                                        </Option>
-                                        <Option value="3day">
-                                            3 ngày, 2 đêm
-                                        </Option>
-                                        <Option value="4day">
-                                            4 ngày, 3 đêm
-                                        </Option>
+                                        {handleGenerateTimeOptions.map(
+                                            item => (
+                                                <Option
+                                                    key={item.value}
+                                                    value={item.value}
+                                                >
+                                                    {item.value}
+                                                </Option>
+                                            )
+                                        )}
                                     </Select>
                                 </Form.Item>
                                 <Form.Item
@@ -170,21 +297,40 @@ const Inner = memo(() => {
                                     <Input placeholder="Tổng số du khách" />
                                 </Form.Item>
                                 <Form.Item
-                                    label="Địa điểm vui chơi"
+                                    label="Địa điểm du lịch"
                                     name="locations"
                                     rules={[
                                         {
                                             required: true,
                                             message:
-                                                'Vui lòng lựa chọn các điểm vui chơi mà bạn mong muốn',
+                                                'Vui lòng lựa chọn các điểm du lịch mà bạn mong muốn',
                                         },
                                     ]}
                                 >
                                     <Select
                                         mode="multiple"
                                         allowClear
-                                        placeholder="Địa điểm vui chơi"
-                                        options={options}
+                                        placeholder="Địa điểm du lịch"
+                                        options={listAttractions}
+                                        disabled={
+                                            destinationPlaces.length === 0
+                                        }
+                                        onChange={values =>
+                                            handleChangeAttractions(
+                                                values,
+                                                listAttractions
+                                            )
+                                        }
+                                        maxTagCount="responsive"
+                                        maxTagPlaceholder={omittedValues => (
+                                            <Tooltip
+                                                title={omittedValues
+                                                    .map(({ label }) => label)
+                                                    .join(', ')}
+                                            >
+                                                <span>...</span>
+                                            </Tooltip>
+                                        )}
                                     />
                                 </Form.Item>
                             </div>
