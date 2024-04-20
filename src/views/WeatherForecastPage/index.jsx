@@ -14,6 +14,7 @@ const Wrapper = memo(() => {
     const [sunInfor, setSunInfor] = useState([]);
     const [windInfor, setWindInfor] = useState([]);
     const [description, setDescription] = useState([]);
+    const [allCities, setAllCities] = useState([]);
 
     const getWeatherInformation = useCallback(async () => {
         try {
@@ -30,9 +31,24 @@ const Wrapper = memo(() => {
         }
     }, [location, setSearchParams]);
 
+    const getAllCities = useCallback(async () => {
+        try {
+            const response = await weatherService.getAllCities();
+            if (response?.status === 200) {
+                setAllCities(Object.values(response.data.cities));
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
+
     useEffect(() => {
         getWeatherInformation();
     }, [getWeatherInformation]);
+
+    useEffect(() => {
+        getAllCities();
+    }, [getAllCities]);
 
     return (
         <Inner
@@ -42,6 +58,7 @@ const Wrapper = memo(() => {
             description={description}
             location={location}
             setLocation={setLocation}
+            allCities={allCities}
         />
     );
 });

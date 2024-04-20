@@ -16,6 +16,7 @@ const Inner = memo(
         description,
         location,
         setLocation,
+        allCities,
     }) => {
         useEffect(() => {
             document.title = 'Theo dõi thời tiết';
@@ -65,24 +66,19 @@ const Inner = memo(
                                         optionFilterProp="children"
                                         onChange={onChange}
                                         filterOption={filterOption}
-                                        options={[
-                                            {
-                                                value: 'Ho Chi Minh',
-                                                label: 'TP. Hồ Chí Minh',
-                                            },
-                                            {
-                                                value: 'Da Nang',
-                                                label: 'TP. Đà Nẵng',
-                                            },
-                                            {
-                                                value: 'Vung Tau',
-                                                label: 'Vũng Tàu',
-                                            },
-                                        ]}
-                                    />
+                                    >
+                                        {allCities.map(city => (
+                                            <Option key={city} value={city}>
+                                                {city}
+                                            </Option>
+                                        ))}
+                                    </Select>
                                 </div>
                                 <p className="weather-forecast__today--status">
-                                    {renderStatus(description.main)}
+                                    {renderStatus(
+                                        description.main,
+                                        description.description
+                                    )}
                                 </p>
                                 <div className="weather-forecast__today--info">
                                     <span className="weather-forecast__today--temperature">
@@ -100,7 +96,10 @@ const Inner = memo(
                                 </div>
                             </div>
                             <div className="weather-forecast__today--right">
-                                {renderIcon(description.main)}
+                                {renderIcon(
+                                    description.main,
+                                    description.description
+                                )}
                             </div>
                         </div>
                         <div className="weather-forecast__inf">
