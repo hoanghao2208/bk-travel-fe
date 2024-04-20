@@ -10,6 +10,11 @@ class WeatherService extends ApiBase {
             },
         });
     };
+
+    getAllCities = () => {
+        const url = 'http://localhost:8080/api/v1/destination/cities';
+        return axios.get(url);
+    };
 }
 
 const weatherService = new WeatherService();
