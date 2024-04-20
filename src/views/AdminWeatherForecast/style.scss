@@ -45,12 +45,42 @@
             font-weight: 500;
             padding-top: 8px;
         }
+        .ant-select-selector {
+            font-size: 16px;
+            color: $color-date;
+            font-weight: 500;
+            width: 200px !important;
+            border: none !important;
+            background-color: $color-search-bg !important;
+            span {
+                font-weight: 500;
+            }
+        }
     }
-    &__week {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        width: 85%;
-        margin: 0 auto;
-        gap: 30px;
+    &__inf {
+        text-align: center;
+        p {
+            font-size: 24px;
+            font-weight: 600;
+            color: $color--primary;
+        }
+        &--wrap {
+            width: 45%;
+            margin: 0 auto;
+            border: 1px solid $color--border;
+            padding: 20px 20px 0;
+            border-radius: 8px;
+            div {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                font-size: 18px;
+                font-weight: 500;
+                span:last-child {
+                    color: $color--red;
+                }
+            }
+        }
     }
 }
