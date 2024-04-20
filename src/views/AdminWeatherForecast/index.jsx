@@ -14,6 +14,7 @@ const Wrapper = memo(() => {
     const [sunInfor, setSunInfor] = useState([]);
     const [windInfor, setWindInfor] = useState([]);
     const [description, setDescription] = useState([]);
+    const [allCities, setAllCities] = useState([]);
 
     const getWeatherInformation = useCallback(async () => {
         try {
@@ -30,9 +31,38 @@ const Wrapper = memo(() => {
         }
     }, [location, setSearchParams]);
 
+    const getAllCities = useCallback(async () => {
+        try {
+            const response = await weatherService.getAllCities();
+            if (response?.status === 200) {
+                const transformedCities = [];
+                const cities = response.data.cities;
+                const citiesVN = response.data.citiesVN;
+                for (const key in cities) {
+                    const cityName = cities[key];
+                    const cityLabel = citiesVN[key];
+                    transformedCities.push({
+                        value: cityName,
+                        label: cityLabel,
+                    });
+                }
+                transformedCities.sort((a, b) =>
+                    a.label.localeCompare(b.label)
+                );
+                setAllCities(transformedCities);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
+
     useEffect(() => {
         getWeatherInformation();
     }, [getWeatherInformation]);
+
+    useEffect(() => {
+        getAllCities();
+    }, [getAllCities]);
 
     return (
         <Inner
@@ -42,6 +72,7 @@ const Wrapper = memo(() => {
             description={description}
             location={location}
             setLocation={setLocation}
+            allCities={allCities}
         />
     );
 });
