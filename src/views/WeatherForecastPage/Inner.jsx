@@ -66,13 +66,8 @@ const Inner = memo(
                                         optionFilterProp="children"
                                         onChange={onChange}
                                         filterOption={filterOption}
-                                    >
-                                        {allCities.map(city => (
-                                            <Option key={city} value={city}>
-                                                {city}
-                                            </Option>
-                                        ))}
-                                    </Select>
+                                        options={allCities}
+                                    />
                                 </div>
                                 <p className="weather-forecast__today--status">
                                     {renderStatus(

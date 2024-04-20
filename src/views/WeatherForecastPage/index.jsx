@@ -35,7 +35,21 @@ const Wrapper = memo(() => {
         try {
             const response = await weatherService.getAllCities();
             if (response?.status === 200) {
-                setAllCities(Object.values(response.data.cities));
+                const transformedCities = [];
+                const cities = response.data.cities;
+                const citiesVN = response.data.citiesVN;
+                for (const key in cities) {
+                    const cityName = cities[key];
+                    const cityLabel = citiesVN[key];
+                    transformedCities.push({
+                        value: cityName,
+                        label: cityLabel,
+                    });
+                }
+                transformedCities.sort((a, b) =>
+                    a.label.localeCompare(b.label)
+                );
+                setAllCities(transformedCities);
             }
         } catch (error) {
             console.error(error);
