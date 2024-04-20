@@ -16,6 +16,7 @@ const Inner = memo(
         description,
         location,
         setLocation,
+        allCities,
     }) => {
         useEffect(() => {
             document.title = 'Theo dõi thời tiết';
@@ -65,20 +66,7 @@ const Inner = memo(
                                         optionFilterProp="children"
                                         onChange={onChange}
                                         filterOption={filterOption}
-                                        options={[
-                                            {
-                                                value: 'Ho Chi Minh',
-                                                label: 'TP. Hồ Chí Minh',
-                                            },
-                                            {
-                                                value: 'Da Nang',
-                                                label: 'TP. Đà Nẵng',
-                                            },
-                                            {
-                                                value: 'Vung Tau',
-                                                label: 'Vũng Tàu',
-                                            },
-                                        ]}
+                                        options={allCities}
                                     />
                                 </div>
                                 <p className="admin-weather-forecast__today--status">
