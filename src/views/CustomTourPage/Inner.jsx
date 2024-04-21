@@ -9,6 +9,7 @@ import {
     TimePicker,
     Tooltip,
 } from 'antd';
+import dayjs from 'dayjs';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
 import moment from 'moment';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
@@ -77,7 +78,7 @@ const Inner = memo(
             setDestinationPlaces(values);
         };
 
-        const handleGenerateTimeOptions = useMemo(() => {
+        const timeOptions = useMemo(() => {
             const timeOpts = [];
             for (let i = 0; i < 10; i++) {
                 let newOpt;
@@ -240,6 +241,7 @@ const Inner = memo(
                                         >
                                             <DatePicker
                                                 placeholder="Ngày khởi hành"
+                                                minDate={dayjs().add(3, 'day')}
                                                 format={
                                                     DEFAULT_DISPLAY_DATE_FORMAT
                                                 }
@@ -277,16 +279,14 @@ const Inner = memo(
                                             ]}
                                         >
                                             <Select placeholder="Thời gian tour">
-                                                {handleGenerateTimeOptions.map(
-                                                    item => (
-                                                        <Option
-                                                            key={item.value}
-                                                            value={item.value}
-                                                        >
-                                                            {item.value}
-                                                        </Option>
-                                                    )
-                                                )}
+                                                {timeOptions.map(item => (
+                                                    <Option
+                                                        key={item.value}
+                                                        value={item.value}
+                                                    >
+                                                        {item.value}
+                                                    </Option>
+                                                ))}
                                             </Select>
                                         </Form.Item>
                                         <Form.Item

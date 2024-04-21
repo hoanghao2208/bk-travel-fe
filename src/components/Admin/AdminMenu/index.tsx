@@ -52,6 +52,19 @@ const AdminMenu: FC = () => {
             'group'
         ),
         getItem(
+            'TOURS KHÁCH HÀNG ĐỀ XUẤT',
+            'manage-custom-tour',
+            null,
+            [
+                getItem(
+                    'Quản lý tour đề xuất',
+                    'admin/manage-custom-tours',
+                    <AppstoreOutlined />
+                ),
+            ],
+            'group'
+        ),
+        getItem(
             'QUẢN LÝ HƯỚNG DẪN VIÊN',
             'manage-tour-guide',
             null,
@@ -83,7 +96,7 @@ const AdminMenu: FC = () => {
             'group'
         ),
         getItem(
-            'Mã GIẢM GIÁ',
+            'MÃ GIẢM GIÁ',
             'manage-voucher',
             null,
             [

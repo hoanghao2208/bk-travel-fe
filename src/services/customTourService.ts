@@ -24,6 +24,11 @@ class CustomTourService extends ApiBase {
             },
         });
     };
+
+    getAllPendingTours = () => {
+        const url = 'http://localhost:8080/api/v1/tour/all/pending';
+        return axios.get(url);
+    };
 }
 
 const customTourService = new CustomTourService();

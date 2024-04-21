@@ -196,6 +196,11 @@ const routes: Array<Route> = [
         Component: commonLoadable(() => import('views/UserOders')),
         authorization: true,
     },
+    {
+        name: 'Admin Manage Custom Tours Page',
+        path: routeConstants.ADMIN_MANAGE_CUSTOM_TOURS,
+        Component: commonLoadable(() => import('views/AdminManageCustomTours')),
+    },
 ];
 
 export default routes;
