@@ -9,10 +9,16 @@ const PendingItem = memo(
         status,
         name,
         time,
+        tourId,
+        userId,
+        note,
+        price,
         departure_place,
         departure_date,
         departure_time,
         destination_place,
+        attractions,
+        setReload,
     }) => {
         const [form] = Form.useForm();
         const [modalConfirm, setModalConfirm] = useState(false);
@@ -20,19 +26,16 @@ const PendingItem = memo(
 
         const handleCancelConfirm = () => {
             setModalConfirm(false);
+            form.resetFields();
         };
 
         const handleCancelReject = () => {
             setModalReject(false);
+            form.resetFields();
         };
 
-        const handleConfirm = values => {
-            console.log('vales', values);
-        };
-
-        const handleReject = values => {
-            console.log('vales', values);
-        };
+        const attractionNames = attractions.map(attraction => attraction.name);
+        const namesString = attractionNames.join(', ');
 
         return (
             <div className="pending-item">
@@ -52,7 +55,7 @@ const PendingItem = memo(
                         <div>
                             <div className="pending-item--location">
                                 <span>Điểm vui chơi:</span>
-                                <span>TP. Hồ Chí Minh, Đà Nẵng, Hà Nội</span>
+                                <span>{namesString}</span>
                             </div>
                             <div className="pending-item--location">
                                 <span>Khởi hành:</span>
@@ -61,10 +64,22 @@ const PendingItem = memo(
                                 </span>
                             </div>
                         </div>
+                        {status === 'SUCCESS' && (
+                            <div>
+                                <div className="pending-item--location">
+                                    <span>Giá tour:</span>
+                                    <span>{price.toLocaleString()} VNĐ</span>
+                                </div>
+                            </div>
+                        )}
                     </div>
                     <div className="pending-item--location">
-                        <span>Lưu ý:</span>
-                        <span>Tour có nhiều trẻ em</span>
+                        {status === 'REJECT' ? (
+                            <span>Lý do:</span>
+                        ) : (
+                            <span>Lưu ý:</span>
+                        )}
+                        <span>{note}</span>
                     </div>
                 </div>
                 {status === 'PENDING' && (
@@ -89,22 +104,26 @@ const PendingItem = memo(
                 <ActivityModal
                     form={form}
                     formId="confirm-custom-tour"
+                    tourId={tourId}
+                    userId={userId}
                     title="Xác nhận tour đề xuất của khách hàng"
                     name="price"
                     label="Giá tour"
                     modalOpen={modalConfirm}
                     handleCancel={handleCancelConfirm}
-                    handleOk={handleConfirm}
+                    setReload={setReload}
                 />
                 <ActivityModal
                     form={form}
                     formId="reject-custom-tour"
+                    tourId={tourId}
+                    userId={userId}
                     title="Từ chối tour đề xuất của khách hàng"
                     name="reason"
                     label="Lý do"
                     modalOpen={modalReject}
                     handleCancel={handleCancelReject}
-                    handleOk={handleReject}
+                    setReload={setReload}
                 />
             </div>
         );

@@ -29,6 +29,29 @@ class CustomTourService extends ApiBase {
         const url = 'http://localhost:8080/api/v1/tour/all/pending';
         return axios.get(url);
     };
+
+    getAllSuccessTours = () => {
+        const url = 'http://localhost:8080/api/v1/tour/all/success';
+        return axios.get(url);
+    };
+
+    getAllRejectedTours = () => {
+        const url = 'http://localhost:8080/api/v1/tour/all/reject';
+        return axios.get(url);
+    };
+
+    responseCustomTour = (
+        tourId: number,
+        requestBody: {
+            user_id: number;
+            status: 'reject' | 'success';
+            reason?: string;
+            price?: number;
+        }
+    ) => {
+        const url = `http://localhost:8080/api/v1/tour/${tourId}/response`;
+        return axios.put(url, requestBody);
+    };
 }
 
 const customTourService = new CustomTourService();

@@ -13,7 +13,8 @@
     &--infor--wrapper {
         display: flex;
         gap: 30px;
-        div:first-child {
+        div:first-child,
+        div:last-child {
             flex-shrink: 0;
         }
     }
@@ -24,7 +25,7 @@
     }
     &--location {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         margin-bottom: 20px;
         font-size: 16px;
         font-weight: 500;
@@ -57,5 +58,20 @@
         color: $color-date;
         font-weight: 500;
         font-size: 15px;
+    }
+}
+
+.no-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 50px;
+    span {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 1.4px;
+        display: inline-block;
+        margin-top: 20px;
     }
 }
