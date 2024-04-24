@@ -1,0 +1,26 @@
+@import 'scss/global.scss';
+
+.admin-manage-custom {
+    box-sizing: border-box;
+    &--header {
+        padding: 0 40px;
+        text-transform: uppercase;
+        font-size: 18px;
+        font-weight: 600;
+        color: $color-admin-menu-text;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        border-top: 1px solid $color--border;
+        &--item {
+            padding: 10px;
+        }
+        .active {
+            color: $color-admin-menu-bg;
+        }
+    }
+    &--wrapper {
+        padding: 0 40px;
+        margin-top: 10px;
+    }
+}

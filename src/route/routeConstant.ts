@@ -30,6 +30,7 @@ const routeConstants = {
     ADMIN_SCHEDULE: '/admin/schedule/:tour_id',
     ADMIN_ADD_NEW_VOUCHER: '/admin/add-new-voucher',
     ADMIN_MANAGE_VOUCHER: '/admin/manage-voucher',
+    ADMIN_MANAGE_CUSTOM_TOURS: '/admin/manage-custom-tours',
 };
 
 export default routeConstants;
