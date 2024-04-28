@@ -5,6 +5,7 @@ import { memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import routeConstants from 'route/routeConstant';
 import tourService from 'services/tourService';
+import NoData from 'views/AdminManageCustomTours/components/NoData';
 import WaitingItem from 'views/AdminManageTours/components/WaitingItem';
 import './style.scss';
 
@@ -60,6 +61,12 @@ const Inner = memo(
             }
         };
 
+        const tabs = [
+            { tabName: 'ONLINE', tours: onlineTours },
+            { tabName: 'WAITING', tours: waitingTours },
+            { tabName: 'DELETED', tours: deletedTours },
+        ];
+
         return (
             <AdminLayout>
                 <div className="manage-tours">
@@ -79,65 +86,47 @@ const Inner = memo(
                     </div>
                     <div className="manage-tours__content">
                         <div className="tab-selector">
-                            <div
-                                className={`tab-selector__item ${
-                                    activeTab === 'ONLINE' ? 'active' : ''
-                                }`}
-                                onClick={() => handleChangeTab('ONLINE')}
-                            >
-                                Tour đang hoạt động
-                            </div>
-                            <div
-                                className={`tab-selector__item ${
-                                    activeTab === 'WAITING' ? 'active' : ''
-                                }`}
-                                onClick={() => handleChangeTab('WAITING')}
-                            >
-                                Tour đang chờ
-                            </div>
-                            <div
-                                className={`tab-selector__item ${
-                                    activeTab === 'DELETED' ? 'active' : ''
-                                }`}
-                                onClick={() => handleChangeTab('DELETED')}
-                            >
-                                Tour đã xóa
-                            </div>
+                            {tabs.map(({ tabName }) => (
+                                <div
+                                    key={tabName}
+                                    className={`tab-selector__item ${
+                                        activeTab === tabName ? 'active' : ''
+                                    }`}
+                                    onClick={() => handleChangeTab(tabName)}
+                                >
+                                    {tabName === 'ONLINE' &&
+                                        'Tour đang hoạt động'}
+                                    {tabName === 'WAITING' && 'Tour đang chờ'}
+                                    {tabName === 'DELETED' && 'Tour đã xóa'}
+                                </div>
+                            ))}
                         </div>
 
-                        {activeTab === 'WAITING' &&
-                            waitingTours.length > 0 &&
-                            waitingTours.map(item => (
-                                <WaitingItem
-                                    key={item.tour_id}
-                                    status="WAITING"
-                                    tour_id={item.tour_id}
-                                    imgURL={item.cover_image}
-                                    tourName={item.name}
-                                    date={item.departure_date}
-                                    time={item.time}
-                                    departure_place={item.departure_place}
-                                    setOpenDeleteModal={setOpenDeleteModal}
-                                    setSelectedTourId={setSelectedTourId}
-                                />
-                            ))}
+                        {tabs.map(
+                            ({ tabName, tours }) =>
+                                activeTab === tabName &&
+                                tours.length === 0 && <NoData key={tabName} />
+                        )}
 
-                        {activeTab === 'ONLINE' &&
-                            onlineTours.length > 0 &&
-                            onlineTours.map(item => (
-                                <WaitingItem
-                                    key={item.tour_id}
-                                    status="ONLINE"
-                                    tour_id={item.tour_id}
-                                    imgURL={item.cover_image}
-                                    tourName={item.name}
-                                    date={item.departure_date}
-                                    time={item.time}
-                                    departure_place={item.departure_place}
-                                    setOpenDeleteModal={setOpenDeleteModal}
-                                    setSelectedTourId={setSelectedTourId}
-                                />
-                            ))}
+                        {tabs.map(
+                            ({ tabName, tours }) =>
+                                activeTab === tabName &&
+                                tabName !== 'DELETED' &&
+                                tours.map(tour => (
+                                    <WaitingItem
+                                        status={tabName}
+                                        key={tour.tour_id}
+                                        tour_id={tour.tour_id}
+                                        imgURL={tour.cover_image}
+                                        tourName={tour.name}
+                                        date={tour.departure_date}
+                                        time={tour.time}
+                                        departure_place={tour.departure_place}
+                                        setOpenDeleteModal={setOpenDeleteModal}
+                                        setSelectedTourId={setSelectedTourId}
+                                    />
+                                ))
+                        )}
 
                         {activeTab === 'DELETED' &&
                             deletedTours.length > 0 &&
@@ -174,7 +163,6 @@ const Inner = memo(
                                         key="submit"
                                         danger
                                         type="primary"
-                                        // loading={loading}
                                         onClick={() =>
                                             hanldeDeleteTour(selectedTourId)
                                         }

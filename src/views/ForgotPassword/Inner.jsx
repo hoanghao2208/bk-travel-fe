@@ -37,7 +37,6 @@ const Inner = memo(({ loading, handleForgotPassword }) => {
                         }}
                         layout="vertical"
                         onFinish={handleSubmitForgot}
-                        // onFinishFailed={onFinishFailed}
                         autoComplete="off"
                     >
                         <Form.Item

@@ -19,27 +19,6 @@ const Inner = memo(({ searchResults }) => {
                         Lọc kết quả
                     </h3>
                     <div className="search-result__filter--box">
-                        {/* <div className="search-result__filter--item">
-                            <FilterItem
-                                filterTitle="Loại hình tour"
-                                isSelectedDate={false}
-                                isPrice={false}
-                                options={[
-                                    {
-                                        value: 'trongoi',
-                                        label: 'Tour trọn gói',
-                                    },
-                                    {
-                                        value: 'tourdoan',
-                                        label: 'Tour đoàn',
-                                    },
-                                    {
-                                        value: 'tourle',
-                                        label: 'Tour lẻ',
-                                    },
-                                ]}
-                            />
-                        </div> */}
                         <div className="search-result__filter--item">
                             <FilterItem
                                 filterTitle="Điểm khởi hành"
@@ -123,36 +102,6 @@ const Inner = memo(({ searchResults }) => {
                             />
                         </div>
                         <div className="search-result__filter--item">
-                            <FilterItem
-                                filterTitle="Số lượng hành khách"
-                                isSelectedDate={false}
-                                isPrice={false}
-                                options={[
-                                    {
-                                        value: '1-3',
-                                        label: '1-3 người',
-                                    },
-                                    {
-                                        value: '3-7',
-                                        label: '3-7 người',
-                                    },
-                                    {
-                                        value: '7-15',
-                                        label: '7-15 người',
-                                    },
-                                    {
-                                        value: '>15',
-                                        label: 'Hơn 15 người',
-                                    },
-                                ]}
-                            />
-                            <div className="search-result__filter--item">
-                                <FilterItem
-                                    filterTitle="Giá tour"
-                                    isSelectedDate={false}
-                                    isPrice={true}
-                                />
-                            </div>
                             <div className="search-result__filter--button">
                                 <Button type="primary">Áp dụng</Button>
                             </div>

@@ -25,7 +25,7 @@ const Wrapper = memo(() => {
                             'Mã xác nhận đã hết hạn, vui lòng thử lại',
                             5
                         );
-                        navigate('/forgot-password');
+                        navigate(routeConstants.FORGOT_PASSWORD);
                     } else if (response?.data.Message === 'Code is wrong!') {
                         Message.sendError(
                             'Mã xác nhận không chính xác, vui lòng kiểm tra lại',
