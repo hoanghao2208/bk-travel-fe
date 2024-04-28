@@ -5,10 +5,21 @@ import LogOutIcon from 'assets/icons/LogOutIcon';
 import SearchIcon from 'assets/icons/SearchIcon';
 import UserDropDown from 'assets/icons/UserDropDown';
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './styles.scss';
+import { setCustomerId, setToken } from 'reducers/token/function';
+import routeConstants from 'route/routeConstant';
 
 const AdminHeader: FC = () => {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        setToken('');
+        setCustomerId(0);
+        navigate(routeConstants.USER_HOME_PAGE);
+        window.location.reload();
+    };
+
     const items = [
         {
             key: '1',
@@ -37,6 +48,7 @@ const AdminHeader: FC = () => {
                         display: 'inline-block',
                         paddingLeft: '10px',
                     }}
+                    onClick={handleLogout}
                 >
                     Đăng xuất
                 </Link>
