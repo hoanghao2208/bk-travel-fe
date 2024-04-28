@@ -156,9 +156,11 @@ const UserLoginHeader: FC = () => {
                     />
                 </div>
                 <div className="user-login-header__navigate">
-                    <Link to="/top-tour">Tour nổi bật</Link>
+                    <Link to={routeConstants.USER_LIST_CUSTOM_TOURS}>
+                        Tour đề xuất
+                    </Link>
                     <Link to="/voucher">Ưu đãi</Link>
-                    <Link to="/weather-forecast">Thời tiết</Link>
+                    <Link to={routeConstants.WEATHER_FORECAST}>Thời tiết</Link>
                     <div
                         onClick={() => navigate('/')}
                         className="user-login-header__navigate--bell"
