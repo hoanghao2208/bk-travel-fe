@@ -37,11 +37,15 @@ const OutstandingListTour: FC = () => {
 
     useEffect(() => {
         const now = dayjs().startOf('day');
-        const isOnlineTours = allTours.filter(tour =>
+        const isOnlineTours = allTours?.filter(tour =>
             dayjs(tour.deadline_book_time).isSameOrAfter(now)
         );
         setOnlineTours(isOnlineTours);
     }, [allTours]);
+
+    if (allTours?.length <= 0 || !allTours) {
+        return null;
+    }
 
     return (
         <div className="outstanding-tour">

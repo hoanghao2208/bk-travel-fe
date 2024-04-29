@@ -1,10 +1,10 @@
-import { Pagination } from 'antd';
 import Title from 'components/Title';
 import TourItem from 'components/TourItem';
 import dayjs from 'dayjs';
 import UserActivityLayout from 'layouts/UserActivityLayout';
 import { memo, useEffect } from 'react';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
+import NoData from 'views/AdminManageCustomTours/components/NoData';
 import './style.scss';
 
 const Inner = memo(({ wishListTours }) => {
@@ -16,10 +16,9 @@ const Inner = memo(({ wishListTours }) => {
         <UserActivityLayout>
             <div className="love-list">
                 <Title title="Danh sách yêu thích" />
-                <div className="love-list__content">
-                    {wishListTours &&
-                        wishListTours.length > 0 &&
-                        wishListTours.map(tour => (
+                {wishListTours && wishListTours.length > 0 && (
+                    <div className="love-list__content">
+                        {wishListTours.map(tour => (
                             <div
                                 className="love-list__content--item"
                                 key={tour.tour_id}
@@ -46,10 +45,9 @@ const Inner = memo(({ wishListTours }) => {
                                 />
                             </div>
                         ))}
-                </div>
-                <div className="love-list__pagination">
-                    <Pagination showSizeChanger defaultCurrent={1} total={20} />
-                </div>
+                    </div>
+                )}
+                {wishListTours.length === 0 && <NoData />}
             </div>
         </UserActivityLayout>
     );

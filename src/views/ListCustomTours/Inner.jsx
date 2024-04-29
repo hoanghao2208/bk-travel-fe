@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
 import { memo } from 'react';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
+import NoData from 'views/AdminManageCustomTours/components/NoData';
 import CustomItem from 'views/ListCustomTours/components/CustomItem';
 import './styles.scss';
 
@@ -38,9 +39,23 @@ const Inner = memo(({ pendingTours, successTours, rejectedTours }) => {
     return (
         <UserHomePageLayout>
             <div className="custom-list">
-                {renderCustomItem(pendingTours, 'đang chờ', 'PENDING')}
-                {renderCustomItem(successTours, 'đã được chấp nhận', 'SUCCESS')}
-                {renderCustomItem(rejectedTours, 'đã bị từ chối', 'REJECTED')}
+                {pendingTours?.length === 0 &&
+                    successTours?.length === 0 &&
+                    rejectedTours?.length === 0 && <NoData />}
+                {pendingTours?.length > 0 &&
+                    renderCustomItem(pendingTours, 'đang chờ', 'PENDING')}
+                {successTours?.length > 0 &&
+                    renderCustomItem(
+                        successTours,
+                        'đã được chấp nhận',
+                        'SUCCESS'
+                    )}
+                {rejectedTours?.length > 0 &&
+                    renderCustomItem(
+                        rejectedTours,
+                        'đã bị từ chối',
+                        'REJECTED'
+                    )}
             </div>
         </UserHomePageLayout>
     );
