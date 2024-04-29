@@ -105,14 +105,14 @@ const Inner = memo(
                         {tabs.map(
                             ({ tabName, tours }) =>
                                 activeTab === tabName &&
-                                tours.length === 0 && <NoData key={tabName} />
+                                tours?.length === 0 && <NoData key={tabName} />
                         )}
 
                         {tabs.map(
                             ({ tabName, tours }) =>
                                 activeTab === tabName &&
                                 tabName !== 'DELETED' &&
-                                tours.map(tour => (
+                                tours?.map(tour => (
                                     <WaitingItem
                                         status={tabName}
                                         key={tour.tour_id}
@@ -129,8 +129,8 @@ const Inner = memo(
                         )}
 
                         {activeTab === 'DELETED' &&
-                            deletedTours.length > 0 &&
-                            deletedTours.map(item => (
+                            deletedTours?.length > 0 &&
+                            deletedTours?.map(item => (
                                 <WaitingItem
                                     key={item.tour_id}
                                     status="DELETED"

@@ -24,7 +24,7 @@ const OutstandingListTour: FC = () => {
         try {
             const response = await tourService.getOnlineTour();
             if (response?.status === 200) {
-                setAllTours(response.data.tours);
+                setAllTours(response.data.data);
             }
         } catch (error) {
             console.error(error);

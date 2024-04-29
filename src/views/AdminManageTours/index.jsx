@@ -12,7 +12,7 @@ const Wrapper = memo(() => {
         try {
             const response = await tourService.getWaitingTour();
             if (response?.status === 200) {
-                setWaitingTours(response?.data.tours);
+                setWaitingTours(response?.data.data);
             }
         } catch (err) {
             console.error(err);
@@ -23,7 +23,7 @@ const Wrapper = memo(() => {
         try {
             const response = await tourService.getOnlineTour();
             if (response?.status === 200) {
-                setOnlineTours(response?.data.tours);
+                setOnlineTours(response?.data.data);
             }
         } catch (err) {
             console.error(err);
@@ -34,7 +34,7 @@ const Wrapper = memo(() => {
         try {
             const response = await tourService.getDeletedTour();
             if (response?.status === 200) {
-                setDeletedTours(response?.data.tours);
+                setDeletedTours(response?.data.data);
             }
         } catch (err) {
             console.error(err);
