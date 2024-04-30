@@ -1,10 +1,11 @@
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Dropdown, Input } from 'antd';
+import { Avatar, Badge, Dropdown, Input, Tooltip } from 'antd';
 import BellNotifyIcon from 'assets/icons/BellNotifyIcon';
 import CartIcon from 'assets/icons/CartIcon';
 import HeartDropDown from 'assets/icons/HeartDropDown';
 import LogOutIcon from 'assets/icons/LogOutIcon';
 import Logo from 'assets/icons/Logo';
+import MessageIcon from 'assets/icons/MessageIcon';
 import MoneyDropDown from 'assets/icons/MoneyDropDown';
 import SearchIcon from 'assets/icons/SearchIcon';
 import UserDropDown from 'assets/icons/UserDropDown';
@@ -165,17 +166,31 @@ const UserLoginHeader: FC = () => {
                         onClick={() => navigate('/')}
                         className="user-login-header__navigate--bell"
                     >
-                        <Badge count={8} overflowCount={10}>
-                            <BellNotifyIcon />
-                        </Badge>
+                        <Tooltip placement="top" title="Thông báo">
+                            <Badge count={8} overflowCount={10}>
+                                <BellNotifyIcon />
+                            </Badge>
+                        </Tooltip>
+                    </div>
+                    <div
+                        onClick={() => navigate(routeConstants.MESSAGE)}
+                        className="user-login-header__navigate--bell"
+                    >
+                        <Tooltip placement="top" title="Tin nhắn">
+                            <Badge count={8} overflowCount={10}>
+                                <MessageIcon />
+                            </Badge>
+                        </Tooltip>
                     </div>
                     <div
                         onClick={() => navigate(routeConstants.CART)}
                         className="user-login-header__navigate--cart"
                     >
-                        <Badge count={cartNumber} overflowCount={9}>
-                            <CartIcon />
-                        </Badge>
+                        <Tooltip placement="top" title="Giỏ hàng">
+                            <Badge count={cartNumber} overflowCount={9}>
+                                <CartIcon />
+                            </Badge>
+                        </Tooltip>
                     </div>
                     <div className="user-login-header__navigate--avatar">
                         <Dropdown

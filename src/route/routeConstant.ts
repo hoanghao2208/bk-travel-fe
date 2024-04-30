@@ -17,6 +17,7 @@ const routeConstants = {
     PAYMENT_SUCCESS: '/payment/success',
     USER_ORDERS: '/orders',
     USER_LIST_CUSTOM_TOURS: '/user-list-custom-tours',
+    MESSAGE: '/message',
     ADMIN_HOMEPAGE: '/admin',
     ADMIN_MANAGE_TOURS: '/admin/manage-tours',
     ADMIN_EDIT_TOUR: '/admin/edit-information-tour/:tour_id',
