@@ -118,6 +118,19 @@
     }
 }
 
+// MessageItem
+.message-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    &:hover {
+        .message-item--time {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
 .message-item {
     background-color: $color--light;
     width: fit-content;
@@ -126,8 +139,15 @@
     color: $color-date;
     border-radius: 8px;
     margin: 10px 0;
+    &--time {
+        color: $color-date;
+        font-size: 12px;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s linear;
+    }
 }
 
-.my-message-item {
-    margin-left: auto;
+.display-time {
+    flex-direction: row-reverse;
 }

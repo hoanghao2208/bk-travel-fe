@@ -1,5 +1,5 @@
 import { SendOutlined } from '@ant-design/icons';
-import { Button, Input } from 'antd';
+import { Button, Input, Tooltip } from 'antd';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import messageService from 'services/messageService';
 import MessageItem from 'views/Message/components/MessageItem';
@@ -44,13 +44,16 @@ const ChatSection: FC<ChatSectionProps> = memo(({ name, activeGrp }) => {
                         key={mess.message_id}
                         messId={mess.user_id}
                         content={mess.content}
+                        time={mess.createdAt}
                     />
                 ))}
             </div>
             <div className="chat-section--footer">
-                <div className='chat-section--footer--wrapper'>
+                <div className="chat-section--footer--wrapper">
                     <Input placeholder="Nhập tin nhắn của bạn tại đây" />
-                    <Button icon={<SendOutlined />} type="link" />
+                    <Tooltip placement="top" title="Gửi tin nhắn">
+                        <Button icon={<SendOutlined />} type="link" />
+                    </Tooltip>
                 </div>
             </div>
         </div>
