@@ -25,3 +25,5 @@ export const TIME_FORMAT = 'HH:mm';
 export const DIGIT_VALIDATE = /^[1-9]\d*$/;
 
 export const SPACE_VALIDATE = /^\S*$/;
+
+export const BASE_URL = 'http://localhost:8080';

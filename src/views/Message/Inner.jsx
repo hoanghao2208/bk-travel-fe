@@ -1,56 +1,50 @@
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import { memo, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
+import messageService from 'services/messageService';
+import ChatSection from 'views/Message/components/ChatSection';
 import Group from 'views/Message/components/Group';
 import './styles.scss';
-import { getCustomerId, getToken } from 'reducers/token/function';
-import io from 'socket.io-client';
 
-let socket;
+const Inner = memo(({ allGroups }) => {
+    const [activeGrp, setActiveGrp] = useState(1);
+    const [groupInfo, setGroupInfo] = useState([]);
 
-const Inner = memo(() => {
-    const [groups, setGroups] = useState([]);
-    const [arrivalGroups, setArrivalGroups] = useState([]);
-
-    let baseUrl = 'http://localhost:3000';
-
-    useEffect(() => {
-        const token = getToken();
-        const userId = getCustomerId();
-
-        socket = io(baseUrl, {
-            query: { access_token: token },
-        });
-
-        socket.on('connect', () => {
-            console.log('socket', socket);
-        });
-
-        socket.emit('online', userId);
-
-        socket.on('grpData', grpData => {
-            setArrivalGroups(grpData);
-        });
-
-        socket.on('error', error => {
-            console.error('Socket error:', error);
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const getActiveGroupInfo = useCallback(async () => {
+        try {
+            const response = await messageService.getGroupById(activeGrp);
+            if (response?.status === 200) {
+                setGroupInfo(response.data.data);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, [activeGrp]);
 
     useEffect(() => {
-        console.log('data', arrivalGroups);
-    }, [arrivalGroups]);
-
-    console.log('socket', socket);
+        getActiveGroupInfo();
+    }, [getActiveGroupInfo]);
 
     return (
         <UserHomePageLayout>
             <div className="message">
                 <div className="message-group">
-                    <Group
-                        name="Dương Hoàng Hảo"
-                        desc="Hoàng Hảo"
-                    />
+                    {allGroups.map(group => (
+                        <Group
+                            name={group.name}
+                            desc={
+                                group.description === null
+                                    ? 'Nhóm hỗ trợ thông tin đến khách hàng'
+                                    : group.description
+                            }
+                            id={group.group_id}
+                            activeGrp={activeGrp}
+                            setActiveGrp={setActiveGrp}
+                            key={group.group_id}
+                        />
+                    ))}
+                </div>
+                <div className="message-section">
+                    <ChatSection name={groupInfo?.name} activeGrp={activeGrp} />
                 </div>
             </div>
         </UserHomePageLayout>

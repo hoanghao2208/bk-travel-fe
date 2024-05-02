@@ -4,15 +4,18 @@ import '../styles.scss';
 interface GroupProps {
     name: string;
     desc?: string;
-    id?: number;
-    handleExpandGroup?: Function;
-    customSetGroupId?: Function;
+    id: number;
+    activeGrp?: number;
+    setActiveGrp?: (value: number) => void;
 }
 
 const Group: FC<GroupProps> = memo(
-    ({ name, desc, id, handleExpandGroup, customSetGroupId }) => {
+    ({ name, desc, id, activeGrp, setActiveGrp }) => {
         return (
-            <div className="group">
+            <div
+                className={`group ${id === activeGrp ? 'group-active' : ''}`}
+                onClick={() => setActiveGrp && setActiveGrp(id)}
+            >
                 <div className="group--item">
                     <img
                         src="/images/slide2.jpg"
