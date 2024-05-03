@@ -9,6 +9,13 @@
     gap: 20px;
 }
 
+.message-nodata {
+    width: 80%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 130px 0 40px;
+}
+
 .group {
     background-color: $color--light;
     box-sizing: border-box;
@@ -63,6 +70,7 @@
     border-radius: 8px;
 }
 
+// ChatSection
 .chat-section {
     max-height: 600px;
     display: flex;

@@ -1,4 +1,5 @@
 import { FC, memo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import '../styles.scss';
 
 interface GroupProps {
@@ -11,10 +12,19 @@ interface GroupProps {
 
 const Group: FC<GroupProps> = memo(
     ({ name, desc, id, activeGrp, setActiveGrp }) => {
+        const [searchParams, setSearchParams] = useSearchParams();
+
+        const handleSelectGroup = () => {
+            setActiveGrp && setActiveGrp(id);
+            const params = new URLSearchParams(searchParams);
+            params.set('selectedGrp', id.toString());
+            setSearchParams(params);
+        };
+
         return (
             <div
                 className={`group ${id === activeGrp ? 'group-active' : ''}`}
-                onClick={() => setActiveGrp && setActiveGrp(id)}
+                onClick={handleSelectGroup}
             >
                 <div className="group--item">
                     <img

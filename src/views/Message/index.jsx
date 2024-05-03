@@ -8,6 +8,10 @@ import Inner from 'views/Message/Inner';
 let socket;
 
 const Wrapper = memo(() => {
+    useEffect(() => {
+        document.title = 'Tin nhắn';
+    });
+
     const token = getToken();
     const userId = getCustomerId();
 
@@ -41,7 +45,7 @@ const Wrapper = memo(() => {
         getAllGroupsOfUser();
     }, [getAllGroupsOfUser]);
 
-    return <Inner allGroups={allGroups} />;
+    return <Inner allGroups={allGroups} socket={socket} />;
 });
 
 Wrapper.displayName = 'Message';
