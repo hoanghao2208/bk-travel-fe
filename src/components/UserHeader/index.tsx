@@ -23,9 +23,10 @@ const UserHeader: FC = () => {
                     />
                 </div>
                 <div className="user-header__navigate">
-                    <Link to="/top-tour">Tour nổi bật</Link>
-                    <Link to="/weather-forecast">Thời tiết</Link>
-                    <Link to="/support">Trợ giúp</Link>
+                    <Link to={routeConstants.USER_LIST_CUSTOM_TOURS}>
+                        Tour đề xuất
+                    </Link>
+                    <Link to={routeConstants.WEATHER_FORECAST}>Thời tiết</Link>
                     <Link to={routeConstants.REGISTER}>Đăng ký</Link>
                     <Button
                         type="primary"

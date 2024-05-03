@@ -1,16 +1,25 @@
 import UserFooter from 'components/UserFooter';
 import UserHeader from 'components/UserHeader';
 import UserLoginHeader from 'components/UserLoginHeader';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { FC, PropsWithChildren, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { profileActions } from 'reducers/profile';
 import { getCustomerId, getToken } from 'reducers/token/function';
+import routeConstants from 'route/routeConstant';
 import userService from 'services/userService';
 import { dispatch } from 'store/Store';
 import './styles.scss';
 
+interface DecodedToken extends JwtPayload {
+    role_user: string;
+}
+
 const UserHomePageLayout: FC<PropsWithChildren> = ({ children }) => {
     const token = getToken();
     const userId = getCustomerId();
+
+    const navigate = useNavigate();
 
     const getUserInfor = useCallback(async () => {
         try {
@@ -25,6 +34,15 @@ const UserHomePageLayout: FC<PropsWithChildren> = ({ children }) => {
             console.error(error);
         }
     }, [userId]);
+
+    useEffect(() => {
+        if (token !== '') {
+            const json: DecodedToken = jwtDecode(token);
+            if (json.role_user !== 'customer') {
+                navigate(routeConstants.ADMIN_HOMEPAGE);
+            }
+        }
+    }, [navigate, token]);
 
     useEffect(() => {
         getUserInfor();

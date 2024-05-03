@@ -1,22 +1,25 @@
+import { CameraOutlined, InboxOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Modal, Spin, Upload } from 'antd';
+import type { RcFile, UploadProps } from 'antd/es/upload';
+import type { UploadFile } from 'antd/es/upload/interface';
+import Message from 'components/Message';
 import UserActivityMenu from 'components/UserActivityMenu';
 import UserFooter from 'components/UserFooter';
 import UserLoginHeader from 'components/UserLoginHeader';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 import {
     FC,
-    PropsWithChildren,
     memo,
+    PropsWithChildren,
     useCallback,
     useEffect,
     useState,
 } from 'react';
-import './styles.scss';
-import { Avatar, Modal, Spin, Upload } from 'antd';
-import { UserOutlined, CameraOutlined, InboxOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 import { getCustomerId, getToken } from 'reducers/token/function';
+import routeConstants from 'route/routeConstant';
 import userService from 'services/userService';
-import type { RcFile, UploadProps } from 'antd/es/upload';
-import type { UploadFile } from 'antd/es/upload/interface';
-import Message from 'components/Message';
+import './styles.scss';
 
 interface UserInfo {
     firstname: string;
@@ -32,6 +35,10 @@ const defaultUserInfo: UserInfo = {
     avatar: '',
 };
 
+interface DecodedToken extends JwtPayload {
+    role_user: string;
+}
+
 const UserActivityLayout: FC<PropsWithChildren> = memo(({ children }) => {
     const [avtModal, setAvtModal] = useState<boolean>(false);
     const [userInfo, setUserInfo] = useState<UserInfo>(defaultUserInfo);
@@ -41,6 +48,9 @@ const UserActivityLayout: FC<PropsWithChildren> = memo(({ children }) => {
 
     const user_id = getCustomerId();
     const token = getToken();
+
+    const json: DecodedToken = jwtDecode(token);
+    const navigate = useNavigate();
 
     const handleCancel = () => {
         setAvtModal(false);
@@ -57,10 +67,6 @@ const UserActivityLayout: FC<PropsWithChildren> = memo(({ children }) => {
             console.log(err);
         }
     }, [user_id]);
-
-    useEffect(() => {
-        handleGetUserData();
-    }, [handleGetUserData]);
 
     const handleBeforeUpload = (file: RcFile) => {
         const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -131,6 +137,16 @@ const UserActivityLayout: FC<PropsWithChildren> = memo(({ children }) => {
             Message.sendError(currentError, 5);
         }
     }, [currentError]);
+
+    useEffect(() => {
+        handleGetUserData();
+    }, [handleGetUserData]);
+
+    useEffect(() => {
+        if (json.role_user !== 'customer') {
+            navigate(routeConstants.ADMIN_HOMEPAGE);
+        }
+    }, [json, navigate]);
 
     return (
         <Spin tip="Vui lòng chờ" size="large" spinning={loading}>

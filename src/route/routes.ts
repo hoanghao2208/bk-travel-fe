@@ -106,36 +106,43 @@ const routes: Array<Route> = [
         name: 'Admin Homepage',
         path: routeConstants.ADMIN_HOMEPAGE,
         Component: commonLoadable(() => import('views/AdminHomePage')),
+        authorization: true,
     },
     {
         name: 'Admin Manage Tours',
         path: routeConstants.ADMIN_MANAGE_TOURS,
         Component: commonLoadable(() => import('views/AdminManageTours')),
+        authorization: true,
     },
     {
         name: 'Admin Manage Tour Guide',
         path: routeConstants.ADMIN_MANAGE_TOUR_GUIDE,
         Component: commonLoadable(() => import('views/AdminManageTourGuide')),
+        authorization: true,
     },
     {
         name: 'Admin Assign New Task',
         path: routeConstants.ADMIN_ASSIGN_NEW_TASK,
         Component: commonLoadable(() => import('views/AdminAssignTask')),
+        authorization: true,
     },
     {
         name: 'Admin Add New Tour',
         path: routeConstants.ADMIN_ADD_NEW_TOUR,
         Component: commonLoadable(() => import('views/AdminAddNewTour')),
+        authorization: true,
     },
     {
         name: 'Admin Edit Tour',
         path: routeConstants.ADMIN_EDIT_TOUR,
         Component: commonLoadable(() => import('views/AdminEditTour')),
+        authorization: true,
     },
     {
         name: 'Admin Notification',
         path: routeConstants.ADMIN_NOTIFICATION,
         Component: commonLoadable(() => import('views/AdminNotification')),
+        authorization: true,
     },
     {
         name: 'Admin Manage Notification',
@@ -143,11 +150,13 @@ const routes: Array<Route> = [
         Component: commonLoadable(
             () => import('views/AdminManageNotification')
         ),
+        authorization: true,
     },
     {
         name: 'Admin Manage Tourist',
         path: routeConstants.ADMIN_MANAGE_TOURIST,
         Component: commonLoadable(() => import('views/AdminManageTourist')),
+        authorization: true,
     },
     {
         name: 'Weather Forecast',
@@ -158,6 +167,7 @@ const routes: Array<Route> = [
         name: 'Admin Weather Forecast',
         path: routeConstants.ADMIN_WEATHER_FORECAST,
         Component: commonLoadable(() => import('views/AdminWeatherForecast')),
+        authorization: true,
     },
     {
         name: 'Schedule Detail Page',
@@ -173,16 +183,19 @@ const routes: Array<Route> = [
         name: 'Admin Schedule Page',
         path: routeConstants.ADMIN_SCHEDULE,
         Component: commonLoadable(() => import('views/AdminSchedule')),
+        authorization: true,
     },
     {
         name: 'Admin Add New Voucher Page',
         path: routeConstants.ADMIN_ADD_NEW_VOUCHER,
         Component: commonLoadable(() => import('views/AdminAddNewVoucher')),
+        authorization: true,
     },
     {
         name: 'Admin Manage Voucher Page',
         path: routeConstants.ADMIN_MANAGE_VOUCHER,
         Component: commonLoadable(() => import('views/AdminManageVouchers')),
+        authorization: true,
     },
     {
         name: 'Payment Success Page',

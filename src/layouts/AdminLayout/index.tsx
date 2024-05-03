@@ -1,9 +1,28 @@
-import { FC, PropsWithChildren, memo } from 'react';
-import './styles.scss';
-import AdminMenu from 'components/Admin/AdminMenu';
 import AdminHeader from 'components/Admin/AdminHeader';
+import AdminMenu from 'components/Admin/AdminMenu';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { FC, memo, PropsWithChildren, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getToken } from 'reducers/token/function';
+import routeConstants from 'route/routeConstant';
+import './styles.scss';
+
+interface DecodedToken extends JwtPayload {
+    role_user: string;
+}
 
 const AdminLayout: FC<PropsWithChildren> = memo(({ children }) => {
+    const token = getToken();
+    const navigate = useNavigate();
+
+    const json: DecodedToken = jwtDecode(token);
+
+    useEffect(() => {
+        if (json.role_user !== 'admin') {
+            navigate(routeConstants.USER_HOME_PAGE);
+        }
+    }, [json, navigate]);
+
     return (
         <div className="admin-layout">
             <AdminMenu />
