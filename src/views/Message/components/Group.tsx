@@ -1,3 +1,4 @@
+import { Tooltip } from 'antd';
 import { FC, memo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import '../styles.scss';
@@ -28,12 +29,14 @@ const Group: FC<GroupProps> = memo(
             >
                 <div className="group--item">
                     <img
-                        src="/images/slide2.jpg"
+                        src="/images/group-chat.jpg"
                         alt="gr-avatar"
                         className="group--img"
                     />
                     <div className="group--info">
-                        <span className="group--name">{name}</span>
+                        <Tooltip placement="right" title={name}>
+                            <span className="group--name">{name}</span>
+                        </Tooltip>
                         <span className="group--desc">{desc}</span>
                     </div>
                 </div>

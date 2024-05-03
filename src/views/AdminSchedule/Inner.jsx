@@ -17,6 +17,7 @@ const Inner = memo(
 
         const { tour_id } = useParams();
         const [openModal, setOpenModal] = useState(false);
+        const [reload, setReload] = useState(false);
         const [allGrpId, setAllGrpId] = useState([]);
         const [groupName, setGroupName] = useState('');
 
@@ -53,6 +54,7 @@ const Inner = memo(
                         Message.sendSuccess('Tạo nhóm hỗ trợ thành công');
                         setGroupName('');
                         setOpenModal(false);
+                        setReload(prev => !prev);
                     }
                 }
             } catch (error) {
@@ -62,7 +64,7 @@ const Inner = memo(
 
         useEffect(() => {
             handleGetAllGroups();
-        }, [handleGetAllGroups]);
+        }, [handleGetAllGroups, reload]);
 
         return (
             <Spin tip="Vui lòng chờ" size="large" spinning={loading}>

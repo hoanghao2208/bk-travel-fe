@@ -80,7 +80,7 @@ const ChatSection: FC<ChatSectionProps> = memo(
             <div className="chat-section">
                 <div className="chat-section--header">
                     <img
-                        src="/images/slide2.jpg"
+                        src="/images/group-chat.jpg"
                         alt="gr-avatar"
                         className="chat-section--header--img"
                     />
