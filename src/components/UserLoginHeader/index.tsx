@@ -177,9 +177,7 @@ const UserLoginHeader: FC = () => {
                         className="user-login-header__navigate--bell"
                     >
                         <Tooltip placement="top" title="Tin nhắn">
-                            <Badge count={8} overflowCount={10}>
-                                <MessageIcon />
-                            </Badge>
+                            <MessageIcon />
                         </Tooltip>
                     </div>
                     <div
