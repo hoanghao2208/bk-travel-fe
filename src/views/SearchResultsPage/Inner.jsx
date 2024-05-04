@@ -1,5 +1,4 @@
-import { Button, Pagination } from 'antd';
-import FilterItem from 'components/FilterItem';
+import { Pagination } from 'antd';
 import TourItem from 'components/TourItem';
 import dayjs from 'dayjs';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
@@ -18,7 +17,7 @@ const Inner = memo(({ searchResults }) => {
                     <h3 className="search-result__filter--title">
                         Lọc kết quả
                     </h3>
-                    <div className="search-result__filter--box">
+                    {/* <div className="search-result__filter--box">
                         <div className="search-result__filter--item">
                             <FilterItem
                                 filterTitle="Điểm khởi hành"
@@ -106,7 +105,7 @@ const Inner = memo(({ searchResults }) => {
                                 <Button type="primary">Áp dụng</Button>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="search-result__results">
                     <h3 className="search-result__results--title">

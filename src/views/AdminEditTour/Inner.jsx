@@ -17,6 +17,7 @@ import dayjs from 'dayjs';
 import AdminLayout from 'layouts/AdminLayout';
 import moment from 'moment';
 import { memo, useCallback, useEffect, useState } from 'react';
+import tourService from 'services/tourService';
 import {
     DEFAULT_DISPLAY_DATE_FORMAT,
     DIGIT_VALIDATE,
@@ -51,11 +52,12 @@ const Inner = memo(
             document.title = 'Chỉnh sửa thông tin tour';
         });
 
-        useState(false);
         const [departureTime, setDepartureTime] = useState('');
         const [deadlineDate, setDeadlineDate] = useState('');
         const [currentError, setCurrentError] = useState('');
         const [attractions, setAttractions] = useState([]);
+        const [destinations, setDestinations] = useState([]);
+        const [allDestinations, setAllDestinations] = useState([]);
 
         const onChangeDepartureDate = (_, dateString) => {
             const formattedDate = moment(
@@ -77,18 +79,45 @@ const Inner = memo(
             setDepartureTime(timeString);
         };
 
+        const filterOption = (input, option) =>
+            (option?.children ?? '')
+                .toLowerCase()
+                .includes(input.toLowerCase());
+
         const getAttractions = useCallback(() => {
-            if (tourData?.destination) {
-                const attractionNames = tourData.destination.attractions.map(
+            if (tourData?.attractions) {
+                const attractionNames = tourData.attractions.map(
                     attraction => attraction.name
                 );
                 setAttractions(attractionNames);
             }
         }, [tourData]);
 
-        useEffect(() => {
-            getAttractions();
-        }, [getAttractions]);
+        const getDestinations = useCallback(() => {
+            if (tourData?.destinations) {
+                const destinationNames = tourData.destinations.map(
+                    destination => destination.name
+                );
+                setDestinations(destinationNames);
+            }
+        }, [tourData]);
+
+        const getAllDestinations = useCallback(async () => {
+            try {
+                const response = await tourService.getAllDestinations();
+                if (response.status === 200) {
+                    const allDes = response.data.data;
+                    allDes.sort((a, b) => {
+                        if (a.name > b.name) return 1;
+                        if (a.name < b.name) return -1;
+                        return 0;
+                    });
+                    setAllDestinations(allDes);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }, []);
 
         const handleBeforeUpload = file => {
             const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -147,18 +176,6 @@ const Inner = memo(
             }
         };
 
-        useEffect(() => {
-            if (imgURL) {
-                getImageByURL(imgURL).then(file => {
-                    if (file) {
-                        setFileList(file);
-                    } else {
-                        console.error('Failed to download image.');
-                    }
-                });
-            }
-        }, [imgURL, setFileList]);
-
         const handleSubmitEditTour = values => {
             const tourData = {
                 ...values,
@@ -177,6 +194,34 @@ const Inner = memo(
             }
         }, [currentError]);
 
+        useEffect(() => {
+            getAttractions();
+        }, [getAttractions]);
+
+        useEffect(() => {
+            getDestinations();
+        }, [getDestinations]);
+
+        useEffect(() => {
+            getAllDestinations();
+        }, [getAllDestinations]);
+
+        useEffect(() => {
+            if (imgURL) {
+                getImageByURL(imgURL).then(file => {
+                    if (file) {
+                        setFileList(file);
+                    } else {
+                        console.error('Failed to download image.');
+                    }
+                });
+            }
+        }, [imgURL, setFileList]);
+
+        if (tourData?.name === undefined) {
+            return null;
+        }
+
         return (
             <Spin tip="Vui lòng chờ" size="large" spinning={loading}>
                 <AdminLayout>
@@ -191,7 +236,7 @@ const Inner = memo(
                                 hệ thống của bạn
                             </p>
                         </div>
-                        {tourData?.name && attractions.length > 0 && (
+                        {attractions.length > 0 && (
                             <div className="add-new-tour__content">
                                 <Form
                                     form={form}
@@ -355,22 +400,28 @@ const Inner = memo(
                                             >
                                                 <Select
                                                     placeholder="Điểm khởi hành"
+                                                    showSearch
+                                                    filterOption={filterOption}
                                                     defaultValue={
                                                         tourData.departure_place
                                                     }
                                                 >
-                                                    <Option value="TP. Hồ Chí Minh">
-                                                        TP. Hồ Chí Minh
-                                                    </Option>
-                                                    <Option value="Đà Nẵng">
-                                                        Đà Nẵng
-                                                    </Option>
-                                                    <Option value="Hà Nội">
-                                                        Hà Nội
-                                                    </Option>
-                                                    <Option value="Vũng Tàu">
-                                                        Vũng Tàu
-                                                    </Option>
+                                                    {allDestinations.map(
+                                                        destination => (
+                                                            <Option
+                                                                key={
+                                                                    destination.destination_id
+                                                                }
+                                                                value={
+                                                                    destination.name
+                                                                }
+                                                            >
+                                                                {
+                                                                    destination.name
+                                                                }
+                                                            </Option>
+                                                        )
+                                                    )}
                                                 </Select>
                                             </Form.Item>
                                         </div>
@@ -385,32 +436,45 @@ const Inner = memo(
                                                             'Vui lòng chọn điểm đến',
                                                     },
                                                 ]}
-                                                initialValue={
-                                                    tourData.destination.name
-                                                }
+                                                initialValue={destinations}
                                             >
                                                 <Select
                                                     placeholder="Điểm đến"
                                                     mode="multiple"
                                                     allowClear="false"
                                                     disabled
-                                                    defaultValue={
-                                                        tourData.destination
-                                                            .name
-                                                    }
+                                                    defaultValue={destinations}
+                                                    maxTagCount="responsive"
+                                                    maxTagPlaceholder={omittedValues => (
+                                                        <Tooltip
+                                                            title={omittedValues
+                                                                .map(
+                                                                    ({
+                                                                        label,
+                                                                    }) => label
+                                                                )
+                                                                .join(', ')}
+                                                        >
+                                                            <span>...</span>
+                                                        </Tooltip>
+                                                    )}
                                                 >
-                                                    <Option value="TP. Hồ Chí Minh">
-                                                        TP. Hồ Chí Minh
-                                                    </Option>
-                                                    <Option value="Đà Nẵng">
-                                                        Đà Nẵng
-                                                    </Option>
-                                                    <Option value="Hà Nội">
-                                                        Hà Nội
-                                                    </Option>
-                                                    <Option value="Vũng Tàu">
-                                                        Vũng Tàu
-                                                    </Option>
+                                                    {allDestinations.map(
+                                                        destination => (
+                                                            <Option
+                                                                key={
+                                                                    destination.destination_id
+                                                                }
+                                                                value={
+                                                                    destination.name
+                                                                }
+                                                            >
+                                                                {
+                                                                    destination.name
+                                                                }
+                                                            </Option>
+                                                        )
+                                                    )}
                                                 </Select>
                                             </Form.Item>
                                         </div>
