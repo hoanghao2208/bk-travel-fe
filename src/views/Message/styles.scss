@@ -132,14 +132,35 @@
 // MessageItem
 .message-wrapper {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 10px;
+    margin: 10px 0;
     &:hover {
         .message-item--time {
             opacity: 1;
             visibility: visible;
         }
     }
+}
+
+.mess-component {
+    display: flex;
+    flex-direction: column;
+    span {
+        font-size: 14px;
+        font-weight: 500;
+        color: $color-date;
+        display: inline-block;
+        padding-bottom: 10px;
+    }
+}
+
+.message-component {
+    align-items: flex-start;
+}
+
+.message-component-reverse {
+    align-items: flex-end;
 }
 
 .message-item {
@@ -149,7 +170,7 @@
     font-weight: 500;
     color: $color-date;
     border-radius: 8px;
-    margin: 10px 0;
+    max-width: 400px;
     &--time {
         color: $color-date;
         font-size: 12px;
