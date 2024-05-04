@@ -73,13 +73,12 @@ const Wrapper = memo(() => {
                     setTourImageList([]);
                     setTourListURL([]);
                     form.resetFields();
-                } else {
-                    Message.sendError(
-                        'Đã có lỗi xãy ra, vui lòng kiểm tra lại'
-                    );
                 }
             } catch (err) {
                 console.error(err);
+                Message.sendError(
+                    'Đã có lỗi xãy ra, vui lòng kiểm tra lại'
+                );
             } finally {
                 setLoading(false);
             }

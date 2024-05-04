@@ -30,13 +30,10 @@ const Wrapper = memo(() => {
                     setImgURL('');
                     setShowUpload(true);
                     form.resetFields();
-                } else {
-                    Message.sendError(
-                        'Đã có lỗi xãy ra, vui lòng kiểm tra lại'
-                    );
                 }
             } catch (error) {
                 console.error(error);
+                Message.sendError('Đã có lỗi xãy ra, vui lòng kiểm tra lại');
             } finally {
                 setLoading(false);
             }

@@ -1,4 +1,4 @@
-import { Button, Spin } from 'antd';
+import { Button } from 'antd';
 import ErrorIcon from 'assets/icons/ErrorIcon';
 import SuccessIcon from 'assets/icons/SuccessIcon';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
@@ -21,29 +21,27 @@ const Inner = memo(({ resultPayment }) => {
     }, [countdown, navigate]);
 
     return (
-        <Spin tip="Vui lòng chờ" size="large" spinning={resultPayment === ''}>
-            <UserHomePageLayout>
-                <div className="payment-success">
-                    {resultPayment === '00' ? <SuccessIcon /> : <ErrorIcon />}
-                    {resultPayment === '00' ? (
-                        <p className="payment-success__desc">
-                            Thanh toán thành công, bạn có thể tiếp tục mua sắm
-                        </p>
-                    ) : (
-                        <p className="payment-success__desc">
-                            Thanh toán thất bại, vui lòng thử lại
-                        </p>
-                    )}
-                    <Button
-                        type="primary"
-                        size="large"
-                        onClick={() => navigate(routeConstants.USER_HOME_PAGE)}
-                    >
-                        Trở lại trang chủ sau {countdown} giây.
-                    </Button>
-                </div>
-            </UserHomePageLayout>
-        </Spin>
+        <UserHomePageLayout>
+            <div className="payment-success">
+                {resultPayment === '00' ? <SuccessIcon /> : <ErrorIcon />}
+                {resultPayment === '00' ? (
+                    <p className="payment-success__desc">
+                        Thanh toán thành công, bạn có thể tiếp tục mua sắm
+                    </p>
+                ) : (
+                    <p className="payment-success__desc">
+                        Thanh toán thất bại, vui lòng thử lại
+                    </p>
+                )}
+                <Button
+                    type="primary"
+                    size="large"
+                    onClick={() => navigate(routeConstants.USER_HOME_PAGE)}
+                >
+                    Trở lại trang chủ sau {countdown} giây.
+                </Button>
+            </div>
+        </UserHomePageLayout>
     );
 });
 

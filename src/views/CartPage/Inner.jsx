@@ -64,6 +64,7 @@ const Inner = memo(
                 }
             } catch (error) {
                 console.error(error);
+                Message.sendError('Đã có lỗi xãy ra, vui lòng thử lại');
             }
         }, [navigate, selectedOrder, selectedTour, userId, userInfor]);
 

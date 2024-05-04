@@ -17,13 +17,12 @@ const Wrapper = memo(() => {
                 if (response?.status === 200) {
                     Message.sendSuccess('Vui lòng kiểm tra email của bạn');
                     navigate(routeConstants.RESET_PASSWORD);
-                } else {
-                    Message.sendError(
-                        'Tài khoản của bạn không tồn tại trên hệ thống, vui lòng kiểm tra lại'
-                    );
                 }
             } catch (err) {
                 console.error(err);
+                Message.sendError(
+                    'Tài khoản của bạn không tồn tại trên hệ thống, vui lòng kiểm tra lại'
+                );
             } finally {
                 setLoading(false);
             }

@@ -39,13 +39,10 @@ const Wrapper = memo(() => {
                     Message.sendSuccess('Khởi tạo lịch trình thành công');
                     form.resetFields();
                     navigate(routeConstants.ADMIN_MANAGE_TOURS);
-                } else if (response?.status === 400) {
-                    Message.sendError('Tour này đã được lên lịch trình');
-                } else {
-                    Message.sendError('Đã có lỗi xãy ra, vui lòng thử lại');
                 }
             } catch (error) {
                 console.error(error);
+                Message.sendError('Đã có lỗi xãy ra, vui lòng thử lại');
             } finally {
                 setLoading(false);
             }

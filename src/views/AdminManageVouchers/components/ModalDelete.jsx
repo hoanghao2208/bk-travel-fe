@@ -16,13 +16,12 @@ const ModalDelete = memo(
                 if (response?.status === 200) {
                     Message.sendSuccess('Xóa mã giảm giá thành công');
                     setIsReload(prev => !prev);
-                } else {
-                    Message.sendError(
-                        'Đã có lỗi xãy ra! Xóa mã giảm giá không thành công'
-                    );
                 }
             } catch (error) {
                 console.error(error);
+                Message.sendError(
+                    'Đã có lỗi xãy ra! Xóa mã giảm giá không thành công'
+                );
             } finally {
                 setLoading(false);
                 setIsOpen(false);

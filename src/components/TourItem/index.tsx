@@ -140,11 +140,10 @@ const TourItem: FC<TourItemProps> = memo(
                 const response = await userService.addToCart(body);
                 if (response?.status === 200) {
                     Message.sendSuccess('Thêm vào giỏ hàng thành công');
-                } else {
-                    Message.sendError('Thêm vào giỏ hàng không thành công');
                 }
             } catch (error) {
                 console.error(error);
+                Message.sendError('Thêm vào giỏ hàng không thành công');
             } finally {
                 setAdultQuantity(prev => ({
                     ...prev,
@@ -199,6 +198,7 @@ const TourItem: FC<TourItemProps> = memo(
                 }
             } catch (error) {
                 console.error(error);
+                Message.sendError('Thêm vào giỏ hàng không thành công');
             } finally {
                 setAdultQuantity(prev => ({
                     ...prev,

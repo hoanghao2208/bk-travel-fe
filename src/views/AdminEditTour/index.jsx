@@ -37,13 +37,10 @@ const Wrapper = memo(() => {
                 if (response.status === 200) {
                     Message.sendSuccess('Cập nhật dữ liệu tour thành công!');
                     navigate(routeConstants.ADMIN_EDIT_TOUR);
-                } else {
-                    Message.sendError(
-                        'Đã có lỗi xãy ra, vui lòng kiểm tra lại'
-                    );
                 }
             } catch (err) {
                 console.error(err);
+                Message.sendError('Đã có lỗi xãy ra, vui lòng kiểm tra lại');
             } finally {
                 setLoading(false);
             }

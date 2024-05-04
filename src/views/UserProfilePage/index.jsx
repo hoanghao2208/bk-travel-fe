@@ -51,6 +51,7 @@ const Wrapper = memo(() => {
                 }
             } catch (err) {
                 console.error(err);
+                Message.sendError('Đã có lỗi xãy ra vui lòng thử lại');
             } finally {
                 setLoading(false);
                 window.location.reload();

@@ -60,6 +60,7 @@ const ChatSection: FC<ChatSectionProps> = memo(
                 }
             } catch (error) {
                 console.error(error);
+                Message.sendError('Đã có lỗi xãy ra vui lòng thử lại');
             }
         }, [activeGrp, contentMessage, socket, userId]);
 

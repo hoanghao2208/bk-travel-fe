@@ -49,7 +49,7 @@ const WriteReview: FC<WriteReviewProps> = memo(({ reload, setReload }) => {
             } catch (error) {
                 console.error(error);
                 Message.sendError(
-                    'Đã có lỗi xãy ra, bạn bình luận không thành công'
+                    'Đã có lỗi xãy ra, bạn đã đánh giá không thành công'
                 );
             } finally {
                 setLoading(false);

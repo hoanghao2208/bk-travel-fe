@@ -58,6 +58,7 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
                 }
             } catch (error) {
                 console.error(error);
+                Message.sendError('Đã có lỗi xãy ra vui lòng thử lại');
             } finally {
                 setOpenDeleteModal(false);
                 setLoading(false);
