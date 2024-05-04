@@ -11,13 +11,11 @@ import SearchIcon from 'assets/icons/SearchIcon';
 import UserDropDown from 'assets/icons/UserDropDown';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-    getCustomerId,
-    setCustomerId,
-    setToken,
-} from 'reducers/token/function';
+import { tokenActions } from 'reducers/token';
+import { getCartCount, getCustomerId } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import userService from 'services/userService';
+import { dispatch } from 'store/Store';
 import './styles.scss';
 
 interface UserInfo {
@@ -31,7 +29,8 @@ const defaultUserInfo: UserInfo = {
 const UserLoginHeader: FC = () => {
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState<UserInfo>(defaultUserInfo);
-    const [cartNumber, setCartNumber] = useState(0);
+
+    const cartNumber = getCartCount();
 
     const user_id = getCustomerId();
 
@@ -46,22 +45,9 @@ const UserLoginHeader: FC = () => {
         }
     }, [user_id]);
 
-    const handleGetCartCount = useCallback(async () => {
-        const response = await userService.getCartByUser(user_id);
-        if (response?.status === 200) {
-            if (
-                response?.data.data !== null &&
-                response?.data.data.cart !== null
-            ) {
-                const orderItems = response?.data.data.cart.order_items;
-                setCartNumber(orderItems?.length);
-            }
-        }
-    }, [user_id]);
-
     const handleLogout = () => {
-        setToken('');
-        setCustomerId(0);
+        dispatch(tokenActions.SET_ACCESS_TOKEN(''));
+        dispatch(tokenActions.SET_USER_ID(0));
         navigate(routeConstants.USER_HOME_PAGE);
         window.location.reload();
     };
@@ -69,10 +55,6 @@ const UserLoginHeader: FC = () => {
     useEffect(() => {
         handleGetUserInfo();
     }, [handleGetUserInfo]);
-
-    useEffect(() => {
-        handleGetCartCount();
-    }, [handleGetCartCount]);
 
     const items = [
         {

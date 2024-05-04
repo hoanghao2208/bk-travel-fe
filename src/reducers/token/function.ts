@@ -11,6 +11,10 @@ export const setCustomerId = (userId?: number) => {
     storeFunc.dispatch(tokenActions.SET_USER_ID, userId);
 };
 
+export const setCartCount = (cartNumber?: number) => {
+    storeFunc.dispatch(tokenActions.SET_CART_COUNT, cartNumber);
+};
+
 export const setFacebookToken = (
     facebookAccessToken?: string,
     userId?: string,
@@ -33,7 +37,11 @@ export const getToken = () => {
 
 export const getCustomerId = () => {
     return storeFunc.getState()?.token?.user_id;
-}
+};
+
+export const getCartCount = () => {
+    return storeFunc.getState()?.token?.cartCount;
+};
 
 export const getFacebookToken = () => {
     return storeFunc.getState()?.token?.facebookAccessToken;

@@ -120,10 +120,10 @@ const Inner = memo(
                                         <h4 className="cart__content--price-cost">
                                             {totalPrice.toLocaleString()} VNĐ
                                         </h4>
-                                        <p className="cart__content--price-grade">
+                                        {/* <p className="cart__content--price-grade">
                                             * Bạn sẽ nhận được 123 điểm thành
                                             viên sau khi thanh toán
-                                        </p>
+                                        </p> */}
                                         <div className="cart__content--price-btn">
                                             <Button
                                                 type="primary"

@@ -4,6 +4,7 @@ import { TokenState } from 'reducers/token/type';
 const initialState: TokenState = {
     accessToken: '',
     user_id: 0,
+    cartCount: 0,
     facebookAccessToken: '',
     userId: '',
     email: '',
@@ -31,6 +32,16 @@ const SET_USER_ID: TokenCaseReducer<number | undefined> = (
     return {
         ...state,
         user_id: payload ?? 0,
+    };
+};
+
+const SET_CART_COUNT: TokenCaseReducer<number | undefined> = (
+    state,
+    { payload }
+) => {
+    return {
+        ...state,
+        cartCount: payload ?? 0,
     };
 };
 
@@ -69,6 +80,7 @@ const tokenSlice = createSlice({
     initialState,
     reducers: {
         SET_ACCESS_TOKEN,
+        SET_CART_COUNT,
         SET_FACEBOOK_ACCESS_TOKEN,
         SET_FACE_BOOK_USER_INFO,
         SET_USER_ID,

@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { getCustomerId } from 'reducers/token/function';
+import { getCustomerId, setCartCount } from 'reducers/token/function';
 import userService from 'services/userService';
 import Inner from 'views/CartPage/Inner';
 
@@ -14,6 +14,13 @@ const Wrapper = memo(() => {
             const response = await userService.getCartByUser(userId);
             if (response?.status === 200) {
                 setCartList(response.data.data);
+                if (
+                    response?.data.data !== null &&
+                    response?.data.data.cart !== null
+                ) {
+                    const orderItems = response?.data.data.cart.order_items;
+                    setCartCount(orderItems?.length);
+                }
             }
         } catch (error) {
             console.error(error);
