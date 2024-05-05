@@ -71,16 +71,17 @@ const WaitingItem: FC<WaitingItemProps> = memo(
                         </span>
                     </div>
                 </div>
+                {status === 'ONLINE' && (
+                    <div className="waiting-item__btn">
+                        <Button
+                            icon={<EditOutlined />}
+                            onClick={hanldeNavigateEdit}
+                        >
+                            Chỉnh sửa
+                        </Button>
+                    </div>
+                )}
 
-                <div className="waiting-item__btn">
-                    <Button
-                        icon={<EditOutlined />}
-                        onClick={hanldeNavigateEdit}
-                    >
-                        Chỉnh sửa
-                    </Button>
-                </div>
-                
                 {status === 'WAITING' && setOpenDeleteModal && (
                     <div className="waiting-item__btn">
                         <Button
