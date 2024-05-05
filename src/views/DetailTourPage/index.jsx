@@ -114,7 +114,7 @@ const Wrapper = memo(() => {
                 address_customer: 'TP. Hồ Chí Minh',
             };
 
-            if (body.phone_customer === null) {
+            if (body.phone_customer === null || body.phone_customer === '') {
                 navigate(routeConstants.USER_PROFILE);
                 Message.sendWarning('Vui lòng cập nhật số điện thoại');
                 return;

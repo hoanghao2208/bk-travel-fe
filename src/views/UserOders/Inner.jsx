@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import UserActivityLayout from 'layouts/UserActivityLayout';
 import { memo } from 'react';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
+import NoData from 'views/AdminManageCustomTours/components/NoData';
 import OrderItem from 'views/UserOders/components/OrderItem';
 import './style.scss';
 
@@ -24,6 +25,7 @@ const Inner = memo(({ completedOrders }) => {
                         />
                     ))}
                 </div>
+                {completedOrders.length === 0 && <NoData />}
             </div>
         </UserActivityLayout>
     );

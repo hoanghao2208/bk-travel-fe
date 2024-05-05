@@ -133,7 +133,6 @@ const Inner = memo(
                                     parseInt(orderInfor?.total_to_pay)
                                 }
                                 total={parseInt(orderInfor?.total_to_pay)}
-                                score="234"
                             />
                             <div className="fill-infor__content--btn">
                                 <Button

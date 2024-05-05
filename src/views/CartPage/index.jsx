@@ -20,6 +20,8 @@ const Wrapper = memo(() => {
                 ) {
                     const orderItems = response?.data.data.cart.order_items;
                     setCartCount(orderItems?.length);
+                } else {
+                    setCartCount(0);
                 }
             }
         } catch (error) {

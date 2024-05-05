@@ -26,20 +26,21 @@ const Wrapper = memo(() => {
                     if (response?.status === 200) {
                         Message.sendSuccess('Thay đổi mật khẩu thành công');
                         form.resetFields();
-                    } else if (response?.status === 400) {
-                        Message.sendError(
-                            'Mật khẩu cũ của bạn không chính xác',
-                            4
-                        );
-                    } else {
-                        Message.sendError(
-                            'Thay đổi mật khẩu không thành công',
-                            4
-                        );
                     }
                 }
             } catch (error) {
                 console.error(error);
+                if (error.response?.status === 400) {
+                    Message.sendError(
+                        'Mật khẩu cũ của bạn không chính xác',
+                        4
+                    );
+                } else {
+                    Message.sendError(
+                        'Thay đổi mật khẩu không thành công',
+                        4
+                    );
+                }
             }
         },
         [form, token]

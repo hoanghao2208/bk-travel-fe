@@ -5,11 +5,10 @@ interface PayCostItemProps {
     cost: string;
     reduced: string;
     total: string;
-    score: number;
 }
 
 const PayCostItem: FC<PayCostItemProps> = memo(
-    ({ cost, reduced, total, score }) => {
+    ({ cost, reduced, total }) => {
         return (
             <div className="pay-cost">
                 <h3 className="pay-cost__title">Hóa đơn</h3>
@@ -35,10 +34,6 @@ const PayCostItem: FC<PayCostItemProps> = memo(
                         </span>
                     </div>
                 </div>
-                <p className="pay-cost__score">
-                    * Bạn sẽ nhận được {score} điểm thành viên sau khi thanh
-                    toán
-                </p>
             </div>
         );
     }

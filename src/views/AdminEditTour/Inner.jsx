@@ -624,7 +624,9 @@ const Inner = memo(
                                                             'Giá tour không phù hợp, vui lòng kiếm tra lại',
                                                     },
                                                 ]}
-                                                initialValue={tourData.price}
+                                                initialValue={parseInt(
+                                                    tourData.price
+                                                )}
                                             >
                                                 <Input placeholder="Giá tour" />
                                             </Form.Item>
