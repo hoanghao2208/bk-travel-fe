@@ -1,22 +1,51 @@
 import { Form } from 'antd';
 import Message from 'components/Message';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import routeConstants from 'route/routeConstant';
 import tourService from 'services/tourService';
+import EditTourContextProvider from 'views/AdminEditTour/Context';
 import Inner from 'views/AdminEditTour/Inner';
 
 const Wrapper = memo(() => {
-    const [loading, setLoading] = useState(false);
-    const [fileList, setFileList] = useState([]);
     const [imgURL, setImgURL] = useState('');
     const [departureDate, setDepartureDate] = useState('');
-    const [showUpload, setShowUpload] = useState(true);
+    const [departureTime, setDepartureTime] = useState('');
+    const [deadlineDate, setDeadlineDate] = useState('');
+    const [fileList, setFileList] = useState([]);
     const [tourData, setTourData] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [showUpload, setShowUpload] = useState(true);
 
     const [form] = Form.useForm();
     const { tour_id } = useParams();
     const navigate = useNavigate();
+
+    const ContextValue = useMemo(() => {
+        return {
+            loading,
+            fileList,
+            setFileList,
+            imgURL,
+            setImgURL,
+            showUpload,
+            setShowUpload,
+            departureDate,
+            setDepartureDate,
+            departureTime,
+            setDepartureTime,
+            deadlineDate,
+            setDeadlineDate,
+        };
+    }, [
+        deadlineDate,
+        departureDate,
+        departureTime,
+        fileList,
+        imgURL,
+        loading,
+        showUpload,
+    ]);
 
     const handleEditedTour = useCallback(
         async data => {
@@ -36,7 +65,7 @@ const Wrapper = memo(() => {
                 );
                 if (response.status === 200) {
                     Message.sendSuccess('Cập nhật dữ liệu tour thành công!');
-                    navigate(routeConstants.ADMIN_EDIT_TOUR);
+                    navigate(routeConstants.ADMIN_MANAGE_TOURS);
                 }
             } catch (err) {
                 console.error(err);
@@ -56,6 +85,8 @@ const Wrapper = memo(() => {
                 setImgURL(response?.data.data.cover_image);
                 setShowUpload(false);
                 setDepartureDate(response?.data.data.departure_date);
+                setDepartureTime(response?.data.data.departure_time);
+                setDeadlineDate(response?.data.data.deadline_book_time);
             }
         } catch (error) {
             console.error(error);
@@ -67,20 +98,13 @@ const Wrapper = memo(() => {
     }, [handleGetTourData]);
 
     return (
-        <Inner
-            handleEditedTour={handleEditedTour}
-            tourData={tourData}
-            form={form}
-            loading={loading}
-            fileList={fileList}
-            setFileList={setFileList}
-            imgURL={imgURL}
-            setImgURL={setImgURL}
-            showUpload={showUpload}
-            setShowUpload={setShowUpload}
-            departureDate={departureDate}
-            setDepartureDate={setDepartureDate}
-        />
+        <EditTourContextProvider value={ContextValue}>
+            <Inner
+                handleEditedTour={handleEditedTour}
+                tourData={tourData}
+                form={form}
+            />
+        </EditTourContextProvider>
     );
 });
 
