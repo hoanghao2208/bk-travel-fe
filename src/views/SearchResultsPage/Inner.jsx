@@ -1,15 +1,47 @@
-import { Pagination } from 'antd';
+import { Button, DatePicker, Form, Select } from 'antd';
 import TourItem from 'components/TourItem';
 import dayjs from 'dayjs';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import { memo, useEffect } from 'react';
+import { memo, useCallback, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
 import './style.scss';
 
-const Inner = memo(({ searchResults }) => {
+const Inner = memo(({ searchResults, allDestinations, handleFilterTours }) => {
     useEffect(() => {
         document.title = 'Kết quả tìm kiếm';
     });
+
+    const [searchParams] = useSearchParams();
+
+    const { departure_place, destination_place, departure_date, time } =
+        Object.fromEntries(searchParams.entries());
+
+    const timeOptions = useMemo(() => {
+        const timeOpts = [];
+        for (let i = 0; i < 10; i++) {
+            let newOpt;
+            if (i === 0) {
+                newOpt = {
+                    value: `${i + 1} ngày`,
+                };
+            } else {
+                newOpt = {
+                    value: `${i + 1} ngày, ${i} đêm`,
+                };
+            }
+            timeOpts.push(newOpt);
+        }
+        return timeOpts;
+    }, []);
+
+    const onFinish = useCallback(
+        values => {
+            handleFilterTours(values);
+        },
+        [handleFilterTours]
+    );
+
     return (
         <UserHomePageLayout>
             <div className="search-result">
@@ -17,95 +49,96 @@ const Inner = memo(({ searchResults }) => {
                     <h3 className="search-result__filter--title">
                         Lọc kết quả
                     </h3>
-                    {/* <div className="search-result__filter--box">
-                        <div className="search-result__filter--item">
-                            <FilterItem
-                                filterTitle="Điểm khởi hành"
-                                isSelectedDate={false}
-                                isPrice={false}
-                                options={[
-                                    {
-                                        value: 'tphcm',
-                                        label: 'TP. Hồ Chí Minh',
-                                    },
-                                    {
-                                        value: 'dn',
-                                        label: 'Đà Nẵng',
-                                    },
-                                    {
-                                        value: 'nt',
-                                        label: 'Nha Trang',
-                                    },
-                                    {
-                                        value: 'pt',
-                                        label: 'Phan Thiết',
-                                    },
-                                ]}
-                            />
-                        </div>
-                        <div className="search-result__filter--item">
-                            <FilterItem
-                                filterTitle="Điểm đến"
-                                isSelectedDate={false}
-                                isPrice={false}
-                                options={[
-                                    {
-                                        value: 'tphcm',
-                                        label: 'TP. Hồ Chí Minh',
-                                    },
-                                    {
-                                        value: 'dn',
-                                        label: 'Đà Nẵng',
-                                    },
-                                    {
-                                        value: 'nt',
-                                        label: 'Nha Trang',
-                                    },
-                                    {
-                                        value: 'pt',
-                                        label: 'Phan Thiết',
-                                    },
-                                ]}
-                            />
-                        </div>
-                        <div className="search-result__filter--item">
-                            <FilterItem
-                                filterTitle="Thời gian tour"
-                                isSelectedDate={false}
-                                isPrice={false}
-                                options={[
-                                    {
-                                        value: '2n1d',
-                                        label: '2 ngày, 1 đêm',
-                                    },
-                                    {
-                                        value: '3n2d',
-                                        label: '3 ngày, 2 đêm',
-                                    },
-                                    {
-                                        value: '4n3d',
-                                        label: '4 ngày, 3 đêm',
-                                    },
-                                    {
-                                        value: '>5n',
-                                        label: 'Hơn 5 ngày',
-                                    },
-                                ]}
-                            />
-                        </div>
-                        <div className="search-result__filter--item">
-                            <FilterItem
-                                filterTitle="Ngày khởi hành"
-                                isSelectedDate={true}
-                                isPrice={false}
-                            />
-                        </div>
-                        <div className="search-result__filter--item">
-                            <div className="search-result__filter--button">
-                                <Button type="primary">Áp dụng</Button>
-                            </div>
-                        </div>
-                    </div> */}
+                    <div className="search-result__filter--box">
+                        <Form
+                            name="filter-tour"
+                            layout="vertical"
+                            id="filter-tour"
+                            onFinish={onFinish}
+                        >
+                            <Form.Item
+                                name="departure_place"
+                                label="Điểm khởi hành"
+                                initialValue={departure_place}
+                            >
+                                <Select
+                                    placeholder="Điểm khởi hành"
+                                    defaultValue={departure_place}
+                                    allowClear
+                                >
+                                    {allDestinations.map(destination => (
+                                        <Option
+                                            key={destination.destination_id}
+                                            value={destination.name}
+                                        >
+                                            {destination.name}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                            <Form.Item
+                                name="destination_place"
+                                label="Điểm đến"
+                                initialValue={destination_place}
+                            >
+                                <Select
+                                    placeholder="Điểm đến"
+                                    defaultValue={destination_place}
+                                    allowClear
+                                >
+                                    {allDestinations.map(destination => (
+                                        <Option
+                                            key={destination.destination_id}
+                                            value={destination.name}
+                                        >
+                                            {destination.name}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                            <Form.Item
+                                name="departure_date"
+                                label="Ngày khởi hành"
+                                initialValue={
+                                    departure_date !== undefined &&
+                                    dayjs(departure_date)
+                                }
+                            >
+                                <DatePicker
+                                    placeholder="Ngày khởi hành"
+                                    format={DEFAULT_DISPLAY_DATE_FORMAT}
+                                    allowClear
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                name="time"
+                                label="Thời gian tour"
+                                initialValue={time}
+                            >
+                                <Select
+                                    placeholder="Thời gian tour"
+                                    allowClear
+                                    defaultValue={time}
+                                >
+                                    {timeOptions.map(item => (
+                                        <Option
+                                            key={item.value}
+                                            value={item.value}
+                                        >
+                                            {item.value}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                            <Button
+                                type="primary"
+                                size="large"
+                                htmlType="submit"
+                            >
+                                Tìm kiếm
+                            </Button>
+                        </Form>
+                    </div>
                 </div>
                 <div className="search-result__results">
                     <h3 className="search-result__results--title">
@@ -146,13 +179,6 @@ const Inner = memo(({ searchResults }) => {
                                     />
                                 </div>
                             ))}
-                    </div>
-                    <div className="search-result__results--pagination">
-                        <Pagination
-                            showSizeChanger
-                            defaultCurrent={1}
-                            total={20}
-                        />
                     </div>
                 </div>
             </div>
