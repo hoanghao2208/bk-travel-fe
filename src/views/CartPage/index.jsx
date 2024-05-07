@@ -1,17 +1,18 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { getCustomerId, setCartCount } from 'reducers/token/function';
+import { getCustomerId, getToken, setCartCount } from 'reducers/token/function';
 import userService from 'services/userService';
 import Inner from 'views/CartPage/Inner';
 
 const Wrapper = memo(() => {
     const userId = getCustomerId();
+    const token = getToken();
     const [cartList, setCartList] = useState([]);
     const [selectedTour, setSelectedTour] = useState([]);
     const [reload, setReload] = useState(false);
 
     const getCartList = useCallback(async () => {
         try {
-            const response = await userService.getCartByUser(userId);
+            const response = await userService.getCartByUser(userId, token);
             if (response?.status === 200) {
                 setCartList(response.data.data);
                 if (
@@ -27,7 +28,7 @@ const Wrapper = memo(() => {
         } catch (error) {
             console.error(error);
         }
-    }, [userId]);
+    }, [token, userId]);
 
     useEffect(() => {
         getCartList();

@@ -48,8 +48,6 @@ const UserLoginHeader: FC = () => {
     const handleLogout = () => {
         dispatch(tokenActions.SET_ACCESS_TOKEN(''));
         dispatch(tokenActions.SET_USER_ID(0));
-        navigate(routeConstants.USER_HOME_PAGE);
-        window.location.reload();
     };
 
     useEffect(() => {

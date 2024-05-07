@@ -118,9 +118,13 @@ class UserService extends ApiBase {
         return axios.post(url, requestBody);
     };
 
-    getCartByUser = (user_id: number) => {
-        const url = `http://localhost:8080/api/v1/user/cart/${user_id}`;
-        return axios.get(url);
+    getCartByUser = (user_id: number, token: string) => {
+        const url = `http://localhost:8080/api/v1/user/${user_id}/cart`;
+        return axios.get(url, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
     };
 
     deleteFromCart = (cart_id: number, tour_id: number) => {

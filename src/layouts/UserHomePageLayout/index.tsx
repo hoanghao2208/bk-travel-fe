@@ -5,7 +5,7 @@ import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { FC, PropsWithChildren, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { profileActions } from 'reducers/profile';
-import { getCustomerId, getToken } from 'reducers/token/function';
+import { getCustomerId, getToken, setCartCount } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import userService from 'services/userService';
 import { dispatch } from 'store/Store';
@@ -35,6 +35,29 @@ const UserHomePageLayout: FC<PropsWithChildren> = ({ children }) => {
         }
     }, [userId]);
 
+    const getNumberOfCart = useCallback(async () => {
+        try {
+            const response = await userService.getCartByUser(userId, token);
+            if (response?.status === 200) {
+                if (
+                    response?.data.data !== null &&
+                    response?.data.data.cart !== null
+                ) {
+                    const orderItems = response?.data.data.cart.order_items;
+                    setCartCount(orderItems?.length);
+                } else {
+                    setCartCount(0);
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, [token, userId]);
+
+    useEffect(() => {
+        getNumberOfCart();
+    }, [getNumberOfCart]);
+
     useEffect(() => {
         if (token !== '') {
             const json: DecodedToken = jwtDecode(token);
@@ -45,12 +68,28 @@ const UserHomePageLayout: FC<PropsWithChildren> = ({ children }) => {
     }, [navigate, token]);
 
     useEffect(() => {
+        if (token === '') {
+            navigate(routeConstants.USER_HOME_PAGE);
+        }
+    }, [navigate, token]);
+
+    useEffect(() => {
         getUserInfor();
     }, [getUserInfor]);
 
+    if (token === '') {
+        return (
+            <>
+                <UserHeader />
+                <div className="user-homepage__wrapper">{children}</div>
+                <UserFooter />
+            </>
+        );
+    }
+
     return (
         <>
-            {token === '' ? <UserHeader /> : <UserLoginHeader />}
+            <UserLoginHeader />
             <div className="user-homepage__wrapper">{children}</div>
             <UserFooter />
         </>

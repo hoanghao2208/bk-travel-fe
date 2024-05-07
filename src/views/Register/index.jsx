@@ -1,12 +1,27 @@
 import Message from 'components/Message';
-import { memo, useCallback } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import { memo, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import userService from 'services/userService';
 import Inner from 'views/Register/Inner';
 
 const Wrapper = memo(() => {
     const navigate = useNavigate();
+    const token = getToken();
+
+    useEffect(() => {
+        if (token !== '') {
+            const json = jwtDecode(token);
+            if (json.role_user === 'customer') {
+                navigate(routeConstants.USER_HOME_PAGE);
+            } else {
+                navigate(routeConstants.ADMIN_HOMEPAGE);
+            }
+        }
+    }, [navigate, token]);
+
     const handleRegister = useCallback(
         async data => {
             try {

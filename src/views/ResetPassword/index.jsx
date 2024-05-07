@@ -1,6 +1,8 @@
 import Message from 'components/Message';
-import { memo, useCallback, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import userService from 'services/userService';
 import Inner from 'views/ResetPassword/Inner';
@@ -8,6 +10,18 @@ import Inner from 'views/ResetPassword/Inner';
 const Wrapper = memo(() => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const token = getToken();
+
+    useEffect(() => {
+        if (token !== '') {
+            const json = jwtDecode(token);
+            if (json.role_user === 'customer') {
+                navigate(routeConstants.USER_HOME_PAGE);
+            } else {
+                navigate(routeConstants.ADMIN_HOMEPAGE);
+            }
+        }
+    }, [navigate, token]);
 
     const handleResetPassword = useCallback(
         async value => {
