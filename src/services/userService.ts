@@ -123,8 +123,8 @@ class UserService extends ApiBase {
         return axios.get(url);
     };
 
-    deleteFromCart = (user_id: number, tour_id: number) => {
-        const url = `http://localhost:8080/api/v1/user/cart/${user_id}`;
+    deleteFromCart = (cart_id: number, tour_id: number) => {
+        const url = `http://localhost:8080/api/v1/user/cart/${cart_id}`;
         return axios.delete(url, {
             data: { tour_id },
         });

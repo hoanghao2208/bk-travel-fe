@@ -9,12 +9,12 @@ import Message from 'components/Message';
 import ProductItem from 'components/ProductItem';
 import EditPassengerNumber from 'components/ProductWrapper/components/EditPassengerNumber';
 import { FC, memo, useCallback, useState } from 'react';
-import { getCustomerId } from 'reducers/token/function';
 import userService from 'services/userService';
 import './styles.scss';
 
 interface ProductWrapperProps {
     tourId: number;
+    cartId: number;
     adultQuantity: number;
     childQuantity: number;
     totalPrice: string;
@@ -27,6 +27,7 @@ interface ProductWrapperProps {
 const ProductWrapper: FC<ProductWrapperProps> = memo(
     ({
         tourId,
+        cartId,
         adultQuantity,
         childQuantity,
         totalPrice,
@@ -35,8 +36,6 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
         setReload,
         setSelectedTour,
     }) => {
-        const userId = getCustomerId();
-
         const [openDeleteModal, setOpenDeleteModal] = useState(false);
         const [openEditModal, setOpenEditModal] = useState(false);
         const [loading, setLoading] = useState(false);
@@ -45,7 +44,7 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
             try {
                 setLoading(true);
                 const response = await userService.deleteFromCart(
-                    userId,
+                    cartId,
                     tourId
                 );
                 if (response?.status === 200) {
@@ -63,7 +62,7 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
                 setOpenDeleteModal(false);
                 setLoading(false);
             }
-        }, [reload, selectedTour, setReload, setSelectedTour, tourId, userId]);
+        }, [cartId, reload, selectedTour, setReload, setSelectedTour, tourId]);
 
         const handleSelectedTour = useCallback(() => {
             if (selectedTour.includes(tourId)) {
