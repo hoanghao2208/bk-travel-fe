@@ -44,7 +44,6 @@ const Wrapper = memo(() => {
                     body
                 );
                 if (response?.status === 200) {
-                    setListVoucher(response.data.listVoucher);
                     setIsReload(prev => !prev);
                     Message.sendSuccess('Áp dụng mã giảm giá thành công');
                     form.resetFields();
@@ -67,6 +66,28 @@ const Wrapper = memo(() => {
             }
         },
         [form, searchParams, userId]
+    );
+
+    const handleRemoveVoucher = useCallback(
+        async value => {
+            try {
+                const orderId = searchParams.getAll('orderId').map(Number);
+                const body = {
+                    code: value,
+                };
+                const response = await voucherService.removeVoucherFromOrder(
+                    orderId,
+                    body
+                );
+                if (response?.status === 200) {
+                    setIsReload(prev => !prev);
+                    Message.sendInfo('Xóa mã giảm giá thành công');
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        [searchParams]
     );
 
     const handlePaymentDirectly = useCallback(async () => {
@@ -92,6 +113,22 @@ const Wrapper = memo(() => {
         }
     }, [navigate, searchParams, userId]);
 
+    const handleGetAllVoucherInOrder = useCallback(async () => {
+        try {
+            const orderId = searchParams.getAll('orderId').map(Number);
+            const response = await voucherService.getAllVoucherInOrder(orderId);
+            if (response?.status === 200) {
+                setListVoucher(response.data.vouchers.vouchers);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, [searchParams]);
+
+    useEffect(() => {
+        handleGetAllVoucherInOrder();
+    }, [handleGetAllVoucherInOrder, isReload]);
+
     useEffect(() => {
         getOrderInformation();
     }, [getOrderInformation, isReload]);
@@ -103,6 +140,7 @@ const Wrapper = memo(() => {
             orderItems={orderInfor.order_items}
             listVoucher={listVoucher}
             handleApplyVoucher={handleApplyVoucher}
+            handleRemoveVoucher={handleRemoveVoucher}
             handlePaymentDirectly={handlePaymentDirectly}
         />
     );

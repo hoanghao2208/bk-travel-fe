@@ -1,4 +1,4 @@
-import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import { Button, Table, Tooltip } from 'antd';
 import dayjs from 'dayjs';
 import AdminLayout from 'layouts/AdminLayout';
@@ -83,11 +83,6 @@ const Inner = memo(({ voucherData, setIsReload }) => {
                                     }
                                 >
                                     <EyeOutlined />
-                                </Button>
-                            </Tooltip>
-                            <Tooltip placement="top" title="Chỉnh sửa">
-                                <Button>
-                                    <EditOutlined />
                                 </Button>
                             </Tooltip>
                             <Tooltip placement="top" title="Xóa">

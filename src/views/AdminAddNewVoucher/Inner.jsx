@@ -155,19 +155,6 @@ const Inner = memo(
                                     <Input placeholder="Tên mã giảm giá" />
                                 </Form.Item>
                                 <Form.Item
-                                    label="Mã giảm giá"
-                                    name="code_voucher"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                'Vui lòng nhập mã giảm giá',
-                                        },
-                                    ]}
-                                >
-                                    <Input placeholder="Mã giảm giá" />
-                                </Form.Item>
-                                <Form.Item
                                     label="Hình thức giảm giá"
                                     name="type"
                                     rules={[
@@ -210,8 +197,6 @@ const Inner = memo(
                                 >
                                     <Input placeholder="Giá giảm" />
                                 </Form.Item>
-                            </div>
-                            <div className="add-new-voucher__content--row">
                                 <Form.Item
                                     label="Số lượng mã giảm"
                                     name="max_number"
@@ -230,6 +215,8 @@ const Inner = memo(
                                 >
                                     <Input placeholder="Số lượng mã giảm" />
                                 </Form.Item>
+                            </div>
+                            <div className="add-new-voucher__content--row">
                                 <Form.Item
                                     label="Giá trị đơn tối thiểu (VNĐ)"
                                     name="min_order_value"

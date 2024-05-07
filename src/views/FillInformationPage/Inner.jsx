@@ -1,4 +1,5 @@
-import { Button, Form, Input } from 'antd';
+import { CloseOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Tooltip } from 'antd';
 import PayCostItem from 'components/PayCostItem';
 import ProductItem from 'components/ProductItem';
 import StepByStep from 'components/StepByStep';
@@ -14,6 +15,7 @@ const Inner = memo(
         orderItems,
         listVoucher,
         handleApplyVoucher,
+        handleRemoveVoucher,
         handlePaymentDirectly,
     }) => {
         useEffect(() => {
@@ -92,22 +94,25 @@ const Inner = memo(
                                             </div>
                                         </Form>
                                     </div>
-                                    {listVoucher && listVoucher.length > 0 && (
+                                    {listVoucher.length > 0 && (
                                         <div className="fill-infor__form--voucher-list">
                                             <p>
                                                 Danh sách ưu đãi đã được áp dụng
                                             </p>
                                             <div className="fill-infor__form--voucher-list-wrapper">
                                                 <div>
-                                                    <span>Mã giảm giá</span>
+                                                    <span className="first-label">
+                                                        Mã giảm giá
+                                                    </span>
                                                     <span>Giá giảm</span>
+                                                    <span></span>
                                                 </div>
 
                                                 {listVoucher.map(voucher => (
                                                     <div
                                                         key={voucher.voucher_id}
                                                     >
-                                                        <span>
+                                                        <span className="first-label">
                                                             {
                                                                 voucher.code_voucher
                                                             }
@@ -117,6 +122,21 @@ const Inner = memo(
                                                             {voucher.value_discount.toLocaleString()}{' '}
                                                             VNĐ
                                                         </span>
+                                                        <Tooltip
+                                                            placement="top"
+                                                            title="Hủy voucher"
+                                                        >
+                                                            <Button
+                                                                type="link"
+                                                                onClick={() =>
+                                                                    handleRemoveVoucher(
+                                                                        voucher.code_voucher
+                                                                    )
+                                                                }
+                                                            >
+                                                                <CloseOutlined />
+                                                            </Button>
+                                                        </Tooltip>
                                                     </div>
                                                 ))}
                                             </div>

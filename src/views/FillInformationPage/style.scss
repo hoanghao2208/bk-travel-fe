@@ -161,29 +161,23 @@
                     margin: 0 auto;
                     border-radius: 8px;
                     div {
-                        padding: 16px 36px;
-                        display: flex;
-                        border-bottom: 1px solid $color--border2;
+                        padding: 16px;
+                        display: grid;
+                        grid-template-columns: 3fr 3fr 1fr;
+                        gap: 20px;
                         align-items: center;
-                        span {
-                            width: 50%;
-                            text-align: center;
-                            font-size: 18px;
-                            font-weight: 500;
-                            color: $color-date;
-                            &:first-child {
-                                border-right: 1px solid $color--border2;
-                            }
-                        }
-                        &:first-child,
-                        &:last-child {
-                            span {
-                                font-weight: 600;
-                                color: $color--black;
-                            }
-                        }
+                        text-align: center;
+                        font-size: 18px;
+                        font-weight: 500;
                         &:first-child {
-                            border-bottom: 1px solid $color--border2;
+                            color: $color--primary;
+                            border-bottom: 1px solid $color--border;
+                        }
+                        &:last-child {
+                            color: $color--red;
+                        }
+                        .first-label {
+                            border-right: 1px solid $color--border;
                         }
                     }
                 }
