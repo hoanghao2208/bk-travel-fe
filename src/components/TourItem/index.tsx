@@ -103,7 +103,8 @@ const TourItem: FC<TourItemProps> = memo(
                 if (!loveList.includes(tourId)) {
                     const response = await userService.addToWishList(
                         userId,
-                        tourId
+                        tourId,
+                        token
                     );
                     if (response?.status === 201) {
                         setLoveList(prev => [...prev, tourId]);

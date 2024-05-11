@@ -91,9 +91,17 @@ class UserService extends ApiBase {
         });
     };
 
-    addToWishList = (user_id: number, tour_id: number) => {
+    addToWishList = (user_id: number, tour_id: number, token: string) => {
         const url = `http://localhost:8080/api/v1/user/wishlist/${user_id}/tours/${tour_id}`;
-        return axios.post(url);
+        return axios.post(
+            url,
+            {},
+            {
+                headers: {
+                    Authorization: `${token}`,
+                },
+            }
+        );
     };
 
     getWishList = (user_id: number) => {
