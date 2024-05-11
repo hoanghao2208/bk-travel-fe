@@ -20,6 +20,7 @@ import routeConstants from 'route/routeConstant';
 import userService from 'services/userService';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
 import CommentList from 'views/DetailTourPage/components/Comment';
+import ConfirmToChat from 'views/DetailTourPage/components/ConfirmToChat';
 import Rating from 'views/DetailTourPage/components/Rating';
 import WriteComment from 'views/DetailTourPage/components/WriteComment';
 import WriteReview from 'views/DetailTourPage/components/WriteReview';
@@ -27,7 +28,14 @@ import { useCreateContext } from 'views/DetailTourPage/Context';
 import './style.scss';
 
 const Inner = memo(
-    ({ tourData, commentsList, reviewsList, handleCreateOrder }) => {
+    ({
+        tourData,
+        orderData,
+        socket,
+        commentsList,
+        reviewsList,
+        handleCreateOrder,
+    }) => {
         useEffect(() => {
             document.title = 'Chi tiết tour';
         });
@@ -51,6 +59,7 @@ const Inner = memo(
         const userId = getCustomerId();
 
         const [activeTab, setActiveTab] = useState('RATING');
+        const [openModalJoinChat, setOpenModalJoinChat] = useState(false);
 
         const handleWishListTour = useCallback(async () => {
             if (token === '') {
@@ -64,7 +73,8 @@ const Inner = memo(
                 if (!loveList.includes(tourId)) {
                     const response = await userService.addToWishList(
                         userId,
-                        tourId
+                        tourId,
+                        token
                     );
                     if (response?.status === 201) {
                         setLoveList(prev => [...prev, tourId]);
@@ -213,6 +223,7 @@ const Inner = memo(
                                 intro="Bạn đang gặp vấn đề? Liên hệ ngay với chúng tôi!"
                                 icon={<CommentOutlined />}
                                 buttonTitle="Liên hệ với chúng tôi"
+                                onClick={() => setOpenModalJoinChat(true)}
                             />
                         </div>
                     </div>
@@ -332,6 +343,12 @@ const Inner = memo(
                         openModal={openOrderModal}
                         setOpenModal={setOpenOrderModal}
                         handleFinish={handleCreateOrder}
+                    />
+                    <ConfirmToChat
+                        socket={socket}
+                        openModalJoinChat={openModalJoinChat}
+                        setOpenModalJoinChat={setOpenModalJoinChat}
+                        orderData={orderData}
                     />
                 </div>
             </UserHomePageLayout>

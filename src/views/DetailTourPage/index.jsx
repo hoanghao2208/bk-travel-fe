@@ -2,25 +2,31 @@ import Message from 'components/Message';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useUserProfile } from 'reducers/profile/function';
-import { getCustomerId } from 'reducers/token/function';
+import { getCustomerId, getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import commentService from 'services/commentService';
 import orderService from 'services/orderService';
 import tourService from 'services/tourService';
 import userService from 'services/userService';
+import { io } from 'socket.io-client';
+import { BASE_URL } from 'utils/constants';
 import CreateDetailContextProvider from 'views/DetailTourPage/Context';
 import Inner from 'views/DetailTourPage/Inner';
+
+let socket;
 
 const Wrapper = memo(() => {
     const userInfor = useUserProfile();
     const { tour_id } = useParams();
     const navigate = useNavigate();
     const userId = getCustomerId();
+    const token = getToken();
 
     const [tourData, setTourData] = useState([]);
     const [loveList, setLoveList] = useState([]);
     const [commentsList, setCommentsList] = useState([]);
     const [reviewsList, setReviewsList] = useState([]);
+    const [orderData, setOrderData] = useState([]);
     const [reload, setReload] = useState(false);
     const [openOrderModal, setOpenOrderModal] = useState(false);
     const [adultQuantity, setAdultQuantity] = useState({
@@ -44,6 +50,16 @@ const Wrapper = memo(() => {
             setChildQuantity,
         };
     }, [adultQuantity, childQuantity, loveList, openOrderModal, reload]);
+
+    useEffect(() => {
+        socket = io(BASE_URL, {
+            query: { access_token: token },
+        });
+
+        socket.emit('online', userId);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleGetTourData = useCallback(async () => {
         try {
@@ -149,6 +165,26 @@ const Wrapper = memo(() => {
         userInfor,
     ]);
 
+    const handleGetCompletedTour = useCallback(async () => {
+        try {
+            const response = await orderService.getCompletedOrder(userId);
+            if (response?.status === 200) {
+                const orderData = [];
+                const orderCompleted = response?.data.complete_orders;
+                orderCompleted.forEach(item => {
+                    const tourId = [];
+                    item.tours.forEach(tour => {
+                        tourId.push(tour.tour_id);
+                    });
+                    orderData[item.order_id] = { tour_id: tourId };
+                });
+                setOrderData(orderData);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, [userId]);
+
     useEffect(() => {
         handleGetTourData();
     }, [handleGetTourData, reload]);
@@ -165,10 +201,16 @@ const Wrapper = memo(() => {
         handleGetReviews();
     }, [handleGetReviews, reload]);
 
+    useEffect(() => {
+        handleGetCompletedTour();
+    }, [handleGetCompletedTour]);
+
     return (
         <CreateDetailContextProvider value={ContextValue}>
             <Inner
                 tourData={tourData}
+                orderData={orderData}
+                socket={socket}
                 commentsList={commentsList}
                 reviewsList={reviewsList}
                 handleCreateOrder={handleCreateOrder}
