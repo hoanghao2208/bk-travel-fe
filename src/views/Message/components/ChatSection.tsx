@@ -1,7 +1,7 @@
 import { SendOutlined } from '@ant-design/icons';
 import { Button, Input, Tooltip } from 'antd';
 import Message from 'components/Message';
-import { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, memo, useCallback, useRef, useState } from 'react';
 import { getCustomerId } from 'reducers/token/function';
 import messageService from 'services/messageService';
 import MessageItem from 'views/Message/components/MessageItem';
@@ -11,27 +11,15 @@ interface ChatSectionProps {
     name: string;
     activeGrp: number;
     socket: any;
+    allMessage: any;
 }
 
 const ChatSection: FC<ChatSectionProps> = memo(
-    ({ name, activeGrp, socket }) => {
+    ({ name, activeGrp, socket, allMessage }) => {
         const userId = getCustomerId();
         const contentRef = useRef<HTMLDivElement>(null);
 
-        const [allMessage, setAllMessage] = useState([]);
         const [contentMessage, setContentMessage] = useState('');
-        const [reload, setReload] = useState(false);
-
-        const getAllMessages = useCallback(async () => {
-            try {
-                const response = await messageService.getAllMessages(activeGrp);
-                if (response?.status === 200) {
-                    setAllMessage(response.data.data);
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        }, [activeGrp]);
 
         const getContentMessage = useCallback((e: any) => {
             setContentMessage(e.target.value);
@@ -40,10 +28,11 @@ const ChatSection: FC<ChatSectionProps> = memo(
         const handleSendMessage = useCallback(async () => {
             try {
                 if (contentMessage !== '') {
-                    socket.emit('send message', {
-                        msg: contentMessage,
-                        room: activeGrp,
-                    });
+                    socket.emit('send message', contentMessage, activeGrp);
+                    // socket.emit('send message', {
+                    //     msg: contentMessage,
+                    //     room: activeGrp,
+                    // });
                     const body = {
                         group_id: activeGrp,
                         user_id: userId,
@@ -52,7 +41,6 @@ const ChatSection: FC<ChatSectionProps> = memo(
                     const response = await messageService.createMessage(body);
                     if (response?.status === 200) {
                         setContentMessage('');
-                        setReload(prev => !prev);
                     }
                 } else {
                     Message.sendWarning('Vui lòng nhập nội dung tin nhắn');
@@ -63,19 +51,6 @@ const ChatSection: FC<ChatSectionProps> = memo(
                 Message.sendError('Đã có lỗi xãy ra vui lòng thử lại');
             }
         }, [activeGrp, contentMessage, socket, userId]);
-
-        useEffect(() => {
-            getAllMessages();
-        }, [getAllMessages, reload]);
-
-        useEffect(() => {
-            if (contentRef.current) {
-                contentRef.current.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'end',
-                });
-            }
-        }, [allMessage, reload]);
 
         return (
             <div className="chat-section">

@@ -54,6 +54,18 @@ class MessageService extends ApiBase {
         const url = `http://localhost:8080/api/v1/groups/${group_id}/messages/`;
         return axios.get(url);
     };
+
+    joinGroup = (
+        group_id: number,
+        requestBody: {
+            user_id: number;
+            tour_id: number;
+            order_id: number;
+        }
+    ) => {
+        const url = `http://localhost:8080/api/v1/groups/${group_id}/join`;
+        return axios.post(url, requestBody);
+    };
 }
 
 const messageService = new MessageService();
