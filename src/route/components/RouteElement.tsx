@@ -26,7 +26,7 @@ const RouteElement: FC<IProps> = memo(
             if (!authorized) {
                 if (authorization) {
                     if (token) {
-                        userService.getUserInfo(userId).then(res => {
+                        userService.getUserInfo(userId, token).then(res => {
                             if (res?.status === 200) {
                                 setAuthorized(true);
                                 dispatch(

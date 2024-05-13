@@ -1,6 +1,6 @@
 import { Button, InputNumber } from 'antd';
 import { FC, memo, useCallback, useMemo } from 'react';
-import { getCustomerId } from 'reducers/token/function';
+import { getCustomerId, getToken } from 'reducers/token/function';
 import userService from 'services/userService';
 import './style.scss';
 
@@ -16,6 +16,7 @@ interface EditPassengerNumberProps {
 const EditPassengerNumber: FC<EditPassengerNumberProps> = memo(
     ({ title, number, tourId, reload, setReload, isChild }) => {
         const userId = getCustomerId();
+        const token = getToken();
         const body = useMemo(() => {
             return {
                 user_id: userId,
@@ -25,43 +26,43 @@ const EditPassengerNumber: FC<EditPassengerNumberProps> = memo(
 
         const handleDecrementAdult = useCallback(async () => {
             try {
-                await userService.decreaseAdultQuantity(body);
+                await userService.decreaseAdultQuantity(token, body);
             } catch (error) {
                 console.error(error);
             } finally {
                 setReload(!reload);
             }
-        }, [body, reload, setReload]);
+        }, [body, reload, setReload, token]);
 
         const handleIncrementAdult = useCallback(async () => {
             try {
-                await userService.increaseAdultQuantity(body);
+                await userService.increaseAdultQuantity(token, body);
             } catch (error) {
                 console.error(error);
             } finally {
                 setReload(!reload);
             }
-        }, [body, reload, setReload]);
+        }, [body, reload, setReload, token]);
 
         const handleDecrementChild = useCallback(async () => {
             try {
-                await userService.decreaseChildQuantity(body);
+                await userService.decreaseChildQuantity(token, body);
             } catch (error) {
                 console.error(error);
             } finally {
                 setReload(!reload);
             }
-        }, [body, reload, setReload]);
+        }, [body, reload, setReload, token]);
 
         const handleIncrementChild = useCallback(async () => {
             try {
-                await userService.increaseChildQuantity(body);
+                await userService.increaseChildQuantity(token, body);
             } catch (error) {
                 console.error(error);
             } finally {
                 setReload(!reload);
             }
-        }, [body, reload, setReload]);
+        }, [body, reload, setReload, token]);
 
         return (
             <div className="edit-passenger">

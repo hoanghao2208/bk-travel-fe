@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import AdminLayout from 'layouts/AdminLayout';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { getToken } from 'reducers/token/function';
 import messageService from 'services/messageService';
 import ScheduleList from 'views/AdminSchedule/views/ScheduleList';
 import './style.scss';
@@ -15,6 +16,7 @@ const Inner = memo(
             document.title = 'Lên lịch trình tour';
         });
 
+        const token = getToken();
         const { tour_id } = useParams();
         const [openModal, setOpenModal] = useState(false);
         const [reload, setReload] = useState(false);
@@ -27,7 +29,7 @@ const Inner = memo(
 
         const handleGetAllGroups = useCallback(async () => {
             try {
-                const response = await messageService.getAllGroups();
+                const response = await messageService.getAllGroups(token);
                 if (response?.status === 200) {
                     const allId = response.data.groups.map(
                         group => group.tour_id
@@ -37,7 +39,7 @@ const Inner = memo(
             } catch (error) {
                 console.error(error);
             }
-        }, []);
+        }, [token]);
 
         const handleCreateGroup = useCallback(async () => {
             try {
@@ -49,7 +51,10 @@ const Inner = memo(
                         tour_id,
                         name: groupName,
                     };
-                    const response = await messageService.createGroup(body);
+                    const response = await messageService.createGroup(
+                        token,
+                        body
+                    );
                     if (response?.status === 201) {
                         Message.sendSuccess('Tạo nhóm hỗ trợ thành công');
                         setGroupName('');
@@ -61,7 +66,7 @@ const Inner = memo(
                 console.error(error);
                 Message.sendError('Đã có lỗi xãy ra, vui lòng thử lại');
             }
-        }, [groupName, tour_id]);
+        }, [groupName, token, tour_id]);
 
         useEffect(() => {
             handleGetAllGroups();

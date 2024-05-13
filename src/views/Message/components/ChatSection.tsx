@@ -2,7 +2,7 @@ import { SendOutlined } from '@ant-design/icons';
 import { Button, Input, Tooltip } from 'antd';
 import Message from 'components/Message';
 import { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
-import { getCustomerId } from 'reducers/token/function';
+import { getCustomerId, getToken } from 'reducers/token/function';
 import messageService from 'services/messageService';
 import MessageItem from 'views/Message/components/MessageItem';
 import '../styles.scss';
@@ -16,6 +16,7 @@ interface ChatSectionProps {
 const ChatSection: FC<ChatSectionProps> = memo(
     ({ name, activeGrp, socket }) => {
         const userId = getCustomerId();
+        const token = getToken();
         const contentRef = useRef<HTMLDivElement>(null);
 
         const [allMessage, setAllMessage] = useState([]);
@@ -24,14 +25,17 @@ const ChatSection: FC<ChatSectionProps> = memo(
 
         const getAllMessages = useCallback(async () => {
             try {
-                const response = await messageService.getAllMessages(activeGrp);
+                const response = await messageService.getAllMessages(
+                    activeGrp,
+                    token
+                );
                 if (response?.status === 200) {
                     setAllMessage(response.data.data);
                 }
             } catch (error) {
                 console.error(error);
             }
-        }, [activeGrp]);
+        }, [activeGrp, token]);
 
         const getContentMessage = useCallback((e: any) => {
             setContentMessage(e.target.value);
@@ -49,7 +53,10 @@ const ChatSection: FC<ChatSectionProps> = memo(
                         user_id: userId,
                         content: contentMessage,
                     };
-                    const response = await messageService.createMessage(body);
+                    const response = await messageService.createMessage(
+                        body,
+                        token
+                    );
                     if (response?.status === 200) {
                         setContentMessage('');
                         setReload(prev => !prev);
@@ -62,7 +69,7 @@ const ChatSection: FC<ChatSectionProps> = memo(
                 console.error(error);
                 Message.sendError('Đã có lỗi xãy ra vui lòng thử lại');
             }
-        }, [activeGrp, contentMessage, socket, userId]);
+        }, [activeGrp, contentMessage, socket, token, userId]);
 
         useEffect(() => {
             getAllMessages();

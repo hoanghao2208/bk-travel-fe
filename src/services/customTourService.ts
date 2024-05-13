@@ -17,7 +17,7 @@ class CustomTourService extends ApiBase {
             user_id: number;
         }
     ) => {
-        const url = `http://localhost:8080/api/v1/user/${userId}/tour`;
+        const url = `http://localhost:8080/api/v1/users/${userId}/tours`;
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -26,18 +26,45 @@ class CustomTourService extends ApiBase {
     };
 
     getAllPendingTours = () => {
-        const url = 'http://localhost:8080/api/v1/tour/all/pending';
+        const url = 'http://localhost:8080/api/v1/tours/all/pending';
         return axios.get(url);
     };
 
     getAllSuccessTours = () => {
-        const url = 'http://localhost:8080/api/v1/tour/all/success';
+        const url = 'http://localhost:8080/api/v1/tours/all/success';
         return axios.get(url);
     };
 
     getAllRejectedTours = () => {
-        const url = 'http://localhost:8080/api/v1/tour/all/reject';
+        const url = 'http://localhost:8080/api/v1/tours/all/reject';
         return axios.get(url);
+    };
+
+    getPendingTourByUser = (user_id: number, token: string) => {
+        const url = `http://localhost:8080/api/v1/users/${user_id}/pendingtour`;
+        return axios.get(url, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
+
+    getRejectedTourByUser = (user_id: number, token: string) => {
+        const url = `http://localhost:8080/api/v1/users/${user_id}/rejectedtour`;
+        return axios.get(url, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
+
+    getSuccessTourByUser = (user_id: number, token: string) => {
+        const url = `http://localhost:8080/api/v1/users/${user_id}/successtour`;
+        return axios.get(url, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
     };
 
     responseCustomTour = (
@@ -47,10 +74,15 @@ class CustomTourService extends ApiBase {
             status: 'reject' | 'success';
             reason?: string;
             price?: number;
-        }
+        },
+        token: string
     ) => {
-        const url = `http://localhost:8080/api/v1/tour/${tourId}/response`;
-        return axios.put(url, requestBody);
+        const url = `http://localhost:8080/api/v1/tours/${tourId}/response`;
+        return axios.put(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
     };
 }
 

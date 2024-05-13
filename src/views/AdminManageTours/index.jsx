@@ -1,8 +1,11 @@
 import { memo, useCallback, useEffect, useState } from 'react';
+import { getToken } from 'reducers/token/function';
 import tourService from 'services/tourService';
 import Inner from 'views/AdminManageTours/Inner';
 
 const Wrapper = memo(() => {
+    const token = getToken();
+
     const [waitingTours, setWaitingTours] = useState([]);
     const [deletedTours, setDeletedTours] = useState([]);
     const [onlineTours, setOnlineTours] = useState([]);
@@ -10,14 +13,14 @@ const Wrapper = memo(() => {
 
     const handleGetWaitingTours = useCallback(async () => {
         try {
-            const response = await tourService.getWaitingTour();
+            const response = await tourService.getWaitingTour(token);
             if (response?.status === 200) {
                 setWaitingTours(response?.data.data);
             }
         } catch (err) {
             console.error(err);
         }
-    }, []);
+    }, [token]);
 
     const handleGetOnlineTours = useCallback(async () => {
         try {
@@ -32,14 +35,14 @@ const Wrapper = memo(() => {
 
     const handleGetDeletedTours = useCallback(async () => {
         try {
-            const response = await tourService.getDeletedTour();
+            const response = await tourService.getDeletedTour(token);
             if (response?.status === 200) {
                 setDeletedTours(response?.data.data);
             }
         } catch (err) {
             console.error(err);
         }
-    }, []);
+    }, [token]);
 
     useEffect(() => {
         handleGetWaitingTours();

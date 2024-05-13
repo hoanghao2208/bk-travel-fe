@@ -3,7 +3,7 @@ import TextArea from 'antd/es/input/TextArea';
 import Message from 'components/Message';
 import { FC, memo, useCallback, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getCustomerId } from 'reducers/token/function';
+import { getCustomerId, getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import commentService from 'services/commentService';
 import './styles.scss';
@@ -18,6 +18,7 @@ const WriteComment: FC<WriteCommentProps> = memo(({ reload, setReload }) => {
     const navigate = useNavigate();
     const userId = String(getCustomerId());
     const [form] = Form.useForm();
+    const token = getToken();
 
     const [loading, setLoading] = useState(false);
 
@@ -42,7 +43,10 @@ const WriteComment: FC<WriteCommentProps> = memo(({ reload, setReload }) => {
                     formData.append('user_id', userId);
                 }
 
-                const response = await commentService.createComment(formData);
+                const response = await commentService.createComment(
+                    token,
+                    formData
+                );
 
                 if (response?.status === 200) {
                     Message.sendSuccess('Bạn đã bình luận thành công');
@@ -58,7 +62,7 @@ const WriteComment: FC<WriteCommentProps> = memo(({ reload, setReload }) => {
                 setLoading(false);
             }
         },
-        [form, navigate, reload, setReload, tour_id, userId]
+        [form, navigate, reload, setReload, token, tour_id, userId]
     );
 
     return (

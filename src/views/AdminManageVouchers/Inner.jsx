@@ -124,7 +124,11 @@ const Inner = memo(({ voucherData, setIsReload }) => {
                         Danh sách tất cả các mã giảm giá trên hệ thống
                     </h3>
                     <div className="admin-tour-guides__content--table">
-                        <Table columns={columns} dataSource={voucherData} />
+                        <Table
+                            columns={columns}
+                            dataSource={voucherData}
+                            pagination={false}
+                        />
                     </div>
                 </div>
             </div>

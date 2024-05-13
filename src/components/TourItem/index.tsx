@@ -80,7 +80,7 @@ const TourItem: FC<TourItemProps> = memo(
                 if (userId === 0) {
                     return;
                 }
-                const response = await userService.getWishList(userId);
+                const response = await userService.getWishList(userId, token);
                 if (response?.status === 200) {
                     const tempLoveList = response.data.data[0].tours.map(
                         (item: any) => item.tour_id
@@ -90,7 +90,7 @@ const TourItem: FC<TourItemProps> = memo(
             } catch (error) {
                 console.error(error);
             }
-        }, [userId]);
+        }, [token, userId]);
 
         const handleWishListTour = useCallback(async () => {
             if (token === '') {
@@ -112,7 +112,8 @@ const TourItem: FC<TourItemProps> = memo(
                 } else {
                     const response = await userService.removeFromWishList(
                         userId,
-                        tourId
+                        tourId,
+                        token
                     );
                     if (response?.status === 200) {
                         setLoveList(prev => prev.filter(id => id !== tourId));
@@ -138,7 +139,7 @@ const TourItem: FC<TourItemProps> = memo(
                         child_quantity: childQuantity.value,
                     },
                 };
-                const response = await userService.addToCart(body);
+                const response = await userService.addToCart(token, body);
                 if (response?.status === 200) {
                     Message.sendSuccess('Thêm vào giỏ hàng thành công');
                 }
@@ -194,7 +195,7 @@ const TourItem: FC<TourItemProps> = memo(
                     return;
                 }
 
-                const response = await orderService.createOneOrder(body);
+                const response = await orderService.createOneOrder(body, token);
                 if (response?.status === 200) {
                     navigate(
                         `${routeConstants.FILL_INFORMATION}?tourId=${selectedItem}&orderId=${response.data.order.order_id}`

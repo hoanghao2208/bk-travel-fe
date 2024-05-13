@@ -119,9 +119,15 @@ const Inner = memo(
                                                         </span>
                                                         <span>
                                                             -{' '}
-                                                            {voucher.value_discount.toLocaleString()}{' '}
-                                                            VNĐ
+                                                            {voucher.type ===
+                                                            'fixed'
+                                                                ? `${voucher.value_discount.toLocaleString()} VNĐ`
+                                                                : `${
+                                                                      voucher.value_discount *
+                                                                      100
+                                                                  } %`}
                                                         </span>
+
                                                         <Tooltip
                                                             placement="top"
                                                             title="Hủy voucher"

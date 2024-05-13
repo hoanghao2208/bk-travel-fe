@@ -3,7 +3,7 @@ import TextArea from 'antd/es/input/TextArea';
 import Message from 'components/Message';
 import { FC, memo, useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getCustomerId } from 'reducers/token/function';
+import { getCustomerId, getToken } from 'reducers/token/function';
 import commentService from 'services/commentService';
 
 interface ReplyCommentProps {
@@ -19,6 +19,7 @@ const ReplyComment: FC<ReplyCommentProps> = memo(
         const [form] = Form.useForm();
         const { tour_id } = useParams();
         const userId = String(getCustomerId());
+        const token = getToken();
 
         const [loading, setLoading] = useState(false);
 
@@ -39,6 +40,7 @@ const ReplyComment: FC<ReplyCommentProps> = memo(
                     }
 
                     const response = await commentService.createComment(
+                        token,
                         formData
                     );
 
@@ -55,7 +57,16 @@ const ReplyComment: FC<ReplyCommentProps> = memo(
                     setLoading(false);
                 }
             },
-            [cmtId, form, reload, setIsDisplay, setReload, tour_id, userId]
+            [
+                cmtId,
+                form,
+                reload,
+                setIsDisplay,
+                setReload,
+                token,
+                tour_id,
+                userId,
+            ]
         );
 
         if (!isDisplay) {
