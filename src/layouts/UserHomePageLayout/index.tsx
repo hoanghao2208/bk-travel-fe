@@ -26,17 +26,20 @@ const UserHomePageLayout: FC<PropsWithChildren> = ({ children }) => {
             if (userId === 0) {
                 return;
             }
-            const response = await userService.getUserInfo(userId);
+            const response = await userService.getUserInfo(userId, token);
             if (response?.status === 200) {
                 dispatch(profileActions.SET_PROFILE(response.data.user_info));
             }
         } catch (error) {
             console.error(error);
         }
-    }, [userId]);
+    }, [token, userId]);
 
     const getNumberOfCart = useCallback(async () => {
         try {
+            if(token === '') {
+                return;
+            }
             const response = await userService.getCartByUser(userId, token);
             if (response?.status === 200) {
                 if (
@@ -64,12 +67,6 @@ const UserHomePageLayout: FC<PropsWithChildren> = ({ children }) => {
             if (json.role_user !== 'customer') {
                 navigate(routeConstants.ADMIN_HOMEPAGE);
             }
-        }
-    }, [navigate, token]);
-
-    useEffect(() => {
-        if (token === '') {
-            navigate(routeConstants.USER_HOME_PAGE);
         }
     }, [navigate, token]);
 

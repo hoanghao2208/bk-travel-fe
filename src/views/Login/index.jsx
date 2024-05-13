@@ -39,20 +39,18 @@ const Wrapper = memo(() => {
                     } else {
                         navigate(routeConstants.USER_HOME_PAGE);
                     }
-                } else {
-                    if (response?.data === "Email doesn't exist!") {
-                        Message.sendError(
-                            'Tài khoản không tồn tại trên hệ thống',
-                            4
-                        );
-                    } else if (response?.data === 'Password is wrong!') {
-                        Message.sendError('Mật khẩu không chính xác', 4);
-                    } else {
-                        Message.sendError('Đăng nhập không thành công', 4);
-                    }
                 }
             } catch (err) {
-                console.error(err);
+                if (err.response.data === 'Password is wrong!') {
+                    Message.sendError('Mật khẩu không chính xác', 4);
+                } else if (err.response.data === "Email doesn't exist!") {
+                    Message.sendError(
+                        'Tài khoản không tồn tại trên hệ thống',
+                        4
+                    );
+                } else {
+                    Message.sendError('Đăng nhập không thành công', 4);
+                }
             } finally {
                 setIsLoading(false);
             }

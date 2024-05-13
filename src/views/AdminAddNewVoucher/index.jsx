@@ -1,11 +1,13 @@
 import { Form, Spin } from 'antd';
 import Message from 'components/Message';
 import { memo, useCallback, useState } from 'react';
+import { getToken } from 'reducers/token/function';
 import voucherService from 'services/voucherService';
 import Inner from 'views/AdminAddNewVoucher/Inner';
 
 const Wrapper = memo(() => {
     const [form] = Form.useForm();
+    const token = getToken();
 
     const [loading, setLoading] = useState(false);
     const [fileList, setFileList] = useState([]);
@@ -22,7 +24,10 @@ const Wrapper = memo(() => {
 
             try {
                 setLoading(true);
-                const response = await voucherService.createVoucher(formData);
+                const response = await voucherService.createVoucher(
+                    formData,
+                    token
+                );
 
                 if (response?.status === 200) {
                     Message.sendSuccess('Tạo mã giảm giá mới thành công');
@@ -38,7 +43,7 @@ const Wrapper = memo(() => {
                 setLoading(false);
             }
         },
-        [form]
+        [form, token]
     );
 
     return (

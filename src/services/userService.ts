@@ -1,9 +1,6 @@
 import axios from 'axios';
 import ApiBase from 'modules/apis/apiBase';
 
-const _USER_PATH = 'user';
-const _AUTH = 'auth';
-
 class UserService extends ApiBase {
     register = (requestBody: {
         firstname: string;
@@ -12,21 +9,35 @@ class UserService extends ApiBase {
         password: string;
         confirm_password: string;
     }) => {
-        const url = `/v1/${_AUTH}/register`;
-        const res = this.post(url, requestBody);
-        return res;
+        const url = 'http://localhost:8080/api/v1/auth/register';
+        return axios.post(url, requestBody);
     };
 
     login = (requestBody: { email: string; password: string }) => {
-        const url = `/v1/${_AUTH}/login`;
-        const res = this.post(url, requestBody);
-        return res;
+        const url = 'http://localhost:8080/api/v1/auth/login';
+        return axios.post(url, requestBody);
     };
 
-    getUserInfo = (user_id: number) => {
-        const url = `/v1/${_USER_PATH}/${user_id}`;
-        const res = this.get(url);
-        return res;
+    logout = (token: string) => {
+        const url = 'http://localhost:8080/api/v1/auth/logout';
+        return axios.post(
+            url,
+            {},
+            {
+                headers: {
+                    Authorization: `${token}`,
+                },
+            }
+        );
+    };
+
+    getUserInfo = (user_id: number, token: string) => {
+        const url = `http://localhost:8080/api/v1/users/${user_id}`;
+        return axios.get(url, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
     };
 
     updateUserInfo = (
@@ -41,7 +52,7 @@ class UserService extends ApiBase {
         },
         token: string
     ) => {
-        const url = `http://localhost:8080/api/v1/user/update/${user_id}`;
+        const url = `http://localhost:8080/api/v1/users/${user_id}`;
         return axios.put(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -50,23 +61,28 @@ class UserService extends ApiBase {
     };
 
     forgotPassword = (requestBody: { email: string }) => {
-        const url = `/v1/${_USER_PATH}/forgot-password`;
-        const res = this.post(url, requestBody);
-        return res;
+        const url = 'http://localhost:8080/api/v1/users/forgot-password';
+        return axios.post(url, requestBody);
     };
 
-    resetPassword = (requestBody: {
-        code: string;
-        new_password: string;
-        confirm_password: string;
-    }) => {
-        const url = `/v1/${_USER_PATH}/reset-password`;
-        const res = this.post(url, requestBody);
-        return res;
+    resetPassword = (
+        requestBody: {
+            code: string;
+            new_password: string;
+            confirm_password: string;
+        },
+        token: string
+    ) => {
+        const url = 'http://localhost:8080/api/v1/users/reset-password';
+        return axios.post(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
     };
 
     uploadAvatar = (user_id: number, requestBody: any, token: string) => {
-        const url = `http://localhost:8080/api/v1/user/upload/${user_id}`;
+        const url = `http://localhost:8080/api/v1/users/${user_id}/upload`;
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -83,7 +99,7 @@ class UserService extends ApiBase {
         },
         token: string
     ) => {
-        const url = 'http://localhost:8080/api/v1/user/change-password';
+        const url = 'http://localhost:8080/api/v1/users/change-password';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -92,7 +108,7 @@ class UserService extends ApiBase {
     };
 
     addToWishList = (user_id: number, tour_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/user/wishlist/${user_id}/tours/${tour_id}`;
+        const url = `http://localhost:8080/api/v1/users/${user_id}/wishlist/tours/${tour_id}`;
         return axios.post(
             url,
             {},
@@ -104,30 +120,8 @@ class UserService extends ApiBase {
         );
     };
 
-    getWishList = (user_id: number) => {
-        const url = `http://localhost:8080/api/v1/user/wishlist/${user_id}`;
-        return axios.get(url);
-    };
-
-    removeFromWishList = (user_id: number, tour_id: number) => {
-        const url = `http://localhost:8080/api/v1/user/wishlist/${user_id}/tours/${tour_id}`;
-        return axios.delete(url);
-    };
-
-    addToCart = (requestBody: {
-        user_id: number;
-        tour: {
-            tour_id: number | null;
-            adult_quantity: number;
-            child_quantity: number;
-        };
-    }) => {
-        const url = 'http://localhost:8080/api/v1/user/cart';
-        return axios.post(url, requestBody);
-    };
-
-    getCartByUser = (user_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/user/${user_id}/cart`;
+    getWishList = (user_id: number, token: string) => {
+        const url = `http://localhost:8080/api/v1/users/${user_id}/wishlist`;
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -135,47 +129,115 @@ class UserService extends ApiBase {
         });
     };
 
-    deleteFromCart = (cart_id: number, tour_id: number) => {
-        const url = `http://localhost:8080/api/v1/user/cart/${cart_id}`;
+    removeFromWishList = (user_id: number, tour_id: number, token: string) => {
+        const url = `http://localhost:8080/api/v1/users/${user_id}/wishlist/tours/${tour_id}`;
         return axios.delete(url, {
-            data: { tour_id },
+            headers: {
+                Authorization: `${token}`,
+            },
         });
     };
 
-    increaseAdultQuantity = (requestBody: {
-        user_id: number;
-        tour_id: number;
-    }) => {
-        const url =
-            'http://localhost:8080/api/v1/user/cart/order-item/adult-quantity/increment';
-        return axios.put(url, requestBody);
+    addToCart = (
+        token: string,
+        requestBody: {
+            user_id: number;
+            tour: {
+                tour_id: number | null;
+                adult_quantity: number;
+                child_quantity: number;
+            };
+        }
+    ) => {
+        const url = 'http://localhost:8080/api/v1/users/carts';
+        return axios.post(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
     };
 
-    decreaseAdultQuantity = (requestBody: {
-        user_id: number;
-        tour_id: number;
-    }) => {
-        const url =
-            'http://localhost:8080/api/v1/user/cart/order-item/adult-quantity/decrement';
-        return axios.put(url, requestBody);
+    getCartByUser = (user_id: number, token: string) => {
+        const url = `http://localhost:8080/api/v1/users/${user_id}/cart`;
+        return axios.get(url, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
     };
 
-    increaseChildQuantity = (requestBody: {
-        user_id: number;
-        tour_id: number;
-    }) => {
-        const url =
-            'http://localhost:8080/api/v1/user/cart/order-item/child-quantity/increment';
-        return axios.put(url, requestBody);
+    deleteFromCart = (cart_id: number, tour_id: number, token: string) => {
+        const url = `http://localhost:8080/api/v1/users/carts/${cart_id}`;
+        return axios.delete(url, {
+            data: { tour_id },
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
     };
 
-    decreaseChildQuantity = (requestBody: {
-        user_id: number;
-        tour_id: number;
-    }) => {
+    increaseAdultQuantity = (
+        token: string,
+        requestBody: {
+            user_id: number;
+            tour_id: number;
+        }
+    ) => {
         const url =
-            'http://localhost:8080/api/v1/user/cart/order-item/child-quantity/decrement';
-        return axios.put(url, requestBody);
+            'http://localhost:8080/api/v1/users/carts/order-item/adult-quantity/increment';
+        return axios.put(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
+
+    decreaseAdultQuantity = (
+        token: string,
+        requestBody: {
+            user_id: number;
+            tour_id: number;
+        }
+    ) => {
+        const url =
+            'http://localhost:8080/api/v1/users/carts/order-item/adult-quantity/decrement';
+        return axios.put(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
+
+    increaseChildQuantity = (
+        token: string,
+        requestBody: {
+            user_id: number;
+            tour_id: number;
+        }
+    ) => {
+        const url =
+            'http://localhost:8080/api/v1/users/carts/order-item/child-quantity/increment';
+        return axios.put(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
+
+    decreaseChildQuantity = (
+        token: string,
+        requestBody: {
+            user_id: number;
+            tour_id: number;
+        }
+    ) => {
+        const url =
+            'http://localhost:8080/api/v1/users/carts/order-item/child-quantity/decrement';
+        return axios.put(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
     };
 }
 

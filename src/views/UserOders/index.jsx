@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { getCustomerId } from 'reducers/token/function';
+import { getCustomerId, getToken } from 'reducers/token/function';
 import orderService from 'services/orderService';
 import Inner from 'views/UserOders/Inner';
 
@@ -9,18 +9,22 @@ const Wrapper = memo(() => {
     });
 
     const userId = getCustomerId();
+    const token = getToken();
     const [completedOrders, setCompletedOrders] = useState([]);
 
     const handleGetCompletedOrders = useCallback(async () => {
         try {
-            const response = await orderService.getCompletedOrder(userId);
+            const response = await orderService.getCompletedOrder(
+                userId,
+                token
+            );
             if (response?.status === 200) {
                 setCompletedOrders(response.data.complete_orders);
             }
         } catch (error) {
             console.error(error);
         }
-    }, [userId]);
+    }, [token, userId]);
 
     useEffect(() => {
         handleGetCompletedOrders();

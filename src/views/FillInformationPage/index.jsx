@@ -2,7 +2,7 @@ import { Form } from 'antd';
 import Message from 'components/Message';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { getCustomerId } from 'reducers/token/function';
+import { getCustomerId, getToken } from 'reducers/token/function';
 import orderService from 'services/orderService';
 import voucherService from 'services/voucherService';
 import Inner from 'views/FillInformationPage/Inner';
@@ -11,6 +11,7 @@ const Wrapper = memo(() => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const userId = getCustomerId();
+    const token = getToken();
 
     const [form] = Form.useForm();
 
@@ -21,14 +22,14 @@ const Wrapper = memo(() => {
     const getOrderInformation = useCallback(async () => {
         try {
             const orderId = searchParams.getAll('orderId').map(Number);
-            const response = await orderService.getOneOrder(orderId);
+            const response = await orderService.getOneOrder(orderId, token);
             if (response?.status === 200) {
                 setOrderInfor(response.data.order);
             }
         } catch (error) {
             console.error(error);
         }
-    }, [searchParams]);
+    }, [searchParams, token]);
 
     const handleApplyVoucher = useCallback(
         async value => {
@@ -41,7 +42,8 @@ const Wrapper = memo(() => {
                 const orderId = searchParams.getAll('orderId').map(Number);
                 const response = await voucherService.applyVoucher(
                     orderId,
-                    body
+                    body,
+                    token
                 );
                 if (response?.status === 200) {
                     setIsReload(prev => !prev);
@@ -65,7 +67,7 @@ const Wrapper = memo(() => {
                 }
             }
         },
-        [form, searchParams, userId]
+        [form, searchParams, token, userId]
     );
 
     const handleRemoveVoucher = useCallback(
@@ -77,7 +79,8 @@ const Wrapper = memo(() => {
                 };
                 const response = await voucherService.removeVoucherFromOrder(
                     orderId,
-                    body
+                    body,
+                    token
                 );
                 if (response?.status === 200) {
                     setIsReload(prev => !prev);
@@ -87,7 +90,7 @@ const Wrapper = memo(() => {
                 console.error(error);
             }
         },
-        [searchParams]
+        [searchParams, token]
     );
 
     const handlePaymentDirectly = useCallback(async () => {
@@ -97,7 +100,7 @@ const Wrapper = memo(() => {
                 user_id: userId,
                 order_id: orderId,
             };
-            const response = await orderService.paymentDirectly(body);
+            const response = await orderService.paymentDirectly(body, token);
             if (response?.status === 200) {
                 if (
                     new URL(response.data.link_payment).origin !==
@@ -111,19 +114,22 @@ const Wrapper = memo(() => {
         } catch (error) {
             console.error(error);
         }
-    }, [navigate, searchParams, userId]);
+    }, [navigate, searchParams, token, userId]);
 
     const handleGetAllVoucherInOrder = useCallback(async () => {
         try {
             const orderId = searchParams.getAll('orderId').map(Number);
-            const response = await voucherService.getAllVoucherInOrder(orderId);
+            const response = await voucherService.getAllVoucherInOrder(
+                orderId,
+                token
+            );
             if (response?.status === 200) {
                 setListVoucher(response.data.vouchers.vouchers);
             }
         } catch (error) {
             console.error(error);
         }
-    }, [searchParams]);
+    }, [searchParams, token]);
 
     useEffect(() => {
         handleGetAllVoucherInOrder();

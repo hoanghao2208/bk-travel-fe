@@ -58,7 +58,7 @@ const UserActivityLayout: FC<PropsWithChildren> = memo(({ children }) => {
 
     const handleGetUserData = useCallback(async () => {
         try {
-            const response = await userService.getUserInfo(user_id);
+            const response = await userService.getUserInfo(user_id, token);
             if (response?.status === 200) {
                 setUserInfo(response?.data.user_info);
             }
@@ -66,7 +66,7 @@ const UserActivityLayout: FC<PropsWithChildren> = memo(({ children }) => {
             // eslint-disable-next-line no-console
             console.log(err);
         }
-    }, [user_id]);
+    }, [token, user_id]);
 
     const handleBeforeUpload = (file: RcFile) => {
         const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];

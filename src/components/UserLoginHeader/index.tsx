@@ -12,7 +12,7 @@ import UserDropDown from 'assets/icons/UserDropDown';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { tokenActions } from 'reducers/token';
-import { getCartCount, getCustomerId } from 'reducers/token/function';
+import { getCartCount, getCustomerId, getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import userService from 'services/userService';
 import { dispatch } from 'store/Store';
@@ -33,17 +33,18 @@ const UserLoginHeader: FC = () => {
     const cartNumber = getCartCount();
 
     const user_id = getCustomerId();
+    const token = getToken();
 
     const handleGetUserInfo = useCallback(async () => {
         try {
-            const response = await userService.getUserInfo(user_id);
+            const response = await userService.getUserInfo(user_id, token);
             if (response?.status === 200) {
                 setUserInfo(response?.data.user_info);
             }
         } catch (err) {
             console.error(err);
         }
-    }, [user_id]);
+    }, [token, user_id]);
 
     const handleLogout = () => {
         dispatch(tokenActions.SET_ACCESS_TOKEN(''));

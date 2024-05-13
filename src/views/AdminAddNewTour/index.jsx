@@ -1,6 +1,7 @@
 import { Form } from 'antd';
 import Message from 'components/Message';
 import { memo, useCallback, useMemo, useState } from 'react';
+import { getToken } from 'reducers/token/function';
 import tourService from 'services/tourService';
 import Inner from 'views/AdminAddNewTour/Inner';
 import CreateTourContextProvider from './Context';
@@ -14,6 +15,7 @@ const Wrapper = memo(() => {
     const [tourListURL, setTourListURL] = useState([]);
 
     const [form] = Form.useForm();
+    const token = getToken();
 
     const ContextValue = useMemo(() => {
         return {
@@ -64,7 +66,7 @@ const Wrapper = memo(() => {
             try {
                 setLoading(true);
                 window.scrollTo(0, 0);
-                const response = await tourService.createTour(formData);
+                const response = await tourService.createTour(token, formData);
                 if (response.status === 201) {
                     Message.sendSuccess('Tạo tour mới thành công!');
                     setFileList([]);
@@ -76,14 +78,12 @@ const Wrapper = memo(() => {
                 }
             } catch (err) {
                 console.error(err);
-                Message.sendError(
-                    'Đã có lỗi xãy ra, vui lòng kiểm tra lại'
-                );
+                Message.sendError('Đã có lỗi xãy ra, vui lòng kiểm tra lại');
             } finally {
                 setLoading(false);
             }
         },
-        [form]
+        [form, token]
     );
 
     return (

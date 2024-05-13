@@ -2,6 +2,7 @@ import { Form } from 'antd';
 import Message from 'components/Message';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import tourService from 'services/tourService';
 import EditTourContextProvider from 'views/AdminEditTour/Context';
@@ -20,6 +21,7 @@ const Wrapper = memo(() => {
     const [form] = Form.useForm();
     const { tour_id } = useParams();
     const navigate = useNavigate();
+    const token = getToken();
 
     const ContextValue = useMemo(() => {
         return {
@@ -61,7 +63,8 @@ const Wrapper = memo(() => {
                 window.scrollTo(0, 0);
                 const response = await tourService.updateTour(
                     formData,
-                    tour_id
+                    tour_id,
+                    token
                 );
                 if (response.status === 200) {
                     Message.sendSuccess('Cập nhật dữ liệu tour thành công!');
@@ -74,7 +77,7 @@ const Wrapper = memo(() => {
                 setLoading(false);
             }
         },
-        [navigate, tour_id]
+        [navigate, token, tour_id]
     );
 
     const handleGetTourData = useCallback(async () => {

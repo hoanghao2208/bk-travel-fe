@@ -9,6 +9,7 @@ import Message from 'components/Message';
 import ProductItem from 'components/ProductItem';
 import EditPassengerNumber from 'components/ProductWrapper/components/EditPassengerNumber';
 import { FC, memo, useCallback, useState } from 'react';
+import { getToken } from 'reducers/token/function';
 import userService from 'services/userService';
 import './styles.scss';
 
@@ -36,6 +37,8 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
         setReload,
         setSelectedTour,
     }) => {
+        const token = getToken();
+
         const [openDeleteModal, setOpenDeleteModal] = useState(false);
         const [openEditModal, setOpenEditModal] = useState(false);
         const [loading, setLoading] = useState(false);
@@ -45,7 +48,8 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
                 setLoading(true);
                 const response = await userService.deleteFromCart(
                     cartId,
-                    tourId
+                    tourId,
+                    token
                 );
                 if (response?.status === 200) {
                     Message.sendSuccess('Tour đã được xóa khỏi giỏ hàng');
@@ -62,7 +66,15 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
                 setOpenDeleteModal(false);
                 setLoading(false);
             }
-        }, [cartId, reload, selectedTour, setReload, setSelectedTour, tourId]);
+        }, [
+            cartId,
+            reload,
+            selectedTour,
+            setReload,
+            setSelectedTour,
+            token,
+            tourId,
+        ]);
 
         const handleSelectedTour = useCallback(() => {
             if (selectedTour.includes(tourId)) {

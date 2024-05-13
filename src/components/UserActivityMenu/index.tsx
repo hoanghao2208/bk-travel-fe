@@ -8,6 +8,8 @@ import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { tokenActions } from 'reducers/token';
+import { dispatch } from 'store/Store';
 import './styles.scss';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -42,7 +44,12 @@ const UserActivityMenu: FC = () => {
     ];
 
     const handleClick: MenuProps['onClick'] = e => {
-        navigate('/' + e.key);
+        if (e.key !== 'log-out') {
+            navigate('/' + e.key);
+        } else {
+            dispatch(tokenActions.SET_ACCESS_TOKEN(''));
+            dispatch(tokenActions.SET_USER_ID(0));
+        }
     };
     return (
         <div className="user-actitvity-menu">

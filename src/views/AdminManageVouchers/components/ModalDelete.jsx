@@ -1,18 +1,23 @@
 import { Button, Modal } from 'antd';
 import Message from 'components/Message';
 import { memo, useCallback, useState } from 'react';
+import { getToken } from 'reducers/token/function';
 import voucherService from 'services/voucherService';
 import './style.scss';
 
 const ModalDelete = memo(
     ({ isOpen, setIsOpen, selectedId, data, setIsReload }) => {
+        const token = getToken();
         const voucherData = data.filter(item => item.voucher_id === selectedId);
         const [loading, setLoading] = useState(false);
 
         const handleDeleteVoucher = useCallback(async () => {
             try {
                 setLoading(true);
-                const response = await voucherService.deleteVoucher(selectedId);
+                const response = await voucherService.deleteVoucher(
+                    selectedId,
+                    token
+                );
                 if (response?.status === 200) {
                     Message.sendSuccess('Xóa mã giảm giá thành công');
                     setIsReload(prev => !prev);
@@ -26,7 +31,7 @@ const ModalDelete = memo(
                 setLoading(false);
                 setIsOpen(false);
             }
-        }, [selectedId, setIsOpen, setIsReload]);
+        }, [selectedId, setIsOpen, setIsReload, token]);
 
         return (
             <Modal

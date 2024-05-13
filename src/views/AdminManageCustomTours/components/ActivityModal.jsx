@@ -1,6 +1,7 @@
 import { Button, Form, Input, Modal } from 'antd';
 import Message from 'components/Message';
 import { memo, useCallback } from 'react';
+import { getToken } from 'reducers/token/function';
 import customTourService from 'services/customTourService';
 import { DIGIT_VALIDATE } from 'utils/constants';
 import './styles.scss';
@@ -18,6 +19,8 @@ const ActivityModal = memo(
         handleCancel,
         setReload,
     }) => {
+        const token = getToken();
+
         const handleResponseCustomTour = useCallback(
             async value => {
                 try {
@@ -30,7 +33,8 @@ const ActivityModal = memo(
                     };
                     const response = await customTourService.responseCustomTour(
                         tourId,
-                        body
+                        body,
+                        token
                     );
                     if (response?.status === 200) {
                         Message.sendSuccess('Bạn đã phản hồi thành công');
@@ -42,7 +46,7 @@ const ActivityModal = memo(
                     Message.sendError('Đã có lỗi xãy ra, vui lòng thử lại');
                 }
             },
-            [form, name, setReload, tourId, userId]
+            [form, name, setReload, token, tourId, userId]
         );
 
         return (

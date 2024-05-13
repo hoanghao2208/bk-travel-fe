@@ -82,19 +82,19 @@ const AdminMenu: FC = () => {
             ],
             'group'
         ),
-        getItem(
-            'QUẢN LÝ DU KHÁCH',
-            'manage-user',
-            null,
-            [
-                getItem(
-                    'Quản lý du khách',
-                    'admin/manage-tourist',
-                    <AppstoreOutlined />
-                ),
-            ],
-            'group'
-        ),
+        // getItem(
+        //     'QUẢN LÝ DU KHÁCH',
+        //     'manage-user',
+        //     null,
+        //     [
+        //         getItem(
+        //             'Quản lý du khách',
+        //             'admin/manage-tourist',
+        //             <AppstoreOutlined />
+        //         ),
+        //     ],
+        //     'group'
+        // ),
         getItem(
             'MÃ GIẢM GIÁ',
             'manage-voucher',
@@ -113,24 +113,24 @@ const AdminMenu: FC = () => {
             ],
             'group'
         ),
-        getItem(
-            'THÔNG BÁO',
-            'inform',
-            null,
-            [
-                getItem(
-                    'Gửi thông báo',
-                    'admin/notification',
-                    <CloudUploadOutlined />
-                ),
-                getItem(
-                    'Quản lý thông báo',
-                    'admin/manage-notification',
-                    <FolderOpenOutlined />
-                ),
-            ],
-            'group'
-        ),
+        // getItem(
+        //     'THÔNG BÁO',
+        //     'inform',
+        //     null,
+        //     [
+        //         getItem(
+        //             'Gửi thông báo',
+        //             'admin/notification',
+        //             <CloudUploadOutlined />
+        //         ),
+        //         getItem(
+        //             'Quản lý thông báo',
+        //             'admin/manage-notification',
+        //             <FolderOpenOutlined />
+        //         ),
+        //     ],
+        //     'group'
+        // ),
         getItem(
             'THỜI TIẾT',
             'weather',

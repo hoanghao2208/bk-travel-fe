@@ -2,11 +2,13 @@ import { Form } from 'antd';
 import Message from 'components/Message';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import tourService from 'services/tourService';
 import Inner from 'views/AdminSchedule/Inner';
 
 const Wrapper = memo(() => {
+    const token = getToken();
     const { tour_id } = useParams();
     const navigate = useNavigate();
 
@@ -34,7 +36,10 @@ const Wrapper = memo(() => {
         async scheduleData => {
             try {
                 setLoading(true);
-                const response = await tourService.createSchedule(scheduleData);
+                const response = await tourService.createSchedule(
+                    scheduleData,
+                    token
+                );
                 if (response?.status === 201) {
                     Message.sendSuccess('Khởi tạo lịch trình thành công');
                     form.resetFields();
@@ -47,7 +52,7 @@ const Wrapper = memo(() => {
                 setLoading(false);
             }
         },
-        [form, navigate]
+        [form, navigate, token]
     );
 
     useEffect(() => {

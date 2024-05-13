@@ -20,7 +20,10 @@ const Wrapper = memo(() => {
             const json = jwtDecode(token);
             setCustomerId(json.user_id);
             try {
-                const response = await userService.getUserInfo(json.user_id);
+                const response = await userService.getUserInfo(
+                    json.user_id,
+                    token
+                );
                 if (response?.status === 200) {
                     setUserInfo(response?.data.user_info);
                 }
