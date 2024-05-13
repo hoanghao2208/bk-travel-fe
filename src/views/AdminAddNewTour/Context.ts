@@ -6,8 +6,6 @@ interface IContext {
     setFileList: (value: string[]) => void;
     tourImageList: string[];
     setTourImageList: (value: string[]) => void;
-    tourListURL: string[];
-    setTourListURL: (value: string[]) => void;
     imgURL: string;
     setImgURL: (value: string) => void;
     showUpload: boolean;
@@ -20,8 +18,6 @@ const defaultValue: IContext = {
     setFileList: () => {},
     tourImageList: [],
     setTourImageList: () => {},
-    tourListURL: [],
-    setTourListURL: () => {},
     imgURL: '',
     setImgURL: () => {},
     showUpload: false,

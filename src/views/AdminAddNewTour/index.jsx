@@ -12,7 +12,7 @@ const Wrapper = memo(() => {
     const [tourImageList, setTourImageList] = useState([]);
     const [imgURL, setImgURL] = useState('');
     const [showUpload, setShowUpload] = useState(true);
-    const [tourListURL, setTourListURL] = useState([]);
+    const [fileListMap, setFileListMap] = useState(new Map());
 
     const [form] = Form.useForm();
     const token = getToken();
@@ -24,14 +24,12 @@ const Wrapper = memo(() => {
             setFileList,
             tourImageList,
             setTourImageList,
-            tourListURL,
-            setTourListURL,
             imgURL,
             setImgURL,
             showUpload,
             setShowUpload,
         };
-    }, [fileList, imgURL, loading, showUpload, tourImageList, tourListURL]);
+    }, [fileList, imgURL, loading, showUpload, tourImageList]);
 
     const handleCreateNewTour = useCallback(
         async data => {
@@ -73,7 +71,7 @@ const Wrapper = memo(() => {
                     setImgURL('');
                     setShowUpload(true);
                     setTourImageList([]);
-                    setTourListURL([]);
+                    setFileListMap(new Map());
                     form.resetFields();
                 }
             } catch (err) {
@@ -88,7 +86,12 @@ const Wrapper = memo(() => {
 
     return (
         <CreateTourContextProvider value={ContextValue}>
-            <Inner handleCreateNewTour={handleCreateNewTour} form={form} />
+            <Inner
+                handleCreateNewTour={handleCreateNewTour}
+                form={form}
+                fileListMap={fileListMap}
+                setFileListMap={setFileListMap}
+            />
         </CreateTourContextProvider>
     );
 });
