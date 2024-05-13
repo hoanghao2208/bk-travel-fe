@@ -2,7 +2,7 @@ import { Button, Modal } from 'antd';
 import Message from 'components/Message';
 import { FC, memo, useCallback, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getCustomerId } from 'reducers/token/function';
+import { getCustomerId, getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import messageService from 'services/messageService';
 
@@ -16,6 +16,7 @@ interface ConfirmToChatProps {
 const ConfirmToChat: FC<ConfirmToChatProps> = memo(
     ({ openModalJoinChat, setOpenModalJoinChat, orderData, socket }) => {
         const { tour_id } = useParams();
+        const token = getToken();
         const userId = getCustomerId();
         const navigate = useNavigate();
 
@@ -47,7 +48,8 @@ const ConfirmToChat: FC<ConfirmToChatProps> = memo(
                     };
                     const response = await messageService.joinGroup(
                         parseInt(tour_id),
-                        body
+                        body,
+                        token
                     );
 
                     if (response?.status === 200) {
@@ -73,6 +75,7 @@ const ConfirmToChat: FC<ConfirmToChatProps> = memo(
             navigate,
             setOpenModalJoinChat,
             socket,
+            token,
             tour_id,
             userId,
         ]);

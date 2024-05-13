@@ -14,6 +14,23 @@ class MessageService extends ApiBase {
         });
     };
 
+    joinGroup = (
+        group_id: number,
+        requestBody: {
+            user_id: number;
+            tour_id: number;
+            order_id: number;
+        },
+        token: string
+    ) => {
+        const url = `http://localhost:8080/api/v1/groups/${group_id}/join`;
+        return axios.post(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
+
     addUserToGroup = (
         group_id: number,
         requestBody: {
