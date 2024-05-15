@@ -1,5 +1,6 @@
 import CloudIcon from 'assets/icons/WeatherIcon/CloudIcon';
 import RainIcon from 'assets/icons/WeatherIcon/RainIcon';
+import RainThunderIcon from 'assets/icons/WeatherIcon/RainThunderIcon';
 import SunCloudIcon from 'assets/icons/WeatherIcon/SunCloudIcon';
 import SunIcon from 'assets/icons/WeatherIcon/SunIcon';
 
@@ -13,6 +14,7 @@ export const renderIcon = (mainWeather: string, description?: string) => {
         return <SunCloudIcon />;
     } else if (mainWeather === 'Rain') return <RainIcon />;
     else if (mainWeather === 'Clear') return <SunIcon />;
+    else if (mainWeather === 'Thunderstorm') return <RainThunderIcon />;
 };
 
 export const renderStatus = (mainWeather: string, description?: string) => {
@@ -25,4 +27,5 @@ export const renderStatus = (mainWeather: string, description?: string) => {
         return 'Trời có mây';
     } else if (mainWeather === 'Rain') return 'Trời mưa';
     else if (mainWeather === 'Clear') return 'Thời tiết trong lành';
+    else if (mainWeather === 'Thunderstorm') return 'Mưa có sấm sét';
 };
