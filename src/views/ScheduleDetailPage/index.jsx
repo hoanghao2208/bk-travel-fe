@@ -2,7 +2,7 @@ import Message from 'components/Message';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useUserProfile } from 'reducers/profile/function';
-import { getCustomerId } from 'reducers/token/function';
+import { getCustomerId, getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import orderService from 'services/orderService';
 import tourService from 'services/tourService';
@@ -10,6 +10,7 @@ import CreateScheduleContextProvider from 'views/ScheduleDetailPage/Context';
 import Inner from 'views/ScheduleDetailPage/Inner';
 
 const Wrapper = memo(() => {
+    const token = getToken();
     const userInfor = useUserProfile();
     const userId = getCustomerId();
     const { tour_id } = useParams();
@@ -83,7 +84,7 @@ const Wrapper = memo(() => {
                 return;
             }
 
-            const response = await orderService.createOneOrder(body);
+            const response = await orderService.createOneOrder(body, token);
             if (response?.status === 200) {
                 navigate(
                     `${routeConstants.FILL_INFORMATION}?tourId=${tour_id}&orderId=${response.data.order.order_id}`
@@ -107,6 +108,7 @@ const Wrapper = memo(() => {
         adultQuantity.value,
         childQuantity.value,
         navigate,
+        token,
         tour_id,
         userId,
         userInfor,

@@ -102,7 +102,9 @@ const Wrapper = memo(() => {
 
     const handleGetReviews = useCallback(async () => {
         try {
-            const response = await commentService.getAllReviews(tour_id);
+            const response = await commentService.getAllReviewsByTourId(
+                tour_id
+            );
             if (response?.status === 200) {
                 setReviewsList(response.data.all_reviews);
             }
@@ -136,7 +138,7 @@ const Wrapper = memo(() => {
                 return;
             }
 
-            const response = await orderService.createOneOrder(body);
+            const response = await orderService.createOneOrder(body, token);
             if (response?.status === 200) {
                 navigate(
                     `${routeConstants.FILL_INFORMATION}?tourId=${tour_id}&orderId=${response.data.order.order_id}`
@@ -160,6 +162,7 @@ const Wrapper = memo(() => {
         adultQuantity.value,
         childQuantity.value,
         navigate,
+        token,
         tour_id,
         userId,
         userInfor,
@@ -167,7 +170,10 @@ const Wrapper = memo(() => {
 
     const handleGetCompletedTour = useCallback(async () => {
         try {
-            const response = await orderService.getCompletedOrder(userId);
+            const response = await orderService.getCompletedOrder(
+                userId,
+                token
+            );
             if (response?.status === 200) {
                 const orderData = [];
                 const orderCompleted = response?.data.complete_orders;
@@ -183,7 +189,7 @@ const Wrapper = memo(() => {
         } catch (error) {
             console.error(error);
         }
-    }, [userId]);
+    }, [token, userId]);
 
     useEffect(() => {
         handleGetTourData();
