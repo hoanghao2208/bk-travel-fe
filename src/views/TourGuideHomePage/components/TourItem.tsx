@@ -1,9 +1,16 @@
-import { Button, Tooltip } from 'antd';
-import { FC, memo } from 'react';
+import { Button, Form, Input, Modal, Tooltip } from 'antd';
+import { FC, memo, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../style.scss';
 
 const TourItem: FC = memo(() => {
+    const [openModalCancel, setOpenModalCancel] = useState(false);
+    const [form] = Form.useForm();
+
+    const handleCancelTour = useCallback((values: { reason: string }) => {
+        console.log('reason', values.reason);
+    }, []);
+
     return (
         <div className="tour-item" style={{ backgroundColor: 'white' }}>
             <div className="tour-item__header">
@@ -37,7 +44,7 @@ const TourItem: FC = memo(() => {
                     shape="round"
                     danger
                     size="large"
-                    // onClick={() => handleOpenAddModal(tourId)}
+                    onClick={() => setOpenModalCancel(true)}
                 >
                     Yêu cầu hủy
                 </Button>
@@ -50,6 +57,50 @@ const TourItem: FC = memo(() => {
                     Trang nhiệm vụ
                 </Button>
             </div>
+
+            <Modal
+                title="Yêu cầu hủy tour được giao"
+                open={openModalCancel}
+                onCancel={() => setOpenModalCancel(false)}
+                footer={[
+                    <Button
+                        key="back"
+                        onClick={() => setOpenModalCancel(false)}
+                    >
+                        Hủy
+                    </Button>,
+                    <Button
+                        danger
+                        htmlType="submit"
+                        key="submit"
+                        type="primary"
+                        form="cancel-my-tour"
+                    >
+                        Xác nhận
+                    </Button>,
+                ]}
+            >
+                <Form
+                    form={form}
+                    name="cancel-my-tour"
+                    id="cancel-my-tour"
+                    layout="vertical"
+                    onFinish={handleCancelTour}
+                >
+                    <Form.Item
+                        name="reason"
+                        label="Lý do hủy"
+                        rules={[
+                            {
+                                required: true,
+                                message: `Vui lòng điền lý do`,
+                            },
+                        ]}
+                    >
+                        <Input placeholder="Lý do bạn muốn hủy chuyến" />
+                    </Form.Item>
+                </Form>
+            </Modal>
         </div>
     );
 });
