@@ -107,17 +107,19 @@ class UserService extends ApiBase {
         });
     };
 
-    addToWishList = (user_id: number, tour_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/users/${user_id}/wishlist/tours/${tour_id}`;
-        return axios.post(
-            url,
-            {},
-            {
-                headers: {
-                    Authorization: `${token}`,
-                },
-            }
-        );
+    addToWishList = (
+        requestBody: {
+            user_id: number;
+            tour_id: number;
+        },
+        token: string
+    ) => {
+        const url = `http://localhost:8080/api/v1/users/wishlist`;
+        return axios.post(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
     };
 
     getWishList = (user_id: number, token: string) => {
@@ -129,12 +131,19 @@ class UserService extends ApiBase {
         });
     };
 
-    removeFromWishList = (user_id: number, tour_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/users/${user_id}/wishlist/tours/${tour_id}`;
+    removeFromWishList = (
+        requestBody: {
+            user_id: number;
+            tour_id: number;
+        },
+        token: string
+    ) => {
+        const url = `http://localhost:8080/api/v1/users/wishlist`;
         return axios.delete(url, {
             headers: {
                 Authorization: `${token}`,
             },
+            data: requestBody,
         });
     };
 

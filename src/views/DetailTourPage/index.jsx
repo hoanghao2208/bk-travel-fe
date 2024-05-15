@@ -77,7 +77,7 @@ const Wrapper = memo(() => {
             if (userId === 0) {
                 return;
             }
-            const response = await userService.getWishList(userId);
+            const response = await userService.getWishList(userId, token);
             if (response?.status === 200) {
                 const tempLoveList = response.data.data[0].tours.map(
                     item => item.tour_id
@@ -87,7 +87,7 @@ const Wrapper = memo(() => {
         } catch (error) {
             console.error(error);
         }
-    }, [userId]);
+    }, [token, userId]);
 
     const handleGetComment = useCallback(async () => {
         try {

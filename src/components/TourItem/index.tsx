@@ -100,10 +100,13 @@ const TourItem: FC<TourItemProps> = memo(
                 );
                 return;
             } else {
+                const body = {
+                    user_id: userId,
+                    tour_id: tourId,
+                };
                 if (!loveList.includes(tourId)) {
                     const response = await userService.addToWishList(
-                        userId,
-                        tourId,
+                        body,
                         token
                     );
                     if (response?.status === 201) {
@@ -111,8 +114,7 @@ const TourItem: FC<TourItemProps> = memo(
                     }
                 } else {
                     const response = await userService.removeFromWishList(
-                        userId,
-                        tourId,
+                        body,
                         token
                     );
                     if (response?.status === 200) {

@@ -70,10 +70,13 @@ const Inner = memo(
                 return;
             } else {
                 const tourId = parseInt(tour_id);
+                const body = {
+                    user_id: userId,
+                    tour_id: tourId,
+                };
                 if (!loveList.includes(tourId)) {
                     const response = await userService.addToWishList(
-                        userId,
-                        tourId,
+                        body,
                         token
                     );
                     if (response?.status === 201) {
@@ -81,7 +84,7 @@ const Inner = memo(
                     }
                 } else {
                     const response = await userService.removeFromWishList(
-                        userId,
+                        body,
                         tourId
                     );
                     if (response?.status === 200) {
@@ -96,8 +99,17 @@ const Inner = memo(
         }
 
         const imageList = JSON.parse(tourData.list_image);
-        const descriptionParagraphs =
-            tourData?.description.split(/\r\n\r\n|\r\n/);
+        const descriptionParagraphs = tourData?.description.split(
+            /\r\n\r\n\r\n|\r\n\r\n|\r\n/
+        );
+
+        const hightLightParagraphs = tourData?.highlight.split(
+            /\r\n\r\n\r\n|\r\n\r\n|\r\n/
+        );
+
+        const notesParagraphs = tourData?.note.split(
+            /\r\n\r\n\r\n|\r\n\r\n|\r\n/
+        );
 
         const attractionsName = tourData.attractions.map(
             attraction => attraction.name
@@ -168,7 +180,13 @@ const Inner = memo(
                                 </div>
                                 <div className="tour-detail__infor--details">
                                     <Title title="Điểm nhấn" />
-                                    <p>{tourData?.highlight}</p>
+                                    <p>
+                                        {hightLightParagraphs.map(
+                                            (paragraph, index) => (
+                                                <p key={index}>{paragraph}</p>
+                                            )
+                                        )}
+                                    </p>
                                 </div>
                                 <div className="tour-detail__infor--details">
                                     <Title title="Chi tiết tour" />
@@ -180,7 +198,13 @@ const Inner = memo(
                                 </div>
                                 <div className="tour-detail__infor--details">
                                     <Title title="Những điều cần lưu ý" />
-                                    <p>{tourData?.note}</p>
+                                    <p>
+                                        {notesParagraphs.map(
+                                            (paragraph, index) => (
+                                                <p key={index}>{paragraph}</p>
+                                            )
+                                        )}
+                                    </p>
                                 </div>
                                 <div className="tour-detail__infor--details">
                                     <Title title="Một số hình ảnh của tour du lịch" />
