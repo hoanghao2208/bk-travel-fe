@@ -6,9 +6,11 @@ import NoData from 'views/AdminManageCustomTours/components/NoData';
 import ChatSection from 'views/Message/components/ChatSection';
 import Group from 'views/Message/components/Group';
 import './styles.scss';
+import { getToken } from 'reducers/token/function';
 
 const Inner = memo(({ allGroups, socket }) => {
     const [searchParams] = useSearchParams();
+    const token = getToken();
 
     const [activeGrp, setActiveGrp] = useState(
         Object.fromEntries(searchParams.entries()).selectedGrp || null
@@ -18,7 +20,10 @@ const Inner = memo(({ allGroups, socket }) => {
     const getActiveGroupInfo = useCallback(async () => {
         try {
             if (activeGrp) {
-                const response = await messageService.getGroupById(activeGrp);
+                const response = await messageService.getGroupById(
+                    activeGrp,
+                    token
+                );
                 if (response?.status === 200) {
                     setGroupInfo(response.data.data);
                 }
@@ -26,7 +31,7 @@ const Inner = memo(({ allGroups, socket }) => {
         } catch (error) {
             console.error(error);
         }
-    }, [activeGrp]);
+    }, [activeGrp, token]);
 
     useEffect(() => {
         getActiveGroupInfo();
