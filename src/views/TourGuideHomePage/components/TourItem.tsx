@@ -1,9 +1,11 @@
 import { Button, Form, Input, Modal, Tooltip } from 'antd';
 import { FC, memo, useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../style.scss';
 
 const TourItem: FC = memo(() => {
+    const navigate = useNavigate();
+
     const [openModalCancel, setOpenModalCancel] = useState(false);
     const [form] = Form.useForm();
 
@@ -26,8 +28,8 @@ const TourItem: FC = memo(() => {
                     Ngày 13/05/2024 - 19:00
                 </div>
                 <div className="tour-item__center--location">
-                    <Tooltip title="Lương Kim Khánh">
-                        <Link to="/">Lương Kim Khánh</Link>
+                    <Tooltip title="Tour du lịch số 1">
+                        <Link to="/">Tour du lịch số 1</Link>
                     </Tooltip>
                 </div>
                 <div className="tour-item__center--start">
@@ -52,7 +54,7 @@ const TourItem: FC = memo(() => {
                     type="primary"
                     shape="round"
                     size="large"
-                    // onClick={() => handleOpenOrderModal(tourId)}
+                    onClick={() => navigate('/tour-guide/missions/1')}
                 >
                     Trang nhiệm vụ
                 </Button>

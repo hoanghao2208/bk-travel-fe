@@ -65,9 +65,7 @@ const TourGuideHeader: FC = () => {
                     </Link>
                 </div>
                 <div className="user-login-header__navigate">
-                    <Link to={routeConstants.TOURGUIDE_MISSION}>
-                        Nhiệm vụ
-                    </Link>
+                    <Link to={routeConstants.TOURGUIDE_MISSION}>Nhiệm vụ</Link>
                     <Link to={routeConstants.WEATHER_FORECAST}>Thời tiết</Link>
                     <div
                         onClick={() => navigate('/')}
@@ -80,7 +78,9 @@ const TourGuideHeader: FC = () => {
                         </Tooltip>
                     </div>
                     <div
-                        onClick={() => navigate(routeConstants.MESSAGE)}
+                        onClick={() =>
+                            navigate(routeConstants.TOURGUIDE_MESSAGE)
+                        }
                         className="user-login-header__navigate--bell"
                     >
                         <Tooltip placement="top" title="Tin nhắn">

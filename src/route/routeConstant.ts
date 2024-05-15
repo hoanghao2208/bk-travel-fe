@@ -34,7 +34,8 @@ const routeConstants = {
     ADMIN_MANAGE_VOUCHER: '/admin/manage-voucher',
     ADMIN_MANAGE_CUSTOM_TOURS: '/admin/manage-custom-tours',
     TOURGUIDE_HOMEPAGE: '/tour-guide/home',
-    TOURGUIDE_MISSION: '/tour-guide/missions',
+    TOURGUIDE_MISSION: '/tour-guide/missions/:tour_id',
+    TOURGUIDE_MESSAGE: '/tour-guide/messages',
 };
 
 export default routeConstants;

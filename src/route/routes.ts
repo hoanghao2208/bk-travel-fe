@@ -231,6 +231,16 @@ const routes: Array<Route> = [
         path: routeConstants.TOURGUIDE_HOMEPAGE,
         Component: commonLoadable(() => import('views/TourGuideHomePage')),
     },
+    {
+        name: 'TourGuide Mission Page',
+        path: routeConstants.TOURGUIDE_MISSION,
+        Component: commonLoadable(() => import('views/TourGuideMission')),
+    },
+    {
+        name: 'TourGuide Message Page',
+        path: routeConstants.TOURGUIDE_MESSAGE,
+        Component: commonLoadable(() => import('views/TourGuideMessage')),
+    },
 ];
 
 export default routes;
