@@ -1,0 +1,47 @@
+@import 'scss/global.scss';
+
+.user-login-header {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    &__wrapper {
+        width: 100%;
+        background-color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        box-shadow: 0 20px 25px -5px $color-shadow1,
+            0 8px 10px -6px $color-shadow1;
+    }
+    &__navigate {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        text-transform: uppercase;
+        a {
+            text-decoration: none;
+            color: $color-gray-68;
+            display: inline-block;
+            padding: 0 20px;
+            font-size: 14px;
+            transition: all 0.2s linear;
+            &:hover {
+                color: $color-button--primary;
+            }
+        }
+        &--bell,
+        &--avatar {
+            cursor: pointer;
+        }
+        &--bell{
+            padding: 0 20px;
+        }
+        &--avatar {
+            padding-left: 20px;
+        }
+    }
+}
