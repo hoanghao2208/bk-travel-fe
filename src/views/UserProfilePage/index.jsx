@@ -16,7 +16,7 @@ const Wrapper = memo(() => {
 
     const token = getToken();
     const handleGetUserData = useCallback(async () => {
-        if (token) {
+        if (token !== '') {
             const json = jwtDecode(token);
             setCustomerId(json.user_id);
             try {

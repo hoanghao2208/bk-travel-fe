@@ -37,6 +37,9 @@ const UserLoginHeader: FC = () => {
 
     const handleGetUserInfo = useCallback(async () => {
         try {
+            if(user_id === 0) {
+                return;
+            }
             const response = await userService.getUserInfo(user_id, token);
             if (response?.status === 200) {
                 setUserInfo(response?.data.user_info);

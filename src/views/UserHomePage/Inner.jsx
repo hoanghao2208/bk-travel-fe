@@ -1,9 +1,7 @@
 import { FloatButton } from 'antd';
 import LocationSlide from 'components/LocationSlide';
-import OutstandingListLocation from 'components/OutstandingListLocation';
 import OutstandingListTour from 'components/OutstandingListTour';
 import ReasonList from 'components/ReasonList';
-import TopLocationList from 'components/TopLocationList';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
 import { memo, useEffect } from 'react';
 import 'swiper/css';
@@ -69,8 +67,6 @@ const Inner = memo(() => {
             </div>
             <div className="homepage-container">
                 <OutstandingListTour />
-                <OutstandingListLocation />
-                <TopLocationList />
                 <ReasonList />
             </div>
             <FloatButton.BackTop visibilityHeight={0} />
