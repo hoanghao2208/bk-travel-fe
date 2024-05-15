@@ -5,7 +5,7 @@ import UserHomePageLayout from 'layouts/UserHomePageLayout';
 import { memo, useCallback, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserProfile } from 'reducers/profile/function';
-import { getCustomerId } from 'reducers/token/function';
+import { getCustomerId, getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import orderService from 'services/orderService';
 import NoItemInCart from 'views/CartPage/components/NoItemInCart';
@@ -16,8 +16,10 @@ const Inner = memo(
         useEffect(() => {
             document.title = 'Giỏ hàng';
         });
-        const userInfor = useUserProfile();
+
+        const token = getToken();
         const userId = getCustomerId();
+        const userInfor = useUserProfile();
         const navigate = useNavigate();
 
         const selectedOrder = useMemo(() => {
@@ -56,7 +58,10 @@ const Inner = memo(
                     Message.sendWarning('Vui lòng cập nhật số điện thoại');
                     return;
                 }
-                const response = await orderService.createCartOrder(body);
+                const response = await orderService.createCartOrder(
+                    body,
+                    token
+                );
                 if (response?.status === 200) {
                     const tourIds = selectedTour
                         .map(tourId => `tourId=${tourId}`)
@@ -69,7 +74,7 @@ const Inner = memo(
                 console.error(error);
                 Message.sendError('Đã có lỗi xãy ra, vui lòng thử lại');
             }
-        }, [navigate, selectedOrder, selectedTour, userId, userInfor]);
+        }, [navigate, selectedOrder, selectedTour, token, userId, userInfor]);
 
         if (cartList?.userId === '') {
             return null;
