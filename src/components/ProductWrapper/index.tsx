@@ -42,6 +42,7 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
         const [openDeleteModal, setOpenDeleteModal] = useState(false);
         const [openEditModal, setOpenEditModal] = useState(false);
         const [loading, setLoading] = useState(false);
+        const [isExpired, setIsExprired] = useState(false);
 
         const handleDeleteFromCart = useCallback(async () => {
             try {
@@ -96,44 +97,47 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
                             tourId={tourId}
                             adultQuantity={adultQuantity}
                             childQuantity={childQuantity}
+                            setIsExprired={setIsExprired}
                         />
                     </div>
-                    <div className="product-wrapper__footer">
-                        <div className="product-wrapper__footer--button">
-                            <Button
-                                danger={selectedTour.includes(tourId)}
-                                type="primary"
-                                icon={
-                                    selectedTour.includes(tourId) ? (
-                                        <CloseOutlined />
-                                    ) : (
-                                        <CheckOutlined />
-                                    )
-                                }
-                                onClick={handleSelectedTour}
-                            >
-                                {selectedTour.includes(tourId)
-                                    ? 'Hủy chọn tour'
-                                    : 'Chọn tour này'}
-                            </Button>
-                            <Button
-                                icon={<EditOutlined />}
-                                onClick={() => setOpenEditModal(true)}
-                            >
-                                Chỉnh sửa
-                            </Button>
-                            <Button
-                                danger
-                                icon={<DeleteOutlined />}
-                                onClick={() => setOpenDeleteModal(true)}
-                            >
-                                Xóa
-                            </Button>
+                    {!isExpired && (
+                        <div className="product-wrapper__footer">
+                            <div className="product-wrapper__footer--button">
+                                <Button
+                                    danger={selectedTour.includes(tourId)}
+                                    type="primary"
+                                    icon={
+                                        selectedTour.includes(tourId) ? (
+                                            <CloseOutlined />
+                                        ) : (
+                                            <CheckOutlined />
+                                        )
+                                    }
+                                    onClick={handleSelectedTour}
+                                >
+                                    {selectedTour.includes(tourId)
+                                        ? 'Hủy chọn tour'
+                                        : 'Chọn tour này'}
+                                </Button>
+                                <Button
+                                    icon={<EditOutlined />}
+                                    onClick={() => setOpenEditModal(true)}
+                                >
+                                    Chỉnh sửa
+                                </Button>
+                                <Button
+                                    danger
+                                    icon={<DeleteOutlined />}
+                                    onClick={() => setOpenDeleteModal(true)}
+                                >
+                                    Xóa
+                                </Button>
+                            </div>
+                            <span className="product-wrapper__footer--price">
+                                {parseInt(totalPrice).toLocaleString()} VNĐ
+                            </span>
                         </div>
-                        <span className="product-wrapper__footer--price">
-                            {parseInt(totalPrice).toLocaleString()} VNĐ
-                        </span>
-                    </div>
+                    )}
                 </div>
                 <Modal
                     open={openDeleteModal}

@@ -1,3 +1,4 @@
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Button } from 'antd';
 import Message from 'components/Message';
 import ProductWrapper from 'components/ProductWrapper';
@@ -115,6 +116,12 @@ const Inner = memo(
                                             />
                                         </div>
                                     ))}
+                                    <p className="cart__content--status">
+                                        <ExclamationCircleFilled />
+                                        Một số đơn hàng của bạn trước đó có thể
+                                        đã bị loại bỏ khỏi giỏ hàng với lý do đã
+                                        hết hạng đặt chổ.
+                                    </p>
                                 </div>
                             </div>
                             <div className="cart__content--price">

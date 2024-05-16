@@ -1,18 +1,22 @@
 import dayjs from 'dayjs';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import tourService from 'services/tourService';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
 import { ITour } from 'utils/type';
 import './styles.scss';
+
+dayjs.extend(isSameOrAfter);
 
 interface ProductItemProps {
     tourId: number;
     adultQuantity: number;
     childQuantity: number;
+    setIsExprired: (value: boolean) => void;
 }
 
 const ProductItem: FC<ProductItemProps> = memo(
-    ({ tourId, adultQuantity, childQuantity }) => {
+    ({ tourId, adultQuantity, childQuantity, setIsExprired }) => {
         const [tourInformation, setTourInformation] = useState<ITour>();
 
         const getTourInformation = useCallback(async () => {
@@ -29,6 +33,16 @@ const ProductItem: FC<ProductItemProps> = memo(
         useEffect(() => {
             getTourInformation();
         }, [getTourInformation]);
+
+        if (
+            tourInformation &&
+            !dayjs(tourInformation.deadline_book_time).isSameOrAfter(
+                dayjs().startOf('day')
+            )
+        ) {
+            setIsExprired(true);
+            return null;
+        }
 
         return (
             <div className="product-item">

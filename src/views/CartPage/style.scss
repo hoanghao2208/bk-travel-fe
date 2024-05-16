@@ -99,5 +99,15 @@
                 }
             }
         }
+        &--status {
+            width: 100%;
+            background-color: $color-status--warning;
+            color: $color-status--deploying;
+            padding: 8px 12px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            display: flex;
+            gap: 10px;
+        }
     }
 }
