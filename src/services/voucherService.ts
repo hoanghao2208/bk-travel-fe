@@ -31,14 +31,13 @@ class VoucherService extends ApiBase {
     };
 
     applyVoucher = (
-        orderId: number,
         requestBody: {
-            user_id: number;
+            orderId: number;
             listVoucherCodes: string[];
         },
         token: string
     ) => {
-        const url = `http://localhost:8080/api/v1/orders/${orderId}/vouchers`;
+        const url = 'http://localhost:8080/api/v1/orders/vouchers';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -47,13 +46,13 @@ class VoucherService extends ApiBase {
     };
 
     removeVoucherFromOrder = (
-        order_id: number,
         requestBody: {
+            order_id: number;
             code: string;
         },
         token: string
     ) => {
-        const url = `http://localhost:8080/api/v1/orders/${order_id}/vouchers`;
+        const url = 'http://localhost:8080/api/v1/orders/vouchers';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,

@@ -34,17 +34,13 @@ const Wrapper = memo(() => {
     const handleApplyVoucher = useCallback(
         async value => {
             try {
+                const orderId = searchParams.getAll('orderId').map(Number);
                 const body = {
-                    user_id: userId,
+                    order_id: orderId,
                     listVoucherCodes: [value.voucher_code],
                 };
 
-                const orderId = searchParams.getAll('orderId').map(Number);
-                const response = await voucherService.applyVoucher(
-                    orderId,
-                    body,
-                    token
-                );
+                const response = await voucherService.applyVoucher(body, token);
                 if (response?.status === 200) {
                     setIsReload(prev => !prev);
                     Message.sendSuccess('Áp dụng mã giảm giá thành công');
@@ -67,7 +63,7 @@ const Wrapper = memo(() => {
                 }
             }
         },
-        [form, searchParams, token, userId]
+        [form, searchParams, token]
     );
 
     const handleRemoveVoucher = useCallback(
@@ -75,10 +71,10 @@ const Wrapper = memo(() => {
             try {
                 const orderId = searchParams.getAll('orderId').map(Number);
                 const body = {
+                    order_id: orderId,
                     code: value,
                 };
                 const response = await voucherService.removeVoucherFromOrder(
-                    orderId,
                     body,
                     token
                 );
