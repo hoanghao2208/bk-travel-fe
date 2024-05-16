@@ -16,6 +16,7 @@ import UserHomePageLayout from 'layouts/UserHomePageLayout';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getCustomerId, useToken } from 'reducers/token/function';
+import LoadableLoading from 'route/components/LoadableLoading';
 import routeConstants from 'route/routeConstant';
 import userService from 'services/userService';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
@@ -113,7 +114,7 @@ const Inner = memo(
         }, [orderPaymentData, tour_id]);
 
         if (!tourData || !tourData.description || !tourData.list_image) {
-            return null;
+            return <LoadableLoading />;
         }
 
         const imageList = JSON.parse(tourData.list_image);
@@ -387,6 +388,7 @@ const Inner = memo(
                         openModal={openOrderModal}
                         setOpenModal={setOpenOrderModal}
                         handleFinish={handleCreateOrder}
+                        empty={tourData.max_customer - tourData.current_customers}
                     />
                     <ConfirmToChat
                         socket={socket}

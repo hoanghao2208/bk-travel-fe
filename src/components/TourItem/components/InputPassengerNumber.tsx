@@ -10,10 +10,11 @@ interface InputPassengerNumberProps {
     number: IPassengerNumber;
     setNumber: (value: IPassengerNumber) => void;
     isChild?: boolean;
+    disabledIncrease: boolean;
 }
 
 const InputPassengerNumber: FC<InputPassengerNumberProps> = memo(
-    ({ title, number, setNumber, isChild }) => {
+    ({ title, number, setNumber, isChild, disabledIncrease }) => {
         const validatePrimeNumber = (
             number: number
         ): {
@@ -86,7 +87,12 @@ const InputPassengerNumber: FC<InputPassengerNumberProps> = memo(
                             />
                         </Form.Item>
                         <div className="btn-increase">
-                            <Button onClick={handleIncrement}>+</Button>
+                            <Button
+                                onClick={handleIncrement}
+                                disabled={disabledIncrease}
+                            >
+                                +
+                            </Button>
                         </div>
                     </div>
                 </div>

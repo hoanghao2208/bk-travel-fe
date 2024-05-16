@@ -199,6 +199,7 @@ const Inner = memo(({ tourData, scheduleData, handleCreateOrder }) => {
                     openModal={openOrderModal}
                     setOpenModal={setOpenOrderModal}
                     handleFinish={handleCreateOrder}
+                    empty={tourData.max_customer - tourData.current_customers}
                 />
             </div>
         </UserHomePageLayout>

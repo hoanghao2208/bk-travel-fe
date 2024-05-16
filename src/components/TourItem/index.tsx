@@ -320,6 +320,7 @@ const TourItem: FC<TourItemProps> = memo(
                     openModal={openAddModal}
                     setOpenModal={setOpenAddModal}
                     handleFinish={handleAddToCart}
+                    empty={empty}
                 />
                 <ModalSelectPassenger
                     tourId={tourId}
@@ -331,6 +332,7 @@ const TourItem: FC<TourItemProps> = memo(
                     openModal={openOrderModal}
                     setOpenModal={setOpenOrderModal}
                     handleFinish={handleCreateOrder}
+                    empty={empty}
                 />
             </>
         );

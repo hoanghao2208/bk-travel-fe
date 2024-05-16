@@ -1,6 +1,6 @@
 import { Button, Form, Modal } from 'antd';
 import InputPassengerNumber from 'components/TourItem/components/InputPassengerNumber';
-import { FC, memo } from 'react';
+import { FC, memo, useMemo } from 'react';
 import { IPassengerNumber } from 'utils/type';
 import '../styles.scss';
 
@@ -14,6 +14,7 @@ interface ModalSelectPassengerProps {
     openModal: boolean;
     setOpenModal: (isOpen: boolean) => void;
     handleFinish: () => void;
+    empty: number;
 }
 
 const ModalSelectPassenger: FC<ModalSelectPassengerProps> = memo(
@@ -27,11 +28,20 @@ const ModalSelectPassenger: FC<ModalSelectPassengerProps> = memo(
         openModal,
         setOpenModal,
         handleFinish,
+        empty,
     }) => {
+        const disabledIncrease = useMemo(() => {
+            if (adultQuantity.value + childQuantity.value === empty) {
+                return true;
+            }
+            return false;
+        }, [adultQuantity.value, childQuantity.value, empty]);
+
         return (
             <Modal
                 title="Số lượng hành khách"
                 open={openModal}
+                onCancel={() => setOpenModal(false)}
                 footer={[
                     <div key="add-to-cart-footer" className="btn-add-to-cart">
                         <Button key="back" onClick={() => setOpenModal(false)}>
@@ -60,12 +70,14 @@ const ModalSelectPassenger: FC<ModalSelectPassengerProps> = memo(
                         title="Người lớn"
                         number={adultQuantity}
                         setNumber={setAdultQuantity}
+                        disabledIncrease={disabledIncrease}
                     />
                     <InputPassengerNumber
                         title="Trẻ em"
                         number={childQuantity}
                         setNumber={setChildQuantity}
                         isChild={true}
+                        disabledIncrease={disabledIncrease}
                     />
                 </Form>
             </Modal>
