@@ -27,6 +27,7 @@ const OrderItem: FC<OrderItemProps> = memo(
                     {tours.map((tour: any) => (
                         <TourItem
                             key={tour.tour_id}
+                            tour_id={tour.tour_id}
                             imgURL={tour.cover_image}
                             tourName={tour.name}
                             price={tour.price}

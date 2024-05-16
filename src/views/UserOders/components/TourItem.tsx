@@ -1,7 +1,9 @@
 import { FC, memo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../style.scss';
 
 interface TourItemProps {
+    tour_id: number;
     imgURL: string;
     tourName: string;
     price: string;
@@ -14,6 +16,7 @@ interface TourItemProps {
 
 const TourItem: FC<TourItemProps> = memo(
     ({
+        tour_id,
         imgURL,
         tourName,
         price,
@@ -23,8 +26,13 @@ const TourItem: FC<TourItemProps> = memo(
         departure_date,
         departure_time,
     }) => {
+        const navigate = useNavigate();
+
         return (
-            <div className="tour-item-completed">
+            <div
+                className="tour-item-completed"
+                onClick={() => navigate(`/tour/information/detail/${tour_id}`)}
+            >
                 <img
                     src={imgURL}
                     alt="tour-img"
