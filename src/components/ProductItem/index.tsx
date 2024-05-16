@@ -47,7 +47,13 @@ const ProductItem: FC<ProductItemProps> = memo(
         return (
             <div className="product-item">
                 <div className="product-item__img">
-                    <img src={tourInformation?.cover_image} alt="product-img" />
+                    <img
+                        src={
+                            tourInformation?.cover_image ||
+                            '/images/cover_image_df.jpg'
+                        }
+                        alt="product-img"
+                    />
                 </div>
                 <div className="product-item__detail">
                     <h3 className="product-item__detail--title">

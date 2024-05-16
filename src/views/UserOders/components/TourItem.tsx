@@ -1,3 +1,4 @@
+import { Tooltip } from 'antd';
 import { FC, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style.scss';
@@ -34,13 +35,15 @@ const TourItem: FC<TourItemProps> = memo(
                 onClick={() => navigate(`/tour/information/detail/${tour_id}`)}
             >
                 <img
-                    src={imgURL}
+                    src={imgURL || '/images/cover_image_df.jpg'}
                     alt="tour-img"
                     className="tour-item-completed--img"
                 />
                 <div className="tour-item-completed--infor">
                     <div className="tour-item-completed--title">
-                        <h3>{tourName}</h3>
+                        <Tooltip placement="top" title={tourName}>
+                            <h3>{tourName}</h3>
+                        </Tooltip>
                         <span>{parseFloat(price).toLocaleString()} VNĐ</span>
                     </div>
                     <div className="tour-item-completed--row">

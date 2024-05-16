@@ -23,7 +23,7 @@ const Wrapper = memo(() => {
                 token
             );
             if (response?.status === 200) {
-                setPendingTours(response.data.data[0].tours);
+                setPendingTours(response.data.tours);
             }
         } catch (error) {
             console.error(error);
@@ -37,7 +37,7 @@ const Wrapper = memo(() => {
                 token
             );
             if (response?.status === 200) {
-                setSuccessTours(response.data.data[0].tours);
+                setSuccessTours(response.data.tours);
             }
         } catch (error) {
             console.error(error);
@@ -51,7 +51,7 @@ const Wrapper = memo(() => {
                 token
             );
             if (response?.status === 200) {
-                setRejectedTours(response.data.data[0].tours);
+                setRejectedTours(response.data.tours);
             }
         } catch (error) {
             console.error(error);
