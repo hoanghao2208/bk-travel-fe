@@ -27,6 +27,7 @@ const Wrapper = memo(() => {
     const [commentsList, setCommentsList] = useState([]);
     const [reviewsList, setReviewsList] = useState([]);
     const [orderData, setOrderData] = useState([]);
+    const [orderPaymentData, setOrderPaymentData] = useState([]);
     const [reload, setReload] = useState(false);
     const [openOrderModal, setOpenOrderModal] = useState(false);
     const [adultQuantity, setAdultQuantity] = useState({
@@ -176,6 +177,7 @@ const Wrapper = memo(() => {
             );
             if (response?.status === 200) {
                 const orderData = [];
+                const paymentData = [];
                 const orderCompleted = response?.data.complete_orders;
                 orderCompleted.forEach(item => {
                     const tourId = [];
@@ -183,8 +185,10 @@ const Wrapper = memo(() => {
                         tourId.push(tour.tour_id);
                     });
                     orderData[item.order_id] = { tour_id: tourId };
+                    paymentData[item.payment_id] = { tour_id: tourId };
                 });
                 setOrderData(orderData);
+                setOrderPaymentData(paymentData);
             }
         } catch (error) {
             console.error(error);
@@ -216,6 +220,7 @@ const Wrapper = memo(() => {
             <Inner
                 tourData={tourData}
                 orderData={orderData}
+                orderPaymentData={orderPaymentData}
                 socket={socket}
                 commentsList={commentsList}
                 reviewsList={reviewsList}
