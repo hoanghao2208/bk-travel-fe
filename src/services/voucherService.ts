@@ -53,7 +53,7 @@ class VoucherService extends ApiBase {
         token: string
     ) => {
         const url = 'http://localhost:8080/api/v1/orders/vouchers';
-        return axios.post(url, requestBody, {
+        return axios.put(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
             },
