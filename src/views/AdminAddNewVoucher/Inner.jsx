@@ -25,6 +25,9 @@ const Inner = memo(
 
         const [startDate, setStartDate] = useState('');
         const [expiredDate, setExpiredDate] = useState('');
+        const [reduceCost, setReduceCost] = useState('');
+        const [minCost, setMinCost] = useState('');
+
         const [selectedStartDate, setSelectedStartDate] = useState(false);
 
         const [currentError, setCurrentError] = useState('');
@@ -95,23 +98,59 @@ const Inner = memo(
             return false;
         };
 
+        const onChangeReduceCost = useCallback(e => {
+            let val = e.target.value;
+            val = val.replace(/\D/g, '');
+            val = Number(val).toLocaleString();
+
+            setReduceCost(val);
+        }, []);
+
+        const onChangeMinCost = useCallback(e => {
+            let val = e.target.value;
+            val = val.replace(/\D/g, '');
+            val = Number(val).toLocaleString();
+
+            setMinCost(val);
+        }, []);
+
         const handleSubmitNewVoucher = useCallback(
             values => {
-                const { type, value_discount } = values;
+                const { type } = values;
+                const reducePrice = Number(reduceCost.replace(/\./g, ''));
+                const minPrice = Number(minCost.replace(/\./g, ''));
                 const voucherData = {
                     ...values,
                     start_date: startDate,
                     expired_date: expiredDate,
                     value_discount:
-                        type === 'fixed'
-                            ? value_discount
-                            : value_discount / 100,
+                        type === 'fixed' ? reducePrice : reducePrice / 100,
                     image: fileList[0].originFileObj,
+                    min_order_value: minPrice,
                 };
 
+                if (voucherData.value_discount === 0) {
+                    Message.sendWarning(
+                        'Giá giảm không phù hợp, vui lòng kiếm tra lại'
+                    );
+                    return;
+                }
+                if (voucherData.min_order_value === 0) {
+                    Message.sendWarning(
+                        'Giá trị đơn tối thiểu không phù hợp, vui lòng kiếm tra lại'
+                    );
+                    return;
+                }
                 handleCreateNewVoucher(voucherData);
             },
-            [expiredDate, fileList, handleCreateNewVoucher, startDate]
+            [
+                expiredDate,
+                fileList,
+                handleCreateNewVoucher,
+                minCost,
+                reduceCost,
+                startDate,
+            ]
         );
 
         useEffect(() => {
@@ -182,7 +221,6 @@ const Inner = memo(
                                 </Form.Item>
                                 <Form.Item
                                     label="Giá giảm"
-                                    name="value_discount"
                                     rules={[
                                         {
                                             required: true,
@@ -195,7 +233,11 @@ const Inner = memo(
                                         },
                                     ]}
                                 >
-                                    <Input placeholder="Giá giảm" />
+                                    <Input
+                                        placeholder="Giá giảm"
+                                        value={reduceCost}
+                                        onChange={onChangeReduceCost}
+                                    />
                                 </Form.Item>
                                 <Form.Item
                                     label="Số lượng mã giảm"
@@ -219,7 +261,6 @@ const Inner = memo(
                             <div className="add-new-voucher__content--row">
                                 <Form.Item
                                     label="Giá trị đơn tối thiểu (VNĐ)"
-                                    name="min_order_value"
                                     rules={[
                                         {
                                             required: true,
@@ -233,7 +274,11 @@ const Inner = memo(
                                         },
                                     ]}
                                 >
-                                    <Input placeholder="Giá trị đơn tối thiểu" />
+                                    <Input
+                                        placeholder="Giá trị đơn tối thiểu"
+                                        value={minCost}
+                                        onChange={onChangeMinCost}
+                                    />
                                 </Form.Item>
                                 <Form.Item
                                     label="Ngày bắt đầu"
