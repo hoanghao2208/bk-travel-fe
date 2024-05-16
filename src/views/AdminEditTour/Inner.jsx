@@ -182,6 +182,11 @@ const Inner = memo(({ handleEditedTour, tourData, form }) => {
             cover_image: fileList,
         };
 
+        if (tourData.cover_image.length === 0) {
+            Message.sendWarning('Bạn chưa thêm ảnh bìa');
+            return;
+        }
+
         handleEditedTour(tourData);
     };
 

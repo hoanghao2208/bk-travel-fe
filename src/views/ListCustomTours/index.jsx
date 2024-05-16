@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { getCustomerId } from 'reducers/token/function';
+import { getCustomerId, getToken } from 'reducers/token/function';
 import customTourService from 'services/customTourService';
 import Inner from 'views/ListCustomTours/Inner';
 
@@ -7,6 +7,8 @@ const Wrapper = memo(() => {
     useEffect(() => {
         document.title = 'Danh sách tour đề xuất';
     });
+
+    const token = getToken();
 
     const [pendingTours, setPendingTours] = useState([]);
     const [successTours, setSuccessTours] = useState([]);
@@ -16,38 +18,45 @@ const Wrapper = memo(() => {
 
     const getAllPendingTours = useCallback(async () => {
         try {
-            const response = await customTourService.getAllPendingTours(userId);
+            const response = await customTourService.getPendingTourByUser(
+                userId,
+                token
+            );
             if (response?.status === 200) {
-                setPendingTours(response.data.tours);
+                setPendingTours(response.data.data[0].tours);
             }
         } catch (error) {
             console.error(error);
         }
-    }, [userId]);
+    }, [token, userId]);
 
     const getAllSuccessTours = useCallback(async () => {
         try {
-            const response = await customTourService.getAllSuccessTours(userId);
+            const response = await customTourService.getSuccessTourByUser(
+                userId,
+                token
+            );
             if (response?.status === 200) {
-                setSuccessTours(response.data.tours);
+                setSuccessTours(response.data.data[0].tours);
             }
         } catch (error) {
             console.error(error);
         }
-    }, [userId]);
+    }, [token, userId]);
 
     const getAllRejectedTours = useCallback(async () => {
         try {
-            const response = await customTourService.getAllRejectedTours(
-                userId
+            const response = await customTourService.getRejectedTourByUser(
+                userId,
+                token
             );
             if (response?.status === 200) {
-                setRejectedTours(response.data.tours);
+                setRejectedTours(response.data.data[0].tours);
             }
         } catch (error) {
             console.error(error);
         }
-    }, [userId]);
+    }, [token, userId]);
 
     useEffect(() => {
         getAllPendingTours();
