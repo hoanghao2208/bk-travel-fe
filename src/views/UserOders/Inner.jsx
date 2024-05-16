@@ -22,6 +22,7 @@ const Inner = memo(({ completedOrders }) => {
                             date={dayjs(order.createdAt).format(
                                 DEFAULT_DISPLAY_DATE_FORMAT
                             )}
+                            tours={order.tours}
                         />
                     ))}
                 </div>
