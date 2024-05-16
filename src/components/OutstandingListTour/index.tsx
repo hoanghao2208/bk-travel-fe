@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import routeConstants from 'route/routeConstant';
 import tourService from 'services/tourService';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -51,7 +52,9 @@ const OutstandingListTour: FC = () => {
         <div className="outstanding-tour">
             <div className="outstanding-tour__header">
                 <Title title="Các tour mới của BK Travel" />
-                <Link to="/">Xem thêm</Link>
+                {onlineTours.length > 4 && (
+                    <Link to={routeConstants.ALL_TOURS}>Xem thêm</Link>
+                )}
             </div>
 
             <div className="outstanding-tour__list">

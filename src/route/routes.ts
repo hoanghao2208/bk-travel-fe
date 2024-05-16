@@ -226,6 +226,11 @@ const routes: Array<Route> = [
         Component: commonLoadable(() => import('views/Message')),
         authorization: true,
     },
+    {
+        name: 'User All Tours Page',
+        path: routeConstants.ALL_TOURS,
+        Component: commonLoadable(() => import('views/UserAllTours')),
+    },
 ];
 
 export default routes;
