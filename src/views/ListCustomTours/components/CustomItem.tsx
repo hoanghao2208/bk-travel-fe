@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import Message from 'components/Message';
 import ModalSelectPassenger from 'components/TourItem/components/ModalSelectPassenger';
-import { FC, memo, useCallback, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserProfile } from 'reducers/profile/function';
 import { getCustomerId, getToken } from 'reducers/token/function';
@@ -47,8 +47,9 @@ const CustomItem: FC<CustomItemProps> = memo(
         const userId = getCustomerId();
         const token = getToken();
         const userInfor = useUserProfile();
-
         const navigate = useNavigate();
+
+        const [orderData, setOrderData] = useState([]);
         const [openOrderModal, setOpenOrderModal] = useState(false);
         const [adultQuantity, setAdultQuantity] = useState<IPassengerNumber>({
             value: 1,
@@ -101,6 +102,47 @@ const CustomItem: FC<CustomItemProps> = memo(
             userInfor,
         ]);
 
+        const handleGetCompletedTour = useCallback(async () => {
+            try {
+                const response = await orderService.getCompletedOrder(
+                    userId,
+                    token
+                );
+                if (response?.status === 200) {
+                    const orderData: any = [];
+                    const paymentData = [];
+                    const orderCompleted = response?.data.complete_orders;
+                    orderCompleted.forEach((item: any) => {
+                        const tourId: number[] = [];
+                        item.tours.forEach((tour: any) => {
+                            tourId.push(tour.tour_id);
+                        });
+                        orderData[item.order_id] = { tour_id: tourId };
+                        paymentData[item.payment_id] = { tour_id: tourId };
+                    });
+                    setOrderData(orderData);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }, [token, userId]);
+
+        const isTourIdExists = useMemo(() => {
+            if (tour_id) {
+                for (let index = 0; index < orderData.length; index++) {
+                    const item: any = orderData[index];
+                    if (item !== undefined && item.tour_id.includes(tour_id)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }, [orderData, tour_id]);
+
+        useEffect(() => {
+            handleGetCompletedTour();
+        }, [handleGetCompletedTour]);
+
         return (
             <>
                 <div className="custom-item">
@@ -112,7 +154,7 @@ const CustomItem: FC<CustomItemProps> = memo(
                     <div className="custom-item--details">
                         <div className="custom-item--header">
                             <h3>{tourName}</h3>
-                            {status === 'SUCCESS' && (
+                            {status === 'SUCCESS' && !isTourIdExists && (
                                 <div className="custom-item--pay-order">
                                     <span className="custom-item--price">
                                         {price?.toLocaleString()} VNĐ
@@ -124,6 +166,11 @@ const CustomItem: FC<CustomItemProps> = memo(
                                         Thanh toán
                                     </Button>
                                 </div>
+                            )}
+                            {status === 'SUCCESS' && isTourIdExists && (
+                                <span className="custom-item--status">
+                                    Đã thanh toán
+                                </span>
                             )}
                         </div>
                         <div className="custom-item--row">

@@ -77,4 +77,13 @@
             }
         }
     }
+    &--status {
+        font-weight: 600;
+        background-color: $color-button--green;
+        color: $color-button--green-hover;
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 8px;
+        text-transform: uppercase;
+    }
 }
