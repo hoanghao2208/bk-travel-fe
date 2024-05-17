@@ -60,11 +60,16 @@ const WriteReview: FC<WriteReviewProps> = memo(
                         form.resetFields();
                         setReload(!reload);
                     }
-                } catch (error) {
+                } catch (error: any) {
                     console.error(error);
-                    Message.sendError(
-                        'Đã có lỗi xãy ra, bạn đã đánh giá không thành công'
-                    );
+                    if (
+                        error.response.data.message ===
+                        "You can't review tour because you reviewed tour before!"
+                    ) {
+                        Message.sendError('Bạn đã đánh giá tour này rồi');
+                    } else {
+                        Message.sendError('Đã có lỗi xãy ra, vui lòng thử lại');
+                    }
                 } finally {
                     setLoading(false);
                 }
