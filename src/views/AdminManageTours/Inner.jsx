@@ -1,8 +1,9 @@
 import { Button, Modal } from 'antd';
 import Message from 'components/Message';
 import AdminLayout from 'layouts/AdminLayout';
-import { memo, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import tourService from 'services/tourService';
 import NoData from 'views/AdminManageCustomTours/components/NoData';
@@ -10,11 +11,12 @@ import WaitingItem from 'views/AdminManageTours/components/WaitingItem';
 import './style.scss';
 
 const Inner = memo(
-    ({ waitingTours, deletedTours, onlineTours, setRefresh }) => {
+    ({ waitingTours, deletedTours, onlineTours, refresh, setRefresh }) => {
         useEffect(() => {
             document.title = 'Quản lý tours';
         });
         const navigate = useNavigate();
+        const token = getToken();
 
         const [activeTab, setActiveTab] = useState('ONLINE');
         const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -25,7 +27,7 @@ const Inner = memo(
             setActiveTab(currentTab);
         };
 
-        const handleGetTourName = async tour_id => {
+        const handleGetTourName = useCallback(async tour_id => {
             try {
                 const response = await tourService.getOneTour(tour_id);
                 if (response?.status === 200) {
@@ -34,33 +36,45 @@ const Inner = memo(
             } catch (error) {
                 console.error(error);
             }
-        };
+        }, []);
 
-        const hanldeDeleteTour = async tour_id => {
-            try {
-                const response = await tourService.deleteTour(tour_id);
-                if (response?.status === 200) {
-                    Message.sendSuccess('Xóa tour du lịch thành công');
-                    setOpenDeleteModal(false);
-                    setRefresh(prev => !prev);
+        const hanldeDeleteTour = useCallback(
+            async tour_id => {
+                try {
+                    const response = await tourService.deleteTour(
+                        tour_id,
+                        token
+                    );
+                    if (response?.status === 200) {
+                        Message.sendSuccess('Xóa tour du lịch thành công');
+                        setOpenDeleteModal(false);
+                        setRefresh(prev => !prev);
+                    }
+                } catch (error) {
+                    console.error(error);
+                    Message.sendError('Đã có lỗi xãy ra, vui lòng thử lại');
                 }
-            } catch (error) {
-                console.error(error);
-                Message.sendError('Đã có lỗi xãy ra, vui lòng thử lại');
-            }
-        };
+            },
+            [setRefresh, token]
+        );
 
-        const handleRecoverTour = async tour_id => {
-            try {
-                const response = await tourService.recoverTour(tour_id);
-                if (response?.status === 200) {
-                    Message.sendSuccess('Khôi phục tour thành công');
-                    setRefresh(prev => !prev);
+        const handleRecoverTour = useCallback(
+            async tour_id => {
+                try {
+                    const response = await tourService.recoverTour(
+                        tour_id,
+                        token
+                    );
+                    if (response?.status === 200) {
+                        Message.sendSuccess('Khôi phục tour thành công');
+                        setRefresh(prev => !prev);
+                    }
+                } catch (error) {
+                    console.error(error);
                 }
-            } catch (error) {
-                console.error(error);
-            }
-        };
+            },
+            [setRefresh, token]
+        );
 
         const tabs = [
             { tabName: 'ONLINE', tours: onlineTours },
@@ -98,7 +112,8 @@ const Inner = memo(
                                     {tabName === 'ONLINE' &&
                                         'Tour đang hoạt động'}
                                     {tabName === 'WAITING' && 'Tour đang chờ'}
-                                    {tabName === 'DELETED' && 'Tour đã xóa'}
+                                    {tabName === 'DELETED' &&
+                                        'Tour dừng hoạt động'}
                                 </div>
                             ))}
                         </div>
@@ -124,6 +139,8 @@ const Inner = memo(
                                         time={tour.time}
                                         departure_place={tour.departure_place}
                                         setOpenDeleteModal={setOpenDeleteModal}
+                                        refresh={refresh}
+                                        setRefresh={setRefresh}
                                         setSelectedTourId={setSelectedTourId}
                                     />
                                 ))
