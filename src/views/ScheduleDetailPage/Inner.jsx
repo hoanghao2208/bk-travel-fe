@@ -42,6 +42,10 @@ const Inner = memo(({ tourData, scheduleData, handleCreateOrder }) => {
         return null;
     }
 
+    const hightLightParagraphs = tourData?.highlight.split(
+        /\r\n\r\n\r\n|\r\n\r\n|\r\n/
+    );
+
     const imageList = JSON.parse(tourData.list_image);
     const columnNumber = parseInt(tourData.time.match(/\d+/)[0]);
 
@@ -134,7 +138,9 @@ const Inner = memo(({ tourData, scheduleData, handleCreateOrder }) => {
                     <div className="schedule-detail__information--right">
                         <h3>Điểm nhấn</h3>
                         <p className="schedule-detail__information--right-hightlight">
-                            {tourData.highlight}
+                            {hightLightParagraphs.map((paragraph, index) => (
+                                <p key={index}>{paragraph}</p>
+                            ))}
                         </p>
                     </div>
                 </div>

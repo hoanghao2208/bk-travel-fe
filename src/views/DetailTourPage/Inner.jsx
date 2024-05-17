@@ -151,7 +151,7 @@ const Inner = memo(
                                     ({tourData?.count_reviewer} lượt đánh giá)
                                 </span>
                                 <span className="tour-detail__header--count">
-                                    5000+ Tour đã được đặt
+                                    {tourData?.current_customers} tours đã được đặt
                                 </span>
                             </p>
                             <p
@@ -388,7 +388,9 @@ const Inner = memo(
                         openModal={openOrderModal}
                         setOpenModal={setOpenOrderModal}
                         handleFinish={handleCreateOrder}
-                        empty={tourData.max_customer - tourData.current_customers}
+                        empty={
+                            tourData.max_customer - tourData.current_customers
+                        }
                     />
                     <ConfirmToChat
                         socket={socket}

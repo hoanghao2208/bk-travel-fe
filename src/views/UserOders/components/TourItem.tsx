@@ -32,7 +32,11 @@ const TourItem: FC<TourItemProps> = memo(
         return (
             <div
                 className="tour-item-completed"
-                onClick={() => navigate(`/tour/information/detail/${tour_id}`)}
+                onClick={() => {
+                    if (!destination_place.includes('[')) {
+                        navigate(`/tour/information/detail/${tour_id}`);
+                    }
+                }}
             >
                 <img
                     src={imgURL || '/images/cover_image_df.jpg'}
@@ -53,7 +57,12 @@ const TourItem: FC<TourItemProps> = memo(
                         </div>
                         <div>
                             <span>Điểm đến: </span>
-                            <span>{destination_place}</span>
+                            <span>
+                                {' '}
+                                {destination_place.includes('[')
+                                    ? JSON.parse(destination_place).join(', ')
+                                    : destination_place}
+                            </span>
                         </div>
                     </div>
                     <div className="tour-item-completed--row">

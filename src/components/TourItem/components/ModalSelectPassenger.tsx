@@ -73,7 +73,7 @@ const ModalSelectPassenger: FC<ModalSelectPassengerProps> = memo(
                         disabledIncrease={disabledIncrease}
                     />
                     <InputPassengerNumber
-                        title="Trẻ em"
+                        title="Trẻ em (75% giá gốc)"
                         number={childQuantity}
                         setNumber={setChildQuantity}
                         isChild={true}
