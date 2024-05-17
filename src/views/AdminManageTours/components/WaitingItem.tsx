@@ -1,13 +1,16 @@
 import {
     CloudSyncOutlined,
+    CopyOutlined,
     DeleteOutlined,
     EditOutlined,
     UndoOutlined,
 } from '@ant-design/icons';
-import { Button } from 'antd';
+import { Button, Tooltip } from 'antd';
+import Message from 'components/Message';
 import dayjs from 'dayjs';
-import { FC, memo } from 'react';
+import { FC, memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import tourService from 'services/tourService';
 import './styles.scss';
 
 interface WaitingItemProps {
@@ -18,8 +21,10 @@ interface WaitingItemProps {
     date: string;
     time: string;
     departure_place: string;
+    refresh?: boolean;
     setOpenDeleteModal?: (isOpen: boolean) => void;
     setSelectedTourId?: (tour_id: number) => void;
+    setRefresh?: (value: boolean) => void;
     handleRecoverTour?: (tour_id: number) => void;
 }
 
@@ -31,8 +36,10 @@ const WaitingItem: FC<WaitingItemProps> = memo(
         tourName,
         date,
         time,
+        refresh,
         departure_place,
         setOpenDeleteModal,
+        setRefresh,
         setSelectedTourId,
         handleRecoverTour,
     }) => {
@@ -43,6 +50,18 @@ const WaitingItem: FC<WaitingItemProps> = memo(
             setOpenDeleteModal && setOpenDeleteModal(true);
             setSelectedTourId && setSelectedTourId(tour_id);
         };
+
+        const handleDuplicateTour = useCallback(async () => {
+            try {
+                const response = await tourService.adminDuplicateTour(tour_id);
+                if (response?.status === 201 && setRefresh) {
+                    setRefresh(!refresh);
+                    Message.sendSuccess('Sao chép tour thành công');
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }, [refresh, setRefresh, tour_id]);
 
         const hanldeNavigateEdit = () => {
             navigate(`/admin/edit-information-tour/${tour_id}`);
@@ -73,52 +92,77 @@ const WaitingItem: FC<WaitingItemProps> = memo(
                 </div>
                 {status === 'ONLINE' && (
                     <div className="waiting-item__btn">
-                        <Button
-                            icon={<EditOutlined />}
-                            onClick={hanldeNavigateEdit}
-                        >
-                            Chỉnh sửa
-                        </Button>
+                        <Tooltip placement="top" title="Chỉnh sửa">
+                            <Button
+                                icon={<EditOutlined />}
+                                type="text"
+                                shape="circle"
+                                onClick={hanldeNavigateEdit}
+                            />
+                        </Tooltip>
+                        <Tooltip placement="top" title="Sao chép tour">
+                            <Button
+                                type="text"
+                                shape="circle"
+                                icon={<CopyOutlined />}
+                                onClick={handleDuplicateTour}
+                            />
+                        </Tooltip>
                     </div>
                 )}
 
                 {status === 'WAITING' && setOpenDeleteModal && (
                     <div className="waiting-item__btn">
-                        <Button
-                            type="primary"
-                            icon={<CloudSyncOutlined />}
-                            onClick={handleNavigateSchedule}
-                        >
-                            Lên lịch trình
-                        </Button>
-                        <Button
-                            icon={<EditOutlined />}
-                            onClick={hanldeNavigateEdit}
-                        >
-                            Chỉnh sửa
-                        </Button>
-                        <Button
-                            key="submit"
-                            danger
-                            type="primary"
-                            icon={<DeleteOutlined />}
-                            onClick={handleOpenModal}
-                        >
-                            Xóa
-                        </Button>
-                        ,
+                        <div className="waiting-item__btn--row">
+                            <Tooltip placement="top" title="Lên lịch trình">
+                                <Button
+                                    type="link"
+                                    shape="circle"
+                                    icon={<CloudSyncOutlined />}
+                                    onClick={handleNavigateSchedule}
+                                />
+                            </Tooltip>
+                            <Tooltip placement="top" title="Chỉnh sửa">
+                                <Button
+                                    icon={<EditOutlined />}
+                                    type="text"
+                                    shape="circle"
+                                    onClick={hanldeNavigateEdit}
+                                />
+                            </Tooltip>
+                        </div>
+                        <div className="waiting-item__btn--row">
+                            <Tooltip placement="top" title="Sao chép tour">
+                                <Button
+                                    type="text"
+                                    shape="circle"
+                                    icon={<CopyOutlined />}
+                                    onClick={handleDuplicateTour}
+                                />
+                            </Tooltip>
+                            <Tooltip placement="top" title="Xóa">
+                                <Button
+                                    danger
+                                    key="submit"
+                                    shape="circle"
+                                    type="text"
+                                    icon={<DeleteOutlined />}
+                                    onClick={handleOpenModal}
+                                />
+                            </Tooltip>
+                        </div>
                     </div>
                 )}
 
                 {status === 'DELETED' && handleRecoverTour && (
                     <div className="waiting-item__btn">
-                        <Button
-                            type="primary"
-                            icon={<UndoOutlined />}
-                            onClick={() => handleRecoverTour(tour_id)}
-                        >
-                            Khôi phục
-                        </Button>
+                        <Tooltip placement="top" title="Khôi phục">
+                            <Button
+                                type="primary"
+                                icon={<UndoOutlined />}
+                                onClick={() => handleRecoverTour(tour_id)}
+                            />
+                        </Tooltip>
                     </div>
                 )}
             </div>

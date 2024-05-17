@@ -61,6 +61,7 @@ const Wrapper = memo(() => {
             waitingTours={waitingTours}
             deletedTours={deletedTours}
             onlineTours={onlineTours}
+            refresh={refresh}
             setRefresh={setRefresh}
         />
     );

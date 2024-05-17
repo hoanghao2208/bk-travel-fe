@@ -1,8 +1,7 @@
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Dropdown, Input } from 'antd';
+import { Avatar, Badge, Dropdown } from 'antd';
 import BellNotifyIcon from 'assets/icons/BellNotifyIcon';
 import LogOutIcon from 'assets/icons/LogOutIcon';
-import SearchIcon from 'assets/icons/SearchIcon';
 import UserDropDown from 'assets/icons/UserDropDown';
 import { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -60,9 +59,6 @@ const AdminHeader: FC = () => {
     return (
         <div className="admin-header__wrapper">
             <div className="admin-header">
-                <div className="admin-header__search">
-                    <Input placeholder="Tìm kiếm ..." prefix={<SearchIcon />} />
-                </div>
                 <div className="admin-header__navigate">
                     <div className="admin-header__navigate--bell">
                         <Badge count={8} overflowCount={10}>

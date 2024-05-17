@@ -1,9 +1,11 @@
 import { Form } from 'antd';
 import Message from 'components/Message';
+import dayjs from 'dayjs';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
+import messageService from 'services/messageService';
 import tourService from 'services/tourService';
 import Inner from 'views/AdminSchedule/Inner';
 
@@ -36,11 +38,21 @@ const Wrapper = memo(() => {
         async scheduleData => {
             try {
                 setLoading(true);
-                const response = await tourService.createSchedule(
+                const body = {
+                    tour_id,
+                    name: `Nhóm hỗ trợ ${
+                        tourData.name
+                    } - Khởi hành ngày ${dayjs(tourData.departure_date).format(
+                        'DD/MM/YYYY'
+                    )} - ${tourData.time}`,
+                };
+                const response1 = await tourService.createSchedule(
                     scheduleData,
                     token
                 );
-                if (response?.status === 201) {
+                const response2 = await messageService.createGroup(token, body);
+
+                if (response1?.status === 201 && response2?.status === 201) {
                     Message.sendSuccess('Khởi tạo lịch trình thành công');
                     form.resetFields();
                     navigate(routeConstants.ADMIN_MANAGE_TOURS);
@@ -52,7 +64,7 @@ const Wrapper = memo(() => {
                 setLoading(false);
             }
         },
-        [form, navigate, token]
+        [form, navigate, token, tourData, tour_id]
     );
 
     useEffect(() => {

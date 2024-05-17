@@ -10,7 +10,7 @@ import './style.scss';
 const SCHEDULE_DEFAULT_VALUE = [undefined];
 
 const ScheduleList = memo(
-    ({ form, tourData, column, handleScheduleTour, isCreatedGroup }) => {
+    ({ form, tourData, column, handleScheduleTour }) => {
         const { tour_id } = useParams();
 
         const renderForms = () => {
@@ -96,7 +96,6 @@ const ScheduleList = memo(
                                 htmlType="submit"
                                 shape="round"
                                 icon={<CompassFilled />}
-                                disabled={!isCreatedGroup}
                             >
                                 Xác nhận
                             </Button>

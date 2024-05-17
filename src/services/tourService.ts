@@ -124,6 +124,11 @@ class TourService extends ApiBase {
 
         return axios.get(url, { params });
     };
+
+    adminDuplicateTour = (tour_id: number) => {
+        const url = `http://localhost:8080/api/v1/tours/${tour_id}`;
+        return axios.post(url);
+    };
 }
 
 const tourService = new TourService();
