@@ -15,6 +15,10 @@ const Inner = memo(
         setFileList,
         imgURL,
         setImgURL,
+        reduceCost,
+        setReduceCost,
+        minCost,
+        setMinCost,
         showUpload,
         setShowUpload,
         handleCreateNewVoucher,
@@ -25,8 +29,6 @@ const Inner = memo(
 
         const [startDate, setStartDate] = useState('');
         const [expiredDate, setExpiredDate] = useState('');
-        const [reduceCost, setReduceCost] = useState('');
-        const [minCost, setMinCost] = useState('');
 
         const [selectedStartDate, setSelectedStartDate] = useState(false);
 
@@ -98,21 +100,27 @@ const Inner = memo(
             return false;
         };
 
-        const onChangeReduceCost = useCallback(e => {
-            let val = e.target.value;
-            val = val.replace(/\D/g, '');
-            val = Number(val).toLocaleString();
+        const onChangeReduceCost = useCallback(
+            e => {
+                let val = e.target.value;
+                val = val.replace(/\D/g, '');
+                val = Number(val).toLocaleString();
 
-            setReduceCost(val);
-        }, []);
+                setReduceCost(val);
+            },
+            [setReduceCost]
+        );
 
-        const onChangeMinCost = useCallback(e => {
-            let val = e.target.value;
-            val = val.replace(/\D/g, '');
-            val = Number(val).toLocaleString();
+        const onChangeMinCost = useCallback(
+            e => {
+                let val = e.target.value;
+                val = val.replace(/\D/g, '');
+                val = Number(val).toLocaleString();
 
-            setMinCost(val);
-        }, []);
+                setMinCost(val);
+            },
+            [setMinCost]
+        );
 
         const handleSubmitNewVoucher = useCallback(
             values => {

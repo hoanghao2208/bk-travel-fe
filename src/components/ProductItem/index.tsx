@@ -1,7 +1,8 @@
+import { Tooltip } from 'antd';
 import dayjs from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import tourService from 'services/tourService';
-import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
 import { ITour } from 'utils/type';
 import './styles.scss';
@@ -57,7 +58,9 @@ const ProductItem: FC<ProductItemProps> = memo(
                 </div>
                 <div className="product-item__detail">
                     <h3 className="product-item__detail--title">
-                        {tourInformation?.name}
+                        <Tooltip placement="top" title={tourInformation?.name}>
+                            {tourInformation?.name}
+                        </Tooltip>
                     </h3>
                     <div className="product-item__detail--inf1">
                         <span className="product-item__detail--inf1-col1">

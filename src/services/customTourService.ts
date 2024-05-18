@@ -17,7 +17,7 @@ class CustomTourService extends ApiBase {
             user_id: number;
         }
     ) => {
-        const url = `http://localhost:8080/api/v1/users/${userId}/tours`;
+        const url = `http://localhost:8080/api/v1/users/tours`;
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,

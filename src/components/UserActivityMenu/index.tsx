@@ -1,9 +1,4 @@
-import {
-    HeartOutlined,
-    LogoutOutlined,
-    StarOutlined,
-    UserOutlined,
-} from '@ant-design/icons';
+import { HeartOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import React, { FC } from 'react';
@@ -35,10 +30,8 @@ const UserActivityMenu: FC = () => {
         getItem('Thông tin tải khoản', 'account-info', <UserOutlined />, [
             getItem('Thông tin cá nhân', 'user-profile'),
             getItem('Đổi mật khẩu', 'change-password'),
-            getItem('Thông tin thanh toán', 'pay-info'),
             getItem('Đơn hàng', 'orders'),
         ]),
-        getItem('Đánh giá', 'evaluate', <StarOutlined />),
         getItem('Mục yêu thích', 'wishlist', <HeartOutlined />),
         getItem('Đăng xuất', 'log-out', <LogoutOutlined />),
     ];
