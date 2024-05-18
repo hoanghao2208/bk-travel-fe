@@ -104,6 +104,35 @@ class TourService extends ApiBase {
         });
     };
 
+    updateSchedule = (
+        schedule_id: number,
+        requestBody: {
+            tour_id: number;
+            schedule_detail: any;
+        },
+        token: string
+    ) => {
+        const url = `http://localhost:8080/api/v1/schedules/${schedule_id}`;
+        return axios.put(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
+
+    publicTour = (tour_id: number, token: string) => {
+        const url = `http://localhost:8080/api/v1/tours/${tour_id}/public`;
+        return axios.patch(
+            url,
+            {},
+            {
+                headers: {
+                    Authorization: `${token}`,
+                },
+            }
+        );
+    };
+
     getAllAttractionsOfTour = (id_tour: number) => {
         const url = `http://localhost:8080/api/v1/tours/${id_tour}/destinations`;
         return axios.get(url);

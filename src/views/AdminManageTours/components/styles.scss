@@ -88,4 +88,16 @@
             gap: 10px;
         }
     }
+    &__navigate-modal {
+        .ant-modal-footer {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            .ant-btn {
+                height: 36px;
+                span {
+                    font-weight: 500;
+                }
+            }
+        }
+    }
 }

@@ -5,11 +5,14 @@ import {
     EditOutlined,
     UndoOutlined,
 } from '@ant-design/icons';
-import { Button, Tooltip } from 'antd';
+import { Button, Modal, Tooltip } from 'antd';
 import Message from 'components/Message';
 import dayjs from 'dayjs';
-import { FC, memo, useCallback } from 'react';
+import { FC, memo, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getToken } from 'reducers/token/function';
+import routeConstants from 'route/routeConstant';
+import messageService from 'services/messageService';
 import tourService from 'services/tourService';
 import './styles.scss';
 
@@ -43,8 +46,10 @@ const WaitingItem: FC<WaitingItemProps> = memo(
         setSelectedTourId,
         handleRecoverTour,
     }) => {
+        const token = getToken();
         const formattedDate = dayjs(date).format('DD/MM/YYYY');
         const navigate = useNavigate();
+        const [modalNavigate, setModalNavigate] = useState(false);
 
         const handleOpenModal = () => {
             setOpenDeleteModal && setOpenDeleteModal(true);
@@ -67,9 +72,54 @@ const WaitingItem: FC<WaitingItemProps> = memo(
             navigate(`/admin/edit-information-tour/${tour_id}`);
         };
 
-        const handleNavigateSchedule = () => {
-            navigate(`/admin/schedule/${tour_id}`);
-        };
+        const handleNavigateSchedule = useCallback(async () => {
+            try {
+                const response = await tourService.getTourSchedule(tour_id);
+                if (response?.status === 200) {
+                    setModalNavigate(true);
+                }
+            } catch (error: any) {
+                if (error?.response.status === 404) {
+                    navigate(`/admin/schedule/${tour_id}`);
+                }
+            }
+        }, [navigate, tour_id]);
+
+        const handlePublicTour = useCallback(async () => {
+            try {
+                const body = {
+                    tour_id,
+                    name: `Nhóm hỗ trợ ${tourName} - Khởi hành ngày ${dayjs(
+                        date
+                    ).format('DD/MM/YYYY')} - ${time}`,
+                };
+
+                const response1 = await tourService.publicTour(tour_id, token);
+                const response2 = await messageService.createGroup(token, body);
+
+                if (
+                    response1?.status === 200 &&
+                    response2?.status === 201 &&
+                    setRefresh
+                ) {
+                    Message.sendSuccess('Khởi tạo tour thành công');
+                    setModalNavigate(false);
+                    setRefresh(!refresh);
+                    navigate(routeConstants.ADMIN_MANAGE_TOURS);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }, [
+            date,
+            navigate,
+            refresh,
+            setRefresh,
+            time,
+            token,
+            tourName,
+            tour_id,
+        ]);
 
         return (
             <div className="waiting-item">
@@ -165,6 +215,32 @@ const WaitingItem: FC<WaitingItemProps> = memo(
                         </Tooltip>
                     </div>
                 )}
+
+                <Modal
+                    open={modalNavigate}
+                    title="Thông báo"
+                    onCancel={() => setModalNavigate(false)}
+                    className="waiting-item__navigate-modal"
+                    footer={[
+                        <Button key="back" onClick={handlePublicTour}>
+                            Giữ nguyên lịch trình
+                        </Button>,
+                        <Button
+                            key="submit"
+                            type="primary"
+                            onClick={() =>
+                                navigate(`/admin/update/schedule/${tour_id}`)
+                            }
+                        >
+                            Cập nhật lịch trình
+                        </Button>,
+                    ]}
+                >
+                    <p>
+                        Tour du lịch này đã được lên lịch trình từ trước, bạn có
+                        muốn cập nhật lại lịch trình hay không?
+                    </p>
+                </Modal>
             </div>
         );
     }

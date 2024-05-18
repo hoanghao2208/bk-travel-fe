@@ -231,6 +231,12 @@ const routes: Array<Route> = [
         path: routeConstants.ALL_TOURS,
         Component: commonLoadable(() => import('views/UserAllTours')),
     },
+    {
+        name: 'Admin Update Schedule Page',
+        path: routeConstants.ADMIN_UPDATE_SCHEDULE,
+        Component: commonLoadable(() => import('views/AdminUpdateSchedule')),
+        authorization: true,
+    },
 ];
 
 export default routes;
