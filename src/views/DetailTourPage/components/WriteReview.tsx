@@ -44,12 +44,8 @@ const WriteReview: FC<WriteReviewProps> = memo(
                     if (userId) {
                         formData.append('user_id', userId);
                     }
-                    if (content === undefined) {
-                        formData.append('is_comment', 'false');
-                    } else {
-                        formData.append('is_comment', 'true');
-                        formData.append('content', content);
-                    }
+                    formData.append('is_comment', 'true');
+                    formData.append('content', content);
 
                     const response = await commentService.createReview(
                         token,
@@ -107,7 +103,15 @@ const WriteReview: FC<WriteReviewProps> = memo(
                             <Rate />
                         </Form.Item>
                     </div>
-                    <Form.Item name="content">
+                    <Form.Item
+                        name="content"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Vui lòng đóng góp cảm nhận của bạn',
+                            },
+                        ]}
+                    >
                         <TextArea
                             autoSize={{ minRows: 6, maxRows: 9 }}
                             placeholder="Nhập bình luận của bạn"
