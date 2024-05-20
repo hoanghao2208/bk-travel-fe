@@ -7,34 +7,83 @@
     box-sizing: border-box;
     &--item {
         &--wrapper {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            width: 100%;
             margin-top: 20px;
         }
     }
 }
 
 .custom-item {
-    h3 {
-        margin: 0;
-        color: $color--primary;
-    }
+    display: flex;
+    width: 100%;
     background-color: $color--light;
     padding: 16px 24px;
     border-radius: 8px;
     box-shadow: 0 20px 25px -5px $color-shadow1, 0 8px 10px -6px $color-shadow1;
-    &--inf {
-        padding: 10px 0;
-        line-height: 1.4;
-        font-weight: 500;
-        span:first-child {
+    margin-top: 20px;
+    &--image {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    &--details {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 150px;
+    }
+    &--header {
+        h3 {
+            margin: 0;
             color: $color--primary;
-            display: inline-block;
-            margin-right: 6px;
         }
-        span:last-child {
-            color: $color--red
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &--pay-order {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    &--price {
+        font-weight: 600;
+        color: $color--red;
+        background-color: $bg-color--red;
+        display: inline-block;
+        padding: 6.5px 6px;
+        border-radius: 8px;
+    }
+    &--row {
+        display: flex;
+        align-items: baseline;
+        font-weight: 500;
+        .first-item,
+        .second-item {
+            width: 300px;
         }
+        div {
+            span:first-child {
+                color: $color--primary;
+            }
+            span:last-child {
+                color: $color--red;
+            }
+        }
+    }
+    &--status {
+        font-weight: 600;
+        background-color: $color-button--green;
+        color: $color-button--green-hover;
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 8px;
+        text-transform: uppercase;
     }
 }

@@ -4,13 +4,11 @@ import dayjs from 'dayjs';
 import { memo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { DEFAULT_DISPLAY_DATE_FORMAT, TIME_FORMAT } from 'utils/constants';
-import FormList from 'views/AdminSchedule/views/FormList';
+import FormList from 'views/AdminUpdateSchedule/views/FormList';
 import './style.scss';
 
-const SCHEDULE_DEFAULT_VALUE = [undefined];
-
 const ScheduleList = memo(
-    ({ form, tourData, column, handleScheduleTour }) => {
+    ({ form, tourData, scheduleData, column, handleUpdateScheduleTour }) => {
         const { tour_id } = useParams();
 
         const renderForms = () => {
@@ -66,23 +64,38 @@ const ScheduleList = memo(
                 schedule_detail,
             };
 
-            handleScheduleTour(scheduleData);
+            handleUpdateScheduleTour(scheduleData);
         };
 
         useEffect(() => {
             for (let i = 1; i <= column; i++) {
                 const fieldName = `schedule-${i}`;
+                const UPDATE_SCHEDULE_DEFAULT_VALUES = [];
+                const dayData = scheduleData[i - 1];
+                dayData?.detail.forEach(day => {
+                    const [startTime, endTime] = day.range_time.split(' - ');
+                    const dataItem = {
+                        range_time: [
+                            dayjs(startTime, TIME_FORMAT),
+                            dayjs(endTime, TIME_FORMAT),
+                        ],
+                        name: day.name,
+                        description: day.description,
+                        note: day.note,
+                    };
+                    UPDATE_SCHEDULE_DEFAULT_VALUES.push(dataItem);
+                });
                 form.setFieldsValue({
-                    [fieldName]: SCHEDULE_DEFAULT_VALUE,
+                    [fieldName]: UPDATE_SCHEDULE_DEFAULT_VALUES,
                 });
             }
-        }, [column, form]);
+        }, [column, form, scheduleData]);
 
         return (
             <div>
                 <Form
                     form={form}
-                    name="admin-schedule-list"
+                    name="admin-update-schedule"
                     onFinish={onFinish}
                     autoComplete="off"
                     layout="vertical"

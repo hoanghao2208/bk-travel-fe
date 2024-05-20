@@ -227,6 +227,17 @@ const routes: Array<Route> = [
         authorization: true,
     },
     {
+        name: 'User All Tours Page',
+        path: routeConstants.ALL_TOURS,
+        Component: commonLoadable(() => import('views/UserAllTours')),
+    },
+    {
+        name: 'Admin Update Schedule Page',
+        path: routeConstants.ADMIN_UPDATE_SCHEDULE,
+        Component: commonLoadable(() => import('views/AdminUpdateSchedule')),
+        authorization: true,
+    },
+    {
         name: 'TourGuide Home Page',
         path: routeConstants.TOURGUIDE_HOMEPAGE,
         Component: commonLoadable(() => import('views/TourGuideHomePage')),

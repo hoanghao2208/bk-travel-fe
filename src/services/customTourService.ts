@@ -17,7 +17,7 @@ class CustomTourService extends ApiBase {
             user_id: number;
         }
     ) => {
-        const url = `http://localhost:8080/api/v1/users/${userId}/tours`;
+        const url = `http://localhost:8080/api/v1/users/tours`;
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -50,7 +50,7 @@ class CustomTourService extends ApiBase {
     };
 
     getRejectedTourByUser = (user_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/users/${user_id}/rejectedtour`;
+        const url = `http://localhost:8080/api/v1/users/${user_id}/rejectedTour`;
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -59,7 +59,7 @@ class CustomTourService extends ApiBase {
     };
 
     getSuccessTourByUser = (user_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/users/${user_id}/successtour`;
+        const url = `http://localhost:8080/api/v1/users/${user_id}/successTour`;
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,

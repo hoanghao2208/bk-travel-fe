@@ -1,0 +1,89 @@
+@import 'scss/global.scss';
+
+.location {
+    &-form {
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
+        &-btn {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -60px;
+        }
+    }
+    &-form-list {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        .ant-select-selector {
+            height: 36px !important;
+            font-size: 16px;
+            color: $color-date;
+            font-weight: 500;
+            span {
+                font-weight: 500;
+            }
+        }
+        .ant-picker {
+            width: 100%;
+            height: 36px;
+        }
+        .ant-picker-input {
+            input {
+                color: $color-date;
+                font-weight: 500;
+                font-size: 16px;
+            }
+        }
+        .ant-btn {
+            height: 36px;
+            span {
+                font-weight: 500;
+                font-size: 16px;
+                color: $color-date;
+            }
+        }
+        .ant-form-item-label > label {
+            line-height: 1.4;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .ant-input {
+            width: 100%;
+            height: 36px;
+            color: $color-date;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        &__btn {
+            display: flex;
+            justify-content: center;
+        }
+    }
+    &-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        p {
+            font-size: 20px;
+            font-weight: 500;
+            color: $color-date;
+        }
+        &__btn {
+            display: flex;
+            gap: 20px;
+        }
+    }
+}
+
+.admin-schedule-confirm-btn {
+    text-align: center;
+    .ant-btn {
+        width: 200px;
+        height: 40px;
+        span {
+            font-weight: 500;
+        }
+    }
+}

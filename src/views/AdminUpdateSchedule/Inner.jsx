@@ -2,11 +2,18 @@ import { Spin } from 'antd';
 import dayjs from 'dayjs';
 import AdminLayout from 'layouts/AdminLayout';
 import { memo, useEffect } from 'react';
-import ScheduleList from 'views/AdminSchedule/views/ScheduleList';
+import ScheduleList from 'views/AdminUpdateSchedule/views/ScheduleList';
 import './style.scss';
 
 const Inner = memo(
-    ({ form, tourData, column, handleScheduleTour, loading }) => {
+    ({
+        form,
+        tourData,
+        scheduleData,
+        column,
+        handleUpdateScheduleTour,
+        loading,
+    }) => {
         useEffect(() => {
             document.title = 'Lên lịch trình tour';
         });
@@ -17,7 +24,7 @@ const Inner = memo(
                     <div className="admin-schedule">
                         <div className="admin-schedule__header">
                             <h1 className="admin-schedule__header--title">
-                                lên lịch trình tour
+                                cập nhật lịch trình tour
                             </h1>
                             {tourData.name && (
                                 <p className="admin-schedule__header--intro">
@@ -33,8 +40,11 @@ const Inner = memo(
                             <ScheduleList
                                 form={form}
                                 tourData={tourData}
+                                scheduleData={scheduleData}
                                 column={column}
-                                handleScheduleTour={handleScheduleTour}
+                                handleUpdateScheduleTour={
+                                    handleUpdateScheduleTour
+                                }
                             />
                         </div>
                     </div>
@@ -44,6 +54,6 @@ const Inner = memo(
     }
 );
 
-Inner.displayName = 'Admin Schedule Inner';
+Inner.displayName = 'Admin Update Schedule Inner';
 
 export default Inner;

@@ -52,6 +52,7 @@ const Inner = memo(
             useState(false);
         const [departureTime, setDepartureTime] = useState('');
         const [deadlineDate, setDeadlineDate] = useState('');
+        const [price, setPrice] = useState('');
 
         const [currentError, setCurrentError] = useState('');
         const [destinationPlaces, setDestinationPlaces] = useState([]);
@@ -101,6 +102,14 @@ const Inner = memo(
         const onChangeTime = (_, timeString) => {
             setDepartureTime(timeString);
         };
+
+        const onChangePrice = useCallback(e => {
+            let val = e.target.value;
+            val = val.replace(/\D/g, '');
+            val = Number(val).toLocaleString();
+
+            setPrice(val);
+        }, []);
 
         const handleBeforeUpload = file => {
             const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -212,6 +221,7 @@ const Inner = memo(
                 all_attractions: allAttractions,
                 destination_places,
                 list_images: tourImageList,
+                price: Number(price.replace(/\./g, '')),
             };
 
             handleCreateNewTour(tourData);
@@ -669,21 +679,24 @@ const Inner = memo(
                                     <div className="add-new-tour__content-inf2--item">
                                         <Form.Item
                                             label="Giá tour (VNĐ)"
-                                            name="price"
                                             rules={[
                                                 {
                                                     required: true,
                                                     message:
                                                         'Vui lòng nhập giá tour',
                                                 },
-                                                {
-                                                    pattern: DIGIT_VALIDATE,
-                                                    message:
-                                                        'Giá tour không phù hợp, vui lòng kiếm tra lại',
-                                                },
+                                                // {
+                                                //     pattern: DIGIT_VALIDATE,
+                                                //     message:
+                                                //         'Giá tour không phù hợp, vui lòng kiếm tra lại',
+                                                // },
                                             ]}
                                         >
-                                            <Input placeholder="Giá tour (VNĐ)" />
+                                            <Input
+                                                placeholder="Giá tour (VNĐ)"
+                                                value={price}
+                                                onChange={onChangePrice}
+                                            />
                                         </Form.Item>
                                     </div>
                                 </div>

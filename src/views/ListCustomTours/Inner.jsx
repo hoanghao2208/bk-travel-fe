@@ -14,6 +14,7 @@ const renderCustomItem = (tours, name, status) => (
             {tours.map(tour => (
                 <CustomItem
                     key={tour.tour_id}
+                    tour_id={tour.tour_id}
                     status={status}
                     tourName={tour.name}
                     departure={tour.departure_place}

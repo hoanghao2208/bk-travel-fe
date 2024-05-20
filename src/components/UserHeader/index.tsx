@@ -1,6 +1,5 @@
-import { Button, Input } from 'antd';
+import { Button } from 'antd';
 import Logo from 'assets/icons/Logo';
-import SearchIcon from 'assets/icons/SearchIcon';
 import { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import routeConstants from 'route/routeConstant';
@@ -15,12 +14,6 @@ const UserHeader: FC = () => {
                     <Link to={routeConstants.USER_HOME_PAGE}>
                         <Logo />
                     </Link>
-                </div>
-                <div className="user-header__search">
-                    <Input
-                        placeholder="Tìm kiếm điểm đến, hoạt động ..."
-                        prefix={<SearchIcon />}
-                    />
                 </div>
                 <div className="user-header__navigate">
                     <Link to={routeConstants.USER_LIST_CUSTOM_TOURS}>

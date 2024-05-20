@@ -1,5 +1,5 @@
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Dropdown, Input, Tooltip } from 'antd';
+import { Avatar, Badge, Dropdown, Tooltip } from 'antd';
 import BellNotifyIcon from 'assets/icons/BellNotifyIcon';
 import CartIcon from 'assets/icons/CartIcon';
 import HeartDropDown from 'assets/icons/HeartDropDown';
@@ -7,7 +7,6 @@ import LogOutIcon from 'assets/icons/LogOutIcon';
 import Logo from 'assets/icons/Logo';
 import MessageIcon from 'assets/icons/MessageIcon';
 import MoneyDropDown from 'assets/icons/MoneyDropDown';
-import SearchIcon from 'assets/icons/SearchIcon';
 import UserDropDown from 'assets/icons/UserDropDown';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -37,7 +36,7 @@ const UserLoginHeader: FC = () => {
 
     const handleGetUserInfo = useCallback(async () => {
         try {
-            if(user_id === 0) {
+            if (user_id === 0) {
                 return;
             }
             const response = await userService.getUserInfo(user_id, token);
@@ -133,12 +132,6 @@ const UserLoginHeader: FC = () => {
                     <Link to={routeConstants.USER_HOME_PAGE}>
                         <Logo />
                     </Link>
-                </div>
-                <div className="user-login-header__search">
-                    <Input
-                        placeholder="Tìm kiếm điểm đến, hoạt động ..."
-                        prefix={<SearchIcon />}
-                    />
                 </div>
                 <div className="user-login-header__navigate">
                     <Link to={routeConstants.USER_LIST_CUSTOM_TOURS}>

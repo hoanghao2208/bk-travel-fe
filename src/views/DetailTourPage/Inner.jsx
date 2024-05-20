@@ -13,9 +13,10 @@ import Title from 'components/Title';
 import ModalSelectPassenger from 'components/TourItem/components/ModalSelectPassenger';
 import dayjs from 'dayjs';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getCustomerId, useToken } from 'reducers/token/function';
+import LoadableLoading from 'route/components/LoadableLoading';
 import routeConstants from 'route/routeConstant';
 import userService from 'services/userService';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
@@ -31,6 +32,7 @@ const Inner = memo(
     ({
         tourData,
         orderData,
+        orderPaymentData,
         socket,
         commentsList,
         reviewsList,
@@ -58,6 +60,7 @@ const Inner = memo(
         const { tour_id } = useParams();
         const userId = getCustomerId();
 
+        const [curPayment, setCurPayment] = useState(0);
         const [activeTab, setActiveTab] = useState('RATING');
         const [openModalJoinChat, setOpenModalJoinChat] = useState(false);
 
@@ -94,8 +97,24 @@ const Inner = memo(
             }
         }, [loveList, navigate, setLoveList, token, tour_id, userId]);
 
+        const isTourIdExists = useMemo(() => {
+            if (tour_id) {
+                for (let index = 0; index < orderPaymentData.length; index++) {
+                    const item = orderPaymentData[index];
+                    if (
+                        item !== undefined &&
+                        item.tour_id.includes(parseInt(tour_id))
+                    ) {
+                        setCurPayment(index);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }, [orderPaymentData, tour_id]);
+
         if (!tourData || !tourData.description || !tourData.list_image) {
-            return null;
+            return <LoadableLoading />;
         }
 
         const imageList = JSON.parse(tourData.list_image);
@@ -132,7 +151,7 @@ const Inner = memo(
                                     ({tourData?.count_reviewer} lượt đánh giá)
                                 </span>
                                 <span className="tour-detail__header--count">
-                                    5000+ Tour đã được đặt
+                                    {tourData?.current_customers} khách hàng đã đặt tour
                                 </span>
                             </p>
                             <p
@@ -301,6 +320,8 @@ const Inner = memo(
                                     <WriteReview
                                         reload={reload}
                                         setReload={setReload}
+                                        curPayment={curPayment}
+                                        isTourIdExists={isTourIdExists}
                                     />
                                 </div>
                                 {reviewsList.length > 0 &&
@@ -367,6 +388,9 @@ const Inner = memo(
                         openModal={openOrderModal}
                         setOpenModal={setOpenOrderModal}
                         handleFinish={handleCreateOrder}
+                        empty={
+                            tourData.max_customer - tourData.current_customers
+                        }
                     />
                     <ConfirmToChat
                         socket={socket}

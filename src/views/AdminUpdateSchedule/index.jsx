@@ -7,7 +7,7 @@ import { getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import messageService from 'services/messageService';
 import tourService from 'services/tourService';
-import Inner from 'views/AdminSchedule/Inner';
+import Inner from 'views/AdminUpdateSchedule/Inner';
 
 const Wrapper = memo(() => {
     const token = getToken();
@@ -15,6 +15,8 @@ const Wrapper = memo(() => {
     const navigate = useNavigate();
 
     const [tourData, setTourData] = useState({});
+    const [scheduleData, setScheduleData] = useState([]);
+    const [scheduleId, setScheduleId] = useState(undefined);
     const [column, setColumn] = useState(0);
     const [loading, setLoading] = useState(false);
 
@@ -34,7 +36,19 @@ const Wrapper = memo(() => {
         }
     }, [tour_id]);
 
-    const handleScheduleTour = useCallback(
+    const handleGetScheduleData = useCallback(async () => {
+        try {
+            const response = await tourService.getTourSchedule(tour_id);
+            if (response?.status === 200) {
+                setScheduleData(response.data.schedule_tour.schedule_detail);
+                setScheduleId(response.data.schedule_tour.id);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, [tour_id]);
+
+    const handleUpdateScheduleTour = useCallback(
         async scheduleData => {
             try {
                 setLoading(true);
@@ -46,14 +60,15 @@ const Wrapper = memo(() => {
                         'DD/MM/YYYY'
                     )} - ${tourData.time}`,
                 };
-                const response1 = await tourService.createSchedule(
+                const response1 = await tourService.updateSchedule(
+                    scheduleId,
                     scheduleData,
                     token
                 );
                 const response2 = await messageService.createGroup(token, body);
 
-                if (response1?.status === 201 && response2?.status === 201) {
-                    Message.sendSuccess('Khởi tạo lịch trình thành công');
+                if (response1?.status === 200 && response2?.status === 201) {
+                    Message.sendSuccess('Cập nhật lịch trình thành công');
                     form.resetFields();
                     navigate(routeConstants.ADMIN_MANAGE_TOURS);
                 }
@@ -64,25 +79,30 @@ const Wrapper = memo(() => {
                 setLoading(false);
             }
         },
-        [form, navigate, token, tourData, tour_id]
+        [form, navigate, scheduleId, token, tourData, tour_id]
     );
 
     useEffect(() => {
         handleGetTourDetails();
     }, [handleGetTourDetails]);
 
+    useEffect(() => {
+        handleGetScheduleData();
+    }, [handleGetScheduleData]);
+
     return (
         <Inner
             form={form}
             tourData={tourData}
+            scheduleData={scheduleData}
             column={column}
-            handleScheduleTour={handleScheduleTour}
+            handleUpdateScheduleTour={handleUpdateScheduleTour}
             loading={loading}
         />
     );
 });
 
-Wrapper.displayName = 'Admin Schedule';
+Wrapper.displayName = 'Admin Update Schedule';
 
 const AdminSchedule = Wrapper;
 

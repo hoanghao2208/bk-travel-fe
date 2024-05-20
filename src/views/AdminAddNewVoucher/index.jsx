@@ -12,6 +12,8 @@ const Wrapper = memo(() => {
     const [loading, setLoading] = useState(false);
     const [fileList, setFileList] = useState([]);
     const [imgURL, setImgURL] = useState('');
+    const [reduceCost, setReduceCost] = useState('');
+    const [minCost, setMinCost] = useState('');
     const [showUpload, setShowUpload] = useState(true);
 
     const handleCreateNewVoucher = useCallback(
@@ -33,6 +35,8 @@ const Wrapper = memo(() => {
                     Message.sendSuccess('Tạo mã giảm giá mới thành công');
                     setFileList([]);
                     setImgURL('');
+                    setReduceCost('');
+                    setMinCost('');
                     setShowUpload(true);
                     form.resetFields();
                 }
@@ -54,6 +58,10 @@ const Wrapper = memo(() => {
                 setFileList={setFileList}
                 imgURL={imgURL}
                 setImgURL={setImgURL}
+                reduceCost={reduceCost}
+                setReduceCost={setReduceCost}
+                minCost={minCost}
+                setMinCost={setMinCost}
                 showUpload={showUpload}
                 setShowUpload={setShowUpload}
                 handleCreateNewVoucher={handleCreateNewVoucher}

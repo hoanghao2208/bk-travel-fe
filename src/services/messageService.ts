@@ -90,7 +90,7 @@ class MessageService extends ApiBase {
     };
 
     getAllGroupsByUserId = (user_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/user/${user_id}/groups`;
+        const url = `http://localhost:8080/api/v1/users/${user_id}/groups`;
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
