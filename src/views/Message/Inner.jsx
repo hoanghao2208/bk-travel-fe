@@ -29,6 +29,7 @@ const Inner = memo(
                                     activeGrp={activeGrp}
                                     setActiveGrp={setActiveGrp}
                                     key={group.group_id}
+                                    socket={socket}
                                 />
                             ))}
                         </div>

@@ -1,6 +1,5 @@
 import { Tooltip } from 'antd';
 import { FC, memo } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import '../styles.scss';
 
 interface GroupProps {
@@ -9,17 +8,14 @@ interface GroupProps {
     id: number;
     activeGrp?: number;
     setActiveGrp?: (value: number) => void;
+    socket: any;
 }
 
 const Group: FC<GroupProps> = memo(
-    ({ name, desc, id, activeGrp, setActiveGrp }) => {
-        const [searchParams, setSearchParams] = useSearchParams();
-
+    ({ name, desc, id, activeGrp, setActiveGrp, socket }) => {
         const handleSelectGroup = () => {
             setActiveGrp && setActiveGrp(id);
-            const params = new URLSearchParams(searchParams);
-            params.set('selectedGrp', id.toString());
-            setSearchParams(params);
+            socket.emit('join', id);
         };
 
         return (

@@ -1,5 +1,4 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { getCustomerId, getToken } from 'reducers/token/function';
 import messageService from 'services/messageService';
 import io from 'socket.io-client';
@@ -12,21 +11,15 @@ const Wrapper = memo(() => {
         document.title = 'Tin nhắn';
     });
 
-    const [searchParams] = useSearchParams();
-
     const token = getToken();
     const userId = getCustomerId();
 
     const [allGroups, setAllGroups] = useState([]);
     const [allMessage, setAllMessage] = useState([]);
     const [groupInfo, setGroupInfo] = useState([]);
-    const [arrivalGrps, setArrivalGrps] = useState([]);
+    // const [arrivalGrps, setArrivalGrps] = useState([]);
 
-    const [arrivalMessage, setArrivalMessage] = useState(null);
-
-    const [activeGrp, setActiveGrp] = useState(
-        Object.fromEntries(searchParams.entries()).selectedGrp || null
-    );
+    const [activeGrp, setActiveGrp] = useState(null);
 
     useEffect(() => {
         socket = io('http://localhost:8080', {
@@ -34,20 +27,31 @@ const Wrapper = memo(() => {
         });
 
         socket.on('connect', () => {
+            // eslint-disable-next-line no-console
             console.log('Connected to the server');
         });
 
         socket.emit('online', userId);
 
-        socket.on('room message', msg => {
-            console.log('Received message:', msg);
+        socket.on('room message', (msg, user_id) => {
+            const newMsg = {
+                content: msg,
+                group_id: parseInt(activeGrp),
+                message_id: allMessage.length + 1,
+                user_id,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+            };
+            setAllMessage(prev => [...prev, newMsg]);
         });
 
         socket.on('groupData', groups => {
+            // eslint-disable-next-line no-console
             console.log('Received group data:', groups);
         });
 
         socket.on('disconnect', () => {
+            // eslint-disable-next-line no-console
             console.log('Disconnected from the server');
         });
 
@@ -59,12 +63,14 @@ const Wrapper = memo(() => {
 
     const getAllMessages = useCallback(async () => {
         try {
-            const response = await messageService.getAllMessages(
-                activeGrp,
-                token
-            );
-            if (response?.status === 200) {
-                setAllMessage(response.data.data);
+            if (activeGrp !== null) {
+                const response = await messageService.getAllMessages(
+                    activeGrp,
+                    token
+                );
+                if (response?.status === 200) {
+                    setAllMessage(response.data.data);
+                }
             }
         } catch (error) {
             console.error(error);
@@ -73,7 +79,7 @@ const Wrapper = memo(() => {
 
     const getActiveGroupInfo = useCallback(async () => {
         try {
-            if (activeGrp) {
+            if (activeGrp !== null) {
                 const response = await messageService.getGroupById(
                     activeGrp,
                     token
@@ -110,25 +116,8 @@ const Wrapper = memo(() => {
     }, [getAllGroupsOfUser]);
 
     useEffect(() => {
-        arrivalGrps && setAllGroups([...arrivalGrps]);
-    }, [arrivalGrps]);
-
-    useEffect(() => {
         getAllMessages();
     }, [getAllMessages]);
-
-    useEffect(() => {
-        arrivalMessage && setAllMessage(prev => [...prev, arrivalMessage]);
-    }, [arrivalMessage]);
-
-    // useEffect(() => {
-    //     if (contentRef.current) {
-    //         contentRef.current.scrollIntoView({
-    //             behavior: 'smooth',
-    //             block: 'end',
-    //         });
-    //     }
-    // }, [allMessage, reload]);
 
     return (
         <Inner
