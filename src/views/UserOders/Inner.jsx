@@ -13,7 +13,7 @@ const Inner = memo(({ completedOrders }) => {
             <div className="orders">
                 <Title title="Đơn hàng đã thanh toán" />
                 <div className="orders--list">
-                    {completedOrders.map(order => (
+                    {completedOrders?.map(order => (
                         <OrderItem
                             key={order.order_id}
                             paymentId={order.payment_id}

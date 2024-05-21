@@ -27,8 +27,8 @@
         }
         &-inf1 {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
             .ant-select-selector {
                 height: 36px !important;
                 font-size: 14px;

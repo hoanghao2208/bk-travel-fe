@@ -1,8 +1,7 @@
 import { CompassFilled } from '@ant-design/icons';
-import { Button, DatePicker, Form, Select } from 'antd';
+import { Button, Form, Select } from 'antd';
 import AdminLayout from 'layouts/AdminLayout';
 import { memo, useEffect, useRef } from 'react';
-import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
 import './style.scss';
 
 const Inner = memo(() => {
@@ -44,71 +43,6 @@ const Inner = memo(() => {
                         <div className="admin-assign-task__content-inf1">
                             <div className="admin-assign-task__content-inf1--item">
                                 <Form.Item
-                                    label="Điểm khởi hành"
-                                    name="departure"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                'Vui lòng chọn điểm khởi hành',
-                                        },
-                                    ]}
-                                >
-                                    <Select placeholder="Điểm khởi hành">
-                                        <Option value="hochiminh">
-                                            TP. Hồ Chí Minh
-                                        </Option>
-                                        <Option value="danang">Đà Nẵng</Option>
-                                        <Option value="hanoi">Hà Nội</Option>
-                                        <Option value="vungtau">
-                                            Vũng Tàu
-                                        </Option>
-                                    </Select>
-                                </Form.Item>
-                            </div>
-                            <div className="admin-assign-task__content-inf1--item">
-                                <Form.Item
-                                    label="Điểm đến"
-                                    name="destination"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Vui lòng chọn điểm đến',
-                                        },
-                                    ]}
-                                >
-                                    <Select placeholder="Điểm đến">
-                                        <Option value="hochiminh">
-                                            TP. Hồ Chí Minh
-                                        </Option>
-                                        <Option value="danang">Đà Nẵng</Option>
-                                        <Option value="hanoi">Hà Nội</Option>
-                                        <Option value="vungtau">
-                                            Vũng Tàu
-                                        </Option>
-                                    </Select>
-                                </Form.Item>
-                            </div>
-                            <div className="admin-assign-task__content-inf1--item">
-                                <Form.Item
-                                    label="Ngày khởi hành"
-                                    name="day"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                'Vui lòng chọn ngày khởi hành',
-                                        },
-                                    ]}
-                                >
-                                    <DatePicker
-                                        placeholder="Ngày khởi hành"
-                                        format={DEFAULT_DISPLAY_DATE_FORMAT}
-                                    />
-                                </Form.Item>
-                            </div>
-                            <div className="admin-assign-task__content-inf1--item">
-                                <Form.Item
                                     label="Tour hướng dẫn"
                                     name="tour"
                                     rules={[
@@ -148,8 +82,6 @@ const Inner = memo(() => {
                                     />
                                 </Form.Item>
                             </div>
-                        </div>
-                        <div className="admin-assign-task__content-inf1">
                             <div className="admin-assign-task__content-inf1--item">
                                 <Form.Item
                                     label="Số hướng dẫn viên"
@@ -245,6 +177,7 @@ const Inner = memo(() => {
                                 </Form.Item>
                             </div>
                         </div>
+                        <div className="admin-assign-task__content-inf1"></div>
                         <div className="admin-assign-task__content-btn">
                             <Button
                                 type="primary"
