@@ -14,7 +14,6 @@
         }
         &--btn {
             .ant-btn {
-                width: 160px;
                 height: 40px;
                 border-color: $color--light;
                 span {
@@ -30,6 +29,50 @@
             margin: 0;
             padding: 14px;
             border-radius: 8px 8px 0 0;
+        }
+    }
+}
+
+.add-tourguide-modal {
+    width: 600px !important;
+    .ant-modal-footer {
+        text-align: center;
+        .ant-btn {
+            width: 120px;
+            height: 36px;
+            span {
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+.modal-item {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    .ant-form-item-label > label {
+        line-height: 1.4;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .ant-input,
+    .ant-input-affix-wrapper {
+        position: relative;
+        align-items: center;
+        width: 100%;
+        height: 36px;
+        color: $color-date;
+        font-weight: 500;
+        font-size: 16px;
+    }
+    .ant-select-selector {
+        height: 36px !important;
+        font-size: 16px;
+        color: $color-date;
+        font-weight: 500;
+        span {
+            font-weight: 500;
         }
     }
 }

@@ -10,6 +10,25 @@ class TourGuideService extends ApiBase {
             },
         });
     };
+
+    createTourguide = (
+        requestBody: {
+            email: string;
+            password: string;
+            gender: string;
+            phone_number: string;
+            lastname: string;
+            firstname: string;
+        },
+        token: string
+    ) => {
+        const url = 'http://localhost:8080/admin/manage-account';
+        return axios.post(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
 }
 
 const tourGuideService = new TourGuideService();
