@@ -1,7 +1,7 @@
 import { SendOutlined } from '@ant-design/icons';
 import { Button, Input, Tooltip } from 'antd';
 import Message from 'components/Message';
-import { FC, memo, useCallback, useRef, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
 import { getCustomerId, getToken } from 'reducers/token/function';
 import messageService from 'services/messageService';
 import MessageItem from 'views/Message/components/MessageItem';
@@ -26,14 +26,24 @@ const ChatSection: FC<ChatSectionProps> = memo(
             setContentMessage(e.target.value);
         }, []);
 
+        useEffect(() => {
+            if (contentRef.current) {
+                contentRef.current.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'end',
+                });
+            }
+        }, [allMessage]);
+
         const handleSendMessage = useCallback(async () => {
             try {
                 if (contentMessage !== '') {
-                    socket.emit('send message', contentMessage, activeGrp);
-                    // socket.emit('send message', {
-                    //     msg: contentMessage,
-                    //     room: activeGrp,
-                    // });
+                    socket.emit(
+                        'send message',
+                        contentMessage,
+                        activeGrp,
+                        userId
+                    );
                     const body = {
                         group_id: activeGrp,
                         user_id: userId,
