@@ -30,8 +30,8 @@ const Inner = memo(({ voucherData, setIsReload }) => {
         return [
             {
                 title: 'ID',
-                dataIndex: 'voucher_id',
                 align: 'center',
+                render: (text, record, index) => index + 1,
             },
             {
                 title: 'Tên mã giảm',

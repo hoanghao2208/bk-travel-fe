@@ -27,8 +27,15 @@
         }
         &-inf1 {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
+            .ant-input {
+                width: 100%;
+                height: 36px;
+                color: $color-date;
+                font-weight: 500;
+                font-size: 16px;
+            }
             .ant-select-selector {
                 height: 36px !important;
                 font-size: 14px;

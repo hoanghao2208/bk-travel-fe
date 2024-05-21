@@ -5,50 +5,53 @@ import { EMAIL_VALIDATE } from 'utils/constants';
 import './style.scss';
 
 const Inner = memo(
-    ({ form, modalTourguide, setModalTourguide, handleCreateTourguide }) => {
+    ({
+        form,
+        tourguideData,
+        modalTourguide,
+        setModalTourguide,
+        handleCreateTourguide,
+    }) => {
         useEffect(() => {
             document.title = 'Quản lý hướng dẫn viên';
         });
         const columns = [
             {
                 title: 'STT',
-                dataIndex: 'stt',
                 align: 'center',
-                key: 'name',
-            },
-            {
-                title: 'ID',
-                dataIndex: 'id',
-                align: 'center',
-                key: 'id',
+                render: (text, record, index) => index + 1,
             },
             {
                 title: 'Họ và tên',
-                dataIndex: 'name',
                 align: 'center',
-                key: 'name',
+                render: (_, col) => {
+                    return (
+                        <span>
+                            {col.firstname + ' '}
+                            {col.lastname}
+                        </span>
+                    );
+                },
             },
             {
-                title: 'Ngày sinh',
-                dataIndex: 'date',
+                title: 'Giới tính',
+                dataIndex: 'gender',
                 align: 'center',
-                key: 'date',
+            },
+            {
+                title: 'Email',
+                dataIndex: 'email',
+                align: 'center',
             },
             {
                 title: 'Số điện thoại',
-                dataIndex: 'phone',
+                dataIndex: 'phone_number',
                 align: 'center',
-                key: 'phone',
             },
             {
                 title: 'Số tour được giao',
                 dataIndex: 'task',
                 align: 'center',
-                key: 'task',
-            },
-            {
-                align: 'center',
-                key: 'action',
             },
         ];
 
@@ -59,7 +62,6 @@ const Inner = memo(
             [handleCreateTourguide]
         );
 
-        const data = [];
         return (
             <AdminLayout>
                 <div className="admin-tour-guides">
@@ -78,13 +80,16 @@ const Inner = memo(
                             Danh sách tất cả các hướng dẫn viên trên hệ thống
                         </h3>
                         <div className="admin-tour-guides__content--table">
-                            <Table columns={columns} dataSource={data} />
+                            <Table
+                                columns={columns}
+                                dataSource={tourguideData}
+                                pagination={false}
+                            />
                         </div>
                     </div>
                     <Modal
                         open={modalTourguide}
                         title="Hướng dẫn viên mới"
-                        // onOk={handleOk}
                         onCancel={() => setModalTourguide(false)}
                         className="add-tourguide-modal"
                         footer={[
@@ -99,7 +104,6 @@ const Inner = memo(
                                 key="submit"
                                 type="primary"
                                 form="add-tourguide"
-                                // onClick={handleOk}
                             >
                                 Xác nhận
                             </Button>,

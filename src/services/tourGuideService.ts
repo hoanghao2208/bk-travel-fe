@@ -29,6 +29,23 @@ class TourGuideService extends ApiBase {
             },
         });
     };
+
+    assignTask = (
+        requestBody: {
+            tour_id: number;
+            number: number;
+            listTourGuides: string[];
+            description: string;
+        },
+        token: string
+    ) => {
+        const url = 'http://localhost:8080/admin/task';
+        return axios.post(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
 }
 
 const tourGuideService = new TourGuideService();
