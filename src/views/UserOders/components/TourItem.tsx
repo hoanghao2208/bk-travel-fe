@@ -34,7 +34,9 @@ const TourItem: FC<TourItemProps> = memo(
                 className="tour-item-completed"
                 onClick={() => {
                     if (!destination_place.includes('[')) {
-                        navigate(`/tour/information/detail/${tour_id}`);
+                        navigate(
+                            `/tour/schedule/information/detail/${tour_id}`
+                        );
                     }
                 }}
             >

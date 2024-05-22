@@ -1,6 +1,5 @@
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Badge, Dropdown, Tooltip } from 'antd';
-import BellNotifyIcon from 'assets/icons/BellNotifyIcon';
 import CartIcon from 'assets/icons/CartIcon';
 import HeartDropDown from 'assets/icons/HeartDropDown';
 import LogOutIcon from 'assets/icons/LogOutIcon';
@@ -137,18 +136,10 @@ const UserLoginHeader: FC = () => {
                     <Link to={routeConstants.USER_LIST_CUSTOM_TOURS}>
                         Tour đề xuất
                     </Link>
-                    <Link to={routeConstants.USER_ORDERS}>Đơn hàng của bạn</Link>
+                    <Link to={routeConstants.USER_ORDERS}>
+                        Đơn hàng của bạn
+                    </Link>
                     <Link to={routeConstants.WEATHER_FORECAST}>Thời tiết</Link>
-                    <div
-                        onClick={() => navigate('/')}
-                        className="user-login-header__navigate--bell"
-                    >
-                        <Tooltip placement="top" title="Thông báo">
-                            <Badge count={8} overflowCount={10}>
-                                <BellNotifyIcon />
-                            </Badge>
-                        </Tooltip>
-                    </div>
                     <div
                         onClick={() => navigate(routeConstants.MESSAGE)}
                         className="user-login-header__navigate--bell"
