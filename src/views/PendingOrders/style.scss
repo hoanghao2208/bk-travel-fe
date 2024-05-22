@@ -9,16 +9,6 @@
         flex-direction: column;
         gap: 40px;
     }
-    &-pending-item--status {
-        text-transform: uppercase;
-        background-color: $color-status--warning;
-        color: $color-status--deploying;
-        font-weight: 600;
-        border-radius: 8px;
-        display: inline-block;
-        padding: 6px 8px;
-        font-size: 14px;
-    }
 }
 
 .orders-item {

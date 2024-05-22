@@ -38,6 +38,7 @@ const routeConstants = {
     TOURGUIDE_MISSION: '/tour-guide/missions/:tour_id',
     TOURGUIDE_MESSAGE: '/tour-guide/messages',
     ALL_TOURS: '/all-tours',
+    PENDING_ORDERS: '/pending-orders'
 };
 
 export default routeConstants;

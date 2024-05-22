@@ -78,14 +78,14 @@ const UserLoginHeader: FC = () => {
             key: '2',
             label: (
                 <Link
-                    to="/orders"
+                    to={routeConstants.PENDING_ORDERS}
                     style={{
                         fontSize: '16px',
                         display: 'inline-block',
                         paddingLeft: '10px',
                     }}
                 >
-                    Đơn hàng của bạn
+                    Đơn hàng chưa thanh toán
                 </Link>
             ),
             icon: <MoneyDropDown />,
@@ -137,7 +137,7 @@ const UserLoginHeader: FC = () => {
                     <Link to={routeConstants.USER_LIST_CUSTOM_TOURS}>
                         Tour đề xuất
                     </Link>
-                    <Link to="/voucher">Ưu đãi</Link>
+                    <Link to={routeConstants.USER_ORDERS}>Đơn hàng của bạn</Link>
                     <Link to={routeConstants.WEATHER_FORECAST}>Thời tiết</Link>
                     <div
                         onClick={() => navigate('/')}

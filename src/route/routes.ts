@@ -252,6 +252,11 @@ const routes: Array<Route> = [
         path: routeConstants.TOURGUIDE_MESSAGE,
         Component: commonLoadable(() => import('views/TourGuideMessage')),
     },
+    {
+        name: 'Pending Orders Page',
+        path: routeConstants.PENDING_ORDERS,
+        Component: commonLoadable(() => import('views/PendingOrders')),
+    },
 ];
 
 export default routes;
