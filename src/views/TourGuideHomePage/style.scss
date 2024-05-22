@@ -1,0 +1,120 @@
+@import 'scss/global.scss';
+
+.tourguide-home {
+    padding: 130px 0 40px;
+    width: 80%;
+    margin: 0 auto;
+    &__list {
+        .swiper-wrapper {
+            margin-top: 42px;
+        }
+    }
+}
+
+.tour-item {
+    border-radius: 8px;
+    padding-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    &:hover {
+        .tour-item__header--icon {
+            opacity: 1;
+        }
+        .tour-item__center--location {
+            a {
+                color: $color--primary;
+            }
+        }
+        transition: all 0.2s linear;
+        transform: translateY(-12px);
+        box-shadow: 0 20px 25px -5px $color-shadow1,
+            0 8px 10px -6px $color-shadow1;
+    }
+    &__header {
+        width: 100%;
+        &--img {
+            width: 100%;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+            height: 200px;
+            cursor: pointer;
+        }
+    }
+
+    &__center {
+        padding: 12px;
+        box-sizing: border-box;
+        &--date {
+            text-align: center;
+            margin-bottom: 12px;
+            font-weight: 500;
+            font-size: 14px;
+            color: $color-date;
+        }
+        &--location {
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            a {
+                text-decoration: none;
+                color: $color--black;
+                &:hover {
+                    color: $color--primary;
+                }
+            }
+        }
+        &--start {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        &--data {
+            font-weight: 600;
+            color: $color--primary;
+        }
+    }
+
+    &__bottom {
+        display: flex;
+        flex-direction: column;
+        padding-top: 12px;
+        border-top: 1px solid $color--border2;
+        align-items: center;
+        margin-top: auto;
+        button {
+            width: 160px;
+            span {
+                font-weight: 500;
+                font-size: 14px;
+            }
+            &:first-child {
+                margin-bottom: 12px;
+            }
+        }
+    }
+}
+
+.ant-modal-body {
+    .ant-form-item-label > label {
+        line-height: 1.4;
+        font-size: 15px;
+        font-weight: 600;
+    }
+    .ant-input {
+        width: 100%;
+        height: 32px;
+        color: $color-date;
+        font-weight: 500;
+        font-size: 15px;
+    }
+}

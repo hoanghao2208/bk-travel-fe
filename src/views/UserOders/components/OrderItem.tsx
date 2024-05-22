@@ -24,7 +24,7 @@ const OrderItem: FC<OrderItemProps> = memo(
                     <span className="orders-item--status">Đã thanh toán</span>
                 </div>
                 <div className="orders-item--tours">
-                    {tours.map((tour: any) => (
+                    {tours?.map((tour: any) => (
                         <TourItem
                             key={tour.tour_id}
                             tour_id={tour.tour_id}

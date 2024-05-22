@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import routeConstants from 'route/routeConstant';
 import './style.scss';
 
-const Inner = memo(() => {
+const Inner = memo(({ allTour, allTourguides, totalBooked, totalRevenue }) => {
     useEffect(() => {
         document.title = 'Trang chủ';
     });
@@ -31,22 +31,10 @@ const Inner = memo(() => {
             key: 'tour',
         },
         {
-            title: 'Khởi hành',
-            dataIndex: 'departure',
-            align: 'center',
-            key: 'departure',
-        },
-        {
             title: 'Điểm đến',
             dataIndex: 'destination',
             align: 'center',
             key: 'destination',
-        },
-        {
-            title: 'Ngày khởi hành',
-            dataIndex: 'date',
-            align: 'center',
-            key: 'date',
         },
         {
             title: 'Số hành khách',
@@ -84,7 +72,7 @@ const Inner = memo(() => {
                         <div className="admin-homepage__header-infor--item">
                             <InforItem
                                 itemTitle="Tổng số tour"
-                                count={128}
+                                count={allTour?.length}
                                 unit="Tours"
                                 icon={<PlaneIcon />}
                             />
@@ -92,7 +80,7 @@ const Inner = memo(() => {
                         <div className="admin-homepage__header-infor--item">
                             <InforItem
                                 itemTitle="Hướng dẫn viên"
-                                count={40}
+                                count={allTourguides?.length}
                                 unit="Hướng dẫn viên"
                                 icon={<TourGuideIcon />}
                             />
@@ -100,7 +88,7 @@ const Inner = memo(() => {
                         <div className="admin-homepage__header-infor--item">
                             <InforItem
                                 itemTitle="Số khách du lịch"
-                                count={1234}
+                                count={totalBooked}
                                 unit="khách"
                                 icon={<TouristIcon />}
                             />
@@ -108,8 +96,8 @@ const Inner = memo(() => {
                         <div className="admin-homepage__header-infor--item">
                             <InforItem
                                 itemTitle="Doanh thu"
-                                count={135}
-                                unit="triệu"
+                                count={totalRevenue.toLocaleString()}
+                                unit="VNĐ"
                                 icon={<MoneyIcon />}
                             />
                         </div>

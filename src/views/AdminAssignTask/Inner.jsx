@@ -1,15 +1,18 @@
 import { CompassFilled } from '@ant-design/icons';
-import { Button, DatePicker, Form, Select } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 import AdminLayout from 'layouts/AdminLayout';
-import { memo, useEffect, useRef } from 'react';
-import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
+import { memo, useCallback, useEffect, useState } from 'react';
 import './style.scss';
 
-const Inner = memo(() => {
+const Inner = memo(({ form, tourguideData, tourData, handleAssignTask }) => {
     useEffect(() => {
         document.title = 'Giao nhiệm vụ';
     });
-    const formRef = useRef(null);
+    const [numTourGuides, setNumTourGuides] = useState(1);
+    const [firstTG, setFirstTG] = useState('');
+    const [secondTG, setSecondTG] = useState('');
+    const [thirdTG, setThirdTG] = useState('');
+
     const filterOption = (input, option) => {
         return (option?.label ?? '')
             .toLowerCase()
@@ -21,6 +24,29 @@ const Inner = memo(() => {
             .toLowerCase()
             .localeCompare((optionB?.label ?? '').toLowerCase());
     };
+
+    const handleNumTourGuidesChange = value => {
+        setNumTourGuides(value);
+    };
+
+    const onChangeFirstTourGuide = value => {
+        setFirstTG(value);
+    };
+
+    const onChangeSecondTourGuide = value => {
+        setSecondTG(value);
+    };
+
+    const onChangeThirdTourGuide = value => {
+        setThirdTG(value);
+    };
+
+    const onSubmitAssignTask = useCallback(
+        values => {
+            handleAssignTask(values);
+        },
+        [handleAssignTask]
+    );
 
     return (
         <AdminLayout>
@@ -36,77 +62,12 @@ const Inner = memo(() => {
                 </div>
                 <div className="admin-assign-task__content">
                     <Form
-                        ref={formRef}
-                        name="assignt-new-task"
+                        form={form}
+                        name="assign-new-task"
                         layout="vertical"
-                        // onFinish={onFinish}
+                        onFinish={onSubmitAssignTask}
                     >
                         <div className="admin-assign-task__content-inf1">
-                            <div className="admin-assign-task__content-inf1--item">
-                                <Form.Item
-                                    label="Điểm khởi hành"
-                                    name="departure"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                'Vui lòng chọn điểm khởi hành',
-                                        },
-                                    ]}
-                                >
-                                    <Select placeholder="Điểm khởi hành">
-                                        <Option value="hochiminh">
-                                            TP. Hồ Chí Minh
-                                        </Option>
-                                        <Option value="danang">Đà Nẵng</Option>
-                                        <Option value="hanoi">Hà Nội</Option>
-                                        <Option value="vungtau">
-                                            Vũng Tàu
-                                        </Option>
-                                    </Select>
-                                </Form.Item>
-                            </div>
-                            <div className="admin-assign-task__content-inf1--item">
-                                <Form.Item
-                                    label="Điểm đến"
-                                    name="destination"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Vui lòng chọn điểm đến',
-                                        },
-                                    ]}
-                                >
-                                    <Select placeholder="Điểm đến">
-                                        <Option value="hochiminh">
-                                            TP. Hồ Chí Minh
-                                        </Option>
-                                        <Option value="danang">Đà Nẵng</Option>
-                                        <Option value="hanoi">Hà Nội</Option>
-                                        <Option value="vungtau">
-                                            Vũng Tàu
-                                        </Option>
-                                    </Select>
-                                </Form.Item>
-                            </div>
-                            <div className="admin-assign-task__content-inf1--item">
-                                <Form.Item
-                                    label="Ngày khởi hành"
-                                    name="day"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                'Vui lòng chọn ngày khởi hành',
-                                        },
-                                    ]}
-                                >
-                                    <DatePicker
-                                        placeholder="Ngày khởi hành"
-                                        format={DEFAULT_DISPLAY_DATE_FORMAT}
-                                    />
-                                </Form.Item>
-                            </div>
                             <div className="admin-assign-task__content-inf1--item">
                                 <Form.Item
                                     label="Tour hướng dẫn"
@@ -123,37 +84,16 @@ const Inner = memo(() => {
                                         showSearch
                                         placeholder="Tour hướng dẫn"
                                         optionFilterProp="children"
-                                        // onChange={onChange}
-                                        // onSearch={onSearch}
                                         filterOption={filterOption}
                                         filterSort={filterSort}
-                                        options={[
-                                            {
-                                                value: 'hcm',
-                                                label: 'TP. Hồ Chí Minh',
-                                            },
-                                            {
-                                                value: 'dn',
-                                                label: 'Đà Nẵng',
-                                            },
-                                            {
-                                                value: 'vt',
-                                                label: 'Vũng Tàu',
-                                            },
-                                            {
-                                                value: 'nt',
-                                                label: 'Nha Trang',
-                                            },
-                                        ]}
+                                        options={tourData}
                                     />
                                 </Form.Item>
                             </div>
-                        </div>
-                        <div className="admin-assign-task__content-inf1">
                             <div className="admin-assign-task__content-inf1--item">
                                 <Form.Item
                                     label="Số hướng dẫn viên"
-                                    name="number-tour-guide"
+                                    name="number"
                                     rules={[
                                         {
                                             required: true,
@@ -162,7 +102,10 @@ const Inner = memo(() => {
                                         },
                                     ]}
                                 >
-                                    <Select placeholder="Số hướng dẫn viên">
+                                    <Select
+                                        placeholder="Số hướng dẫn viên"
+                                        onChange={handleNumTourGuidesChange}
+                                    >
                                         <Option value="1">1</Option>
                                         <Option value="2">2</Option>
                                         <Option value="3">3</Option>
@@ -172,7 +115,7 @@ const Inner = memo(() => {
                             <div className="admin-assign-task__content-inf1--item">
                                 <Form.Item
                                     label="Hướng dẫn viên 1"
-                                    name="person-1"
+                                    name="person_1"
                                     rules={[
                                         {
                                             required: true,
@@ -181,67 +124,91 @@ const Inner = memo(() => {
                                         },
                                     ]}
                                 >
-                                    <Select placeholder="Hướng dẫn viên 1">
-                                        <Option value="ng-v-a">
-                                            Nguyễn Văn A
-                                        </Option>
-                                        <Option value="ng-v-b">
-                                            Nguyễn Văn B
-                                        </Option>
-                                        <Option value="ng-v-c">
-                                            Nguyễn Văn C
-                                        </Option>
-                                    </Select>
+                                    <Select
+                                        showSearch
+                                        placeholder="Hướng dẫn viên 1"
+                                        optionFilterProp="children"
+                                        onChange={onChangeFirstTourGuide}
+                                        filterOption={filterOption}
+                                        filterSort={filterSort}
+                                        options={tourguideData.filter(
+                                            value =>
+                                                value.value !== secondTG &&
+                                                value.value !== thirdTG
+                                        )}
+                                    />
                                 </Form.Item>
                             </div>
+                            {numTourGuides >= 2 && (
+                                <div className="admin-assign-task__content-inf1--item">
+                                    <Form.Item
+                                        label="Hướng dẫn viên 2"
+                                        name="person_2"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Vui lòng chọn hướng dẫn viên',
+                                            },
+                                        ]}
+                                    >
+                                        <Select
+                                            showSearch
+                                            placeholder="Hướng dẫn viên 2"
+                                            optionFilterProp="children"
+                                            onChange={onChangeSecondTourGuide}
+                                            filterOption={filterOption}
+                                            filterSort={filterSort}
+                                            options={tourguideData.filter(
+                                                value =>
+                                                    value.value !== firstTG &&
+                                                    value.value !== thirdTG
+                                            )}
+                                        />
+                                    </Form.Item>
+                                </div>
+                            )}
+                            {numTourGuides >= 3 && (
+                                <div className="admin-assign-task__content-inf1--item">
+                                    <Form.Item
+                                        label="Hướng dẫn viên 3"
+                                        name="person_3"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Vui lòng chọn hướng dẫn viên',
+                                            },
+                                        ]}
+                                    >
+                                        <Select
+                                            showSearch
+                                            placeholder="Hướng dẫn viên 3"
+                                            optionFilterProp="children"
+                                            onChange={onChangeThirdTourGuide}
+                                            filterOption={filterOption}
+                                            filterSort={filterSort}
+                                            options={tourguideData.filter(
+                                                value =>
+                                                    value.value !== firstTG &&
+                                                    value.value !== secondTG
+                                            )}
+                                        />
+                                    </Form.Item>
+                                </div>
+                            )}
                             <div className="admin-assign-task__content-inf1--item">
                                 <Form.Item
-                                    label="Hướng dẫn viên 2"
-                                    name="person-2"
+                                    label="Mô tả công việc"
+                                    name="description"
                                     rules={[
                                         {
                                             required: true,
-                                            message:
-                                                'Vui lòng chọn hướng dẫn viên',
+                                            message: 'Vui lòng mô tả công việc',
                                         },
                                     ]}
                                 >
-                                    <Select placeholder="Hướng dẫn viên 2">
-                                        <Option value="ng-v-a">
-                                            Nguyễn Văn A
-                                        </Option>
-                                        <Option value="ng-v-b">
-                                            Nguyễn Văn B
-                                        </Option>
-                                        <Option value="ng-v-c">
-                                            Nguyễn Văn C
-                                        </Option>
-                                    </Select>
-                                </Form.Item>
-                            </div>
-                            <div className="admin-assign-task__content-inf1--item">
-                                <Form.Item
-                                    label="Hướng dẫn viên 3"
-                                    name="person-3"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                'Vui lòng chọn hướng dẫn viên',
-                                        },
-                                    ]}
-                                >
-                                    <Select placeholder="Hướng dẫn viên 3">
-                                        <Option value="ng-v-a">
-                                            Nguyễn Văn A
-                                        </Option>
-                                        <Option value="ng-v-b">
-                                            Nguyễn Văn B
-                                        </Option>
-                                        <Option value="ng-v-c">
-                                            Nguyễn Văn C
-                                        </Option>
-                                    </Select>
+                                    <Input placeholder="Mô tả công việc" />
                                 </Form.Item>
                             </div>
                         </div>
@@ -249,6 +216,7 @@ const Inner = memo(() => {
                             <Button
                                 type="primary"
                                 shape="round"
+                                htmlType="submit"
                                 icon={<CompassFilled />}
                                 size="large"
                             >

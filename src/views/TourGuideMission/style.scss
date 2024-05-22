@@ -1,0 +1,18 @@
+@import 'scss/global.scss';
+
+.tour-mission {
+    padding: 130px 0 40px;
+    width: 80%;
+    margin: 0 auto;
+    &--title {
+        text-transform: uppercase;
+        font-size: 32px;
+        letter-spacing: 1.4px;
+    }
+    &--intro {
+        margin: 8px 4px;
+        font-size: 20px;
+        font-weight: 500;
+        color: $color-date;
+    }
+}
