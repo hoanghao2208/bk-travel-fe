@@ -1,6 +1,6 @@
 import { Button, Modal } from 'antd';
 import Message from 'components/Message';
-import { FC, memo, useCallback, useMemo, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getCustomerId, getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
@@ -10,17 +10,17 @@ interface ConfirmToChatProps {
     openModalJoinChat: boolean;
     setOpenModalJoinChat: (isOpen: boolean) => void;
     orderData: any;
-    socket: any;
 }
 
 const ConfirmToChat: FC<ConfirmToChatProps> = memo(
-    ({ openModalJoinChat, setOpenModalJoinChat, orderData, socket }) => {
+    ({ openModalJoinChat, setOpenModalJoinChat, orderData }) => {
         const { tour_id } = useParams();
         const token = getToken();
         const userId = getCustomerId();
         const navigate = useNavigate();
 
         const [curOrder, setCurOrder] = useState(0);
+        const [groupId, setGroupId] = useState<number | null>(null);
 
         const isTourIdExists = useMemo(() => {
             if (tour_id) {
@@ -38,25 +38,38 @@ const ConfirmToChat: FC<ConfirmToChatProps> = memo(
             return false;
         }, [orderData, tour_id]);
 
+        const handleGetAllGroups = useCallback(async () => {
+            try {
+                const response = await messageService.getAllGroups(token);
+                if (response?.status === 200 && tour_id) {
+                    const group = response.data.groups.find(
+                        (g: any) => g.tour_id === parseInt(tour_id)
+                    );
+                    if (group) {
+                        setGroupId(group.group_id);
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }, [token, tour_id]);
+
         const handleJoinGroup = useCallback(async () => {
             try {
-                if (isTourIdExists && tour_id) {
+                if (isTourIdExists && tour_id && groupId) {
                     const body = {
                         user_id: userId,
                         tour_id: parseInt(tour_id),
                         order_id: curOrder,
                     };
                     const response = await messageService.joinGroup(
-                        parseInt(tour_id),
+                        groupId,
                         body,
                         token
                     );
 
                     if (response?.status === 200) {
                         Message.sendSuccess('Tham gia nhóm hỗ trợ thành công');
-                        socket.emit('join', {
-                            room: parseInt(tour_id),
-                        });
                         setOpenModalJoinChat(false);
                         navigate(routeConstants.MESSAGE);
                     }
@@ -71,14 +84,18 @@ const ConfirmToChat: FC<ConfirmToChatProps> = memo(
             }
         }, [
             curOrder,
+            groupId,
             isTourIdExists,
             navigate,
             setOpenModalJoinChat,
-            socket,
             token,
             tour_id,
             userId,
         ]);
+
+        useEffect(() => {
+            handleGetAllGroups();
+        }, [handleGetAllGroups]);
 
         return (
             <Modal

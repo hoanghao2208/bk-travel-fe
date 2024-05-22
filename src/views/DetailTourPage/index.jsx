@@ -8,12 +8,8 @@ import commentService from 'services/commentService';
 import orderService from 'services/orderService';
 import tourService from 'services/tourService';
 import userService from 'services/userService';
-import { io } from 'socket.io-client';
-import { BASE_URL } from 'utils/constants';
 import CreateDetailContextProvider from 'views/DetailTourPage/Context';
 import Inner from 'views/DetailTourPage/Inner';
-
-let socket;
 
 const Wrapper = memo(() => {
     const userInfor = useUserProfile();
@@ -51,16 +47,6 @@ const Wrapper = memo(() => {
             setChildQuantity,
         };
     }, [adultQuantity, childQuantity, loveList, openOrderModal, reload]);
-
-    useEffect(() => {
-        socket = io(BASE_URL, {
-            query: { access_token: token },
-        });
-
-        socket.emit('online', userId);
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const handleGetTourData = useCallback(async () => {
         try {
@@ -221,7 +207,6 @@ const Wrapper = memo(() => {
                 tourData={tourData}
                 orderData={orderData}
                 orderPaymentData={orderPaymentData}
-                socket={socket}
                 commentsList={commentsList}
                 reviewsList={reviewsList}
                 handleCreateOrder={handleCreateOrder}

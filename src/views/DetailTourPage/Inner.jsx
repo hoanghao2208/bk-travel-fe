@@ -33,7 +33,6 @@ const Inner = memo(
         tourData,
         orderData,
         orderPaymentData,
-        socket,
         commentsList,
         reviewsList,
         handleCreateOrder,
@@ -394,7 +393,6 @@ const Inner = memo(
                         }
                     />
                     <ConfirmToChat
-                        socket={socket}
                         openModalJoinChat={openModalJoinChat}
                         setOpenModalJoinChat={setOpenModalJoinChat}
                         orderData={orderData}
