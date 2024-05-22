@@ -58,7 +58,9 @@ const ScheduleTable = memo(({ columnNumber, tourData, scheduleData }) => {
                             <p>{item.name}</p>
                         </div>
                         <div>
-                            <RightHandIcon />
+                            <div className="right-icon">
+                                <RightHandIcon />
+                            </div>
                             <p className="schedule-table__right--desc">
                                 {item.description}
                             </p>

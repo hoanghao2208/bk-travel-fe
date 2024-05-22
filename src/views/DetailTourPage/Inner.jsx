@@ -151,7 +151,8 @@ const Inner = memo(
                                     ({tourData?.count_reviewer} lượt đánh giá)
                                 </span>
                                 <span className="tour-detail__header--count">
-                                    {tourData?.current_customers} khách hàng đã đặt tour
+                                    {tourData?.booked_number} khách hàng đã đặt
+                                    tour
                                 </span>
                             </p>
                             <p

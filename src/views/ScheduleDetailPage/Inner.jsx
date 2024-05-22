@@ -66,7 +66,7 @@ const Inner = memo(({ tourData, scheduleData, handleCreateOrder }) => {
                                 <span>Số chổ trống:</span>
                                 <span>
                                     {tourData?.max_customer -
-                                        tourData?.current_customers}
+                                        tourData?.booked_number}
                                 </span>
                             </div>
                             <div>

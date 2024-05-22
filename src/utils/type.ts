@@ -7,6 +7,7 @@ export interface ITour {
     name: string;
     cover_image: string;
     current_customers: number;
+    booked_number: number;
     max_customer: number;
     departure_place: string;
     departure_date: string;

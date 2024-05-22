@@ -88,7 +88,7 @@ const Inner = memo(({ allTour, allTourguides, totalBooked, totalRevenue }) => {
                         <div className="admin-homepage__header-infor--item">
                             <InforItem
                                 itemTitle="Số khách du lịch"
-                                count={totalBooked}
+                                count={totalBooked || 0}
                                 unit="khách"
                                 icon={<TouristIcon />}
                             />
@@ -96,7 +96,7 @@ const Inner = memo(({ allTour, allTourguides, totalBooked, totalRevenue }) => {
                         <div className="admin-homepage__header-infor--item">
                             <InforItem
                                 itemTitle="Doanh thu"
-                                count={totalRevenue.toLocaleString()}
+                                count={totalRevenue?.toLocaleString() || 0}
                                 unit="VNĐ"
                                 icon={<MoneyIcon />}
                             />

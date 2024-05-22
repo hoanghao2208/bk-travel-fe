@@ -35,8 +35,7 @@ const Inner = memo(({ wishListTours }) => {
                                     tourName={tour.name}
                                     departurePlace={tour.departure_place}
                                     empty={
-                                        tour.max_customer -
-                                        tour.current_customers
+                                        tour.max_customer - tour.booked_number
                                     }
                                     deadlineBookTime={dayjs(
                                         tour.deadline_book_time
