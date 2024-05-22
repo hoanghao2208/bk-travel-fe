@@ -9,6 +9,7 @@ const Wrapper = memo(() => {
     const token = getToken();
     const [modalTourguide, setModalTourguide] = useState(false);
     const [tourguideData, setTourguideData] = useState([]);
+    const [reload, setReload] = useState(false);
 
     const [form] = Form.useForm();
 
@@ -23,6 +24,7 @@ const Wrapper = memo(() => {
                     Message.sendSuccess('Tạo mới Hướng dẫn viên thành công');
                     form.resetFields();
                     setModalTourguide(false);
+                    setReload(prev => !prev);
                 }
             } catch (error) {
                 console.error(error);
@@ -44,7 +46,7 @@ const Wrapper = memo(() => {
 
     useEffect(() => {
         handleGetAllTourguide();
-    }, [handleGetAllTourguide]);
+    }, [handleGetAllTourguide, reload]);
 
     return (
         <Inner
