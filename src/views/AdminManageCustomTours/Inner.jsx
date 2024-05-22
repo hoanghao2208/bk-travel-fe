@@ -62,6 +62,7 @@ const Inner = memo(
                                         {...(tabName === 'SUCCESS' && {
                                             price: parseInt(tour.price),
                                         })}
+                                        current_customers={tour.current_customers}
                                         attractions={tour.attractions}
                                         time={tour.time}
                                         note={tour.note}

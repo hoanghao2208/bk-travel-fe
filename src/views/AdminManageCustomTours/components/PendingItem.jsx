@@ -13,6 +13,7 @@ const PendingItem = memo(
         userId,
         note,
         price,
+        current_customers,
         departure_place,
         departure_date,
         departure_time,
@@ -48,20 +49,34 @@ const PendingItem = memo(
                                 <span>{departure_place}</span>
                             </div>
                             <div className="pending-item--location">
-                                <span>Các điểm đến:</span>
-                                <span>{destination_place}</span>
+                                <span>Khởi hành:</span>
+                                <span>
+                                    {departure_time} - {departure_date}
+                                </span>
                             </div>
                         </div>
                         <div>
                             <div className="pending-item--location">
-                                <span>Điểm vui chơi:</span>
-                                <span>{namesString}</span>
+                                <span>Các điểm đến:</span>
+                                <span>{destination_place}</span>
                             </div>
                             <div className="pending-item--location">
-                                <span>Khởi hành:</span>
-                                <span>
-                                    {departure_time} - {departure_date} - {time}
-                                </span>
+                                <span>Thời gian:</span>
+                                <span>{time}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="pending-item--location">
+                                <span>Số khách:</span>
+                                <span>{current_customers}</span>
+                            </div>
+                            <div className="pending-item--location">
+                                {status === 'REJECT' ? (
+                                    <span>Lý do:</span>
+                                ) : (
+                                    <span>Lưu ý:</span>
+                                )}
+                                <span>{note}</span>
                             </div>
                         </div>
                         {status === 'SUCCESS' && (
@@ -73,13 +88,10 @@ const PendingItem = memo(
                             </div>
                         )}
                     </div>
+
                     <div className="pending-item--location">
-                        {status === 'REJECT' ? (
-                            <span>Lý do:</span>
-                        ) : (
-                            <span>Lưu ý:</span>
-                        )}
-                        <span>{note}</span>
+                        <span>Điểm vui chơi:</span>
+                        <span>{namesString}</span>
                     </div>
                 </div>
                 {status === 'PENDING' && (
@@ -108,7 +120,7 @@ const PendingItem = memo(
                     userId={userId}
                     title="Xác nhận tour đề xuất của khách hàng"
                     name="price"
-                    label="Giá tour"
+                    label="Giá tour / 1 khách hàng"
                     modalOpen={modalConfirm}
                     handleCancel={handleCancelConfirm}
                     setReload={setReload}

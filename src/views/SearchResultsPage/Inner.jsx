@@ -170,7 +170,7 @@ const Inner = memo(({ searchResults, allDestinations, handleFilterTours }) => {
                                         departurePlace={tour.departure_place}
                                         empty={
                                             tour.max_customer -
-                                            tour.current_customers
+                                            tour.booked_number
                                         }
                                         deadlineBookTime={dayjs(
                                             tour.deadline_book_time

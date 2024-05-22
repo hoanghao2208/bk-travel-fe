@@ -95,7 +95,7 @@ const ActivityModal = memo(
                                 : []),
                         ]}
                     >
-                        <Input placeholder={`Báo ${label} cho khách hàng`} />
+                        <Input placeholder={`Báo ${label}`} />
                     </Form.Item>
                 </Form>
             </Modal>
