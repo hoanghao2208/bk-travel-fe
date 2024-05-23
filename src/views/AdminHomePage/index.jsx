@@ -10,6 +10,7 @@ const Wrapper = memo(() => {
 
     const [allTour, setAllTour] = useState(undefined);
     const [allTourguides, setAllTourguides] = useState(undefined);
+    const [topRatedTours, setTopRatedTours] = useState([]);
     const [totalBooked, setTotalBooked] = useState(0);
     const [totalRevenue, setTotalRevenue] = useState(0);
 
@@ -57,6 +58,17 @@ const Wrapper = memo(() => {
         }
     }, [token]);
 
+    const handleGetTopRatedTours = useCallback(async () => {
+        try {
+            const response = await adminService.getTopRatedTours();
+            if (response?.status === 200) {
+                setTopRatedTours(response.data.data.slice(0, 5));
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
+
     useEffect(() => {
         handleGetAllTours();
     }, [handleGetAllTours]);
@@ -68,10 +80,14 @@ const Wrapper = memo(() => {
     useEffect(() => {
         handleGetTotalBooked();
     }, [handleGetTotalBooked]);
-    
+
     useEffect(() => {
         handleGetRevenue();
     }, [handleGetRevenue]);
+
+    useEffect(() => {
+        handleGetTopRatedTours();
+    }, [handleGetTopRatedTours]);
 
     return (
         <Inner
@@ -79,6 +95,7 @@ const Wrapper = memo(() => {
             allTourguides={allTourguides}
             totalBooked={totalBooked}
             totalRevenue={totalRevenue}
+            topRatedTours={topRatedTours}
         />
     );
 });

@@ -19,6 +19,11 @@ class AdminService extends ApiBase {
             },
         });
     };
+
+    getTopRatedTours = () => {
+        const url = 'http://localhost:8080/api/v1/tours/toprated';
+        return axios.get(url);
+    };
 }
 
 const adminService = new AdminService();

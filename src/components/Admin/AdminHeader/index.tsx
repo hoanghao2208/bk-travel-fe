@@ -1,13 +1,11 @@
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Dropdown } from 'antd';
-import BellNotifyIcon from 'assets/icons/BellNotifyIcon';
+import { Avatar, Dropdown } from 'antd';
 import LogOutIcon from 'assets/icons/LogOutIcon';
-import UserDropDown from 'assets/icons/UserDropDown';
 import { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './styles.scss';
 import { setCustomerId, setToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
+import './styles.scss';
 
 const AdminHeader: FC = () => {
     const navigate = useNavigate();
@@ -22,22 +20,6 @@ const AdminHeader: FC = () => {
     const items = [
         {
             key: '1',
-            label: (
-                <Link
-                    to="/user-info"
-                    style={{
-                        fontSize: '16px',
-                        display: 'inline-block',
-                        paddingLeft: '10px',
-                    }}
-                >
-                    Thông tin cá nhân
-                </Link>
-            ),
-            icon: <UserDropDown />,
-        },
-        {
-            key: '2',
             danger: true,
             label: (
                 <Link
@@ -60,11 +42,6 @@ const AdminHeader: FC = () => {
         <div className="admin-header__wrapper">
             <div className="admin-header">
                 <div className="admin-header__navigate">
-                    <div className="admin-header__navigate--bell">
-                        <Badge count={8} overflowCount={10}>
-                            <BellNotifyIcon />
-                        </Badge>
-                    </div>
                     <div className="admin-header__navigate--avatar">
                         <Dropdown
                             menu={{
