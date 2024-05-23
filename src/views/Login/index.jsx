@@ -38,7 +38,7 @@ const Wrapper = memo(() => {
                     setCustomerId(json.user_id);
                     if (json.role_user === 'admin') {
                         navigate(routeConstants.ADMIN_HOMEPAGE);
-                    } else if (json.role_user === 'user') {
+                    } else if (json.role_user === 'customer') {
                         navigate(routeConstants.USER_HOME_PAGE);
                     } else {
                         navigate(routeConstants.TOURGUIDE_HOMEPAGE);

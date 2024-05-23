@@ -37,7 +37,7 @@ const UserHomePageLayout: FC<PropsWithChildren> = ({ children }) => {
 
     const getNumberOfCart = useCallback(async () => {
         try {
-            if(token === '') {
+            if (token === '') {
                 return;
             }
             const response = await userService.getCartByUser(userId, token);
@@ -64,8 +64,10 @@ const UserHomePageLayout: FC<PropsWithChildren> = ({ children }) => {
     useEffect(() => {
         if (token !== '') {
             const json: DecodedToken = jwtDecode(token);
-            if (json.role_user !== 'customer') {
+            if (json.role_user === 'admin') {
                 navigate(routeConstants.ADMIN_HOMEPAGE);
+            } else if (json.role_user === 'guider') {
+                navigate(routeConstants.TOURGUIDE_HOMEPAGE);
             }
         }
     }, [navigate, token]);

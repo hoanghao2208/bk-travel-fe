@@ -146,8 +146,10 @@ const UserActivityLayout: FC<PropsWithChildren> = memo(({ children }) => {
     }, [handleGetUserData]);
 
     useEffect(() => {
-        if (json.role_user !== 'customer') {
+        if (json.role_user === 'admin') {
             navigate(routeConstants.ADMIN_HOMEPAGE);
+        } else if (json.role_user === 'guider') {
+            navigate(routeConstants.TOURGUIDE_HOMEPAGE);
         }
     }, [json, navigate]);
 

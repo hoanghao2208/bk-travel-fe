@@ -18,8 +18,10 @@ const AdminLayout: FC<PropsWithChildren> = memo(({ children }) => {
     const json: DecodedToken = jwtDecode(token);
 
     useEffect(() => {
-        if (json.role_user !== 'admin') {
+        if (json.role_user === 'customer') {
             navigate(routeConstants.USER_HOME_PAGE);
+        } else if (json.role_user === 'guider') {
+            navigate(routeConstants.TOURGUIDE_HOMEPAGE);
         }
     }, [json, navigate]);
 
