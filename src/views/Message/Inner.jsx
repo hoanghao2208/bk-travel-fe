@@ -6,7 +6,15 @@ import Group from 'views/Message/components/Group';
 import './styles.scss';
 
 const Inner = memo(
-    ({ allGroups, socket, activeGrp, setActiveGrp, groupInfo, allMessage }) => {
+    ({
+        allGroups,
+        socket,
+        activeGrp,
+        setActiveGrp,
+        groupInfo,
+        allMessage,
+        allTourGuideId,
+    }) => {
         return (
             <UserHomePageLayout>
                 {allGroups.length === 0 && (
@@ -40,6 +48,7 @@ const Inner = memo(
                                     activeGrp={activeGrp}
                                     socket={socket}
                                     allMessage={allMessage}
+                                    allTourGuideId={allTourGuideId}
                                 />
                             </div>
                         )}

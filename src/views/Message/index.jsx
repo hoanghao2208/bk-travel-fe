@@ -1,6 +1,7 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { getCustomerId, getToken } from 'reducers/token/function';
 import messageService from 'services/messageService';
+import tourGuideService from 'services/tourGuideService';
 import io from 'socket.io-client';
 import { BASE_URL } from 'utils/constants';
 import Inner from 'views/Message/Inner';
@@ -18,7 +19,7 @@ const Wrapper = memo(() => {
     const [allGroups, setAllGroups] = useState([]);
     const [allMessage, setAllMessage] = useState([]);
     const [groupInfo, setGroupInfo] = useState([]);
-    // const [arrivalGrps, setArrivalGrps] = useState([]);
+    const [allTourGuideId, setAllTourGuideId] = useState([]);
 
     const [activeGrp, setActiveGrp] = useState(null);
 
@@ -88,10 +89,6 @@ const Wrapper = memo(() => {
         }
     }, [activeGrp, token]);
 
-    useEffect(() => {
-        getActiveGroupInfo();
-    }, [getActiveGroupInfo]);
-
     const getAllGroupsOfUser = useCallback(async () => {
         try {
             const response = await messageService.getAllGroupsByUserId(
@@ -106,6 +103,20 @@ const Wrapper = memo(() => {
         }
     }, [token, userId]);
 
+    const getAllTourGuide = useCallback(async () => {
+        try {
+            const response = await tourGuideService.getAllTourGuides(token);
+            if (response?.status === 200) {
+                const tourGuideIds = response.data.data.map(
+                    item => item.user_id
+                );
+                setAllTourGuideId(tourGuideIds);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, [token]);
+
     useEffect(() => {
         getAllGroupsOfUser();
     }, [getAllGroupsOfUser]);
@@ -113,6 +124,14 @@ const Wrapper = memo(() => {
     useEffect(() => {
         getAllMessages();
     }, [getAllMessages]);
+
+    useEffect(() => {
+        getActiveGroupInfo();
+    }, [getActiveGroupInfo]);
+
+    useEffect(() => {
+        getAllTourGuide();
+    }, [getAllTourGuide]);
 
     return (
         <Inner
@@ -122,6 +141,7 @@ const Wrapper = memo(() => {
             setActiveGrp={setActiveGrp}
             groupInfo={groupInfo}
             allMessage={allMessage}
+            allTourGuideId={allTourGuideId}
         />
     );
 });

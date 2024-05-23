@@ -12,10 +12,11 @@ interface ChatSectionProps {
     activeGrp: number;
     socket: any;
     allMessage: any;
+    allTourGuideId: any;
 }
 
 const ChatSection: FC<ChatSectionProps> = memo(
-    ({ name, activeGrp, socket, allMessage }) => {
+    ({ name, activeGrp, socket, allMessage, allTourGuideId }) => {
         const userId = getCustomerId();
         const token = getToken();
         const contentRef = useRef<HTMLDivElement>(null);
@@ -83,6 +84,7 @@ const ChatSection: FC<ChatSectionProps> = memo(
                             messId={mess.user_id}
                             content={mess.content}
                             time={mess.createdAt}
+                            allTourGuideId={allTourGuideId}
                         />
                     ))}
                     <div ref={contentRef} />
