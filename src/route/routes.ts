@@ -257,6 +257,13 @@ const routes: Array<Route> = [
         path: routeConstants.PENDING_ORDERS,
         Component: commonLoadable(() => import('views/PendingOrders')),
     },
+    {
+        name: 'Schedule Information Detail Page',
+        path: routeConstants.SCHEDULE_INFORMATION_DETAIL,
+        Component: commonLoadable(
+            () => import('views/ScheduleInformationDetail')
+        ),
+    },
 ];
 
 export default routes;
