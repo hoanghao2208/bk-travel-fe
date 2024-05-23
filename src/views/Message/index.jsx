@@ -2,6 +2,7 @@ import { memo, useCallback, useEffect, useState } from 'react';
 import { getCustomerId, getToken } from 'reducers/token/function';
 import messageService from 'services/messageService';
 import io from 'socket.io-client';
+import { BASE_URL } from 'utils/constants';
 import Inner from 'views/Message/Inner';
 
 let socket;
@@ -22,13 +23,17 @@ const Wrapper = memo(() => {
     const [activeGrp, setActiveGrp] = useState(null);
 
     useEffect(() => {
-        socket = io('http://localhost:8080', {
+        socket = io(BASE_URL, {
             query: { access_token: token },
+            reconnection: true,
+            reconnectionAttempts: Infinity,
+            reconnectionDelay: 1000,
+            reconnectionDelayMax: 5000,
         });
 
         socket.on('connect', () => {
             // eslint-disable-next-line no-console
-            console.log('Connected to the server');
+            console.log('Connected to server');
         });
 
         socket.emit('online', userId);
@@ -43,16 +48,6 @@ const Wrapper = memo(() => {
                 updatedAt: new Date().toISOString(),
             };
             setAllMessage(prev => [...prev, newMsg]);
-        });
-
-        socket.on('groupData', groups => {
-            // eslint-disable-next-line no-console
-            console.log('Received group data:', groups);
-        });
-
-        socket.on('disconnect', () => {
-            // eslint-disable-next-line no-console
-            console.log('Disconnected from the server');
         });
 
         return () => {
