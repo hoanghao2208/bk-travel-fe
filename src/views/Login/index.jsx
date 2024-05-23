@@ -18,8 +18,10 @@ const Wrapper = memo(() => {
             const json = jwtDecode(token);
             if (json.role_user === 'customer') {
                 navigate(routeConstants.USER_HOME_PAGE);
-            } else {
+            } else if (json.role_user === 'admin') {
                 navigate(routeConstants.ADMIN_HOMEPAGE);
+            } else if (json.role_user === 'guider') {
+                navigate(routeConstants.TOURGUIDE_HOMEPAGE);
             }
         }
     }, [navigate, token]);
@@ -36,8 +38,10 @@ const Wrapper = memo(() => {
                     setCustomerId(json.user_id);
                     if (json.role_user === 'admin') {
                         navigate(routeConstants.ADMIN_HOMEPAGE);
-                    } else {
+                    } else if (json.role_user === 'user') {
                         navigate(routeConstants.USER_HOME_PAGE);
+                    } else {
+                        navigate(routeConstants.TOURGUIDE_HOMEPAGE);
                     }
                 }
             } catch (err) {

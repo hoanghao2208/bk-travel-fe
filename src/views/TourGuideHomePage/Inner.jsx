@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import TourItem from 'views/TourGuideHomePage/components/TourItem';
 import './style.scss';
 
-const Inner = memo(() => {
+const Inner = memo(({ allTasks }) => {
     return (
         <TourGuideLayout>
             <div className="tourguide-home">
@@ -40,9 +40,14 @@ const Inner = memo(() => {
                                 },
                             }}
                         >
-                            <SwiperSlide>
-                                <TourItem />
-                            </SwiperSlide>
+                            {allTasks.map(task => (
+                                <SwiperSlide key={task.task_id}>
+                                    <TourItem
+                                        tour_id={task.tour_id}
+                                        description={task.description}
+                                    />
+                                </SwiperSlide>
+                            ))}
                         </Swiper>
                     </div>
                 </div>

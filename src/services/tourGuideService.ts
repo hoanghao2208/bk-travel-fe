@@ -46,6 +46,31 @@ class TourGuideService extends ApiBase {
             },
         });
     };
+
+    getAllTasksOfTourGuide = (tourGuide_id: number, token: string) => {
+        const url = `http://localhost:8080/api/v1/tour_guides/${tourGuide_id}/tasks`;
+        return axios.get(url, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
+
+    updateScheduleByTourGuide = (
+        schedule_id: number,
+        requestBody: {
+            tour_id: number;
+            schedule_detail: any;
+        },
+        token: string
+    ) => {
+        const url = `http://localhost:8080/api/v1/schedules/tourguide/${schedule_id}`;
+        return axios.put(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
 }
 
 const tourGuideService = new TourGuideService();
