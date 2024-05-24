@@ -198,19 +198,19 @@ const CustomItem: FC<CustomItemProps> = memo(
                                     {departureTime} - {departureDate}
                                 </span>
                             </div>
-                            <div>
-                                <span>
-                                    {status === 'REJECTED'
-                                        ? 'Lý do: '
-                                        : 'Lưu ý: '}
-                                </span>
-                                <span>{note}</span>
-                            </div>
                         </div>
                         <div className="custom-item--row">
                             <div>
                                 <span>Điểm vui chơi: </span>
                                 <span>{nameString}</span>
+                            </div>
+                        </div>
+                        <div className="custom-item--row">
+                            <div>
+                                {status === 'REJECTED' && <span>Lý do: </span>}
+                                {status === 'SUCCESS' && <span>Mô tả: </span>}
+                                {status === 'PENDING' && <span>Lý do: </span>}
+                                <span>{note}</span>
                             </div>
                         </div>
                     </div>

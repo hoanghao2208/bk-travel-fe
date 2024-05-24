@@ -51,7 +51,7 @@ const PendingItem = memo(
                             <div className="pending-item--location">
                                 <span>Khởi hành:</span>
                                 <span>
-                                    {departure_time} - {departure_date}
+                                    {departure_time} - {departure_date} - {time}
                                 </span>
                             </div>
                         </div>
@@ -61,22 +61,8 @@ const PendingItem = memo(
                                 <span>{destination_place}</span>
                             </div>
                             <div className="pending-item--location">
-                                <span>Thời gian:</span>
-                                <span>{time}</span>
-                            </div>
-                        </div>
-                        <div>
-                            <div className="pending-item--location">
                                 <span>Số khách:</span>
                                 <span>{current_customers}</span>
-                            </div>
-                            <div className="pending-item--location">
-                                {status === 'REJECT' ? (
-                                    <span>Lý do:</span>
-                                ) : (
-                                    <span>Lưu ý:</span>
-                                )}
-                                <span>{note}</span>
                             </div>
                         </div>
                         {status === 'SUCCESS' && (
@@ -92,6 +78,13 @@ const PendingItem = memo(
                     <div className="pending-item--location">
                         <span>Điểm vui chơi:</span>
                         <span>{namesString}</span>
+                    </div>
+
+                    <div className="pending-item--location">
+                        {status === 'REJECT' && <span>Lý do:</span>}
+                        {status === 'SUCCESS' && <span>Mô tả:</span>}
+                        {status === 'PENDING' && <span>Lý do:</span>}
+                        <span>{note}</span>
                     </div>
                 </div>
                 {status === 'PENDING' && (

@@ -26,11 +26,21 @@ const ActivityModal = memo(
                 try {
                     const newValue =
                         name === 'price' ? parseInt(value[name]) : value[name];
-                    const body = {
-                        user_id: userId,
-                        status: name === 'reason' ? 'reject' : 'success',
-                        [name === 'reason' ? 'reason' : 'price']: newValue,
-                    };
+                    let body = {};
+                    if (name === 'price') {
+                        body = {
+                            user_id: userId,
+                            status: 'success',
+                            price: newValue,
+                            reason: value.description,
+                        };
+                    } else {
+                        body = {
+                            user_id: userId,
+                            status: 'reject',
+                            reason: newValue,
+                        };
+                    }
                     const response = await customTourService.responseCustomTour(
                         tourId,
                         body,
@@ -97,6 +107,23 @@ const ActivityModal = memo(
                     >
                         <Input placeholder={`Báo ${label}`} />
                     </Form.Item>
+                    {name === 'price' && (
+                        <Form.Item
+                            name="description"
+                            label="Mô tả tour"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: `Vui lòng mô tả tour du lịch`,
+                                },
+                            ]}
+                        >
+                            <Input.TextArea
+                                placeholder="Mô tả tour du lịch"
+                                style={{ height: 180 }}
+                            />
+                        </Form.Item>
+                    )}
                 </Form>
             </Modal>
         );
