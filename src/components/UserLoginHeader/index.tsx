@@ -7,6 +7,7 @@ import Logo from 'assets/icons/Logo';
 import MessageIcon from 'assets/icons/MessageIcon';
 import MoneyDropDown from 'assets/icons/MoneyDropDown';
 import UserDropDown from 'assets/icons/UserDropDown';
+import Message from 'components/Message';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { tokenActions } from 'reducers/token';
@@ -50,6 +51,7 @@ const UserLoginHeader: FC = () => {
     const handleLogout = () => {
         dispatch(tokenActions.SET_ACCESS_TOKEN(''));
         dispatch(tokenActions.SET_USER_ID(0));
+        Message.sendSuccess('Đăng xuất thành công');
     };
 
     useEffect(() => {

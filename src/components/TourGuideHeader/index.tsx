@@ -5,6 +5,7 @@ import LogOutIcon from 'assets/icons/LogOutIcon';
 import Logo from 'assets/icons/Logo';
 import MessageIcon from 'assets/icons/MessageIcon';
 import UserDropDown from 'assets/icons/UserDropDown';
+import Message from 'components/Message';
 import { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { tokenActions } from 'reducers/token';
@@ -18,6 +19,7 @@ const TourGuideHeader: FC = () => {
     const handleLogout = () => {
         dispatch(tokenActions.SET_ACCESS_TOKEN(''));
         dispatch(tokenActions.SET_USER_ID(0));
+        Message.sendSuccess('Đăng xuất thành công');
     };
 
     const items = [

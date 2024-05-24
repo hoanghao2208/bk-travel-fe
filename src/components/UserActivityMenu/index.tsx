@@ -1,6 +1,7 @@
 import { HeartOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
+import Message from 'components/Message';
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { tokenActions } from 'reducers/token';
@@ -43,6 +44,7 @@ const UserActivityMenu: FC = () => {
         } else {
             dispatch(tokenActions.SET_ACCESS_TOKEN(''));
             dispatch(tokenActions.SET_USER_ID(0));
+            Message.sendSuccess('Đăng xuất thành công');
         }
     };
     return (
