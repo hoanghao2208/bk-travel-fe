@@ -1,15 +1,33 @@
 import { CompassFilled } from '@ant-design/icons';
 import { Button, Form } from 'antd';
 import dayjs from 'dayjs';
-import { memo, useEffect } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { DEFAULT_DISPLAY_DATE_FORMAT, TIME_FORMAT } from 'utils/constants';
-import './style.scss';
 import FormList from 'views/TourGuideMission/components/FormList';
+import './style.scss';
 
 const ScheduleList = memo(
-    ({ form, tourData, scheduleData, column, handleUpdateScheduleTour }) => {
+    ({ form, tourData, scheduleData, column, handleUpdateSchedule }) => {
         const { tour_id } = useParams();
+
+        const filterScheduleData = useCallback(data => {
+            return {
+                ...data,
+                schedule_detail: data.schedule_detail
+                    .map(schedule => {
+                        return {
+                            ...schedule,
+                            detail: schedule.detail.filter(
+                                item =>
+                                    item.status !== undefined &&
+                                    item.reason !== ''
+                            ),
+                        };
+                    })
+                    .filter(schedule => schedule.detail.length > 0),
+            };
+        }, []);
 
         const renderForms = () => {
             const forms = [];
@@ -39,7 +57,7 @@ const ScheduleList = memo(
                         dayjs(item.range_time[0]).format(TIME_FORMAT) +
                         ' - ' +
                         dayjs(item.range_time[1]).format(TIME_FORMAT);
-                    item.reason = item.reason?.trim() || '';
+                    item.note = item.note?.trim() || '';
                 });
             });
 
@@ -58,14 +76,16 @@ const ScheduleList = memo(
                 schedule_detail.push(data);
             }
 
-            const scheduleData = {
+            let scheduleData = {
                 tour_id,
                 schedule_detail,
             };
 
-            console.log('scheduleData', scheduleData);
+            scheduleData = filterScheduleData(scheduleData);
 
-            // handleUpdateScheduleTour(scheduleData);
+            // console.log('scheduleData', scheduleData);
+
+            handleUpdateSchedule(scheduleData);
         };
 
         useEffect(() => {

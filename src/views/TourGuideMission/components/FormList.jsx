@@ -53,12 +53,6 @@ const Item = memo(
                             {...props}
                             name={[name, 'status']}
                             label="Trạng thái"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Vui lòng chọn trạng thái',
-                                },
-                            ]}
                         >
                             <Select
                                 showSearch
@@ -70,16 +64,10 @@ const Item = memo(
                     <div>
                         <Form.Item
                             {...props}
-                            name={[name, 'reason']}
-                            label="Nội dung"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Vui lòng nhập nội dung',
-                                },
-                            ]}
+                            name={[name, 'note']}
+                            label="Lưu ý"
                         >
-                            <Input placeholder="Nội dung" />
+                            <Input placeholder="Lưu ý" />
                         </Form.Item>
                     </div>
                 </div>
@@ -133,10 +121,6 @@ const FormList = memo(({ id }) => {
             {
                 label: 'Đã hoàn thành',
                 value: 'checkin',
-            },
-            {
-                label: 'Gặp sự cố',
-                value: 'problem',
             },
             {
                 label: 'Trì hoãn',

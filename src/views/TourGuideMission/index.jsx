@@ -1,5 +1,8 @@
+import Message from 'components/Message';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { getToken } from 'reducers/token/function';
+import tourGuideService from 'services/tourGuideService';
 import tourService from 'services/tourService';
 import Inner from 'views/TourGuideMission/Inner';
 
@@ -9,9 +12,11 @@ const Wrapper = memo(() => {
     });
 
     const { tour_id } = useParams();
+    const token = getToken();
 
     const [tourData, setTourData] = useState([]);
     const [scheduleData, setScheduleData] = useState([]);
+    const [scheduleId, setScheduleId] = useState(0);
     const [column, setColumn] = useState(0);
 
     const handleGetTourData = useCallback(async () => {
@@ -33,11 +38,33 @@ const Wrapper = memo(() => {
             const response = await tourService.getTourSchedule(tour_id);
             if (response?.status === 200) {
                 setScheduleData(response.data.schedule_tour.schedule_detail);
+                setScheduleId(response.data.schedule_tour.id);
             }
         } catch (error) {
             console.error(error);
         }
     }, [tour_id]);
+
+    const handleUpdateSchedule = useCallback(
+        async scheduleData => {
+            try {
+                const response =
+                    await tourGuideService.updateScheduleByTourGuide(
+                        scheduleId,
+                        scheduleData,
+                        token
+                    );
+
+                if (response?.status === 200) {
+                    Message.sendSuccess('Cập nhật lịch trình thành công');
+                }
+            } catch (error) {
+                console.error(error);
+                Message.sendError('Đã có lỗi xãy ra, vui lòng thử lại');
+            }
+        },
+        [scheduleId, token]
+    );
 
     useEffect(() => {
         handleGetTourData();
@@ -52,6 +79,7 @@ const Wrapper = memo(() => {
             tourData={tourData}
             scheduleData={scheduleData}
             column={column}
+            handleUpdateSchedule={handleUpdateSchedule}
         />
     );
 });
