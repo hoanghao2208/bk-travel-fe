@@ -1,9 +1,10 @@
 import axios from 'axios';
 import ApiBase from 'modules/apis/apiBase';
+import { BASE_URL } from 'utils/constants';
 
 class VoucherService extends ApiBase {
     createVoucher = (requestBody: any, token: string) => {
-        const url = 'http://localhost:8080/api/v1/vouchers';
+        const url = BASE_URL + '/api/v1/vouchers';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -12,17 +13,17 @@ class VoucherService extends ApiBase {
     };
 
     getAllVouchers = () => {
-        const url = 'http://localhost:8080/api/v1/vouchers/all';
+        const url = BASE_URL + '/api/v1/vouchers/all';
         return axios.get(url);
     };
 
     getOneVoucher = (voucher_id: number) => {
-        const url = `http://localhost:8080/api/v1/vouchers/${voucher_id}`;
+        const url = BASE_URL + `/api/v1/vouchers/${voucher_id}`;
         return axios.get(url);
     };
 
     deleteVoucher = (voucher_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/vouchers/${voucher_id}`;
+        const url = BASE_URL + `/api/v1/vouchers/${voucher_id}`;
         return axios.delete(url, {
             headers: {
                 Authorization: `${token}`,
@@ -37,7 +38,7 @@ class VoucherService extends ApiBase {
         },
         token: string
     ) => {
-        const url = 'http://localhost:8080/api/v1/orders/vouchers';
+        const url = BASE_URL + '/api/v1/orders/vouchers';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -52,7 +53,7 @@ class VoucherService extends ApiBase {
         },
         token: string
     ) => {
-        const url = 'http://localhost:8080/api/v1/orders/vouchers';
+        const url = BASE_URL + '/api/v1/orders/vouchers';
         return axios.put(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -61,7 +62,7 @@ class VoucherService extends ApiBase {
     };
 
     getAllVoucherInOrder = (order_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/orders/${order_id}/vouchers`;
+        const url = BASE_URL + `/api/v1/orders/${order_id}/vouchers`;
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,

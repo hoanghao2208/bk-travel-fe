@@ -1,19 +1,21 @@
 import axios from 'axios';
 import ApiBase from 'modules/apis/apiBase';
+import { BASE_URL } from 'utils/constants';
 
 class CommentService extends ApiBase {
     getAllComments = (tourId: number) => {
-        const url = `http://localhost:8080/api/v1/tours/${tourId}/comments`;
+        const url = BASE_URL + `/api/v1/tours/${tourId}/comments`;
         return axios.get(url);
     };
 
     getCommentByParentId = (parent_comment_id: number, tour_id: number) => {
-        const url = `http://localhost:8080/api/v1/tours/${tour_id}/comments/${parent_comment_id}`;
+        const url =
+            BASE_URL + `/api/v1/tours/${tour_id}/comments/${parent_comment_id}`;
         return axios.get(url);
     };
 
     createComment = (token: string, requestBody: any) => {
-        const url = 'http://localhost:8080/api/v1/comments';
+        const url = BASE_URL + '/api/v1/comments';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -22,7 +24,7 @@ class CommentService extends ApiBase {
     };
 
     createReview = (token: string, requestBody: any) => {
-        const url = 'http://localhost:8080/api/v1/reviews';
+        const url = BASE_URL + '/api/v1/reviews';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -31,7 +33,7 @@ class CommentService extends ApiBase {
     };
 
     getAllReviewsByTourId = (tour_id: number) => {
-        const url = `http://localhost:8080/api/v1/tours/${tour_id}/reviews`;
+        const url = BASE_URL + `/api/v1/tours/${tour_id}/reviews`;
         return axios.get(url);
     };
 
@@ -42,7 +44,7 @@ class CommentService extends ApiBase {
             comment_id: number;
         }
     ) => {
-        const url = 'http://localhost:8080/api/v1/comments';
+        const url = BASE_URL + '/api/v1/comments';
         return axios.delete(url, {
             data: requestBody,
             headers: {

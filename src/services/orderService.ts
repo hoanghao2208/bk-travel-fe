@@ -1,9 +1,10 @@
 import axios from 'axios';
 import ApiBase from 'modules/apis/apiBase';
+import { BASE_URL } from 'utils/constants';
 
 class OrderService extends ApiBase {
     getOneOrder = (orderId: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/orders/${orderId}`;
+        const url = BASE_URL + `/api/v1/orders/${orderId}`;
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -12,7 +13,7 @@ class OrderService extends ApiBase {
     };
 
     getCompletedOrder = (userId: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/orders/${userId}/complete`;
+        const url = BASE_URL + `/api/v1/orders/${userId}/complete`;
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -21,7 +22,7 @@ class OrderService extends ApiBase {
     };
 
     getPendingOrder = (userId: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/orders/${userId}/pending`;
+        const url = BASE_URL + `/api/v1/orders/${userId}/pending`;
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -41,7 +42,7 @@ class OrderService extends ApiBase {
         },
         token: string
     ) => {
-        const url = 'http://localhost:8080/api/v1/orders';
+        const url = BASE_URL + '/api/v1/orders';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -59,7 +60,7 @@ class OrderService extends ApiBase {
         },
         token: string
     ) => {
-        const url = 'http://localhost:8080/api/v1/orders/carts';
+        const url = BASE_URL + '/api/v1/orders/carts';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -71,7 +72,7 @@ class OrderService extends ApiBase {
         requestBody: { user_id: number; order_id: number },
         token: string
     ) => {
-        const url = 'http://localhost:8080/api/v1/orders/payments';
+        const url = BASE_URL + '/api/v1/orders/payments';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -80,7 +81,7 @@ class OrderService extends ApiBase {
     };
 
     getResultsPayment = (params: any, token: string) => {
-        const url = `http://localhost:8080/api/v1/users/payment/vnpay_ipn${params}`;
+        const url = BASE_URL + `/api/v1/users/payment/vnpay_ipn${params}`;
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -95,7 +96,7 @@ class OrderService extends ApiBase {
             tour_id: number;
         }
     ) => {
-        const url = `http://localhost:8080/api/v1/users/carts/${cart_id}`;
+        const url = BASE_URL + `/api/v1/users/carts/${cart_id}`;
         return axios.delete(url, {
             data: requestBody,
             headers: {

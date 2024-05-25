@@ -1,9 +1,10 @@
 import axios from 'axios';
 import ApiBase from 'modules/apis/apiBase';
+import { BASE_URL } from 'utils/constants';
 
 class TourService extends ApiBase {
     createTour = (token: string, requestBody: any) => {
-        const url = 'http://localhost:8080/api/v1/tours';
+        const url = BASE_URL + '/api/v1/tours';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -12,17 +13,17 @@ class TourService extends ApiBase {
     };
 
     getAllTour = () => {
-        const url = 'http://localhost:8080/api/v1/tours/all';
+        const url = BASE_URL + '/api/v1/tours/all';
         return axios.get(url);
     };
 
     getOneTour = (tour_id: number) => {
-        const url = `http://localhost:8080/api/v1/tours/${tour_id}`;
+        const url = BASE_URL + `/api/v1/tours/${tour_id}`;
         return axios.get(url);
     };
 
     getWaitingTour = (token: string) => {
-        const url = 'http://localhost:8080/api/v1/tours/all/waiting';
+        const url = BASE_URL + '/api/v1/tours/all/waiting';
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -31,12 +32,12 @@ class TourService extends ApiBase {
     };
 
     getOnlineTour = () => {
-        const url = 'http://localhost:8080/api/v1/tours/all/online';
+        const url = BASE_URL + '/api/v1/tours/all/online';
         return axios.get(url);
     };
 
     getDeletedTour = (token: string) => {
-        const url = 'http://localhost:8080/api/v1/tours/all/deleted';
+        const url = BASE_URL + '/api/v1/tours/all/deleted';
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -45,7 +46,7 @@ class TourService extends ApiBase {
     };
 
     deleteTour = (tour_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/tours/${tour_id}`;
+        const url = BASE_URL + `/api/v1/tours/${tour_id}`;
         return axios.delete(url, {
             headers: {
                 Authorization: `${token}`,
@@ -54,7 +55,7 @@ class TourService extends ApiBase {
     };
 
     recoverTour = (tour_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/tours/recover/${tour_id}`;
+        const url = BASE_URL + `/api/v1/tours/recover/${tour_id}`;
         return axios.put(
             url,
             {},
@@ -67,7 +68,7 @@ class TourService extends ApiBase {
     };
 
     updateTour = (requestBody: any, tour_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/tours/${tour_id}`;
+        const url = BASE_URL + `/api/v1/tours/${tour_id}`;
         return axios.put(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -76,12 +77,12 @@ class TourService extends ApiBase {
     };
 
     getAllDestinations = () => {
-        const url = 'http://localhost:8080/api/v1/destinations/all';
+        const url = BASE_URL + '/api/v1/destinations/all';
         return axios.get(url);
     };
 
     getAllAttractions = (destination: string) => {
-        const url = 'http://localhost:8080/api/v1/attractions/all';
+        const url = BASE_URL + '/api/v1/attractions/all';
         return axios.get(url, {
             params: {
                 destination,
@@ -96,7 +97,7 @@ class TourService extends ApiBase {
         },
         token: string
     ) => {
-        const url = 'http://localhost:8080/api/v1/schedules';
+        const url = BASE_URL + '/api/v1/schedules';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -112,7 +113,7 @@ class TourService extends ApiBase {
         },
         token: string
     ) => {
-        const url = `http://localhost:8080/api/v1/schedules/${schedule_id}`;
+        const url = BASE_URL + `/api/v1/schedules/${schedule_id}`;
         return axios.put(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -121,7 +122,7 @@ class TourService extends ApiBase {
     };
 
     publicTour = (tour_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/tours/${tour_id}/public`;
+        const url = BASE_URL + `/api/v1/tours/${tour_id}/public`;
         return axios.patch(
             url,
             {},
@@ -134,12 +135,12 @@ class TourService extends ApiBase {
     };
 
     getAllAttractionsOfTour = (id_tour: number) => {
-        const url = `http://localhost:8080/api/v1/tours/${id_tour}/destinations`;
+        const url = BASE_URL + `/api/v1/tours/${id_tour}/destinations`;
         return axios.get(url);
     };
 
     getTourSchedule = (id_tour: number) => {
-        const url = `http://localhost:8080/api/v1/tours/${id_tour}/schedules`;
+        const url = BASE_URL + `/api/v1/tours/${id_tour}/schedules`;
         return axios.get(url);
     };
 
@@ -149,13 +150,13 @@ class TourService extends ApiBase {
         time?: string;
         departure_date?: string;
     }) => {
-        const url = 'http://localhost:8080/api/v1/tours/search';
+        const url = BASE_URL + '/api/v1/tours/search';
 
         return axios.get(url, { params });
     };
 
     adminDuplicateTour = (tour_id: number) => {
-        const url = `http://localhost:8080/api/v1/tours/${tour_id}`;
+        const url = BASE_URL + `/api/v1/tours/${tour_id}`;
         return axios.post(url);
     };
 }

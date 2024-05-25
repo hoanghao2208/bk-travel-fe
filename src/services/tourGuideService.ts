@@ -1,9 +1,10 @@
 import axios from 'axios';
 import ApiBase from 'modules/apis/apiBase';
+import { BASE_URL } from 'utils/constants';
 
 class TourGuideService extends ApiBase {
     getAllTourGuides = (token: string) => {
-        const url = 'http://localhost:8080/api/v1/tour_guides';
+        const url = BASE_URL + '/api/v1/tour_guides';
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -22,7 +23,7 @@ class TourGuideService extends ApiBase {
         },
         token: string
     ) => {
-        const url = 'http://localhost:8080/admin/manage-account';
+        const url = BASE_URL + '/admin/manage-account';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -39,7 +40,7 @@ class TourGuideService extends ApiBase {
         },
         token: string
     ) => {
-        const url = 'http://localhost:8080/admin/task';
+        const url = BASE_URL + '/admin/task';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -48,7 +49,7 @@ class TourGuideService extends ApiBase {
     };
 
     getAllTasksOfTourGuide = (tourGuide_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/tour_guides/${tourGuide_id}/tasks`;
+        const url = BASE_URL + `/api/v1/tour_guides/${tourGuide_id}/tasks`;
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -64,7 +65,7 @@ class TourGuideService extends ApiBase {
         },
         token: string
     ) => {
-        const url = `http://localhost:8080/api/v1/schedules/tourguide/${schedule_id}`;
+        const url = BASE_URL + `/api/v1/schedules/tourguide/${schedule_id}`;
         return axios.put(url, requestBody, {
             headers: {
                 Authorization: `${token}`,

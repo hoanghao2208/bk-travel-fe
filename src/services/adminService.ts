@@ -1,9 +1,10 @@
 import axios from 'axios';
 import ApiBase from 'modules/apis/apiBase';
+import { BASE_URL } from 'utils/constants';
 
 class AdminService extends ApiBase {
     getTotalBooked = (token: string) => {
-        const url = 'http://localhost:8080/admin/total-bookednumber';
+        const url = BASE_URL + '/admin/total-bookednumber';
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -12,7 +13,7 @@ class AdminService extends ApiBase {
     };
 
     getTotalRevenue = (token: string) => {
-        const url = 'http://localhost:8080/admin/total-revenue';
+        const url = BASE_URL + '/admin/total-revenue';
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -21,7 +22,7 @@ class AdminService extends ApiBase {
     };
 
     getTopRatedTours = () => {
-        const url = 'http://localhost:8080/api/v1/tours/toprated';
+        const url = BASE_URL + '/api/v1/tours/toprated';
         return axios.get(url);
     };
 }

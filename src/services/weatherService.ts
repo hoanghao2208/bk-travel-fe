@@ -1,9 +1,10 @@
 import axios from 'axios';
 import ApiBase from 'modules/apis/apiBase';
+import { BASE_URL } from 'utils/constants';
 
 class WeatherService extends ApiBase {
     getWeatherOfCity = (city: string) => {
-        const url = 'http://localhost:8080/api/v1/schedules/weather';
+        const url = BASE_URL + '/api/v1/schedules/weather';
         return axios.get(url, {
             params: {
                 city,
@@ -12,7 +13,7 @@ class WeatherService extends ApiBase {
     };
 
     getAllCities = () => {
-        const url = 'http://localhost:8080/api/v1/destinations/cities';
+        const url = BASE_URL + '/api/v1/destinations/cities';
         return axios.get(url);
     };
 }

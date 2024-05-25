@@ -1,5 +1,6 @@
 import axios from 'axios';
 import ApiBase from 'modules/apis/apiBase';
+import { BASE_URL } from 'utils/constants';
 
 class UserService extends ApiBase {
     register = (requestBody: {
@@ -9,17 +10,17 @@ class UserService extends ApiBase {
         password: string;
         confirm_password: string;
     }) => {
-        const url = 'http://localhost:8080/api/v1/auth/register';
+        const url = BASE_URL + '/api/v1/auth/register';
         return axios.post(url, requestBody);
     };
 
     login = (requestBody: { email: string; password: string }) => {
-        const url = 'http://localhost:8080/api/v1/auth/login';
+        const url = BASE_URL + '/api/v1/auth/login';
         return axios.post(url, requestBody);
     };
 
     logout = (token: string) => {
-        const url = 'http://localhost:8080/api/v1/auth/logout';
+        const url = BASE_URL + '/api/v1/auth/logout';
         return axios.post(
             url,
             {},
@@ -32,7 +33,7 @@ class UserService extends ApiBase {
     };
 
     getUserInfo = (user_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/users/${user_id}`;
+        const url = BASE_URL + `/api/v1/users/${user_id}`;
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -52,7 +53,7 @@ class UserService extends ApiBase {
         },
         token: string
     ) => {
-        const url = `http://localhost:8080/api/v1/users/${user_id}`;
+        const url = BASE_URL + `/api/v1/users/${user_id}`;
         return axios.put(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -61,7 +62,7 @@ class UserService extends ApiBase {
     };
 
     forgotPassword = (requestBody: { email: string }) => {
-        const url = 'http://localhost:8080/api/v1/users/forgot-password';
+        const url = BASE_URL + '/api/v1/users/forgot-password';
         return axios.post(url, requestBody);
     };
 
@@ -73,7 +74,7 @@ class UserService extends ApiBase {
         },
         token: string
     ) => {
-        const url = 'http://localhost:8080/api/v1/users/reset-password';
+        const url = BASE_URL + '/api/v1/users/reset-password';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -82,7 +83,7 @@ class UserService extends ApiBase {
     };
 
     uploadAvatar = (user_id: number, requestBody: any, token: string) => {
-        const url = `http://localhost:8080/api/v1/users/${user_id}/upload`;
+        const url = BASE_URL + `/api/v1/users/${user_id}/upload`;
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -99,7 +100,7 @@ class UserService extends ApiBase {
         },
         token: string
     ) => {
-        const url = 'http://localhost:8080/api/v1/users/change-password';
+        const url = BASE_URL + '/api/v1/users/change-password';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -114,7 +115,7 @@ class UserService extends ApiBase {
         },
         token: string
     ) => {
-        const url = `http://localhost:8080/api/v1/users/wishlist`;
+        const url = BASE_URL + '/api/v1/users/wishlist';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -123,7 +124,7 @@ class UserService extends ApiBase {
     };
 
     getWishList = (user_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/users/${user_id}/wishlist`;
+        const url = BASE_URL + `/api/v1/users/${user_id}/wishlist`;
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -138,7 +139,7 @@ class UserService extends ApiBase {
         },
         token: string
     ) => {
-        const url = `http://localhost:8080/api/v1/users/wishlist`;
+        const url = BASE_URL + '/api/v1/users/wishlist';
         return axios.delete(url, {
             headers: {
                 Authorization: `${token}`,
@@ -158,7 +159,7 @@ class UserService extends ApiBase {
             };
         }
     ) => {
-        const url = 'http://localhost:8080/api/v1/users/carts';
+        const url = BASE_URL + '/api/v1/users/carts';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -167,7 +168,7 @@ class UserService extends ApiBase {
     };
 
     getCartByUser = (user_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/users/${user_id}/cart`;
+        const url = BASE_URL + `/api/v1/users/${user_id}/cart`;
         return axios.get(url, {
             headers: {
                 Authorization: `${token}`,
@@ -176,7 +177,7 @@ class UserService extends ApiBase {
     };
 
     deleteFromCart = (cart_id: number, tour_id: number, token: string) => {
-        const url = `http://localhost:8080/api/v1/users/carts/${cart_id}`;
+        const url = BASE_URL + `/api/v1/users/carts/${cart_id}`;
         return axios.delete(url, {
             data: { tour_id },
             headers: {
@@ -193,7 +194,8 @@ class UserService extends ApiBase {
         }
     ) => {
         const url =
-            'http://localhost:8080/api/v1/users/carts/order-item/adult-quantity/increment';
+            BASE_URL +
+            '/api/v1/users/carts/order-item/adult-quantity/increment';
         return axios.put(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -209,7 +211,8 @@ class UserService extends ApiBase {
         }
     ) => {
         const url =
-            'http://localhost:8080/api/v1/users/carts/order-item/adult-quantity/decrement';
+            BASE_URL +
+            '/api/v1/users/carts/order-item/adult-quantity/decrement';
         return axios.put(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -225,7 +228,8 @@ class UserService extends ApiBase {
         }
     ) => {
         const url =
-            'http://localhost:8080/api/v1/users/carts/order-item/child-quantity/increment';
+            BASE_URL +
+            '/api/v1/users/carts/order-item/child-quantity/increment';
         return axios.put(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
@@ -241,7 +245,8 @@ class UserService extends ApiBase {
         }
     ) => {
         const url =
-            'http://localhost:8080/api/v1/users/carts/order-item/child-quantity/decrement';
+            BASE_URL +
+            '/api/v1/users/carts/order-item/child-quantity/decrement';
         return axios.put(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
