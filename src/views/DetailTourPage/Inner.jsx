@@ -303,7 +303,7 @@ const Inner = memo(
                                         <Rate
                                             disabled
                                             allowHalf
-                                            defaultValue={parseFloat(
+                                            value={parseFloat(
                                                 tourData?.average_rate
                                             )}
                                         />

@@ -13,6 +13,7 @@ interface TourItemProps {
     time: string;
     departure_time: string;
     departure_date: string;
+    isPending?: boolean;
 }
 
 const TourItem: FC<TourItemProps> = memo(
@@ -26,6 +27,7 @@ const TourItem: FC<TourItemProps> = memo(
         time,
         departure_date,
         departure_time,
+        isPending,
     }) => {
         const navigate = useNavigate();
 
@@ -33,7 +35,7 @@ const TourItem: FC<TourItemProps> = memo(
             <div
                 className="tour-item-completed"
                 onClick={() => {
-                    if (!destination_place.includes('[')) {
+                    if (!destination_place.includes('[') && !isPending) {
                         navigate(`/schedule/information/detail/${tour_id}`);
                     }
                 }}

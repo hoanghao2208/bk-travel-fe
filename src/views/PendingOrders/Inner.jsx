@@ -25,6 +25,7 @@ const Inner = memo(({ pendingOrders }) => {
                             )}
                             tours={order.tours}
                             isPayment={false}
+                            isPending={true}
                         />
                     ))}
                 </div>

@@ -15,6 +15,7 @@ interface OrderItemProps {
     date: string;
     tours: any;
     isPayment?: boolean;
+    isPending?: boolean;
 }
 
 const OrderItem: FC<OrderItemProps> = memo(
@@ -26,13 +27,16 @@ const OrderItem: FC<OrderItemProps> = memo(
         date,
         tours,
         isPayment = true,
+        isPending = false,
     }) => {
         const navigate = useNavigate();
         const handleNavigate = useCallback(() => {
             const tourIds = tours
                 .map((tour: any) => tour.tour_id)
                 .join('&tourId=');
-            navigate(`${routeConstants.FILL_INFORMATION}?tourId=${tourIds}&orderId=${order_id}`);
+            navigate(
+                `${routeConstants.FILL_INFORMATION}?tourId=${tourIds}&orderId=${order_id}`
+            );
         }, [navigate, order_id, tours]);
         return (
             <div className="orders-item">
@@ -73,6 +77,7 @@ const OrderItem: FC<OrderItemProps> = memo(
                                 DEFAULT_DISPLAY_DATE_FORMAT
                             )}
                             departure_time={tour.departure_time}
+                            isPending={isPending}
                         />
                     ))}
                 </div>
