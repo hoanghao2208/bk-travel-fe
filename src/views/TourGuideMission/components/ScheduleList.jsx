@@ -58,6 +58,7 @@ const ScheduleList = memo(
                         ' - ' +
                         dayjs(item.range_time[1]).format(TIME_FORMAT);
                     item.note = item.note?.trim() || '';
+                    item.status = item.status || '';
                 });
             });
 
@@ -101,6 +102,8 @@ const ScheduleList = memo(
                             dayjs(endTime, TIME_FORMAT),
                         ],
                         name: day.name,
+                        status: day.status,
+                        note: day.note,
                     };
                     UPDATE_SCHEDULE_DEFAULT_VALUES.push(dataItem);
                 });

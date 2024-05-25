@@ -45,7 +45,6 @@ const TourItem: FC<TourItemProps> = memo(({ tour_id, description }) => {
                     src={tourDetail?.cover_image}
                     alt="tour location"
                     className="tour-item__header--img"
-                    // onClick={handleNavigate}
                 />
             </div>
             <div className="tour-item__center">
@@ -57,8 +56,10 @@ const TourItem: FC<TourItemProps> = memo(({ tour_id, description }) => {
                     - {tourDetail?.time}
                 </div>
                 <div className="tour-item__center--location">
-                    <Tooltip title="Tour du lịch số 1">
-                        <Link to="/">{tourDetail?.name}</Link>
+                    <Tooltip title={tourDetail?.name}>
+                        <Link to={`/tour-guide/missions/${tour_id}`}>
+                            {tourDetail?.name}
+                        </Link>
                     </Tooltip>
                 </div>
                 <div className="tour-item__center--start">
@@ -93,7 +94,7 @@ const TourItem: FC<TourItemProps> = memo(({ tour_id, description }) => {
                     type="primary"
                     shape="round"
                     size="large"
-                    onClick={() => navigate('/tour-guide/missions/1')}
+                    onClick={() => navigate(`/tour-guide/missions/${tour_id}`)}
                 >
                     Trang nhiệm vụ
                 </Button>

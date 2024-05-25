@@ -23,6 +23,12 @@
         .detail-time {
             font-size: 18px;
             font-weight: 500;
+            display: flex;
+            gap: 8px;
+            &--name {
+                display: inline-block;
+                margin-right: 20px;
+            }
         }
         .detail-description{
             font-size: 16px;

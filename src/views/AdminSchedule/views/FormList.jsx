@@ -59,11 +59,6 @@ const Item = memo(({ name, tourDestinations, hidden, remove, ...props }) => {
                         <Input placeholder="Mô tả" />
                     </Form.Item>
                 </div>
-                <div>
-                    <Form.Item {...props} name={[name, 'note']} label="Lưu ý">
-                        <Input placeholder="Lưu ý" />
-                    </Form.Item>
-                </div>
             </div>
             <Form.Item hidden={hidden}>
                 <MinusCircleOutlined onClick={remove} />

@@ -1,4 +1,8 @@
+import { Tooltip } from 'antd';
+import CancelIcon from 'assets/icons/CancelIcon';
+import CheckBoxIcon from 'assets/icons/CheckBoxIcon';
 import SparklingIcon from 'assets/icons/SparklingIcon';
+import WarningIcon from 'assets/icons/WarningIcon';
 import dayjs from 'dayjs';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
 import { memo } from 'react';
@@ -34,7 +38,21 @@ const Inner = memo(({ tourDetail, scheduleDetail }) => {
                                     <span>
                                         <SparklingIcon /> {item.range_time}:
                                     </span>
-                                    <span> {item.name}</span>
+                                    <span className="detail-time--name">
+                                        {' '}
+                                        {item.name}
+                                    </span>
+                                    <Tooltip title={item.note}>
+                                        {item.status === 'checkin' && (
+                                            <CheckBoxIcon />
+                                        )}
+                                        {item.status === 'delay' && (
+                                            <WarningIcon />
+                                        )}
+                                        {item.status === 'skip' && (
+                                            <CancelIcon />
+                                        )}
+                                    </Tooltip>
                                 </div>
                                 <p className="detail-description">
                                     {item.description}

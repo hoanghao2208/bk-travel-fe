@@ -65,9 +65,9 @@ const Item = memo(
                         <Form.Item
                             {...props}
                             name={[name, 'note']}
-                            label="Lưu ý"
+                            label="Mô tả"
                         >
-                            <Input placeholder="Lưu ý" />
+                            <Input placeholder="Mô tả" />
                         </Form.Item>
                     </div>
                 </div>
