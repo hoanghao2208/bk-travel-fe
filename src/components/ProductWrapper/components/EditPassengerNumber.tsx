@@ -11,10 +11,19 @@ interface EditPassengerNumberProps {
     reload: boolean;
     setReload: (isReload: boolean) => void;
     isChild?: boolean;
+    disabledIncrease: boolean;
 }
 
 const EditPassengerNumber: FC<EditPassengerNumberProps> = memo(
-    ({ title, number, tourId, reload, setReload, isChild }) => {
+    ({
+        title,
+        number,
+        tourId,
+        reload,
+        setReload,
+        isChild,
+        disabledIncrease,
+    }) => {
         const userId = getCustomerId();
         const token = getToken();
         const body = useMemo(() => {
@@ -91,6 +100,7 @@ const EditPassengerNumber: FC<EditPassengerNumberProps> = memo(
                                         ? handleIncrementChild
                                         : handleIncrementAdult
                                 }
+                                disabled={disabledIncrease}
                             >
                                 +
                             </Button>

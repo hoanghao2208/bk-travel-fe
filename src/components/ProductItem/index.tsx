@@ -1,40 +1,26 @@
 import { Tooltip } from 'antd';
 import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
-import { FC, memo, useCallback, useEffect, useState } from 'react';
-import tourService from 'services/tourService';
+import { FC, memo } from 'react';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
-import { ITour } from 'utils/type';
 import './styles.scss';
 
 dayjs.extend(isSameOrAfter);
 
 interface ProductItemProps {
-    tourId: number;
+    tourInformation: any;
     adultQuantity: number;
     childQuantity: number;
     setIsExprired: (value: boolean) => void;
 }
 
 const ProductItem: FC<ProductItemProps> = memo(
-    ({ tourId, adultQuantity, childQuantity, setIsExprired }) => {
-        const [tourInformation, setTourInformation] = useState<ITour>();
-
-        const getTourInformation = useCallback(async () => {
-            try {
-                const response = await tourService.getOneTour(tourId);
-                if (response?.status === 200) {
-                    setTourInformation(response.data.data);
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        }, [tourId]);
-
-        useEffect(() => {
-            getTourInformation();
-        }, [getTourInformation]);
-
+    ({
+        adultQuantity,
+        childQuantity,
+        setIsExprired,
+        tourInformation,
+    }) => {
         if (
             tourInformation &&
             !dayjs(tourInformation.deadline_book_time).isSameOrAfter(

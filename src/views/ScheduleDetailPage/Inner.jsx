@@ -34,7 +34,7 @@ const Inner = memo(({ tourData, scheduleData, handleCreateOrder }) => {
     } = useCreateContext();
 
     const handleOpenModal = useCallback(() => {
-        if (tourData.booked_number === tourData.current_customers) {
+        if (tourData.booked_number === tourData.max_customer) {
             Message.sendWarning('Tour đã hết chổ trống');
             return;
         }

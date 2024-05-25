@@ -8,9 +8,11 @@ import { Button, Modal } from 'antd';
 import Message from 'components/Message';
 import ProductItem from 'components/ProductItem';
 import EditPassengerNumber from 'components/ProductWrapper/components/EditPassengerNumber';
-import { FC, memo, useCallback, useState } from 'react';
+import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { getToken } from 'reducers/token/function';
+import tourService from 'services/tourService';
 import userService from 'services/userService';
+import { ITour } from 'utils/type';
 import './styles.scss';
 
 interface ProductWrapperProps {
@@ -43,6 +45,7 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
         const [openEditModal, setOpenEditModal] = useState(false);
         const [loading, setLoading] = useState(false);
         const [isExpired, setIsExprired] = useState(false);
+        const [tourInformation, setTourInformation] = useState<ITour>();
 
         const handleDeleteFromCart = useCallback(async () => {
             try {
@@ -89,12 +92,37 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
             }
         }, [selectedTour, setSelectedTour, tourId]);
 
+        const getTourInformation = useCallback(async () => {
+            try {
+                const response = await tourService.getOneTour(tourId);
+                if (response?.status === 200) {
+                    setTourInformation(response.data.data);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }, [tourId]);
+
+        useEffect(() => {
+            getTourInformation();
+        }, [getTourInformation]);
+
+        const disabledIncrease = useMemo(() => {
+            if (tourInformation) {
+                return (
+                    adultQuantity + childQuantity ===
+                    tourInformation.max_customer - tourInformation.booked_number
+                );
+            }
+            return false;
+        }, [adultQuantity, childQuantity, tourInformation]);
+
         return (
             <>
                 <div className="product-wrapper">
                     <div className="product-wrapper__content">
                         <ProductItem
-                            tourId={tourId}
+                            tourInformation={tourInformation}
                             adultQuantity={adultQuantity}
                             childQuantity={childQuantity}
                             setIsExprired={setIsExprired}
@@ -178,6 +206,7 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
                         tourId={tourId}
                         reload={reload}
                         setReload={setReload}
+                        disabledIncrease={disabledIncrease}
                     />
                     <EditPassengerNumber
                         title="Trẻ em"
@@ -186,6 +215,7 @@ const ProductWrapper: FC<ProductWrapperProps> = memo(
                         reload={reload}
                         setReload={setReload}
                         isChild={true}
+                        disabledIncrease={disabledIncrease}
                     />
                 </Modal>
             </>
