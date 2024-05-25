@@ -70,16 +70,6 @@ const TourGuideHeader: FC = () => {
                     <Link to={routeConstants.TOURGUIDE_MISSION}>Nhiệm vụ</Link>
                     <Link to={routeConstants.WEATHER_FORECAST}>Thời tiết</Link>
                     <div
-                        onClick={() => navigate('/')}
-                        className="user-login-header__navigate--bell"
-                    >
-                        <Tooltip placement="top" title="Thông báo">
-                            <Badge count={8} overflowCount={10}>
-                                <BellNotifyIcon />
-                            </Badge>
-                        </Tooltip>
-                    </div>
-                    <div
                         onClick={() =>
                             navigate(routeConstants.TOURGUIDE_MESSAGE)
                         }

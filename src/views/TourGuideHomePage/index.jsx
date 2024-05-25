@@ -4,6 +4,10 @@ import tourGuideService from 'services/tourGuideService';
 import Inner from 'views/TourGuideHomePage/Inner';
 
 const Wrapper = memo(() => {
+    useEffect(() => {
+        document.title = 'Trang chủ';
+    }, []);
+
     const tourGuideId = getCustomerId();
     const token = getToken();
 

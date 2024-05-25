@@ -5,6 +5,10 @@ import Inner from 'views/ScheduleInformationDetail/Inner';
 import './style.scss';
 
 const Wrapper = memo(() => {
+    useEffect(() => {
+        document.title = 'Lịch trình chi tiết của tour';
+    });
+
     const { tour_id } = useParams();
     const [tourDetail, setTourDetail] = useState([]);
     const [scheduleDetail, setScheduleDetail] = useState([]);
