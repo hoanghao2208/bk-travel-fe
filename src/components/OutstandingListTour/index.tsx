@@ -41,7 +41,10 @@ const OutstandingListTour: FC = () => {
         const isOnlineTours = allTours?.filter(tour =>
             dayjs(tour.deadline_book_time).isSameOrAfter(now)
         );
-        setOnlineTours(isOnlineTours);
+        const isAvailableTours = isOnlineTours.filter(
+            tour => tour.booked_number !== tour.max_customer
+        );
+        setOnlineTours(isAvailableTours);
     }, [allTours]);
 
     if (allTours?.length <= 0 || !allTours) {
@@ -53,7 +56,7 @@ const OutstandingListTour: FC = () => {
             <div className="outstanding-tour__header">
                 <Title title="Các tour mới của BK Travel" />
                 {onlineTours.length > 4 && (
-                    <Link to={routeConstants.ALL_TOURS}>Xem thêm</Link>
+                    <Link to={routeConstants.ALL_TOURS}>Xem tất cả</Link>
                 )}
             </div>
 
@@ -91,8 +94,7 @@ const OutstandingListTour: FC = () => {
                                     tourName={tour.name}
                                     departurePlace={tour.departure_place}
                                     empty={
-                                        tour.max_customer -
-                                        tour.booked_number
+                                        tour.max_customer - tour.booked_number
                                     }
                                     deadlineBookTime={dayjs(
                                         tour.deadline_book_time

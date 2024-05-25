@@ -30,7 +30,10 @@ const Wrapper = memo(() => {
         const isOnlineTours = allTours?.filter(tour =>
             dayjs(tour.deadline_book_time).isSameOrAfter(now)
         );
-        setOnlineTours(isOnlineTours);
+        const isAvailableTours = isOnlineTours.filter(
+            tour => tour.booked_number !== tour.max_customer
+        );
+        setOnlineTours(isAvailableTours);
     }, [allTours]);
 
     return <Inner onlineTours={onlineTours} />;
