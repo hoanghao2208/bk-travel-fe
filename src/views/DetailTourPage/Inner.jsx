@@ -112,6 +112,14 @@ const Inner = memo(
             return false;
         }, [orderPaymentData, tour_id]);
 
+        const handleOpenModal = useCallback(() => {
+            if (tourData.booked_number === tourData.current_customers) {
+                Message.sendWarning('Tour đã hết chổ trống');
+                return;
+            }
+            setOpenOrderModal(true);
+        }, [setOpenOrderModal, tourData]);
+
         if (!tourData || !tourData.description || !tourData.list_image) {
             return <LoadableLoading />;
         }
@@ -250,7 +258,7 @@ const Inner = memo(
                                 ).toLocaleString()} VNĐ`}
                                 icon={<SendOutlined />}
                                 buttonTitle="Đặt tour ngay"
-                                onClick={() => setOpenOrderModal(true)}
+                                onClick={handleOpenModal}
                             />
                             <DetailTourItem
                                 title="Lịch trình tour"

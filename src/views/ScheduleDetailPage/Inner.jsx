@@ -1,10 +1,11 @@
 import { SendOutlined } from '@ant-design/icons';
 import { Button, FloatButton, Image } from 'antd';
+import Message from 'components/Message';
 import OutstandingItem from 'components/OutstandingItem';
 import ModalSelectPassenger from 'components/TourItem/components/ModalSelectPassenger';
 import dayjs from 'dayjs';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
-import { memo, useEffect } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -31,6 +32,14 @@ const Inner = memo(({ tourData, scheduleData, handleCreateOrder }) => {
         childQuantity,
         setChildQuantity,
     } = useCreateContext();
+
+    const handleOpenModal = useCallback(() => {
+        if (tourData.booked_number === tourData.current_customers) {
+            Message.sendWarning('Tour đã hết chổ trống');
+            return;
+        }
+        setOpenOrderModal(true);
+    }, [setOpenOrderModal, tourData]);
 
     if (
         !tourData ||
@@ -85,7 +94,7 @@ const Inner = memo(({ tourData, scheduleData, handleCreateOrder }) => {
                                 type="primary"
                                 icon={<SendOutlined />}
                                 shape="round"
-                                onClick={() => setOpenOrderModal(true)}
+                                onClick={handleOpenModal}
                             >
                                 Đặt tour ngay
                             </Button>

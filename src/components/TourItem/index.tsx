@@ -65,15 +65,29 @@ const TourItem: FC<TourItemProps> = memo(
             );
         };
 
-        const handleOpenAddModal = useCallback((tourId: number) => {
-            setSelectedItem(tourId);
-            setOpenAddModal(true);
-        }, []);
+        const handleOpenAddModal = useCallback(
+            (tourId: number) => {
+                if (empty === 0) {
+                    Message.sendWarning('Tour đã hết chổ trống');
+                    return;
+                }
+                setSelectedItem(tourId);
+                setOpenAddModal(true);
+            },
+            [empty]
+        );
 
-        const handleOpenOrderModal = useCallback((tourId: number) => {
-            setSelectedItem(tourId);
-            setOpenOrderModal(true);
-        }, []);
+        const handleOpenOrderModal = useCallback(
+            (tourId: number) => {
+                if (empty === 0) {
+                    Message.sendWarning('Tour đã hết chổ trống');
+                    return;
+                }
+                setSelectedItem(tourId);
+                setOpenOrderModal(true);
+            },
+            [empty]
+        );
 
         const handleGetWishListTours = useCallback(async () => {
             try {
@@ -82,7 +96,7 @@ const TourItem: FC<TourItemProps> = memo(
                 }
                 const response = await userService.getWishList(userId, token);
                 if (response?.status === 200) {
-                    const tempLoveList = response.data.data[0].tours.map(
+                    const tempLoveList = response?.data?.data[0]?.tours.map(
                         (item: any) => item.tour_id
                     );
                     setLoveList(tempLoveList);

@@ -7,7 +7,7 @@ import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
 import NoData from 'views/AdminManageCustomTours/components/NoData';
 import './style.scss';
 
-const Inner = memo(({ wishListTours }) => {
+const Inner = memo(({ onlineTours }) => {
     useEffect(() => {
         document.title = 'Danh sách yêu thích';
     });
@@ -16,9 +16,9 @@ const Inner = memo(({ wishListTours }) => {
         <UserActivityLayout>
             <div className="love-list">
                 <Title title="Danh sách yêu thích" />
-                {wishListTours && wishListTours.length > 0 && (
+                {onlineTours && onlineTours.length > 0 && (
                     <div className="love-list__content">
-                        {wishListTours.map(tour => (
+                        {onlineTours.map(tour => (
                             <div
                                 className="love-list__content--item"
                                 key={tour.tour_id}
@@ -46,7 +46,7 @@ const Inner = memo(({ wishListTours }) => {
                         ))}
                     </div>
                 )}
-                {wishListTours.length === 0 && <NoData />}
+                {onlineTours.length === 0 && <NoData />}
             </div>
         </UserActivityLayout>
     );
