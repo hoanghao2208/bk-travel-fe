@@ -16,7 +16,6 @@ const Wrapper = memo(() => {
 
     const [tourData, setTourData] = useState([]);
     const [scheduleData, setScheduleData] = useState([]);
-    const [scheduleId, setScheduleId] = useState(0);
     const [column, setColumn] = useState(0);
 
     const handleGetTourData = useCallback(async () => {
@@ -38,7 +37,6 @@ const Wrapper = memo(() => {
             const response = await tourService.getTourSchedule(tour_id);
             if (response?.status === 200) {
                 setScheduleData(response.data.schedule_tour.schedule_detail);
-                setScheduleId(response.data.schedule_tour.id);
             }
         } catch (error) {
             console.error(error);
@@ -50,7 +48,6 @@ const Wrapper = memo(() => {
             try {
                 const response =
                     await tourGuideService.updateScheduleByTourGuide(
-                        scheduleId,
                         scheduleData,
                         token
                     );
@@ -63,7 +60,7 @@ const Wrapper = memo(() => {
                 Message.sendError('Đã có lỗi xãy ra, vui lòng thử lại');
             }
         },
-        [scheduleId, token]
+        [token]
     );
 
     useEffect(() => {

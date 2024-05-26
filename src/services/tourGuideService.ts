@@ -58,14 +58,13 @@ class TourGuideService extends ApiBase {
     };
 
     updateScheduleByTourGuide = (
-        schedule_id: number,
         requestBody: {
             tour_id: number;
             schedule_detail: any;
         },
         token: string
     ) => {
-        const url = BASE_URL + `/api/v1/schedules/tourguide/${schedule_id}`;
+        const url = BASE_URL + '/api/v1/schedules';
         return axios.put(url, requestBody, {
             headers: {
                 Authorization: `${token}`,
