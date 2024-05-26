@@ -241,21 +241,25 @@ const routes: Array<Route> = [
         name: 'TourGuide Home Page',
         path: routeConstants.TOURGUIDE_HOMEPAGE,
         Component: commonLoadable(() => import('views/TourGuideHomePage')),
+        authorization: true,
     },
     {
         name: 'TourGuide Mission Page',
         path: routeConstants.TOURGUIDE_MISSION,
         Component: commonLoadable(() => import('views/TourGuideMission')),
+        authorization: true,
     },
     {
         name: 'TourGuide Message Page',
         path: routeConstants.TOURGUIDE_MESSAGE,
         Component: commonLoadable(() => import('views/TourGuideMessage')),
+        authorization: true,
     },
     {
         name: 'Pending Orders Page',
         path: routeConstants.PENDING_ORDERS,
         Component: commonLoadable(() => import('views/PendingOrders')),
+        authorization: true,
     },
     {
         name: 'Schedule Information Detail Page',
@@ -263,6 +267,13 @@ const routes: Array<Route> = [
         Component: commonLoadable(
             () => import('views/ScheduleInformationDetail')
         ),
+        authorization: true,
+    },
+    {
+        name: 'Voucher List Page',
+        path: routeConstants.VOUCHER_LIST,
+        Component: commonLoadable(() => import('views/VoucherList')),
+        authorization: true,
     },
 ];
 

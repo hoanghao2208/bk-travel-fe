@@ -138,6 +138,7 @@ const UserLoginHeader: FC = () => {
                     <Link to={routeConstants.USER_LIST_CUSTOM_TOURS}>
                         Tour đề xuất
                     </Link>
+                    <Link to={routeConstants.VOUCHER_LIST}>Ưu đãi</Link>
                     <Link to={routeConstants.USER_ORDERS}>
                         Đơn hàng của bạn
                     </Link>

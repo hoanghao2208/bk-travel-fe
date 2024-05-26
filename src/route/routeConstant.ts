@@ -40,6 +40,7 @@ const routeConstants = {
     ALL_TOURS: '/all-tours',
     PENDING_ORDERS: '/pending-orders',
     SCHEDULE_INFORMATION_DETAIL: '/schedule/information/detail/:tour_id',
+    VOUCHER_LIST: '/vouchers/list',
 };
 
 export default routeConstants;
