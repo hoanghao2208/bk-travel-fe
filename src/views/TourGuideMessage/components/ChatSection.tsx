@@ -1,5 +1,5 @@
-import { PlusOutlined, SendOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Modal, Tooltip } from 'antd';
+import { SendOutlined } from '@ant-design/icons';
+import { Button, Input, Tooltip } from 'antd';
 import Message from 'components/Message';
 import { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
 import { getCustomerId, getToken } from 'reducers/token/function';
@@ -17,9 +17,6 @@ interface ChatSectionProps {
 
 const ChatSection: FC<ChatSectionProps> = memo(
     ({ name, activeGrp, socket, allMessage, allTourGuideId }) => {
-        const [openModalAddMember, setOpenModalAddMember] = useState(false);
-
-        const [form] = Form.useForm();
         const userId = getCustomerId();
         const token = getToken();
         const contentRef = useRef<HTMLDivElement>(null);
@@ -83,13 +80,6 @@ const ChatSection: FC<ChatSectionProps> = memo(
                             {name}
                         </span>
                     </div>
-                    <Tooltip placement="top" title="Thêm thành viên">
-                        <Button
-                            shape="circle"
-                            icon={<PlusOutlined />}
-                            onClick={() => setOpenModalAddMember(true)}
-                        />
-                    </Tooltip>
                 </div>
                 <div className="chat-section--content">
                     {allMessage.map((mess: any) => (
@@ -120,48 +110,6 @@ const ChatSection: FC<ChatSectionProps> = memo(
                         </Tooltip>
                     </div>
                 </div>
-                <Modal
-                    title="Thêm thành viên"
-                    open={openModalAddMember}
-                    onCancel={() => setOpenModalAddMember(false)}
-                    footer={[
-                        <Button
-                            key="back"
-                            onClick={() => setOpenModalAddMember(false)}
-                        >
-                            Hủy
-                        </Button>,
-                        <Button
-                            htmlType="submit"
-                            key="submit"
-                            type="primary"
-                            form="add-member-to-group"
-                        >
-                            Xác nhận
-                        </Button>,
-                    ]}
-                >
-                    <Form
-                        form={form}
-                        name="add-member-to-group"
-                        id="add-member-to-group"
-                        layout="vertical"
-                        // onFinish={handleCancelTour}
-                    >
-                        <Form.Item
-                            name="member"
-                            label="Tên thành viên"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: `Vui lòng điền tên thành viên`,
-                                },
-                            ]}
-                        >
-                            <Input placeholder="Tên thành viên" />
-                        </Form.Item>
-                    </Form>
-                </Modal>
             </div>
         );
     }

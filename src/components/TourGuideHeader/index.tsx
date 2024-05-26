@@ -1,6 +1,5 @@
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Dropdown, Tooltip } from 'antd';
-import BellNotifyIcon from 'assets/icons/BellNotifyIcon';
+import { Avatar, Dropdown, Tooltip } from 'antd';
 import LogOutIcon from 'assets/icons/LogOutIcon';
 import Logo from 'assets/icons/Logo';
 import MessageIcon from 'assets/icons/MessageIcon';
@@ -67,7 +66,6 @@ const TourGuideHeader: FC = () => {
                     </Link>
                 </div>
                 <div className="user-login-header__navigate">
-                    <Link to={routeConstants.TOURGUIDE_MISSION}>Nhiệm vụ</Link>
                     <Link to={routeConstants.WEATHER_FORECAST}>Thời tiết</Link>
                     <div
                         onClick={() =>

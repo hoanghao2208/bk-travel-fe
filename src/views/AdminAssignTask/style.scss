@@ -73,3 +73,12 @@
         }
     }
 }
+
+.modal--notification {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    .anticon {
+        font-size: 22px;
+    }
+}

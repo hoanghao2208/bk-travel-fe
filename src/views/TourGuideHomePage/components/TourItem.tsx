@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Tooltip } from 'antd';
+import { Button, Tooltip } from 'antd';
 import dayjs from 'dayjs';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,9 +14,6 @@ interface TourItemProps {
 
 const TourItem: FC<TourItemProps> = memo(({ tour_id, description }) => {
     const navigate = useNavigate();
-    const [form] = Form.useForm();
-
-    const [openModalCancel, setOpenModalCancel] = useState(false);
     const [tourDetail, setTourDetail] = useState<ITour>();
 
     const handleGetDetailTour = useCallback(async () => {
@@ -29,10 +26,6 @@ const TourItem: FC<TourItemProps> = memo(({ tour_id, description }) => {
             console.error(error);
         }
     }, [tour_id]);
-
-    const handleCancelTour = useCallback((values: { reason: string }) => {
-        console.log('reason', values.reason);
-    }, []);
 
     useEffect(() => {
         handleGetDetailTour();
@@ -82,15 +75,6 @@ const TourItem: FC<TourItemProps> = memo(({ tour_id, description }) => {
 
             <div className="tour-item__bottom">
                 <Button
-                    type="default"
-                    shape="round"
-                    danger
-                    size="large"
-                    onClick={() => setOpenModalCancel(true)}
-                >
-                    Yêu cầu hủy
-                </Button>
-                <Button
                     type="primary"
                     shape="round"
                     size="large"
@@ -99,50 +83,6 @@ const TourItem: FC<TourItemProps> = memo(({ tour_id, description }) => {
                     Trang nhiệm vụ
                 </Button>
             </div>
-
-            <Modal
-                title="Yêu cầu hủy tour được giao"
-                open={openModalCancel}
-                onCancel={() => setOpenModalCancel(false)}
-                footer={[
-                    <Button
-                        key="back"
-                        onClick={() => setOpenModalCancel(false)}
-                    >
-                        Hủy
-                    </Button>,
-                    <Button
-                        danger
-                        htmlType="submit"
-                        key="submit"
-                        type="primary"
-                        form="cancel-my-tour"
-                    >
-                        Xác nhận
-                    </Button>,
-                ]}
-            >
-                <Form
-                    form={form}
-                    name="cancel-my-tour"
-                    id="cancel-my-tour"
-                    layout="vertical"
-                    onFinish={handleCancelTour}
-                >
-                    <Form.Item
-                        name="reason"
-                        label="Lý do hủy"
-                        rules={[
-                            {
-                                required: true,
-                                message: `Vui lòng điền lý do`,
-                            },
-                        ]}
-                    >
-                        <Input placeholder="Lý do bạn muốn hủy chuyến" />
-                    </Form.Item>
-                </Form>
-            </Modal>
         </div>
     );
 });
