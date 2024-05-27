@@ -118,7 +118,7 @@ const TourItem: FC<TourItemProps> = memo(
                     user_id: userId,
                     tour_id: tourId,
                 };
-                if (!loveList.includes(tourId)) {
+                if (!loveList?.includes(tourId)) {
                     const response = await userService.addToWishList(
                         body,
                         token
@@ -256,7 +256,7 @@ const TourItem: FC<TourItemProps> = memo(
                             className="tour-item__header--icon"
                             onClick={handleWishListTour}
                         >
-                            {!loveList.includes(tourId) ? (
+                            {!loveList?.includes(tourId) ? (
                                 <HeartIcon />
                             ) : (
                                 <HeartRedIcon />
