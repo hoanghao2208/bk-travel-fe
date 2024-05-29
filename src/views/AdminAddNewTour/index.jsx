@@ -11,6 +11,7 @@ const Wrapper = memo(() => {
     const [fileList, setFileList] = useState([]);
     const [tourImageList, setTourImageList] = useState([]);
     const [imgURL, setImgURL] = useState('');
+    const [price, setPrice] = useState('');
     const [showUpload, setShowUpload] = useState(true);
     const [fileListMap, setFileListMap] = useState(new Map());
 
@@ -26,10 +27,12 @@ const Wrapper = memo(() => {
             setTourImageList,
             imgURL,
             setImgURL,
+            price,
+            setPrice,
             showUpload,
             setShowUpload,
         };
-    }, [fileList, imgURL, loading, showUpload, tourImageList]);
+    }, [fileList, imgURL, loading, price, showUpload, tourImageList]);
 
     const handleCreateNewTour = useCallback(
         async data => {
@@ -72,6 +75,7 @@ const Wrapper = memo(() => {
                     setShowUpload(true);
                     setTourImageList([]);
                     setFileListMap(new Map());
+                    setPrice('');
                     form.resetFields();
                 }
             } catch (err) {

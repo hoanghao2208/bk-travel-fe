@@ -139,10 +139,6 @@ const Inner = memo(({ tourData, scheduleData, handleCreateOrder }) => {
                             <span>Thời gian tour:</span>
                             <span>{tourData.time}</span>
                         </div>
-                        <div>
-                            <span>Hướng dẫn viên:</span>
-                            <span>Dương Hoàng Hảo</span>
-                        </div>
                     </div>
                     <div className="schedule-detail__information--right">
                         <h3>Điểm nhấn</h3>

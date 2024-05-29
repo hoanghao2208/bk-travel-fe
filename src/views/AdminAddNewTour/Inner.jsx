@@ -43,6 +43,8 @@ const Inner = memo(
             setTourImageList,
             imgURL,
             setImgURL,
+            price,
+            setPrice,
             showUpload,
             setShowUpload,
         } = useCreateContext();
@@ -52,7 +54,6 @@ const Inner = memo(
             useState(false);
         const [departureTime, setDepartureTime] = useState('');
         const [deadlineDate, setDeadlineDate] = useState('');
-        const [price, setPrice] = useState('');
 
         const [currentError, setCurrentError] = useState('');
         const [destinationPlaces, setDestinationPlaces] = useState([]);
@@ -103,13 +104,16 @@ const Inner = memo(
             setDepartureTime(timeString);
         };
 
-        const onChangePrice = useCallback(e => {
-            let val = e.target.value;
-            val = val.replace(/\D/g, '');
-            val = Number(val).toLocaleString();
+        const onChangePrice = useCallback(
+            e => {
+                let val = e.target.value;
+                val = val.replace(/\D/g, '');
+                val = Number(val).toLocaleString();
 
-            setPrice(val);
-        }, []);
+                setPrice(val);
+            },
+            [setPrice]
+        );
 
         const handleBeforeUpload = file => {
             const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];

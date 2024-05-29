@@ -124,7 +124,9 @@ const TourItem: FC<TourItemProps> = memo(
                         token
                     );
                     if (response?.status === 201) {
-                        setLoveList(prev => [...prev, tourId]);
+                        setLoveList(prev =>
+                            Array.isArray(prev) ? [...prev, tourId] : [tourId]
+                        );
                     }
                 } else {
                     const response = await userService.removeFromWishList(
@@ -132,7 +134,11 @@ const TourItem: FC<TourItemProps> = memo(
                         token
                     );
                     if (response?.status === 200) {
-                        setLoveList(prev => prev.filter(id => id !== tourId));
+                        setLoveList(prev =>
+                            Array.isArray(prev)
+                                ? prev.filter(id => id !== tourId)
+                                : []
+                        );
                     }
                 }
             }

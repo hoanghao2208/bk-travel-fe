@@ -13,7 +13,10 @@ const Wrapper = memo(() => {
         try {
             const response = await voucherService.getAllVouchers();
             if (response?.status === 200) {
-                setAllVouchers(response.data.data);
+                const filteredVouchers = response.data.data.filter(
+                    voucher => voucher.remain_number !== 0
+                );
+                setAllVouchers(filteredVouchers);
             }
         } catch (error) {
             console.error(error);

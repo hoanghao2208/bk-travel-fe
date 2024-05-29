@@ -48,11 +48,6 @@ const Inner = memo(
                 dataIndex: 'phone_number',
                 align: 'center',
             },
-            {
-                title: 'Số tour được giao',
-                dataIndex: 'task',
-                align: 'center',
-            },
         ];
 
         const handleSubmitTourguide = useCallback(
