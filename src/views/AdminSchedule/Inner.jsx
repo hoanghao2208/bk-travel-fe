@@ -6,7 +6,7 @@ import ScheduleList from 'views/AdminSchedule/views/ScheduleList';
 import './style.scss';
 
 const Inner = memo(
-    ({ form, tourData, column, handleScheduleTour, loading }) => {
+    ({ form, tourData, destination, column, handleScheduleTour, loading }) => {
         useEffect(() => {
             document.title = 'Lên lịch trình tour';
         });
@@ -33,6 +33,7 @@ const Inner = memo(
                             <ScheduleList
                                 form={form}
                                 tourData={tourData}
+                                destination={destination}
                                 column={column}
                                 handleScheduleTour={handleScheduleTour}
                             />

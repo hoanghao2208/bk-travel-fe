@@ -159,6 +159,15 @@ class TourService extends ApiBase {
         const url = BASE_URL + `/api/v1/tours/${tour_id}`;
         return axios.post(url);
     };
+
+    getHotelByDestination = (destination: string) => {
+        const url = BASE_URL + '/api/v1/destinations/hotels';
+        return axios.get(url, {
+            params: {
+                destination,
+            },
+        });
+    };
 }
 
 const tourService = new TourService();

@@ -1,5 +1,7 @@
 import ClockIcon from 'assets/icons/ClockIcon';
+import HotelIcon from 'assets/icons/HotelIcon';
 import RightHandIcon from 'assets/icons/RightHandIcon';
+import VehicleIcon from 'assets/icons/VehicleIcon';
 import dayjs from 'dayjs';
 import { memo, useCallback, useEffect, useState } from 'react';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
@@ -50,6 +52,16 @@ const ScheduleTable = memo(({ columnNumber, tourData, scheduleData }) => {
                 className="schedule-table__right"
                 style={{ height: columnNumber * 100 }}
             >
+                <div className="general--infor">
+                    <HotelIcon />
+                    <span>Nơi ở: </span>
+                    <p>{scheduleData[selectedDay].hotels.join(', ')}</p>
+                </div>
+                <div className="general--infor">
+                    <VehicleIcon />
+                    <span>Phương tiện di chuyển: </span>
+                    <p>{scheduleData[selectedDay].transport.join(', ')}</p>
+                </div>
                 {dayData.map((item, index) => (
                     <div key={index} className="schedule-table__right--item">
                         <div>

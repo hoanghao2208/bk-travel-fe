@@ -15,6 +15,7 @@ const Wrapper = memo(() => {
     const navigate = useNavigate();
 
     const [tourData, setTourData] = useState({});
+    const [destination, setDestinations] = useState([]);
     const [column, setColumn] = useState(0);
     const [loading, setLoading] = useState(false);
 
@@ -24,6 +25,10 @@ const Wrapper = memo(() => {
         try {
             const response = await tourService.getOneTour(tour_id);
             if (response?.status === 200) {
+                const destinationsData = response.data.date_for_schedule.map(
+                    item => item.destination.name
+                );
+                setDestinations(destinationsData);
                 setTourData(response.data.data);
                 const timeString = response.data.data.time;
                 const columnNumber = parseInt(timeString.match(/\d+/)[0]);
@@ -75,6 +80,7 @@ const Wrapper = memo(() => {
         <Inner
             form={form}
             tourData={tourData}
+            destination={destination}
             column={column}
             handleScheduleTour={handleScheduleTour}
             loading={loading}

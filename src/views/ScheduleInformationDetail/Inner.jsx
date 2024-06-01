@@ -1,7 +1,9 @@
 import { Tooltip } from 'antd';
 import CancelIcon from 'assets/icons/CancelIcon';
 import CheckBoxIcon from 'assets/icons/CheckBoxIcon';
+import HotelIcon from 'assets/icons/HotelIcon';
 import SparklingIcon from 'assets/icons/SparklingIcon';
+import VehicleIcon from 'assets/icons/VehicleIcon';
 import WarningIcon from 'assets/icons/WarningIcon';
 import dayjs from 'dayjs';
 import UserHomePageLayout from 'layouts/UserHomePageLayout';
@@ -32,6 +34,16 @@ const Inner = memo(({ tourDetail, scheduleDetail }) => {
                         <h4 className="detail-date">
                             {day.schedule_date} ({day.date})
                         </h4>
+                        <div className="general--infor">
+                            <HotelIcon />
+                            <span>Nơi ở: </span>
+                            <p>{day.hotels.join(', ')}</p>
+                        </div>
+                        <div className="general--infor">
+                            <VehicleIcon />
+                            <span>Phương tiện di chuyển: </span>
+                            <p>{day.transport.join(', ')}</p>
+                        </div>
                         {day.detail.map(item => (
                             <div key={item.name}>
                                 <div className="detail-time">

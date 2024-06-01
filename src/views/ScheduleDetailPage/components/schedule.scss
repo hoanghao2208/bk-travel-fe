@@ -44,7 +44,7 @@
             flex-shrink: 0;
         }
         &--item {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             div {
                 font-weight: 600;
                 display: flex;
@@ -53,10 +53,19 @@
                 margin-bottom: 20px;
             }
             span {
-                font-weight: 600;
+                font-weight: 500;
                 span {
                     color: $color--secondary;
                 }
+            }
+        }
+        .general--infor {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+            span {
+                font-weight: 500;
             }
         }
         &--desc {
