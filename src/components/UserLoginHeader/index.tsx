@@ -1,5 +1,6 @@
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Badge, Dropdown, Tooltip } from 'antd';
+import CanceledIcon from 'assets/icons/CanceledIcon';
 import CartIcon from 'assets/icons/CartIcon';
 import HeartDropDown from 'assets/icons/HeartDropDown';
 import LogOutIcon from 'assets/icons/LogOutIcon';
@@ -95,6 +96,22 @@ const UserLoginHeader: FC = () => {
             key: '3',
             label: (
                 <Link
+                    to={routeConstants.CANCELED_ORDERS}
+                    style={{
+                        fontSize: '16px',
+                        display: 'inline-block',
+                        paddingLeft: '10px',
+                    }}
+                >
+                    Đơn hàng đã hủy
+                </Link>
+            ),
+            icon: <CanceledIcon />,
+        },
+        {
+            key: '4',
+            label: (
+                <Link
                     to={routeConstants.LOVE_LIST}
                     style={{
                         fontSize: '16px',
@@ -108,7 +125,7 @@ const UserLoginHeader: FC = () => {
             icon: <HeartDropDown />,
         },
         {
-            key: '4',
+            key: '5',
             danger: true,
             label: (
                 <Link

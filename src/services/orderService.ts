@@ -30,6 +30,15 @@ class OrderService extends ApiBase {
         });
     };
 
+    getCanceledOrder = (userId: number, token: string) => {
+        const url = BASE_URL + `/api/v1/orders/${userId}/canceled`;
+        return axios.get(url, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    }
+
     createOneOrder = (
         requestBody: {
             user_id: number;

@@ -275,6 +275,12 @@ const routes: Array<Route> = [
         Component: commonLoadable(() => import('views/VoucherList')),
         authorization: true,
     },
+    {
+        name: 'Canceled Orders Page',
+        path: routeConstants.CANCELED_ORDERS,
+        Component: commonLoadable(() => import('views/CanceledOrders')),
+        authorization: true,
+    },
 ];
 
 export default routes;

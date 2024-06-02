@@ -31,8 +31,9 @@ const UserActivityMenu: FC = () => {
         getItem('Thông tin tải khoản', 'account-info', <UserOutlined />, [
             getItem('Thông tin cá nhân', 'user-profile'),
             getItem('Đổi mật khẩu', 'change-password'),
-            getItem('Đơn hàng', 'orders'),
+            getItem('Đơn hàng của bạn', 'orders'),
             getItem('Đơn hàng chưa thanh toán', 'pending-orders'),
+            getItem('Đơn hàng đã hủy', 'canceled-orders'),
         ]),
         getItem('Mục yêu thích', 'wishlist', <HeartOutlined />),
         getItem('Đăng xuất', 'log-out', <LogoutOutlined />),
