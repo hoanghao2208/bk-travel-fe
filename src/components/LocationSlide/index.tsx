@@ -32,7 +32,7 @@ const LocationSlide: FC<LocationSlideProps> = ({ imgURL, description }) => {
                     type="primary"
                     onClick={() => navigate(routeConstants.FIND_TOUR)}
                 >
-                    Đặt tour ngay
+                    Tìm kiếm tour
                 </Button>
             </div>
         </div>

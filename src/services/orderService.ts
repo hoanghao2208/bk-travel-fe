@@ -121,7 +121,7 @@ class OrderService extends ApiBase {
         },
         token: string
     ) => {
-        const url = BASE_URL + '/api/v1/users/payment/refund';
+        const url = BASE_URL + '/api/v1/users/payment/refund/user';
         return axios.post(url, requestBody, {
             headers: {
                 Authorization: `${token}`,

@@ -17,6 +17,16 @@ const CanceledOrderItem: FC<CanceledOrderItemProps> = memo(
             <div className="orders-item">
                 <div className="orders-item--header">
                     <div className="orders-item--canceled-status">Đã hủy</div>
+                    <div className="orders-item--totals">
+                        <div className="orders-item--totalPrice">
+                            <span>{total_to_pay.toLocaleString()} VNĐ</span>
+                            {total_to_pay !== total_price && (
+                                <span className="old-price">
+                                    {total_price.toLocaleString()} VNĐ
+                                </span>
+                            )}
+                        </div>
+                    </div>
                 </div>
                 <div className="orders-item--tours">
                     {tours?.map((tour: any) => (
@@ -36,16 +46,6 @@ const CanceledOrderItem: FC<CanceledOrderItemProps> = memo(
                             isPending={isPending}
                         />
                     ))}
-                </div>
-                <div className="orders-item--total">
-                    <div className="orders-item--totalPrice">
-                        <span>{total_to_pay.toLocaleString()} VNĐ</span>
-                        {total_to_pay !== total_price && (
-                            <span className="old-price">
-                                {total_price.toLocaleString()} VNĐ
-                            </span>
-                        )}
-                    </div>
                 </div>
             </div>
         );
