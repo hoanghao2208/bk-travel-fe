@@ -16,6 +16,7 @@ const Inner = memo(({ completedOrders }) => {
                     {completedOrders?.map(order => (
                         <OrderItem
                             key={order.order_id}
+                            order_id={order.order_id}
                             paymentId={order.payment_id}
                             total_price={parseInt(order.total)}
                             total_to_pay={parseInt(order.total_to_pay)}

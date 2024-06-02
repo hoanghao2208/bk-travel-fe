@@ -10,10 +10,18 @@ const Wrapper = memo(() => {
     const hanldeGetPaymentResult = useCallback(async () => {
         try {
             const urlParams = window.location.search;
-            const response = await orderService.getResultsPayment(
-                urlParams,
-                token
-            );
+            let response;
+            if (urlParams.includes('Thanh+toan')) {
+                response = await orderService.getResultsPayment(
+                    urlParams,
+                    token
+                );
+            } else {
+                response = await orderService.getResultsCancelOrder(
+                    urlParams,
+                    token
+                );
+            }
 
             if (response?.status === 200) {
                 setResultPayment(response.data.RspCode);

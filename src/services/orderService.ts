@@ -104,6 +104,30 @@ class OrderService extends ApiBase {
             },
         });
     };
+
+    cancelOrder = (
+        requestBody: {
+            order_id: number;
+            payment_id: number;
+        },
+        token: string
+    ) => {
+        const url = BASE_URL + '/api/v1/users/payment/refund';
+        return axios.post(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
+
+    getResultsCancelOrder = (params: any, token: string) => {
+        const url = BASE_URL + `/api/v1/users/payment/refund${params}`;
+        return axios.get(url, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
 }
 
 const orderService = new OrderService();

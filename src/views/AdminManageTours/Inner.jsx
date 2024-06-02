@@ -137,6 +137,12 @@ const Inner = memo(
                                         tourName={tour.name}
                                         date={tour.departure_date}
                                         time={tour.time}
+                                        space={
+                                            tour.max_customer -
+                                            tour.booked_number
+                                        }
+                                        departure_time={tour.departure_time}
+                                        expired_date={tour.deadline_book_time}
                                         departure_place={tour.departure_place}
                                         setOpenDeleteModal={setOpenDeleteModal}
                                         refresh={refresh}

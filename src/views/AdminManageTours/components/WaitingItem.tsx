@@ -14,6 +14,7 @@ import { getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
 import messageService from 'services/messageService';
 import tourService from 'services/tourService';
+import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
 import './styles.scss';
 
 interface WaitingItemProps {
@@ -24,7 +25,10 @@ interface WaitingItemProps {
     date: string;
     time: string;
     departure_place: string;
+    space?: number;
+    expired_date?: string;
     refresh?: boolean;
+    departure_time?: string;
     setOpenDeleteModal?: (isOpen: boolean) => void;
     setSelectedTourId?: (tour_id: number) => void;
     setRefresh?: (value: boolean) => void;
@@ -39,6 +43,9 @@ const WaitingItem: FC<WaitingItemProps> = memo(
         tourName,
         date,
         time,
+        space,
+        expired_date,
+        departure_time,
         refresh,
         departure_place,
         setOpenDeleteModal,
@@ -130,13 +137,27 @@ const WaitingItem: FC<WaitingItemProps> = memo(
                     <h3 className="waiting-item__detail--title">{tourName}</h3>
                     <div className="waiting-item__detail--inf1">
                         <span className="waiting-item__detail--inf1-col1">
-                            Ngày {formattedDate}
+                            Ngày khởi hành {formattedDate}
+                        </span>
+                        <span className="waiting-item__detail--inf1-col2">
+                            Thời gian {departure_time}
+                        </span>
+                        <span className="waiting-item__detail--inf1-col3">
+                            Từ {departure_place}
+                        </span>
+                    </div>
+                    <div className="waiting-item__detail--inf1">
+                        <span className="waiting-item__detail--inf1-col1">
+                            Hạn đặt chổ{' '}
+                            {dayjs(expired_date).format(
+                                DEFAULT_DISPLAY_DATE_FORMAT
+                            )}
                         </span>
                         <span className="waiting-item__detail--inf1-col2">
                             {time}
                         </span>
                         <span className="waiting-item__detail--inf1-col3">
-                            Khởi hành từ {departure_place}
+                            {space} chổ trống
                         </span>
                     </div>
                 </div>

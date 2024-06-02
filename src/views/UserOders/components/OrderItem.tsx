@@ -2,7 +2,9 @@ import { Button } from 'antd';
 import dayjs from 'dayjs';
 import { FC, memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getToken } from 'reducers/token/function';
 import routeConstants from 'route/routeConstant';
+import orderService from 'services/orderService';
 import { DEFAULT_DISPLAY_DATE_FORMAT } from 'utils/constants';
 import TourItem from 'views/UserOders/components/TourItem';
 import '../style.scss';
@@ -30,6 +32,8 @@ const OrderItem: FC<OrderItemProps> = memo(
         isPending = false,
     }) => {
         const navigate = useNavigate();
+        const token = getToken();
+
         const handleNavigate = useCallback(() => {
             const tourIds = tours
                 .map((tour: any) => tour.tour_id)
@@ -38,6 +42,29 @@ const OrderItem: FC<OrderItemProps> = memo(
                 `${routeConstants.FILL_INFORMATION}?tourId=${tourIds}&orderId=${order_id}`
             );
         }, [navigate, order_id, tours]);
+
+        const handleCancelOrder = useCallback(async () => {
+            try {
+                const body = {
+                    order_id: order_id,
+                    payment_id: paymentId,
+                };
+                const response = await orderService.cancelOrder(body, token);
+                if (response?.status === 200) {
+                    if (
+                        new URL(response.data.link_payment).origin !==
+                        window.location.origin
+                    ) {
+                        window.location.href = response.data.link_payment;
+                    } else {
+                        navigate(response.data.link_payment);
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }, [navigate, order_id, paymentId, token]);
+
         return (
             <div className="orders-item">
                 <div className="orders-item--header">
@@ -47,20 +74,30 @@ const OrderItem: FC<OrderItemProps> = memo(
                             <span>{paymentId}</span>
                         </div>
                     )}
-                    {isPayment ? (
-                        <span className="orders-item--status">
-                            Đã thanh toán
-                        </span>
-                    ) : (
-                        <span className="orders-pending-item--status">
-                            Chưa thanh toán
-                        </span>
-                    )}
-                    {!isPayment && (
-                        <Button type="primary" onClick={handleNavigate}>
-                            Thanh toán ngay
-                        </Button>
-                    )}
+                    <div className="orders-item--status-wrapper">
+                        {isPayment ? (
+                            <span className="orders-item--status">
+                                Đã thanh toán
+                            </span>
+                        ) : (
+                            <span className="orders-pending-item--status">
+                                Chưa thanh toán
+                            </span>
+                        )}
+                        {isPayment ? (
+                            <Button
+                                danger
+                                type="primary"
+                                onClick={handleCancelOrder}
+                            >
+                                Hủy đơn hàng
+                            </Button>
+                        ) : (
+                            <Button type="primary" onClick={handleNavigate}>
+                                Thanh toán ngay
+                            </Button>
+                        )}
+                    </div>
                 </div>
                 <div className="orders-item--tours">
                     {tours?.map((tour: any) => (
