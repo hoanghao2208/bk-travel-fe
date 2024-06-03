@@ -168,6 +168,21 @@ class TourService extends ApiBase {
             },
         });
     };
+
+    createUserSchedule = (
+        requestBody: {
+            tour_id: number;
+            schedule_detail: any;
+        },
+        token: string
+    ) => {
+        const url = BASE_URL + '/api/v1/schedules/users';
+        return axios.post(url, requestBody, {
+            headers: {
+                Authorization: `${token}`,
+            },
+        });
+    };
 }
 
 const tourService = new TourService();

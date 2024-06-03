@@ -108,3 +108,18 @@
         }
     }
 }
+
+.modal-confirm-price {
+    .ant-form-item-label > label {
+        line-height: 1.4;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .ant-input {
+        width: 100%;
+        height: 36px;
+        color: $color-date;
+        font-weight: 500;
+        font-size: 16px;
+    }
+}

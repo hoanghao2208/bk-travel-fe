@@ -3,44 +3,20 @@ import Message from 'components/Message';
 import { memo, useCallback } from 'react';
 import { getToken } from 'reducers/token/function';
 import customTourService from 'services/customTourService';
-import { DIGIT_VALIDATE } from 'utils/constants';
 import './styles.scss';
 
 const ActivityModal = memo(
-    ({
-        form,
-        formId,
-        tourId,
-        userId,
-        title,
-        name,
-        label,
-        modalOpen,
-        handleCancel,
-        setReload,
-    }) => {
+    ({ form, tourId, userId, modalOpen, handleCancel, setReload }) => {
         const token = getToken();
 
         const handleResponseCustomTour = useCallback(
             async value => {
                 try {
-                    const newValue =
-                        name === 'price' ? parseInt(value[name]) : value[name];
-                    let body = {};
-                    if (name === 'price') {
-                        body = {
-                            user_id: userId,
-                            status: 'success',
-                            price: newValue,
-                            reason: value.description,
-                        };
-                    } else {
-                        body = {
-                            user_id: userId,
-                            status: 'reject',
-                            reason: newValue,
-                        };
-                    }
+                    const body = {
+                        user_id: userId,
+                        status: 'reject',
+                        reason: value.reason,
+                    };
                     const response = await customTourService.responseCustomTour(
                         tourId,
                         body,
@@ -56,24 +32,24 @@ const ActivityModal = memo(
                     Message.sendError('Đã có lỗi xãy ra, vui lòng thử lại');
                 }
             },
-            [form, name, setReload, token, tourId, userId]
+            [form, setReload, token, tourId, userId]
         );
 
         return (
             <Modal
                 open={modalOpen}
-                title={title}
+                title="Từ chối tour đề xuất của khách hàng"
                 onCancel={handleCancel}
                 footer={[
                     <Button key="back" onClick={handleCancel}>
                         Hủy
                     </Button>,
                     <Button
-                        danger={name === 'reason'}
+                        danger
                         htmlType="submit"
                         key="submit"
                         type="primary"
-                        form={`${formId}-${tourId}`}
+                        form="reject-custom-tour"
                     >
                         Xác nhận
                     </Button>,
@@ -81,49 +57,23 @@ const ActivityModal = memo(
             >
                 <Form
                     form={form}
-                    name={`${formId}-${tourId}`}
-                    id={`${formId}-${tourId}`}
+                    name="reject-custom-tours"
+                    id="reject-custom-tour"
                     layout="vertical"
                     onFinish={handleResponseCustomTour}
                 >
                     <Form.Item
-                        name={name}
-                        label={label}
+                        name="reason"
+                        label="Lý do"
                         rules={[
                             {
                                 required: true,
-                                message: `Vui lòng điền ${label}`,
+                                message: `Vui lòng nhập lý do`,
                             },
-                            ...(name === 'price'
-                                ? [
-                                      {
-                                          pattern: DIGIT_VALIDATE,
-                                          message:
-                                              'Giá tour không phù hợp, vui lòng kiếm tra lại',
-                                      },
-                                  ]
-                                : []),
                         ]}
                     >
-                        <Input placeholder={`Báo ${label}`} />
+                        <Input placeholder="Báo lý do từ chối" />
                     </Form.Item>
-                    {name === 'price' && (
-                        <Form.Item
-                            name="description"
-                            label="Mô tả tour"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: `Vui lòng mô tả tour du lịch`,
-                                },
-                            ]}
-                        >
-                            <Input.TextArea
-                                placeholder="Mô tả tour du lịch"
-                                style={{ height: 180 }}
-                            />
-                        </Form.Item>
-                    )}
                 </Form>
             </Modal>
         );

@@ -1,4 +1,6 @@
-import { Button } from 'antd';
+import { Button, Tooltip } from 'antd';
+import PayIcon from 'assets/icons/PayIcon';
+import ScheduleIcon from 'assets/icons/ScheduleIcon';
 import Message from 'components/Message';
 import ModalSelectPassenger from 'components/TourItem/components/ModalSelectPassenger';
 import { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
@@ -156,15 +158,33 @@ const CustomItem: FC<CustomItemProps> = memo(
                             <h3>{tourName}</h3>
                             {status === 'SUCCESS' && !isTourIdExists && (
                                 <div className="custom-item--pay-order">
+                                    <Tooltip title="Xem lịch trình">
+                                        <Button
+                                            type="dashed"
+                                            shape="circle"
+                                            icon={<ScheduleIcon />}
+                                            size="large"
+                                            onClick={() =>
+                                                navigate(
+                                                    `/schedule/information/detail/${tour_id}`
+                                                )
+                                            }
+                                        />
+                                    </Tooltip>
+                                    <Tooltip title="Thanh toán">
+                                        <Button
+                                            type="dashed"
+                                            shape="circle"
+                                            icon={<PayIcon />}
+                                            size="large"
+                                            onClick={() =>
+                                                setOpenOrderModal(true)
+                                            }
+                                        />
+                                    </Tooltip>
                                     <span className="custom-item--price">
                                         {price?.toLocaleString()} VNĐ
                                     </span>
-                                    <Button
-                                        type="primary"
-                                        onClick={() => setOpenOrderModal(true)}
-                                    >
-                                        Thanh toán
-                                    </Button>
                                 </div>
                             )}
                             {status === 'SUCCESS' && isTourIdExists && (
@@ -209,7 +229,7 @@ const CustomItem: FC<CustomItemProps> = memo(
                             <div>
                                 {status === 'REJECTED' && <span>Lý do: </span>}
                                 {status === 'SUCCESS' && <span>Mô tả: </span>}
-                                {status === 'PENDING' && <span>Lý do: </span>}
+                                {status === 'PENDING' && <span>Ghi chú: </span>}
                                 <span>{note}</span>
                             </div>
                         </div>

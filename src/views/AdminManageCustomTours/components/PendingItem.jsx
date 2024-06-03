@@ -1,6 +1,7 @@
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Form } from 'antd';
 import { memo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ActivityModal from 'views/AdminManageCustomTours/components/ActivityModal';
 import './styles.scss';
 
@@ -22,13 +23,9 @@ const PendingItem = memo(
         setReload,
     }) => {
         const [form] = Form.useForm();
-        const [modalConfirm, setModalConfirm] = useState(false);
-        const [modalReject, setModalReject] = useState(false);
+        const navigate = useNavigate();
 
-        const handleCancelConfirm = () => {
-            setModalConfirm(false);
-            form.resetFields();
-        };
+        const [modalReject, setModalReject] = useState(false);
 
         const handleCancelReject = () => {
             setModalReject(false);
@@ -92,7 +89,11 @@ const PendingItem = memo(
                         <Button
                             type="primary"
                             icon={<CheckOutlined />}
-                            onClick={() => setModalConfirm(true)}
+                            onClick={() =>
+                                navigate(
+                                    `/admin/schedule/${tourId}?userId=${userId}`
+                                )
+                            }
                         >
                             Xác nhận
                         </Button>
@@ -108,24 +109,8 @@ const PendingItem = memo(
                 )}
                 <ActivityModal
                     form={form}
-                    formId="confirm-custom-tour"
                     tourId={tourId}
                     userId={userId}
-                    title="Xác nhận tour đề xuất của khách hàng"
-                    name="price"
-                    label="Giá tour / 1 khách hàng"
-                    modalOpen={modalConfirm}
-                    handleCancel={handleCancelConfirm}
-                    setReload={setReload}
-                />
-                <ActivityModal
-                    form={form}
-                    formId="reject-custom-tour"
-                    tourId={tourId}
-                    userId={userId}
-                    title="Từ chối tour đề xuất của khách hàng"
-                    name="reason"
-                    label="Lý do"
                     modalOpen={modalReject}
                     handleCancel={handleCancelReject}
                     setReload={setReload}
