@@ -78,9 +78,9 @@ const PendingItem = memo(
                     </div>
 
                     <div className="pending-item--location">
-                        {status === 'REJECT' && <span>Lý do:</span>}
-                        {status === 'SUCCESS' && <span>Mô tả:</span>}
-                        {status === 'PENDING' && <span>Lý do:</span>}
+                        {status === 'REJECT' && <span>Lý do: </span>}
+                        {status === 'SUCCESS' && <span>Mô tả: </span>}
+                        {status === 'PENDING' && <span>Ghi chú: </span>}
                         <span>{note}</span>
                     </div>
                 </div>
